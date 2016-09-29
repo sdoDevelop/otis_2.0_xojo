@@ -199,6 +199,10 @@ Inherits SQLiteDatabase
 
 
 	#tag Property, Flags = &h0
+		data_ready As boolean
+	#tag EndProperty
+
+	#tag Property, Flags = &h0
 		initialized As boolean = False
 	#tag EndProperty
 

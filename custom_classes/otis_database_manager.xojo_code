@@ -61,7 +61,7 @@ Protected Class otis_database_manager
 		    
 		  Else
 		    'db is initialized
-		    
+		    local_db.data_ready = True
 		  End If
 		  
 		  
