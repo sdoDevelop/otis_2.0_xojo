@@ -3,8 +3,8 @@ Protected Module login_scripts
 	#tag Method, Flags = &h1
 		Protected Sub start_script()
 		  // In this script we will be handling launcing all the necesarry methods to
-		      // Connect to the local database and create its structure 
-		      // Connect to the remote databse
+		  // Connect to the local database and create its structure 
+		  // Connect to the remote databse
 		  
 		  
 		  // Check for update
@@ -15,19 +15,19 @@ Protected Module login_scripts
 		  Try 
 		    app.otis_db.connect_to_local
 		  Catch err as RuntimeException
-		    err_manage_temp
+		    err_manage
 		    Return
 		  End Try
 		  
 		  // Check if the local database is initialized
-		  If Not otis_db.local_db.initialized Then
+		  If Not app.otis_db.local_db.initialized Then
 		    'database not initialized we need to do so
-		    otis_db.local_db.initialize
+		    app.otis_db.initialize_local
 		    
-		    
-		    
-		    
-		    MsgBox( "running" )
+		  end if
+		  
+		  
+		  MsgBox( "running" )
 		End Sub
 	#tag EndMethod
 

@@ -1,35 +1,147 @@
 #tag Class
 Protected Class otis_sqlite_database
 Inherits SQLiteDatabase
-	#tag Method, Flags = &h1
-		Protected Sub initialize()
+	#tag Method, Flags = &h0
+		Sub construct_db()
 		  // Point of script is to run all the sql commands necessary to build the local_db structure
+		  ' Raises RuntimeException if any errors occured during the initialization
 		  
-		  
+		  dim sql_script_array() as string
+		  dim sql_script as string
 		  dim sql_array() as string
 		  dim sql_query as string
+		  dim ps as SQLitePreparedStatement
+		  dim sql as string
+		  
+		  dim err_count as integer
+		  
+		  
+		  sql_script_array.Append( client_table_creation )
+		  
+		  // Loop through all of the sql scripts
+		  For i1 as integer = 0 To sql_script_array.Ubound
+		    
+		    err_print_seperator( "local_db", "#########  Script " + str( i1.ToText ) + "  #########" )
+		    
+		    'load sql commands into an array
+		    sql_script = sql_script_array(i1)
+		    sql_array() = split_sql( sql_script )
+		    
+		    For i2 as integer = 0 To sql_array.Ubound
+		      
+		      'prepare the statement
+		      sql = sql_array(i2)
+		      me.SQLExecute(sql)
+		      If me.Error Then
+		        'hmmm error
+		        break
+		        err_manage( "local_db", me.ErrorMessage ) 
+		        err_count = err_count + 1
+		      End If
+		      
+		    Next
+		    
+		  Next
+		  
+		  If err_count > 0 Then
+		    ' errors occured during the db creation
+		    dim err as new RuntimeException
+		    err.Message = "Errors occured during the initialization of the database, please report this to Sean"
+		    raise err
+		  End If
 		  
 		  
 		  
-		  sql_array
+		  
+		  
+		  
+		  
 		End Sub
 	#tag EndMethod
 
 	#tag Method, Flags = &h0
-		Function initialized() As Boolean
+		Function split_sql(script as string) As string()
+		  dim start_pos, end_pos as integer
+		  dim fin as Boolean
+		  dim n1, n2, n3 as integer
+		  dim statements(), s2, s3 as String
+		  
+		  
+		  
+		  start_pos = 0
+		  end_pos = 0
+		  
+		  
+		  While Not fin
+		    
+		    ' find the next occurance of ";"
+		    n1 = InStr( start_pos, script, ";" )
+		    
+		    If n1 > 0 Then
+		      ' check if there is a create trigger command in the subset
+		      n2 = InStr( start_pos, script, "Create Trigger" )
+		      If n2 > 0 Then
+		        'this command is a trigger
+		        n3 = InStr( start_pos, script, "End;" )
+		        If n3 > 0 Then
+		          'found the end of the trigger
+		          'set the end point for the command
+		          end_pos = n3 + 3
+		        Else
+		          'there is no end; ?
+		          'that would make no sense
+		          err_manage
+		        End If
+		      Else
+		        'no trigger funciton in subset
+		        end_pos = n1
+		      End If
+		      
+		    Else
+		      'end of file
+		      fin = True
+		      exit
+		    End If
+		    
+		    
+		    
+		    // now we need to do the work to pull our subset from the string
+		    'get the length of the subset
+		    n1 = end_pos - start_pos + 1
+		    'put subset in string
+		    s2 = Mid( script, start_pos, n1 )
+		    'put string in array
+		    statements.Append( s2 )
+		    
+		    'reset our start point
+		    start_pos = end_pos + 1
+		    end_pos = end_pos + 1
+		    
+		  Wend
+		  
+		  Return statements()
+		End Function
+	#tag EndMethod
+
+	#tag Method, Flags = &h0
+		Function version_matches() As boolean
 		  dim resources_file as FolderItem
 		  dim tis as TextInputStream
 		  dim s1, s2 as string
 		  dim lines() as string
 		  dim parts() as string
+		  dim db_version as string
+		  dim db_version_parts() as string
+		  dim app_version_parts() as integer
 		  
 		  
-		  // Get the path to our resources_file to tell us if we are initialized or not
+		  // Get the path to our resources_file
 		  resources_file = get_filepath( "resources_file" )
 		  
-		  If resources_file <> Nil Then
+		  // Read the resources_file
+		  If resources_file.Exists Then
 		    tis = TextInputStream.Open( resources_file )
-		    If t <> Nil Then
+		    If tis <> Nil Then
 		      'read file into a string variable
 		      s1 = tis.ReadAll
 		      tis.Close
@@ -37,28 +149,63 @@ Inherits SQLiteDatabase
 		      'could not read file
 		      Return False
 		    End If
+		  Else 
+		    Return False 
 		  End If
 		  
-		  
-		  // Seperate the string into each line
+		  ' Seperate the string into each line
 		  lines() = Split( s1, EndOfLine )
 		  
 		  // Loop through the lines, seperate into header and value, then check if its the line we need
 		  For i1 as integer = 0 To lines.Ubound
 		    parts() = Split( lines(i1), " = " )
-		    If InStr( parts(0), "initialized" ) > 0 Then
+		    If InStr( parts(0), "db_version" ) > 0 Then
 		      'this is the line we want
-		      If InStr( parts(1), "true" ) > 0 Then
-		        Return True
-		      Else
-		        Return False
-		      End If
+		      db_version = parts(1)
 		    End If
 		  Next
 		  
-		  Return False
+		  // Now that we have gotten the database version...
+		  
+		  'we can split it up into its individule parts
+		  db_version_parts() = Split( db_version, "." )
+		  app_version_parts() = Array( app.MajorVersion, app.MinorVersion, app.BugVersion )
+		  
+		  
+		  'and now loop through each version part
+		  For i1 as integer = 0 To db_version_parts.Ubound
+		    'now check if the version part is greator or less than app version part
+		    If val(db_version_parts(i1)) <> app_version_parts(i1) Then
+		      Return False
+		    End If
+		    
+		    'versions_match we can exit true
+		    Return True
+		    
+		  Next
+		  
+		  
+		  
+		  
+		  
+		  
+		  
+		  
+		  
+		  
+		  
 		End Function
 	#tag EndMethod
+
+
+	#tag Property, Flags = &h0
+		initialized As boolean = False
+	#tag EndProperty
+
+
+	#tag Constant, Name = client_table_creation, Type = String, Dynamic = False, Default = \"", Scope = Private
+		#Tag Instance, Platform = Any, Language = Default, Definition  = \"-- ##################################\n-- ###### Create Otis Database ######\n-- ##################################\n\n\n\n-- User Tables\n\t\n\t-- events_\n\tCreate Table events_\n\t\t(\n\t\tpkid text\x2C\n\t\trow_created_ timestamp\x2C\n\t\trow_modified_ timestamp\x2C\n\t\trow_username_ text\x2C\n\t\tname_ text\x2C\n\t\tstart_time time\x2C\n\t\tend_time time\x2C\n\t\tloadin_time time\x2C\n\t\tloadout_time time\x2C\n\t\tstart_date date\x2C\n\t\tend_date date\x2C\n\t\tloadin_date\tdate\x2C\n\t\tloadout_date date\x2C\n\t\tdetails text\x2C\n\t\taccount_manager text\n\t\t);\n\n\t-- lineitems_\n\tCreate Table lineitems_ \n\t\t(\n\t\tpkid text\x2C\n\t\trow_created_ timestamp\x2C\n\t\trow_modified_ timestamp\x2C\n\t\trow_username_ text\x2C\n\t\tfkeipl_ text\x2C\n\t\tfkinventory text\x2C\n\t\tname_ text\x2C\n\t\tmanufacturer_ text\x2C\n\t\tmodel_ text\x2C\n\t\tdepartment_ text\x2C\n\t\tcategory_ text\x2C\n\t\tsubcategory_ text\x2C\n\t\tdescription_ text -- from inventory\n\t\ttype_ text\x2C\n\t\tprice_ \tinteger\x2C\n\t\tnote_ text\x2C --line item specific\n\t\trate_ text\x2C\n\t\tdiscount_percent_ integer\x2C\n\t\tdiscount_amount_ integer\x2C\n\t\ttotal_ integer\x2C\n\t\ttime_ integer\x2C\n\t\ttaxable_ boolean\x2C\n\t\ttaxtotal_ integer\x2C\n\t\tquantity_ double precision\x2C\n\t\tignore_price_discrepency boolean\n\t\t);\n\n\n\t-- inventory\n\tCREATE TABLE inventory_ \n\t\t(\n  \t \tpkid \t\t\ttext\x2C\n   \t\trow_created_ \ttimestamp\x2C\n    \t           row_modified_ \ttimestamp\x2C\n    \t               row_username_ \ttext\x2C\n    \t               name_ \t\t\ttext\x2C\n\t\tmanufacturer_ \ttext\x2C\n\t\tmodel_ \t\t\ttext\x2C\n\t\tdepartment_ \ttext\x2C\n\t\tcategory_ \t\ttext\x2C\n\t\tsubcategory_ \ttext\x2C\n\t\tdescription_ \ttext\x2C\n\t\ttype_ \t\t\ttext\x2C\n\t\tquantity_ \t\tinteger\x2C\n\t\tprice_ \t\t\tinteger\x2C\n\t\towner_ \t\t\ttext\x2C\n\t\ttaxable_\t\ttext\n\t\t);\n\n\n\t-- eipl_\n\tCreate Table eipl_ \n\t\t(\n\t\tpkid text\x2C\n\t\trow_created_ timestamp\x2C\n\t\trow_modified_ timestamp\x2C\n\t\trow_username_ text\x2C\n\t\tfkevents_ text\x2C\n\t\teipl_number_ integer\x2C\n\t\tdue_date_ date\x2C\n\t\ttype_ text\x2C\n\t\tbalance integer\x2C\n\t\tgrand_total_ integer\x2C\n\t\tsubtotal_ integer\x2C\n\t\tdiscount_amount_ integer\x2C\n\t\tdiscount_percent_ integer\x2C\n\t\tshipping_method_ text\x2C\n\t\ttax_total_ integer\x2C\n\t\tdiscount_total_ integer\n\t\t);\n\n\n\t-- payments_\n\tCreate Table payments_ \n\t\t(\n\t\tpkid text\x2C\n\t\trow_created_ \t\ttimestamp\x2C\n\t\trow_modified_ \t\ttimestamp\x2C\n\t\trow_username_ \t\ttext\x2C\n\t\tfkeipl_ \t\t\ttext\x2C\n\t\tpayment_date \t\tdate\x2C\n\t\tmemo_\t\t\t\ttext\x2C\n\t\tpayment_amount\t\tinteger\x2C\n\t\tpayment_type\t\ttext\n\t\t);\n\n\n\t-- contact_venue_data\n\tCREATE TABLE contact_venue_data \n\t\t(\n  \t \tpkid text\x2C\n   \t\trow_created_ timestamp\x2C\n    \trow_modified_ timestamp\x2C\n    \trow_username_ text\x2C\n    \tfkcontacts_ text\x2C\n    \tfkvenues_ text\x2C\n    \tfkevents_ text\x2C\n    \tfkeipl_ text\x2C\n    \tprimary_ boolean\n\t\t);\n\n\t-- contacts\n\tCREATE TABLE contacts_ \n\t\t(\n  \t \tpkid text\x2C\n   \t\trow_created_ \t\ttimestamp\x2C\n    \trow_modified_ \t\ttimestamp\x2C\n    \trow_username_ \t\ttext\x2C\n    \tfkconven\t\t\ttext\x2C\n    \tprimary_\t\t\ttext\x2C\n    \tname_first \t\t\ttext\x2C\n    \tname_last \t\t\ttext\x2C\n    \tjob_title\t\t\ttext\x2C\n    \tcompany\t\t\t\ttext\x2C\n    \temail \t\t\t\ttext\x2C\n    \tphone_number\t\ttext\x2C\n    \taddress_line1\t\ttext\x2C\n    \taddress_line2\t\ttext\x2C\n    \taddress_city\t\ttext\x2C\n    \taddress_state\t\ttext\x2C\n    \taddress_zip\t\t\ttext\x2C\n    \taddress_country\t\ttext\n\t\t);\n\n\n\t-- venues\n\tCREATE TABLE venues_ \n\t\t(\n  \t \tpkid text\x2C\n   \t\trow_created_ \t\ttimestamp\x2C\n    \trow_modified_ \t\ttimestamp\x2C\n    \trow_username_ \t\ttext\x2C\n    \tfkconven\t\t\ttext\x2C\n    \tprimary_\t\t\ttext\x2C\n    \tname_ \t\t\t\ttext\x2C\n    \tvenue_type\t\t\ttext\x2C\n    \tcompany\t\t\t\ttext\x2C\n    \temail \t\t\t\ttext\x2C\n    \tphone_number\t\ttext\x2C\n    \taddress_line1\t\ttext\x2C\n    \taddress_line2\t\ttext\x2C\n    \taddress_city\t\ttext\x2C\n    \taddress_state\t\ttext\x2C\n    \taddress_zip\t\t\ttext\x2C\n    \taddress_country\t\ttext\n\t\t);\n\n\n\t-- discounts_\n\tCREATE TABLE discounts_\n\t\t(\n  \t \tpkid text\x2C\n   \t\trow_created_ \t\ttimestamp\x2C\n    \trow_modified_ \t\ttimestamp\x2C\n    \trow_username_ \t\ttext\x2C\n    \tfkeipl_ \t\t\ttext\x2C\n    \tdepartment_\t\t\ttext\x2C\n    \ttype_\t\t\t\ttext\x2C\n    \tamount_ \t\t\tinteger\x2C\n    \tgrand_total_ \t\tinteger\x2C\n    \tsubtotal \t\t\tinteger\x2C\n    \tdiscount_percent_ \tinteger\x2C\n    \tdiscount_amount_ \tinteger\n\t\t);\n\n\n-- Utility Tables\n\n\t-- trigger_log\n\tCREATE TABLE trigger_log\n\t\t(\n  \t \tpkid \t\t\t\ttext\x2C\n   \t\trow_created_ \t\ttimestamp\x2C\n    \ttable_name\t\t\ttext\x2C\n    \tnew_variable\t\ttext\x2C -- column_name\x2Cvalue.column_name\x2Cvalue\n    \told_variable\t\ttext -- column_name\x2Cvalue.column_name\x2Cvalue\n\n\t\t);\n\n"
+	#tag EndConstant
 
 
 	#tag ViewBehavior

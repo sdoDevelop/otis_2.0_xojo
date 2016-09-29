@@ -8,8 +8,11 @@ Protected Module resource_management
 		  dim inf_folder as FolderItem
 		  
 		  dim otis_db_file as FolderItem
+		  dim local_db_log_file as FolderItem
+		  dim error_log_file as FolderItem
 		  dim un_file as FolderItem
 		  dim resources_file as FolderItem
+		  
 		  
 		  
 		  dim tos as TextOutputStream
@@ -40,6 +43,8 @@ Protected Module resource_management
 		  End If
 		  
 		  otis_db_file = db_folder.Child( "otis_db.sqlite" )
+		  local_db_log_file = error_folder.Child( "db_log.txt" )
+		  error_log_file = error_folder.Child( "error_log.txt" )
 		  un_file = inf_folder.Child( "un.txt" )
 		  resources_file = inf_folder.Child( "resources.txt" )
 		  

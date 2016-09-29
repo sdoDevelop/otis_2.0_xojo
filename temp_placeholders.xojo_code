@@ -1,8 +1,87 @@
 #tag Module
 Protected Module temp_placeholders
 	#tag Method, Flags = &h0
-		Sub err_manage_temp()
-		  MsgBox("uh-oh")
+		Sub err_manage()
+		  MsgBox( "uh-oh, no error manager" )
+		  
+		End Sub
+	#tag EndMethod
+
+	#tag Method, Flags = &h0
+		Sub err_manage(faculty as string, message as string)
+		  dim logfile as FolderItem
+		  dim f as FolderItem
+		  dim tos as TextOutputStream
+		  dim write_string as string
+		  
+		  
+		  
+		  // Create the string that we will write
+		  dim thedate as new date
+		  write_string = "[" + thedate.SQLDateTime + "] {" + faculty + "}  -" + message
+		  
+		  
+		  // Set which log file we are writing to
+		  Select Case faculty
+		  Case "local_db"
+		    f = get_filepath( "local_db_log_file" )
+		  Else
+		    f = get_filepath( "error_log_file" )
+		  End Select
+		  
+		  
+		  // Write to file
+		  If f <> Nil Then
+		    If Not f.Exists Then
+		      tos = TextOutputStream.Create( f )
+		    Else
+		      tos = TextOutputStream.Append( f )
+		    End If
+		    tos.Write( write_string )
+		    tos.Close
+		  End If
+		  
+		  
+		  
+		End Sub
+	#tag EndMethod
+
+	#tag Method, Flags = &h0
+		Sub err_print_seperator(faculty as string, message as string)
+		  dim logfile as FolderItem
+		  dim f as FolderItem
+		  dim tos as TextOutputStream
+		  dim write_string as string
+		  
+		  
+		  
+		  // Create the string that we will write
+		  dim thedate as new date
+		  write_string = message
+		  
+		  
+		  // Set which log file we are writing to
+		  Select Case faculty
+		  Case "local_db"
+		    f = get_filepath( "local_db_log_file" )
+		  Else
+		    f = get_filepath( "error_log_file" )
+		  End Select
+		  
+		  
+		  // Write to file
+		  If f <> Nil Then
+		    If Not f.Exists Then
+		      tos = TextOutputStream.Create( f )
+		    Else
+		      tos = TextOutputStream.Append( f )
+		    End If
+		    tos.Write( write_string )
+		    tos.Close
+		  End If
+		  
+		  
+		  
 		End Sub
 	#tag EndMethod
 
