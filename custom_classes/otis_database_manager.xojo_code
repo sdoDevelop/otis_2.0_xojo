@@ -1,6 +1,41 @@
 #tag Class
 Protected Class otis_database_manager
 	#tag Method, Flags = &h0
+		Sub connect_to_local()
+		  dim otis_db_file as FolderItem
+		  
+		  
+		  // Get the path to our db file
+		  otis_db_file = get_filepath( "otis_db_file" )
+		  
+		  // Create the database
+		  local_db = new otis_sqlite_database
+		  local_db.DatabaseFile = otis_db_file
+		  If Not local_db.CreateDatabaseFile Then
+		    ' cannot open the database file for some reaseon 
+		    dim err as RuntimeException
+		    err = new RuntimeException
+		    err.Message = "cannot connect to database for some reason"
+		    Raise err
+		  End If
+		  
+		  
+		End Sub
+	#tag EndMethod
+
+	#tag Method, Flags = &h0
+		Function connect_to_remote() As Boolean
+		  
+		End Function
+	#tag EndMethod
+
+	#tag Method, Flags = &h0
+		Sub create_local_db()
+		  
+		End Sub
+	#tag EndMethod
+
+	#tag Method, Flags = &h0
 		Sub initialize_local()
 		  dim otis_db_file as FolderItem
 		  
@@ -61,7 +96,7 @@ Protected Class otis_database_manager
 		    
 		  Else
 		    'db is initialized
-		    local_db.data_ready = True
+		    
 		  End If
 		  
 		  

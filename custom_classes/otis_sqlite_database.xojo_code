@@ -158,7 +158,7 @@ Inherits SQLiteDatabase
 		  
 		  // Loop through the lines, seperate into header and value, then check if its the line we need
 		  For i1 as integer = 0 To lines.Ubound
-		    parts() = Split( lines(i1), " = " )
+		    parts() = Split( lines(i1), "=" )
 		    If InStr( parts(0), "db_version" ) > 0 Then
 		      'this is the line we want
 		      db_version = parts(1)
@@ -199,10 +199,6 @@ Inherits SQLiteDatabase
 
 
 	#tag Property, Flags = &h0
-		data_ready As boolean
-	#tag EndProperty
-
-	#tag Property, Flags = &h0
 		initialized As boolean = False
 	#tag EndProperty
 
@@ -236,6 +232,12 @@ Inherits SQLiteDatabase
 			Visible=true
 			Group="ID"
 			Type="Integer"
+		#tag EndViewProperty
+		#tag ViewProperty
+			Name="initialized"
+			Group="Behavior"
+			InitialValue="False"
+			Type="boolean"
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="Left"
