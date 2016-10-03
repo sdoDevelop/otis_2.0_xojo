@@ -27,10 +27,10 @@ Protected Module login_scripts
 		  end if
 		  
 		  
-		  if app.otis_db.connect_to_remote Then
-		    MsgBox( "connected")
-		    
-		  end if
+		  app.otis_db.connect_to_remote
+		  
+		  
+		  
 		  
 		  
 		  

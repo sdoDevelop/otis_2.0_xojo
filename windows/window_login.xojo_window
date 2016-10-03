@@ -206,7 +206,7 @@ Begin Window window_login
       Caption         =   "Save Username"
       DataField       =   ""
       DataSource      =   ""
-      Enabled         =   False
+      Enabled         =   True
       Height          =   22
       HelpTag         =   ""
       Index           =   -2147483648
@@ -358,22 +358,112 @@ Begin Window window_login
       Visible         =   True
       Width           =   80
    End
+   Begin Label label_authentication_failed
+      AutoDeactivate  =   True
+      Bold            =   False
+      DataField       =   ""
+      DataSource      =   ""
+      Enabled         =   True
+      Height          =   20
+      HelpTag         =   ""
+      Index           =   -2147483648
+      InitialParent   =   ""
+      Italic          =   False
+      Left            =   294
+      LockBottom      =   False
+      LockedInPosition=   False
+      LockLeft        =   True
+      LockRight       =   False
+      LockTop         =   True
+      Multiline       =   False
+      Scope           =   0
+      Selectable      =   False
+      TabIndex        =   10
+      TabPanelIndex   =   0
+      Text            =   "Authentication Failed"
+      TextAlign       =   0
+      TextColor       =   &cE30A0A00
+      TextFont        =   "FreeSerif"
+      TextSize        =   10.0
+      TextUnit        =   0
+      Top             =   22
+      Transparent     =   True
+      Underline       =   False
+      Visible         =   False
+      Width           =   129
+   End
 End
 #tag EndWindow
 
 #tag WindowCode
 	#tag Event
+		Sub Activate()
+		  textfield_username.Text = username
+		  textfield_password.Text = password
+		  If authentication_failed Then
+		    me.label_authentication_failed.Visible = True
+		  Else
+		    me.label_authentication_failed.Visible = False
+		  End If
+		End Sub
+	#tag EndEvent
+
+	#tag Event
 		Sub Close()
 		  username = textfield_username.Text
 		  password = textfield_password.Text
+		  save_username = checkbox_save_username.Value
+		  save_password = checkbox_save_password.Value
+		  auto_login = checkbox_auto_login.Value
+		  
+		End Sub
+	#tag EndEvent
+
+	#tag Event
+		Sub Open()
 		  
 		End Sub
 	#tag EndEvent
 
 
 	#tag Method, Flags = &h0
-		Sub my_open()
+		Sub change_checkboxes()
 		  
+		  
+		  If checkbox_save_username.Value Then
+		    
+		    checkbox_save_password.Enabled = True
+		    If checkbox_save_password.Value Then
+		      
+		      checkbox_auto_login.Enabled = True
+		      
+		    Else
+		      
+		      checkbox_auto_login.Value = False
+		      checkbox_auto_login.Enabled = False
+		      
+		    End If
+		    
+		  Else
+		    
+		    checkbox_save_password.Value = False
+		    checkbox_save_password.Enabled = False
+		    checkbox_auto_login.Value = False
+		    checkbox_auto_login.Enabled = False
+		    
+		  End If
+		End Sub
+	#tag EndMethod
+
+	#tag Method, Flags = &h0
+		Sub my_open()
+		  textfield_username.Text = username
+		  textfield_password.Text = password
+		  If authentication_failed Then
+		    me.label_authentication_failed.Visible = True
+		  Else
+		    me.label_authentication_failed.Visible = False
+		  End If
 		End Sub
 	#tag EndMethod
 
@@ -389,6 +479,14 @@ End
 		End Sub
 	#tag EndMethod
 
+
+	#tag Property, Flags = &h0
+		aborted As boolean
+	#tag EndProperty
+
+	#tag Property, Flags = &h0
+		authentication_failed As boolean
+	#tag EndProperty
 
 	#tag Property, Flags = &h0
 		auto_login As boolean
@@ -425,9 +523,38 @@ End
 
 #tag EndWindowCode
 
+#tag Events checkbox_save_username
+	#tag Event
+		Sub Action()
+		  change_checkboxes
+		End Sub
+	#tag EndEvent
+#tag EndEvents
+#tag Events checkbox_save_password
+	#tag Event
+		Sub Action()
+		  change_checkboxes
+		End Sub
+	#tag EndEvent
+#tag EndEvents
+#tag Events checkbox_auto_login
+	#tag Event
+		Sub Action()
+		  change_checkboxes
+		End Sub
+	#tag EndEvent
+#tag EndEvents
 #tag Events pushbutton_ok
 	#tag Event
 		Sub Action()
+		  me.Window.Close
+		End Sub
+	#tag EndEvent
+#tag EndEvents
+#tag Events pushbutton_cancel
+	#tag Event
+		Sub Action()
+		  aborted = True
 		  me.Window.Close
 		End Sub
 	#tag EndEvent

@@ -24,7 +24,7 @@ Protected Class otis_database_manager
 	#tag EndMethod
 
 	#tag Method, Flags = &h0
-		Function connect_to_remote() As Boolean
+		Sub connect_to_remote()
 		  dim user_data() as Variant
 		  dim dont_have_ud as Boolean
 		  dim username as string
@@ -34,6 +34,7 @@ Protected Class otis_database_manager
 		  dim save_username_checkbox as Boolean
 		  dim save_password_checkbox as Boolean
 		  dim auto_login_checkbox as Boolean
+		  dim abort_login_loop as Boolean
 		  
 		  
 		  // First we need to see if we can aquire a saved user name as password
@@ -59,15 +60,123 @@ Protected Class otis_database_manager
 		  
 		  // Getting user credentials from user
 		  If open_login_window Then
+		    'open a login windows to grab user info
 		    dim dialog_box as new window_login
 		    dialog_box.username = username
 		    dialog_box.password = password
 		    dialog_box.ShowModal
-		    username = dialog_box.username
-		    password = dialog_box.password
-		    save_username_checkbox = dialog_box.save_username
-		    save_password_checkbox = dialog_box.save_password
-		    auto_login_checkbox = dialog_box.auto_login
+		    
+		    'check if the user aborted the login
+		    If dialog_box.aborted Then
+		      'user aborted the login
+		      is_online = False
+		      Return
+		    Else 'user did not abort
+		      'after user has closed the window we put all the info into some variables
+		      username = dialog_box.username
+		      password = dialog_box.password
+		      save_username_checkbox = dialog_box.save_username
+		      save_password_checkbox = dialog_box.save_password
+		      auto_login_checkbox = dialog_box.auto_login
+		    End If
+		  End If
+		  
+		  
+		  
+		  'try to connect to the database
+		  While Not abort_login_loop
+		    
+		    'set the database details
+		    remote_db = new otis_PostgreSQL_Database
+		    remote_db.UserName = username
+		    remote_db.Password = password
+		    remote_db.Host = "45.32.72.207"
+		    remote_db.Port = 5432
+		    remote_db.DatabaseName = "otis_data"
+		    
+		    If Not remote_db.Connect Then
+		      dim the_message as string = remote_db.ErrorMessage
+		      ' check why the server connection failed
+		      If Instr( the_message, "database" ) > 0 and InStr( the_message, "does not exist" ) > 0 Then
+		        ' 1 | FATAL: database "db name" does not exist
+		        dim err as new RuntimeException
+		        err.Message = "Database " + remote_db.DatabaseName + " does not exist"
+		        err.ErrorNumber = 010001
+		        abort_login_loop = True
+		        is_online = False
+		        Raise err
+		        
+		      ElseIf InStr( the_message, "could not connect to server: Network is unreachable" ) > 0 Then
+		        ' 1 | could not connect to server: Network is unreachable
+		        dim err as new RuntimeException
+		        err.Message = "Could not connect to server: Network is Unreachable"
+		        err.ErrorNumber = 010003
+		        abort_login_loop = True
+		        is_online = False
+		        Raise err
+		        
+		      ElseIf InStr( the_message, "password authentication failed" ) > 0 Then
+		        ' 1 | FATAL: password authentication failed for user "..."
+		        dim dialog as new window_login
+		        dialog.authentication_failed = True
+		        dialog.username = username
+		        dialog.password = password
+		        dialog.ShowModal
+		        
+		        'check if the user aborted the login
+		        If dialog.aborted Then
+		          'user aborted the login
+		          is_online = False
+		          Return
+		        Else 'user did not abort
+		          'after user has closed the window we put all the info into some variables
+		          username = dialog.username
+		          password = dialog.password
+		          save_username_checkbox = dialog.save_username
+		          save_password_checkbox = dialog.save_password
+		          auto_login_checkbox = dialog.auto_login
+		        End If
+		        
+		      Else
+		        is_online = False
+		        dim err as RuntimeException
+		        err.Message = remote_db.ErrorMessage
+		        abort_login_loop = True
+		        Raise err
+		        
+		      End If
+		    Else
+		      is_online = True
+		      abort_login_loop = True
+		      MsgBox( "connected" )
+		    End If
+		    
+		    
+		    
+		    
+		    
+		  Wend
+		  
+		  'check if we need to save any user creds
+		  redim user_data(-1)
+		  If is_online Then
+		    If save_username_checkbox Then
+		      ReDim user_data(2)
+		      user_data(0) = remote_db.UserName
+		      
+		      If save_password_checkbox Then
+		        user_data(1) = remote_db.Password
+		        
+		        If auto_login_checkbox Then
+		          user_data(2) = True
+		        End If
+		        
+		      End If
+		      
+		      if save_user_data( user_data(0), user_data(1), user_data(2) ) then
+		        MsgBox("saved")
+		      end if
+		    End If
 		  End If
 		  
 		  
@@ -75,7 +184,6 @@ Protected Class otis_database_manager
 		  
 		  
 		  
-		  MsgBox username + password
 		  
 		  
 		  
@@ -83,10 +191,7 @@ Protected Class otis_database_manager
 		  
 		  
 		  
-		  
-		  
-		  
-		End Function
+		End Sub
 	#tag EndMethod
 
 	#tag Method, Flags = &h0
@@ -98,7 +203,7 @@ Protected Class otis_database_manager
 	#tag Method, Flags = &h0
 		Function get_user_data() As variant()
 		  dim udf as FolderItem
-		  dim db as SQLiteDatabase
+		  dim db as new SQLiteDatabase
 		  dim ps as SQLitePreparedStatement
 		  dim rs as RecordSet
 		  
@@ -264,7 +369,7 @@ Protected Class otis_database_manager
 	#tag Method, Flags = &h0
 		Function save_user_data(username as string, password as string, auto_login as boolean) As boolean
 		  dim udf as FolderItem
-		  dim db as SQLiteDatabase
+		  dim db as new SQLiteDatabase
 		  dim ps as SQLitePreparedStatement
 		  
 		  
@@ -298,12 +403,13 @@ Protected Class otis_database_manager
 		  End If
 		  
 		  'Finally we add the data to the table
-		  sql = "Insert into udf_ ( username_, password_, auto_login ) Values( $1, $2, $3 );"
-		  ps = db.Prepare( sql )
-		  ps.Bind( 0, username )
-		  ps.Bind( 1, password )
-		  ps.Bind( 2, auto_login )
-		  ps.SQLExecute
+		  sql = "Insert into udf_ ( username_, password_, auto_login ) Values( '" + username + "', '" + password + "', '" + str(auto_login) + "' );"
+		  'ps = db.Prepare( sql )
+		  'ps.Bind( 0, username )
+		  'ps.Bind( 1, password )
+		  'ps.Bind( 2, auto_login )
+		  'ps.SQLExecute
+		  db.SQLExecute(sql)
 		  If db.Error Then
 		    dim err as new RuntimeException
 		    err.Message = "could not instert user data" + db.ErrorMessage
