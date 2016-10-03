@@ -12,6 +12,7 @@ Protected Module resource_management
 		  dim error_log_file as FolderItem
 		  dim un_file as FolderItem
 		  dim resources_file as FolderItem
+		  dim udf as FolderItem
 		  
 		  
 		  
@@ -47,6 +48,7 @@ Protected Module resource_management
 		  error_log_file = error_folder.Child( "error_log.txt" )
 		  un_file = inf_folder.Child( "un.txt" )
 		  resources_file = inf_folder.Child( "resources.txt" )
+		  udf = inf_folder.Child( "udf.sqlite" )
 		  
 		  
 		  
@@ -65,6 +67,8 @@ Protected Module resource_management
 		    Return un_file
 		  Case "resources_file"
 		    Return resources_file
+		  Case "udf" 
+		    Return udf
 		  End Select
 		  
 		  

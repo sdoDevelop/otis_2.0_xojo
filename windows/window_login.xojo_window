@@ -378,7 +378,7 @@ End
 	#tag EndMethod
 
 	#tag Method, Flags = &h0
-		Sub my_open(p_username as string, p_password as string, p_server_address as string, p_server_port as integer, p_db_name as String...)
+		Sub my_open(p_username as string, p_password as string, p_server_address as string, p_server_port as integer, p_db_name as String)
 		  username = p_username
 		  password = p_password
 		  server_address = p_server_address
@@ -391,11 +391,23 @@ End
 
 
 	#tag Property, Flags = &h0
+		auto_login As boolean
+	#tag EndProperty
+
+	#tag Property, Flags = &h0
 		db_name As string
 	#tag EndProperty
 
 	#tag Property, Flags = &h0
 		password As string
+	#tag EndProperty
+
+	#tag Property, Flags = &h0
+		save_password As boolean
+	#tag EndProperty
+
+	#tag Property, Flags = &h0
+		save_username As boolean
 	#tag EndProperty
 
 	#tag Property, Flags = &h0
@@ -413,6 +425,13 @@ End
 
 #tag EndWindowCode
 
+#tag Events pushbutton_ok
+	#tag Event
+		Sub Action()
+		  me.Window.Close
+		End Sub
+	#tag EndEvent
+#tag EndEvents
 #tag ViewBehavior
 	#tag ViewProperty
 		Name="BackColor"
@@ -441,6 +460,11 @@ End
 		Group="OS X (Carbon)"
 		InitialValue="False"
 		Type="Boolean"
+	#tag EndViewProperty
+	#tag ViewProperty
+		Name="db_name"
+		Group="Behavior"
+		Type="string"
 	#tag EndViewProperty
 	#tag ViewProperty
 		Name="Frame"
@@ -587,6 +611,11 @@ End
 		EditorType="String"
 	#tag EndViewProperty
 	#tag ViewProperty
+		Name="password"
+		Group="Behavior"
+		Type="string"
+	#tag EndViewProperty
+	#tag ViewProperty
 		Name="Placement"
 		Visible=true
 		Group="Behavior"
@@ -610,6 +639,16 @@ End
 		EditorType="Boolean"
 	#tag EndViewProperty
 	#tag ViewProperty
+		Name="server_address"
+		Group="Behavior"
+		Type="String"
+	#tag EndViewProperty
+	#tag ViewProperty
+		Name="server_port"
+		Group="Behavior"
+		Type="Integer"
+	#tag EndViewProperty
+	#tag ViewProperty
 		Name="Super"
 		Visible=true
 		Group="ID"
@@ -622,6 +661,11 @@ End
 		Group="Frame"
 		InitialValue="Untitled"
 		Type="String"
+	#tag EndViewProperty
+	#tag ViewProperty
+		Name="username"
+		Group="Behavior"
+		Type="string"
 	#tag EndViewProperty
 	#tag ViewProperty
 		Name="Visible"
