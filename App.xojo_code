@@ -4,10 +4,25 @@ Inherits Application
 	#tag Event
 		Sub Open()
 		  login_scripts.start_script
-		  
+		  window_main.Show
 		  
 		End Sub
 	#tag EndEvent
+
+
+	#tag MenuHandler
+		Function Editpreferences() As Boolean Handles Editpreferences.Action
+			
+			dim w as new window_preferences
+			w.Show
+			
+			
+			
+			
+			Return True
+			
+		End Function
+	#tag EndMenuHandler
 
 
 	#tag Property, Flags = &h0

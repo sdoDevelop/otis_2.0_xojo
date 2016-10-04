@@ -93,6 +93,23 @@ Begin Menu MainMenuBar
          AutoEnable = True
          Visible = True
       End
+      Begin MenuItem EditSeperator3
+         SpecialMenu = 0
+         Text = "-"
+         Index = -2147483648
+         AutoEnable = True
+         Visible = True
+      End
+      Begin MenuItem Editpreferences
+         SpecialMenu = 0
+         Text = "Preferences"
+         Index = -2147483648
+         ShortcutKey = ","
+         Shortcut = "Cmd+,"
+         MenuModifier = True
+         AutoEnable = True
+         Visible = True
+      End
    End
 End
 #tag EndMenu

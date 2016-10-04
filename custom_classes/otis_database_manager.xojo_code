@@ -24,7 +24,7 @@ Protected Class otis_database_manager
 	#tag EndMethod
 
 	#tag Method, Flags = &h0
-		Sub connect_to_remote()
+		Sub connect_to_remote(grab_saved_data as boolean = true)
 		  dim user_data() as Variant
 		  dim dont_have_ud as Boolean
 		  dim username as string
@@ -37,13 +37,17 @@ Protected Class otis_database_manager
 		  dim abort_login_loop as Boolean
 		  
 		  
-		  // First we need to see if we can aquire a saved user name as password
-		  Try
-		    user_data = get_user_data
-		  Catch err as RuntimeException
+		  If grab_saved_data Then
+		    // First we need to see if we can aquire a saved user name as password
+		    Try
+		      user_data = get_user_data
+		    Catch err as RuntimeException
+		      dont_have_ud = True
+		      err_manage( "remote_db", "could not get user credentials" )
+		    End Try
+		  Else
 		    dont_have_ud = True
-		    err_manage( "remote_db", "could not get user credentials" )
-		  End Try
+		  End If
 		  
 		  
 		  // put user data into variables if the exist and determine if we should upen the login window
