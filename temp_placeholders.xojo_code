@@ -8,17 +8,18 @@ Protected Module temp_placeholders
 	#tag EndMethod
 
 	#tag Method, Flags = &h0
-		Sub err_manage(faculty as string, message as string)
+		Sub err_manage(faculty as string, error_number as integer, message as string)
 		  dim logfile as FolderItem
 		  dim f as FolderItem
 		  dim tos as TextOutputStream
 		  dim write_string as string
+		  dim error_number as integer = 000000
 		  
 		  
 		  
 		  // Create the string that we will write
 		  dim thedate as new date
-		  write_string = "[" + thedate.SQLDateTime + "] {" + faculty + "}  -" + message
+		  write_string = "[" + thedate.SQLDateTime + "] {" + faculty + "}  - " + str(error_number) + " | " + message
 		  
 		  
 		  // Set which log file we are writing to
@@ -43,6 +44,12 @@ Protected Module temp_placeholders
 		  
 		  
 		  
+		End Sub
+	#tag EndMethod
+
+	#tag Method, Flags = &h0
+		Sub err_manage(faculty as string, message as string)
+		  err_manage( faculty, 000000, message )
 		End Sub
 	#tag EndMethod
 

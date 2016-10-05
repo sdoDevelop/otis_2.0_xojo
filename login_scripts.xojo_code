@@ -21,14 +21,30 @@ Protected Module login_scripts
 		  
 		  // Check if the local database is initialized
 		  If Not app.otis_db.local_db.initialized Then
+		    
 		    'database not initialized we need to do so
 		    app.otis_db.initialize_local
-		    
 		  end if
 		  
 		  
-		  app.otis_db.connect_to_remote
+		  // Attempt Connection to remote database
+		  Try
+		    app.otis_db.connect_to_remote
+		  Catch err as RuntimeException
+		    err_manage( "remote_db", err.ErrorNumber, err.Message )
+		  End Try
 		  
+		  // Check the state of the data
+		  Select Case app.otis_db.data_state
+		  Case "full_sync"
+		    
+		  Case "half_sync"
+		    
+		  Case "offline"
+		    app.otis_db.work_offline = True
+		  Case "no_luck"
+		    
+		  End Select
 		  
 		  
 		  

@@ -73,7 +73,7 @@ Protected Class otis_database_manager
 		    'check if the user aborted the login
 		    If dialog_box.aborted Then
 		      'user aborted the login
-		      is_online = False
+		      remote_connected = False
 		      Return
 		    Else 'user did not abort
 		      'after user has closed the window we put all the info into some variables
@@ -107,7 +107,7 @@ Protected Class otis_database_manager
 		        err.Message = "Database " + remote_db.DatabaseName + " does not exist"
 		        err.ErrorNumber = 010001
 		        abort_login_loop = True
-		        is_online = False
+		        remote_connected = False
 		        Raise err
 		        
 		      ElseIf InStr( the_message, "could not connect to server: Network is unreachable" ) > 0 Then
@@ -116,7 +116,7 @@ Protected Class otis_database_manager
 		        err.Message = "Could not connect to server: Network is Unreachable"
 		        err.ErrorNumber = 010003
 		        abort_login_loop = True
-		        is_online = False
+		        remote_connected = False
 		        Raise err
 		        
 		      ElseIf InStr( the_message, "password authentication failed" ) > 0 Then
@@ -130,7 +130,7 @@ Protected Class otis_database_manager
 		        'check if the user aborted the login
 		        If dialog.aborted Then
 		          'user aborted the login
-		          is_online = False
+		          remote_connected = False
 		          Return
 		        Else 'user did not abort
 		          'after user has closed the window we put all the info into some variables
@@ -142,7 +142,7 @@ Protected Class otis_database_manager
 		        End If
 		        
 		      Else
-		        is_online = False
+		        remote_connected = False
 		        dim err as RuntimeException
 		        err.Message = remote_db.ErrorMessage
 		        abort_login_loop = True
@@ -150,7 +150,7 @@ Protected Class otis_database_manager
 		        
 		      End If
 		    Else
-		      is_online = True
+		      remote_connected = True
 		      abort_login_loop = True
 		      MsgBox( "connected" )
 		    End If
@@ -163,7 +163,7 @@ Protected Class otis_database_manager
 		  
 		  'check if we need to save any user creds
 		  redim user_data(-1)
-		  If is_online Then
+		  If remote_connected Then
 		    If save_username_checkbox Then
 		      ReDim user_data(2)
 		      user_data(0) = remote_db.UserName
@@ -202,6 +202,49 @@ Protected Class otis_database_manager
 		Sub create_local_db()
 		  
 		End Sub
+	#tag EndMethod
+
+	#tag Method, Flags = &h0
+		Function data_state() As string
+		  
+		  
+		  
+		  // check if local db is initialized
+		  If local_db.initialized Then
+		    
+		    'we are initialized now we check if the remote is connected
+		    If remote_connected Then
+		      
+		      'we need to sync remote and local databases
+		      Return "half_sync"
+		      
+		    Else
+		      
+		      'initialized but remote not connected, we can work offline
+		      Return "offline"
+		      
+		    End If
+		    
+		  Else 
+		    
+		    'we are not initialized now we check if the remote is connected
+		    If remote_connected Then
+		      
+		      'we are not initialized but remote is connected
+		      'we can do a full sync
+		      Return "full_sync"
+		      
+		    Else
+		      
+		      'not initialized, remote not connected, we are out of luck, no offline work possible.....for now....
+		      Return "no_luck"
+		      
+		    End If
+		    
+		    
+		  End If
+		  
+		End Function
 	#tag EndMethod
 
 	#tag Method, Flags = &h0
@@ -292,6 +335,7 @@ Protected Class otis_database_manager
 		  
 		  // Check if the db is up to date
 		  If local_db.version_matches Then
+		    'call it initialized
 		    local_db.initialized = True
 		  Else
 		    'db is not up to date
@@ -449,23 +493,21 @@ Protected Class otis_database_manager
 		End Function
 	#tag EndMethod
 
-	#tag Method, Flags = &h0
-		Sub Untitled()
-		  
-		End Sub
-	#tag EndMethod
-
-
-	#tag Property, Flags = &h21
-		Private is_online As Boolean
-	#tag EndProperty
 
 	#tag Property, Flags = &h0
 		local_db As otis_sqlite_database
 	#tag EndProperty
 
+	#tag Property, Flags = &h21
+		Private remote_connected As Boolean
+	#tag EndProperty
+
 	#tag Property, Flags = &h0
 		remote_db As otis_postgresql_database
+	#tag EndProperty
+
+	#tag Property, Flags = &h0
+		work_offline As boolean
 	#tag EndProperty
 
 
