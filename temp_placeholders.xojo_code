@@ -13,7 +13,7 @@ Protected Module temp_placeholders
 		  dim f as FolderItem
 		  dim tos as TextOutputStream
 		  dim write_string as string
-		  dim error_number as integer = 000000
+		  dim error_numbered as integer = 000000
 		  
 		  
 		  

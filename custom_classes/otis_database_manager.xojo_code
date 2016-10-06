@@ -96,7 +96,7 @@ Protected Class otis_database_manager
 		    remote_db.Password = password
 		    remote_db.Host = "45.32.72.207"
 		    remote_db.Port = 5432
-		    remote_db.DatabaseName = "otis_data"
+		    remote_db.DatabaseName = "postgres"
 		    
 		    If Not remote_db.Connect Then
 		      dim the_message as string = remote_db.ErrorMessage
@@ -245,6 +245,20 @@ Protected Class otis_database_manager
 		  End If
 		  
 		End Function
+	#tag EndMethod
+
+	#tag Method, Flags = &h0
+		Sub full_sync()
+		  dim rs as RecordSet
+		  dim sql_string as string
+		  dim sql_array() as string
+		  
+		  rs = remote_db.SQLSelect( "Select * From create_insert_statements();" )
+		  sql_string = rs.Field("create_insert_statements")
+		  sql_array = Split( sql_string, "|" )
+		  
+		  Break
+		End Sub
 	#tag EndMethod
 
 	#tag Method, Flags = &h0
@@ -544,6 +558,11 @@ Protected Class otis_database_manager
 			Group="Position"
 			InitialValue="0"
 			Type="Integer"
+		#tag EndViewProperty
+		#tag ViewProperty
+			Name="work_offline"
+			Group="Behavior"
+			Type="boolean"
 		#tag EndViewProperty
 	#tag EndViewBehavior
 End Class

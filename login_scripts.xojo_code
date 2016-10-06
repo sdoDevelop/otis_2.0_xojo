@@ -46,6 +46,7 @@ Protected Module login_scripts
 		    
 		  End Select
 		  
+		  app.otis_db.full_sync
 		  
 		  
 		  
