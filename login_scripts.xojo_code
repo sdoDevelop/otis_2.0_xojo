@@ -37,7 +37,13 @@ Protected Module login_scripts
 		  // Check the state of the data
 		  Select Case app.otis_db.data_state
 		  Case "full_sync"
-		    
+		    Break
+		    If app.otis_db.full_sync = 0 Then
+		      app.otis_db.work_offline = False
+		    Else
+		      MsgBox( "Errors occurred while doing a full sync from remote to local database" )
+		      app.otis_db.work_offline = False
+		    End If
 		  Case "half_sync"
 		    
 		  Case "offline"
@@ -45,8 +51,6 @@ Protected Module login_scripts
 		  Case "no_luck"
 		    
 		  End Select
-		  
-		  app.otis_db.full_sync
 		  
 		  
 		  

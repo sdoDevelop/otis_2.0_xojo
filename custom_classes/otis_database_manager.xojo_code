@@ -50,7 +50,7 @@ Protected Class otis_database_manager
 		  End If
 		  
 		  
-		  // put user data into variables if the exist and determine if we should upen the login window
+		  // put user data into variables if the exist and determine if we should open the login window
 		  If Not dont_have_ud Then 'we have the ud
 		    username = user_data(0)
 		    password = user_data(1)
@@ -199,18 +199,12 @@ Protected Class otis_database_manager
 	#tag EndMethod
 
 	#tag Method, Flags = &h0
-		Sub create_local_db()
-		  
-		End Sub
-	#tag EndMethod
-
-	#tag Method, Flags = &h0
 		Function data_state() As string
 		  
 		  
 		  
 		  // check if local db is initialized
-		  If local_db.initialized Then
+		  If local_db.data_ready Then
 		    
 		    'we are initialized now we check if the remote is connected
 		    If remote_connected Then
@@ -248,17 +242,40 @@ Protected Class otis_database_manager
 	#tag EndMethod
 
 	#tag Method, Flags = &h0
-		Sub full_sync()
+		Function full_sync() As integer
 		  dim rs as RecordSet
 		  dim sql_string as string
 		  dim sql_array() as string
+		  dim sql as string
+		  dim errors as integer
 		  
 		  rs = remote_db.SQLSelect( "Select * From create_insert_statements();" )
 		  sql_string = rs.Field("create_insert_statements")
 		  sql_array = Split( sql_string, "|" )
 		  
-		  Break
-		End Sub
+		  // Loop through all of the sql grabbed from the server
+		  For i1 as integer = 0 To sql_array.Ubound
+		    
+		    'execute sql
+		    sql = sql_array(i1)
+		    local_db.SQLExecute( sql )
+		    
+		    'check for errors
+		    If local_db.Error Then
+		      err_manage( "local_db", "full_sync: " + local_db.ErrorMessage )
+		      errors = errors + 1
+		    End If
+		    
+		  Next
+		  
+		  If errors = 0 Then
+		    local_db.data_ready = True
+		  End If
+		  
+		  Return errors
+		  
+		  
+		End Function
 	#tag EndMethod
 
 	#tag Method, Flags = &h0
@@ -348,7 +365,7 @@ Protected Class otis_database_manager
 		  local_db.DatabaseFile = otis_db_file
 		  
 		  // Check if the db is up to date
-		  If local_db.version_matches Then
+		  If local_db.version_matches And otis_db_file.Exists Then
 		    'call it initialized
 		    local_db.initialized = True
 		  Else

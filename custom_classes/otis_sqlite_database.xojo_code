@@ -60,6 +60,103 @@ Inherits SQLiteDatabase
 	#tag EndMethod
 
 	#tag Method, Flags = &h0
+		Sub execute(querry_type as string, tables() as string, columns() as string, values() as string, conditions() as string, returning as string)
+		  // querry_type = Insert, Update, Delete, Select
+		  // tables = ex. "contacts, contact_venue_data"
+		  // columns
+		  // values
+		  // conditions = (field1 = field2, And, field2 = pkid, Or, pkid = ulif)
+		  // returning
+		  
+		  dim table_string as string
+		  dim column_string as string
+		  dim value_string as string
+		  dim condition_string as string
+		  dim sql_string as string
+		  dim the_date as new date
+		  
+		  
+		  // Concat our sql sections
+		  table_string = Join( tables,"," )
+		  column_string = Join( columns,"," )
+		  value_string = Join( values,"," )
+		  condition_string = " Where " +  Join( conditions," " )
+		  
+		  
+		  // Determine what type of querry we are dealing with... select, insert, delete, update
+		  Select Case querry_type
+		  Case "Select"
+		    'perform any before tasks
+		    
+		    ' create our sql
+		    sql_string = "Select " + column_string + " From " + table_string +  condition_string + ";"
+		    
+		    'perform any after tasks
+		    
+		  Case "Insert"
+		    //perform any before tasks
+		    dim mod_columns() as string
+		    dim mod_values() as string
+		    
+		    mod_columns.Append("pkid")
+		    mod_columns.Append("row_created_")
+		    mod_columns.Append("row_modified_")
+		    column_string = Join( Array( Join(mod_columns,", "), column_string), ", " )
+		    
+		    mod_values.Append(NewUUID)
+		    mod_values.Append(the_date.SQLDateTime)
+		    mod_values.Append(the_date.SQLDateTime)
+		    value_string = Join( Array( Join(mod_values,", "), value_string), ", " )
+		    
+		    ' create our sql
+		    sql_string = "Insert Into " + table_string + " (" + column_string + ") " + "Values( " + value_string + ");"
+		    
+		    'perform any after tasks
+		    
+		    rs = SQLSelect(sql_string)
+		    If Error Then
+		      err_manage("local_db", ErrorMessage)
+		    End If
+		    
+		    Return rs
+		    
+		  Case "Update"
+		    'perform any before tasks
+		    dim mod_columns() as string
+		    dim mod_values() as string
+		    
+		    mod_columns.Append("row_modified_")
+		    column_string = Join( Array( Join(mod_columns,", "), column_string), ", " )
+		    
+		    mod_values.Append(the_date.SQLDateTime)
+		    value_string = Join( Array( Join(mod_values,", "), value_string), ", " )
+		    
+		    'create our sql
+		    dim column_value_string as string
+		    dim column_value_array(columns.Ubound) as string
+		    dim s as string
+		    For i1 as integer = 0 To columns.Ubound
+		      s = columns(i1) + " = " + values(i1)
+		      column_value_array(i1) = s
+		      column_value_string = Join( column_value_array, ", " )
+		    Next
+		    sql_string = "Update " + table_string + " Set " + column_value_string + condition_string + ";"
+		    
+		    'perform any after tasks
+		    
+		  Case "Delete"
+		    'perform any before tasks
+		    
+		    'create our sql
+		    sql_string = "Delete From " + table_string + condition_string + ";"
+		    
+		    'perform any after tasks
+		    
+		  End Select
+		End Sub
+	#tag EndMethod
+
+	#tag Method, Flags = &h0
 		Function split_sql(script as string) As string()
 		  dim start_pos, end_pos as integer
 		  dim fin as Boolean
@@ -199,6 +296,10 @@ Inherits SQLiteDatabase
 
 
 	#tag Property, Flags = &h0
+		data_ready As boolean
+	#tag EndProperty
+
+	#tag Property, Flags = &h0
 		initialized As boolean = False
 	#tag EndProperty
 
@@ -214,6 +315,11 @@ Inherits SQLiteDatabase
 			Visible=true
 			Type="FolderItem"
 			EditorType="FolderItem"
+		#tag EndViewProperty
+		#tag ViewProperty
+			Name="data_ready"
+			Group="Behavior"
+			Type="boolean"
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="DebugMode"
