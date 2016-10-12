@@ -60,7 +60,7 @@ Inherits SQLiteDatabase
 	#tag EndMethod
 
 	#tag Method, Flags = &h0
-		Sub execute(querry_type as string, tables() as string, columns() as string, values() as string, conditions() as string, returning as string)
+		Function execute(querry_type as string, tables() as string, columns() as string, values() as string, conditions() as string, returning as string) As recordSet...
 		  // querry_type = Insert, Update, Delete, Select
 		  // tables = ex. "contacts, contact_venue_data"
 		  // columns
@@ -153,7 +153,7 @@ Inherits SQLiteDatabase
 		    'perform any after tasks
 		    
 		  End Select
-		End Sub
+		End Function
 	#tag EndMethod
 
 	#tag Method, Flags = &h0
