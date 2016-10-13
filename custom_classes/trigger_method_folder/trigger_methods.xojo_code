@@ -1,5 +1,51 @@
 #tag Module
 Protected Module trigger_methods
+	#tag Method, Flags = &h1
+		Protected Sub calc_amountpaid()
+		  // calculate_amount_paid
+		  // Triggerd From calculate_amount_paid_trigger in payments_
+		  // Triggered on Insert, Update, and Delete of amount_
+		  // Purpose is to: update the amount that has been paid for this eipl
+		  
+		  dim eipl_pkid as string
+		  dim sql as string
+		  dim rs as RecordSet
+		  dim db as otis_sqlite_database = app.otis_db.local_db
+		  dim payment_total as integer
+		  
+		  // Grab the eipl pkid
+		  If tg_library.type = "INSERT" Or tg_library.type = "UPDATE" Then
+		    eipl_pkid = tg_library.new_rs.Field("fkeipl")
+		  ElseIf tg_library.type = "DELETE" Then
+		    eipl_pkid = tg_library.new_rs.Field("fkeipl")
+		  End If;
+		  
+		  
+		  // Grab sum of payment amounts from payments
+		  sql = "Select  Sum( amount_ ) as total From payments_Where fkeipl = '" + eipl_pkid + "';"
+		  rs = db.SQLSelect(sql)
+		  If db.Error Then
+		    dim err as new RuntimeException
+		    err.Message = db.ErrorMessage
+		    err_manage("local_db", db.ErrorMessage)
+		    raise err
+		  End If
+		  payment_total = rs.Field("total")
+		  
+		  // Update amountpaid field in eipl
+		  sql = "Update  eipl Set totalpaid_ = v_total Where pkid = '" + eiplpkid + "';"
+		  rs = db.SQLExecute(sql)
+		  If db.Error Then
+		    dim err as new RuntimeException
+		    err.Message = db.ErrorMessage
+		    err_manage("local_db", db.ErrorMessage)
+		    raise err
+		  End If
+		  
+		  
+		End Sub
+	#tag EndMethod
+
 	#tag Method, Flags = &h0
 		Function c_execute_triggers() As boolean
 		  dim method_names() as string
