@@ -29,7 +29,7 @@ Protected Module uuid_gen_v1
 		  If lowerc Then sGrabBag = sGrabBag + "abcdefghijklmnopqrstuvwxyz"
 		  If upperc Then sGrabBag = sGrabBag + "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
 		  If numeric Then sGrabBag = sGrabBag + "1234567890"
-		  If symbols Then sGrabBag = sGrabBag + "!@#$%^&*()+"
+		  If symbols Then sGrabBag = sGrabBag + "!@#$%&"
 		  
 		  // How many do we have?
 		  Dim iBagChars, iRandChar As Integer

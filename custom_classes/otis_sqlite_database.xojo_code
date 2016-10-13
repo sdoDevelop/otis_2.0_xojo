@@ -60,7 +60,7 @@ Inherits SQLiteDatabase
 	#tag EndMethod
 
 	#tag Method, Flags = &h0
-		Function execute(querry_type as string, tables() as string, columns() as string, values() as string, conditions() as string, returning as string) As recordSet...
+		Function execute(querry_type as string, table as string, columns() as string, values() as string, conditions() as string, returning as string) As recordSet
 		  // querry_type = Insert, Update, Delete, Select
 		  // tables = ex. "contacts, contact_venue_data"
 		  // columns
@@ -74,30 +74,71 @@ Inherits SQLiteDatabase
 		  dim condition_string as string
 		  dim sql_string as string
 		  dim the_date as new date
+		  dim rs as RecordSet
+		  
 		  
 		  
 		  // Concat our sql sections
-		  table_string = Join( tables,"," )
+		  table_string = table
 		  column_string = Join( columns,"," )
 		  value_string = Join( values,"," )
-		  condition_string = " Where " +  Join( conditions," " )
+		  If conditions(0) <> "" Then
+		    condition_string = " Where " +  Join( conditions," " )
+		  End If
 		  
+		  // Set up some of the tg_library
+		  ReDim tg_library.column_names(-1)
+		  ReDim tg_library.values(-1)
+		  tg_library.type = querry_type
+		  tg_library.table_name = table
+		  tg_library.column_names = columns()
+		  tg_library.values = values()
+		  dim sql as string = "Select * From " + table_string + condition_string + ";"
+		  
+		  tg_library.old_rs = SQLSelect(sql)
+		  If Error Then
+		    err_manage("local_db", ErrorMessage)
+		  End If
 		  
 		  // Determine what type of querry we are dealing with... select, insert, delete, update
 		  Select Case querry_type
 		  Case "Select"
-		    'perform any before tasks
+		    // Perform any before tasks
+		    ' set up our tg_library
+		    tg_library.when = "Before"
+		    tg_library.type = "Select"
 		    
-		    ' create our sql
+		    ' execute triggers
+		    If c_execute_triggers Then
+		    End If
+		    
+		    // execute our sql
 		    sql_string = "Select " + column_string + " From " + table_string +  condition_string + ";"
+		    rs = SQLSelect(sql_string)
 		    
-		    'perform any after tasks
+		    // perform any after tasks
+		    ' set up our tg_library
+		    tg_library.when = "After"
+		    tg_library.type = "Select"
+		    
+		    ' execute triggers
+		    If c_execute_triggers Then
+		    End If
 		    
 		  Case "Insert"
-		    //perform any before tasks
+		    // perform any before tasks
+		    ' set up our tg_library
+		    tg_library.when = "Before"
+		    tg_library.type = "Insert"
+		    
+		    ' execute triggers
+		    If c_execute_triggers Then
+		    End If
+		    
 		    dim mod_columns() as string
 		    dim mod_values() as string
 		    
+		    // add some values that we autoset
 		    mod_columns.Append("pkid")
 		    mod_columns.Append("row_created_")
 		    mod_columns.Append("row_modified_")
@@ -108,20 +149,32 @@ Inherits SQLiteDatabase
 		    mod_values.Append(the_date.SQLDateTime)
 		    value_string = Join( Array( Join(mod_values,", "), value_string), ", " )
 		    
-		    ' create our sql
+		    // execute our sql
 		    sql_string = "Insert Into " + table_string + " (" + column_string + ") " + "Values( " + value_string + ");"
-		    
-		    'perform any after tasks
-		    
-		    rs = SQLSelect(sql_string)
+		    SQLExecute(sql_string)
 		    If Error Then
-		      err_manage("local_db", ErrorMessage)
+		      err_manage("local_db",ErrorMessage)
 		    End If
 		    
-		    Return rs
+		    // perform any after tasks
+		    ' set up our tg_library
+		    tg_library.when = "After"
+		    tg_library.type = "Insert"
+		    
+		    ' execute triggers
+		    If c_execute_triggers Then
+		    End If
 		    
 		  Case "Update"
-		    'perform any before tasks
+		    // perform any before tasks
+		    ' set up our tg_library
+		    tg_library.when = "Before"
+		    tg_library.type = "Update"
+		    
+		    ' execute triggers
+		    If c_execute_triggers Then
+		    End If
+		    
 		    dim mod_columns() as string
 		    dim mod_values() as string
 		    
@@ -131,28 +184,70 @@ Inherits SQLiteDatabase
 		    mod_values.Append(the_date.SQLDateTime)
 		    value_string = Join( Array( Join(mod_values,", "), value_string), ", " )
 		    
-		    'create our sql
+		    // execute our sql
 		    dim column_value_string as string
-		    dim column_value_array(columns.Ubound) as string
+		    dim column_value_array(-1) as string
 		    dim s as string
 		    For i1 as integer = 0 To columns.Ubound
 		      s = columns(i1) + " = " + values(i1)
+		      ReDim column_value_array(i1)
 		      column_value_array(i1) = s
 		      column_value_string = Join( column_value_array, ", " )
 		    Next
-		    sql_string = "Update " + table_string + " Set " + column_value_string + condition_string + ";"
 		    
-		    'perform any after tasks
+		    sql_string = "Update " + table_string + " Set " + column_value_string + condition_string + ";"
+		    SQLExecute(sql_string)
+		    If Error Then
+		      err_manage("local_db",ErrorMessage)
+		    End If
+		    
+		    // perform any after tasks
+		    ' set up our tg_library
+		    tg_library.when = "After"
+		    tg_library.type = "Update"
+		    
+		    ' execute triggers
+		    If c_execute_triggers Then
+		    End If
 		    
 		  Case "Delete"
-		    'perform any before tasks
+		    // perform any before tasks
+		    ' set up our tg_library
+		    tg_library.when = "Before"
+		    tg_library.type = "Delete"
+		    
+		    ' execute triggers
+		    If c_execute_triggers Then
+		    End If
 		    
 		    'create our sql
 		    sql_string = "Delete From " + table_string + condition_string + ";"
+		    SQLExecute(sql_string)
+		    If Error Then
+		      err_manage("local_db",ErrorMessage)
+		    End If
 		    
-		    'perform any after tasks
+		    // perform any after tasks
+		    ' set up our tg_library
+		    tg_library.when = "After"
+		    tg_library.type = "Delete"
+		    
+		    ' execute triggers
+		    If c_execute_triggers Then
+		    End If
 		    
 		  End Select
+		  
+		  
+		  Return rs
+		  
+		  
+		  
+		  
+		  
+		  
+		  
+		  
 		End Function
 	#tag EndMethod
 

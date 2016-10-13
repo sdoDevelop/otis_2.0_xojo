@@ -26,12 +26,57 @@ Begin Window window_main
    Title           =   "Untitled"
    Visible         =   True
    Width           =   600
+   Begin PushButton PushButton1
+      AutoDeactivate  =   True
+      Bold            =   False
+      ButtonStyle     =   "0"
+      Cancel          =   False
+      Caption         =   "OK"
+      Default         =   True
+      Enabled         =   True
+      Height          =   26
+      HelpTag         =   ""
+      Index           =   -2147483648
+      InitialParent   =   ""
+      Italic          =   False
+      Left            =   244
+      LockBottom      =   False
+      LockedInPosition=   False
+      LockLeft        =   True
+      LockRight       =   False
+      LockTop         =   True
+      Scope           =   0
+      TabIndex        =   0
+      TabPanelIndex   =   0
+      TabStop         =   True
+      TextFont        =   "FreeSerif"
+      TextSize        =   0.0
+      TextUnit        =   0
+      Top             =   151
+      Underline       =   False
+      Visible         =   True
+      Width           =   80
+   End
 End
 #tag EndWindow
 
 #tag WindowCode
 #tag EndWindowCode
 
+#tag Events PushButton1
+	#tag Event
+		Sub Action()
+		  dim s() as string
+		  dim rs as RecordSet
+		  
+		  
+		  
+		  rs = app.otis_db.local_db.execute("Select", "events_", Array("name_"), Array(""), Array(""), "")
+		  
+		  
+		End Sub
+	#tag EndEvent
+#tag EndEvents
 #tag ViewBehavior
 	#tag ViewProperty
 		Name="BackColor"

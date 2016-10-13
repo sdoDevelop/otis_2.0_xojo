@@ -9,6 +9,15 @@ Protected Module login_scripts
 		  
 		  // Check for update
 		  
+		  dim f as new FolderItem 
+		  f = resource_management.get_filepath("otis_db_file")
+		  if f <> Nil Then
+		    if f.Exists Then
+		      f.Delete
+		    end if
+		  end if
+		  
+		  
 		  
 		  // Attempt connection to local database
 		  app.otis_db = new otis_database_manager
@@ -37,7 +46,6 @@ Protected Module login_scripts
 		  // Check the state of the data
 		  Select Case app.otis_db.data_state
 		  Case "full_sync"
-		    Break
 		    If app.otis_db.full_sync = 0 Then
 		      app.otis_db.work_offline = False
 		    Else

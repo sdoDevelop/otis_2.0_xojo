@@ -13,6 +13,7 @@ Protected Module resource_management
 		  dim un_file as FolderItem
 		  dim resources_file as FolderItem
 		  dim udf as FolderItem
+		  dim triggers_file as FolderItem
 		  
 		  
 		  
@@ -49,6 +50,7 @@ Protected Module resource_management
 		  un_file = inf_folder.Child( "un.txt" )
 		  resources_file = inf_folder.Child( "resources.txt" )
 		  udf = inf_folder.Child( "udf.sqlite" )
+		  triggers_file = db_folder.Child( "triggers.txt" )
 		  
 		  
 		  
@@ -69,6 +71,8 @@ Protected Module resource_management
 		    Return resources_file
 		  Case "udf" 
 		    Return udf
+		  Case "triggers_file"
+		    Return triggers_file
 		  End Select
 		  
 		  

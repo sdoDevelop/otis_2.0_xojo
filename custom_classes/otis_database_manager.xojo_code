@@ -8,6 +8,18 @@ Protected Class otis_database_manager
 		  // Get the path to our db file
 		  otis_db_file = get_filepath( "otis_db_file" )
 		  
+		  // Check if there is a database file, if there isnt we need to delete our version file to force an update
+		  if Not otis_db_file.Exists then
+		    dim f as FolderItem
+		    f = resource_management.get_filepath("resources_file")
+		    if f <> nil then
+		      if f.Exists then
+		        f.Delete
+		      end if
+		    end if
+		  end if
+		  
+		  
 		  // Create the database
 		  local_db = new otis_sqlite_database
 		  local_db.DatabaseFile = otis_db_file
@@ -96,7 +108,7 @@ Protected Class otis_database_manager
 		    remote_db.Password = password
 		    remote_db.Host = "45.32.72.207"
 		    remote_db.Port = 5432
-		    remote_db.DatabaseName = "postgres"
+		    remote_db.DatabaseName = "otis_data"
 		    
 		    If Not remote_db.Connect Then
 		      dim the_message as string = remote_db.ErrorMessage
@@ -248,8 +260,11 @@ Protected Class otis_database_manager
 		  dim sql_array() as string
 		  dim sql as string
 		  dim errors as integer
-		  
+		  break
 		  rs = remote_db.SQLSelect( "Select * From create_insert_statements();" )
+		  If remote_db.Error Then
+		    err_manage("remote_db", remote_db.ErrorMessage)
+		  End If
 		  sql_string = rs.Field("create_insert_statements")
 		  sql_array = Split( sql_string, "|" )
 		  

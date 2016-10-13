@@ -27,6 +27,7 @@ Begin Window window_threads
    Visible         =   False
    Width           =   600
    Begin Thread thread_trigger_watch
+      Enabled         =   True
       Index           =   -2147483648
       LockedInPosition=   False
       Priority        =   4
