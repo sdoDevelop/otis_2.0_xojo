@@ -115,6 +115,13 @@ Inherits SQLiteDatabase
 		    // execute our sql
 		    sql_string = "Select " + column_string + " From " + table_string +  condition_string + ";"
 		    rs = SQLSelect(sql_string)
+		    If Error Then
+		      dim err as new RuntimeException
+		      err.Message = ErrorMessage
+		      err_manage("local_db",ErrorMessage)
+		      raise err
+		    End If
+		    
 		    
 		    // perform any after tasks
 		    ' set up our tg_library
@@ -153,7 +160,10 @@ Inherits SQLiteDatabase
 		    sql_string = "Insert Into " + table_string + " (" + column_string + ") " + "Values( " + value_string + ");"
 		    SQLExecute(sql_string)
 		    If Error Then
+		      dim err as new RuntimeException
+		      err.Message = ErrorMessage
 		      err_manage("local_db",ErrorMessage)
+		      raise err
 		    End If
 		    
 		    // perform any after tasks
@@ -198,8 +208,12 @@ Inherits SQLiteDatabase
 		    sql_string = "Update " + table_string + " Set " + column_value_string + condition_string + ";"
 		    SQLExecute(sql_string)
 		    If Error Then
+		      dim err as new RuntimeException
+		      err.Message = ErrorMessage
 		      err_manage("local_db",ErrorMessage)
+		      raise err
 		    End If
+		    
 		    
 		    // perform any after tasks
 		    ' set up our tg_library
@@ -224,8 +238,12 @@ Inherits SQLiteDatabase
 		    sql_string = "Delete From " + table_string + condition_string + ";"
 		    SQLExecute(sql_string)
 		    If Error Then
+		      dim err as new RuntimeException
+		      err.Message = ErrorMessage
 		      err_manage("local_db",ErrorMessage)
+		      raise err
 		    End If
+		    
 		    
 		    // perform any after tasks
 		    ' set up our tg_library

@@ -1,6 +1,6 @@
 #tag Window
 Begin Window window_main
-   BackColor       =   &cFFFFFF00
+   BackColor       =   &c49363600
    Backdrop        =   0
    CloseButton     =   True
    Compatibility   =   ""
@@ -8,8 +8,8 @@ Begin Window window_main
    Frame           =   0
    FullScreen      =   False
    FullScreenButton=   False
-   HasBackColor    =   False
-   Height          =   400
+   HasBackColor    =   True
+   Height          =   570
    ImplicitInstance=   True
    LiveResize      =   True
    MacProcID       =   0
@@ -25,55 +25,295 @@ Begin Window window_main
    Resizeable      =   True
    Title           =   "Untitled"
    Visible         =   True
-   Width           =   600
-   Begin PushButton PushButton1
+   Width           =   938
+   Begin Listbox listbox_events
       AutoDeactivate  =   True
+      AutoHideScrollbars=   True
       Bold            =   False
-      ButtonStyle     =   "0"
-      Cancel          =   False
-      Caption         =   "OK"
-      Default         =   True
+      Border          =   False
+      ColumnCount     =   1
+      ColumnsResizable=   True
+      ColumnWidths    =   ""
+      DataField       =   ""
+      DataSource      =   ""
+      DefaultRowHeight=   -1
       Enabled         =   True
-      Height          =   26
+      EnableDrag      =   True
+      EnableDragReorder=   False
+      GridLinesHorizontal=   0
+      GridLinesVertical=   0
+      HasHeading      =   False
+      HeadingIndex    =   -1
+      Height          =   510
       HelpTag         =   ""
+      Hierarchical    =   True
       Index           =   -2147483648
       InitialParent   =   ""
+      InitialValue    =   ""
       Italic          =   False
-      Left            =   244
+      Left            =   0
       LockBottom      =   False
       LockedInPosition=   False
       LockLeft        =   True
       LockRight       =   False
       LockTop         =   True
+      RequiresSelection=   False
       Scope           =   0
+      ScrollbarHorizontal=   False
+      ScrollBarVertical=   True
+      SelectionType   =   1
       TabIndex        =   0
       TabPanelIndex   =   0
       TabStop         =   True
       TextFont        =   "FreeSerif"
       TextSize        =   0.0
       TextUnit        =   0
-      Top             =   151
+      Top             =   60
+      Underline       =   False
+      UseFocusRing    =   True
+      Visible         =   True
+      Width           =   185
+      _ScrollOffset   =   0
+      _ScrollWidth    =   -1
+   End
+   Begin otis_label label_event_name
+      AutoDeactivate  =   True
+      Bold            =   False
+      DataField       =   ""
+      DataSource      =   ""
+      Enabled         =   True
+      Height          =   20
+      HelpTag         =   ""
+      Index           =   -2147483648
+      InitialParent   =   ""
+      Italic          =   False
+      last_click      =   0
+      Left            =   286
+      LockBottom      =   False
+      LockedInPosition=   False
+      LockLeft        =   True
+      LockRight       =   False
+      LockTop         =   True
+      Multiline       =   False
+      Scope           =   0
+      Selectable      =   False
+      TabIndex        =   1
+      TabPanelIndex   =   0
+      Text            =   "Untitled"
+      TextAlign       =   1
+      TextColor       =   &c00000000
+      TextFont        =   "FreeSerif"
+      TextSize        =   18.0
+      TextUnit        =   0
+      Top             =   60
+      Transparent     =   True
       Underline       =   False
       Visible         =   True
-      Width           =   80
+      Width           =   368
+   End
+   Begin TextField textfield_event_name
+      AcceptTabs      =   False
+      Alignment       =   0
+      AutoDeactivate  =   True
+      AutomaticallyCheckSpelling=   False
+      BackColor       =   &cFFFFFF00
+      Bold            =   False
+      Border          =   True
+      CueText         =   ""
+      DataField       =   ""
+      DataSource      =   ""
+      Enabled         =   False
+      Format          =   ""
+      Height          =   26
+      HelpTag         =   ""
+      Index           =   -2147483648
+      Italic          =   False
+      Left            =   323
+      LimitText       =   0
+      LockBottom      =   False
+      LockedInPosition=   False
+      LockLeft        =   True
+      LockRight       =   False
+      LockTop         =   True
+      Mask            =   ""
+      Password        =   False
+      ReadOnly        =   False
+      Scope           =   0
+      TabIndex        =   2
+      TabPanelIndex   =   0
+      TabStop         =   True
+      Text            =   ""
+      TextColor       =   &c00000000
+      TextFont        =   "FreeSerif"
+      TextSize        =   0.0
+      TextUnit        =   0
+      Top             =   70
+      Underline       =   False
+      UseFocusRing    =   True
+      Visible         =   False
+      Width           =   288
+   End
+   Begin date_container date_container1
+      AcceptFocus     =   False
+      AcceptTabs      =   True
+      AutoDeactivate  =   True
+      BackColor       =   &cFFFFFF00
+      Backdrop        =   0
+      Enabled         =   True
+      EraseBackground =   True
+      HasBackColor    =   False
+      Height          =   114
+      HelpTag         =   ""
+      InitialParent   =   ""
+      Left            =   218
+      LockBottom      =   False
+      LockedInPosition=   False
+      LockLeft        =   True
+      LockRight       =   False
+      LockTop         =   True
+      Scope           =   0
+      TabIndex        =   3
+      TabPanelIndex   =   0
+      TabStop         =   True
+      Top             =   119
+      Transparent     =   True
+      UseFocusRing    =   False
+      Visible         =   True
+      Width           =   300
    End
 End
 #tag EndWindow
 
 #tag WindowCode
+	#tag Event
+		Sub Open()
+		  
+		  
+		  me.BackColor = get_color("Gray",1)
+		  scripts = new scripts_class
+		  
+		  scripts.load_event_listbox
+		End Sub
+	#tag EndEvent
+
+
+	#tag MenuHandler
+		Function EventNewEvent() As Boolean Handles EventNewEvent.Action
+			
+			scripts.new_event
+			
+			Return True
+			
+		End Function
+	#tag EndMenuHandler
+
+
+	#tag Property, Flags = &h0
+		pkid_events_ As String
+	#tag EndProperty
+
+	#tag Property, Flags = &h0
+		scripts As scripts_class
+	#tag EndProperty
+
+
 #tag EndWindowCode
 
-#tag Events PushButton1
+#tag Events listbox_events
 	#tag Event
-		Sub Action()
-		  dim s() as string
+		Sub Open()
+		  for i1 as integer = 0 to 10
+		    me.addRow
+		  next
+		  
+		  
+		End Sub
+	#tag EndEvent
+	#tag Event
+		Function CellBackgroundPaint(g As Graphics, row As Integer, column As Integer) As Boolean
+		  If row Mod 2 = 0 Then
+		    g.ForeColor = get_color("Gray",5)
+		    g.FillRect(0, 0, g.Width, g.Height)
+		  End If
+		  If row Mod 2 = 1 Then
+		    g.ForeColor = get_color("Gray",4)
+		    g.FillRect(0, 0, g.Width, g.Height)
+		  End If
+		End Function
+	#tag EndEvent
+	#tag Event
+		Sub Change()
+		  If scripts.load_event Then
+		    
+		  End If
+		End Sub
+	#tag EndEvent
+#tag EndEvents
+#tag Events label_event_name
+	#tag Event
+		Sub MouseEnter()
+		  me.TextColor = get_color( "Blue", 4 )
+		End Sub
+	#tag EndEvent
+	#tag Event
+		Sub MouseExit()
+		  me.TextColor = get_color( "Text", 0 )
+		End Sub
+	#tag EndEvent
+	#tag Event
+		Sub MouseUp(X As Integer, Y As Integer)
+		  scripts.EventName_ShowTextfield
+		End Sub
+	#tag EndEvent
+	#tag Event
+		Function MouseDown(X As Integer, Y As Integer) As Boolean
+		  Return True
+		End Function
+	#tag EndEvent
+#tag EndEvents
+#tag Events textfield_event_name
+	#tag Event
+		Sub LostFocus()
+		  dim db as otis_database_manager
+		  db = app.otis_db
+		  dim error as Boolean
 		  dim rs as RecordSet
 		  
 		  
 		  
-		  rs = app.otis_db.local_db.execute("Select", "events_", Array("name_"), Array(""), Array(""), "")
+		  // save value to database
 		  
 		  
+		  
+		  // get rid of me
+		  me.Enabled = False
+		  me.Visible = False
+		  
+		  // check if the entered value is different than the label and if it is any text
+		  If me.Text <> label_event_name.Text And me.Text <> "" Then
+		    
+		    Try
+		      rs = db.execute( "Update", "events_", Array("name_"),Array("'" +me.Text + "'"),array("pkid = '" + pkid_events_ + "'"),"")
+		    Catch err as RuntimeException
+		      MsgBox("Error occured while updating event name")
+		      error = True
+		    End Try
+		    
+		    If Not error Then
+		      'set label to the name
+		      label_event_name.Text = me.Text
+		      scripts.load_event_listbox
+		      listbox_events.Index = scripts.GetEvent_Index_ByPkid(pkid_events_)
+		    End If
+		    
+		  End If
+		End Sub
+	#tag EndEvent
+	#tag Event
+		Sub KeyUp(Key As String)
+		  if key = Chr(13) then
+		    me.Window.FocusNext
+		  end if
 		End Sub
 	#tag EndEvent
 #tag EndEvents
@@ -249,6 +489,11 @@ End
 		Group="ID"
 		Type="String"
 		EditorType="String"
+	#tag EndViewProperty
+	#tag ViewProperty
+		Name="pkid_events_"
+		Group="Behavior"
+		Type="String"
 	#tag EndViewProperty
 	#tag ViewProperty
 		Name="Placement"

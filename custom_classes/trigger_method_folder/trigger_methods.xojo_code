@@ -18,7 +18,7 @@ Protected Module trigger_methods
 		    eipl_pkid = tg_library.new_rs.Field("fkeipl")
 		  ElseIf tg_library.type = "DELETE" Then
 		    eipl_pkid = tg_library.new_rs.Field("fkeipl")
-		  End If;
+		  End If
 		  
 		  
 		  // Grab sum of payment amounts from payments
@@ -30,11 +30,11 @@ Protected Module trigger_methods
 		    err_manage("local_db", db.ErrorMessage)
 		    raise err
 		  End If
-		  payment_total = rs.Field("total")
+		  payment_total = rs.Field("total").Value
 		  
 		  // Update amountpaid field in eipl
-		  sql = "Update  eipl Set totalpaid_ = v_total Where pkid = '" + eiplpkid + "';"
-		  rs = db.SQLExecute(sql)
+		  sql = "Update  eipl Set totalpaid_ = v_total Where pkid = '" + eipl_pkid + "';"
+		  db.SQLExecute(sql)
 		  If db.Error Then
 		    dim err as new RuntimeException
 		    err.Message = db.ErrorMessage

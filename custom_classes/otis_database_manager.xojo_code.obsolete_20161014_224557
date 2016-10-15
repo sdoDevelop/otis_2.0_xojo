@@ -254,13 +254,31 @@ Protected Class otis_database_manager
 	#tag EndMethod
 
 	#tag Method, Flags = &h0
+		Function execute(querry_type as string, table as string, columns() as string, values() as string, conditions() as string, returning as string) As recordSet
+		  dim rs as RecordSet
+		  
+		  
+		  
+		  rs = local_db.execute(querry_type,table,columns(),values(),conditions(),returning)
+		  
+		  Return rs
+		  
+		  Exception err as RuntimeException
+		    raise err
+		    
+		    
+		End Function
+	#tag EndMethod
+
+	#tag Method, Flags = &h0
 		Function full_sync() As integer
 		  dim rs as RecordSet
 		  dim sql_string as string
 		  dim sql_array() as string
 		  dim sql as string
 		  dim errors as integer
-		  break
+		  
+		  
 		  rs = remote_db.SQLSelect( "Select * From create_insert_statements();" )
 		  If remote_db.Error Then
 		    err_manage("remote_db", remote_db.ErrorMessage)

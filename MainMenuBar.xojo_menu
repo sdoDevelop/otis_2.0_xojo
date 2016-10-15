@@ -111,5 +111,22 @@ Begin Menu MainMenuBar
          Visible = True
       End
    End
+   Begin MenuItem EventMenu
+      SpecialMenu = 0
+      Text = "Event"
+      Index = -2147483648
+      AutoEnable = True
+      Visible = True
+      Begin MenuItem EventNewEvent
+         SpecialMenu = 0
+         Text = "New Event"
+         Index = -2147483648
+         ShortcutKey = "E"
+         Shortcut = "Cmd+E"
+         MenuModifier = True
+         AutoEnable = True
+         Visible = True
+      End
+   End
 End
 #tag EndMenu
