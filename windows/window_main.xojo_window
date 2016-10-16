@@ -162,10 +162,10 @@ Begin Window window_main
       Enabled         =   True
       EraseBackground =   True
       HasBackColor    =   False
-      Height          =   114
+      Height          =   51
       HelpTag         =   ""
       InitialParent   =   ""
-      Left            =   218
+      Left            =   254
       LockBottom      =   False
       LockedInPosition=   False
       LockLeft        =   True
@@ -175,11 +175,11 @@ Begin Window window_main
       TabIndex        =   3
       TabPanelIndex   =   0
       TabStop         =   True
-      Top             =   119
+      Top             =   139
       Transparent     =   True
       UseFocusRing    =   False
       Visible         =   True
-      Width           =   300
+      Width           =   81
    End
 End
 #tag EndWindow
@@ -494,6 +494,7 @@ End
 		Name="pkid_events_"
 		Group="Behavior"
 		Type="String"
+		EditorType="MultiLineEditor"
 	#tag EndViewProperty
 	#tag ViewProperty
 		Name="Placement"

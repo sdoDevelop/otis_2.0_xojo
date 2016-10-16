@@ -8,6 +8,19 @@ Inherits Label
 	#tag EndEvent
 
 
+	#tag Method, Flags = &h0
+		Function Center() As integer
+		  dim the_center as integer
+		  
+		  
+		  the_center = floor( ( me.Width / 2 ) + me.Left )
+		  
+		  
+		  Return the_center
+		End Function
+	#tag EndMethod
+
+
 	#tag Property, Flags = &h0
 		last_click As Integer
 	#tag EndProperty
