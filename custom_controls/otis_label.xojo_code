@@ -22,7 +22,7 @@ Inherits Label
 
 
 	#tag Property, Flags = &h0
-		last_click As Integer
+		state As string = "Normal"
 	#tag EndProperty
 
 
@@ -93,11 +93,6 @@ Inherits Label
 			Type="Boolean"
 		#tag EndViewProperty
 		#tag ViewProperty
-			Name="last_click"
-			Group="Behavior"
-			Type="Integer"
-		#tag EndViewProperty
-		#tag ViewProperty
 			Name="Left"
 			Visible=true
 			Group="Position"
@@ -146,6 +141,13 @@ Inherits Label
 			Group="Appearance"
 			InitialValue="False"
 			Type="Boolean"
+		#tag EndViewProperty
+		#tag ViewProperty
+			Name="state"
+			Group="Behavior"
+			InitialValue="Normal"
+			Type="string"
+			EditorType="MultiLineEditor"
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="Super"

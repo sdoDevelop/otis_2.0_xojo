@@ -9,7 +9,7 @@ Begin ContainerControl date_container
    Enabled         =   True
    EraseBackground =   True
    HasBackColor    =   False
-   Height          =   37
+   Height          =   40
    HelpTag         =   ""
    InitialParent   =   ""
    Left            =   0
@@ -24,112 +24,7 @@ Begin ContainerControl date_container
    Transparent     =   True
    UseFocusRing    =   False
    Visible         =   True
-   Width           =   82
-   Begin otis_label Label_Hour
-      AutoDeactivate  =   True
-      Bold            =   False
-      DataField       =   ""
-      DataSource      =   ""
-      Enabled         =   True
-      Height          =   20
-      HelpTag         =   ""
-      Index           =   -2147483648
-      InitialParent   =   ""
-      Italic          =   False
-      last_click      =   0
-      Left            =   0
-      LockBottom      =   False
-      LockedInPosition=   False
-      LockLeft        =   True
-      LockRight       =   False
-      LockTop         =   True
-      Multiline       =   False
-      Scope           =   0
-      Selectable      =   False
-      TabIndex        =   0
-      TabPanelIndex   =   0
-      Text            =   "00"
-      TextAlign       =   1
-      TextColor       =   &c00000000
-      TextFont        =   "FreeSerif"
-      TextSize        =   0.0
-      TextUnit        =   0
-      Top             =   9
-      Transparent     =   True
-      Underline       =   False
-      Visible         =   True
-      Width           =   27
-   End
-   Begin otis_label Label_Minute
-      AutoDeactivate  =   True
-      Bold            =   False
-      DataField       =   ""
-      DataSource      =   ""
-      Enabled         =   True
-      Height          =   20
-      HelpTag         =   ""
-      Index           =   -2147483648
-      InitialParent   =   ""
-      Italic          =   False
-      last_click      =   0
-      Left            =   30
-      LockBottom      =   False
-      LockedInPosition=   False
-      LockLeft        =   True
-      LockRight       =   False
-      LockTop         =   True
-      Multiline       =   False
-      Scope           =   0
-      Selectable      =   False
-      TabIndex        =   2
-      TabPanelIndex   =   0
-      Text            =   "00"
-      TextAlign       =   1
-      TextColor       =   &c00000000
-      TextFont        =   "FreeSerif"
-      TextSize        =   0.0
-      TextUnit        =   0
-      Top             =   9
-      Transparent     =   True
-      Underline       =   False
-      Visible         =   True
-      Width           =   27
-   End
-   Begin otis_label Label_period
-      AutoDeactivate  =   True
-      Bold            =   False
-      DataField       =   ""
-      DataSource      =   ""
-      Enabled         =   True
-      Height          =   20
-      HelpTag         =   ""
-      Index           =   -2147483648
-      InitialParent   =   ""
-      Italic          =   False
-      last_click      =   0
-      Left            =   54
-      LockBottom      =   False
-      LockedInPosition=   False
-      LockLeft        =   True
-      LockRight       =   False
-      LockTop         =   True
-      Multiline       =   False
-      Scope           =   0
-      Selectable      =   False
-      TabIndex        =   3
-      TabPanelIndex   =   0
-      Text            =   "pm"
-      TextAlign       =   1
-      TextColor       =   &c00000000
-      TextFont        =   "FreeSerif"
-      TextSize        =   0.0
-      TextUnit        =   0
-      Top             =   9
-      Transparent     =   True
-      Underline       =   False
-      Visible         =   True
-      Width           =   27
-   End
+   Width           =   92
    Begin Canvas Canvas_triangles
       AcceptFocus     =   False
       AcceptTabs      =   False
@@ -138,13 +33,13 @@ Begin ContainerControl date_container
       DoubleBuffer    =   False
       Enabled         =   True
       EraseBackground =   True
-      Height          =   35
+      Height          =   38
       HelpTag         =   ""
       Index           =   -2147483648
       InitialParent   =   ""
       Left            =   0
       LockBottom      =   False
-      LockedInPosition=   False
+      LockedInPosition=   True
       LockLeft        =   True
       LockRight       =   False
       LockTop         =   True
@@ -156,7 +51,7 @@ Begin ContainerControl date_container
       Transparent     =   True
       UseFocusRing    =   True
       Visible         =   True
-      Width           =   81
+      Width           =   90
       Begin otis_label Label_colen
          AutoDeactivate  =   True
          Bold            =   False
@@ -168,23 +63,128 @@ Begin ContainerControl date_container
          Index           =   -2147483648
          InitialParent   =   "Canvas_triangles"
          Italic          =   False
-         last_click      =   0
          Left            =   16
          LockBottom      =   False
-         LockedInPosition=   False
+         LockedInPosition=   True
          LockLeft        =   True
          LockRight       =   False
          LockTop         =   True
          Multiline       =   False
          Scope           =   0
          Selectable      =   False
+         state           =   "Normal"
          TabIndex        =   0
          TabPanelIndex   =   0
          Text            =   ":"
          TextAlign       =   1
          TextColor       =   &c00000000
          TextFont        =   "FreeSerif"
-         TextSize        =   0.0
+         TextSize        =   13.0
+         TextUnit        =   0
+         Top             =   9
+         Transparent     =   True
+         Underline       =   False
+         Visible         =   True
+         Width           =   27
+      End
+      Begin otis_label Label_period
+         AutoDeactivate  =   True
+         Bold            =   False
+         DataField       =   ""
+         DataSource      =   ""
+         Enabled         =   True
+         Height          =   20
+         HelpTag         =   ""
+         Index           =   -2147483648
+         InitialParent   =   "Canvas_triangles"
+         Italic          =   False
+         Left            =   54
+         LockBottom      =   False
+         LockedInPosition=   True
+         LockLeft        =   True
+         LockRight       =   False
+         LockTop         =   True
+         Multiline       =   False
+         Scope           =   0
+         Selectable      =   False
+         state           =   "Normal"
+         TabIndex        =   1
+         TabPanelIndex   =   0
+         Text            =   "pm"
+         TextAlign       =   1
+         TextColor       =   &c00000000
+         TextFont        =   "FreeSerif"
+         TextSize        =   13.0
+         TextUnit        =   0
+         Top             =   9
+         Transparent     =   True
+         Underline       =   False
+         Visible         =   True
+         Width           =   27
+      End
+      Begin otis_label Label_Minute
+         AutoDeactivate  =   True
+         Bold            =   False
+         DataField       =   ""
+         DataSource      =   ""
+         Enabled         =   True
+         Height          =   20
+         HelpTag         =   ""
+         Index           =   -2147483648
+         InitialParent   =   "Canvas_triangles"
+         Italic          =   False
+         Left            =   30
+         LockBottom      =   False
+         LockedInPosition=   True
+         LockLeft        =   True
+         LockRight       =   False
+         LockTop         =   True
+         Multiline       =   False
+         Scope           =   0
+         Selectable      =   False
+         state           =   "Normal"
+         TabIndex        =   2
+         TabPanelIndex   =   0
+         Text            =   "00"
+         TextAlign       =   1
+         TextColor       =   &c00000000
+         TextFont        =   "FreeSerif"
+         TextSize        =   13.0
+         TextUnit        =   0
+         Top             =   9
+         Transparent     =   True
+         Underline       =   False
+         Visible         =   True
+         Width           =   27
+      End
+      Begin otis_label Label_Hour
+         AutoDeactivate  =   True
+         Bold            =   False
+         DataField       =   ""
+         DataSource      =   ""
+         Enabled         =   True
+         Height          =   20
+         HelpTag         =   ""
+         Index           =   -2147483648
+         InitialParent   =   "Canvas_triangles"
+         Italic          =   False
+         Left            =   0
+         LockBottom      =   False
+         LockedInPosition=   True
+         LockLeft        =   True
+         LockRight       =   False
+         LockTop         =   True
+         Multiline       =   False
+         Scope           =   0
+         Selectable      =   False
+         state           =   "Normal"
+         TabIndex        =   3
+         TabPanelIndex   =   0
+         Text            =   "00"
+         TextAlign       =   1
+         TextColor       =   &c00000000
+         TextFont        =   "FreeSerif"
+         TextSize        =   13.0
          TextUnit        =   0
          Top             =   9
          Transparent     =   True
@@ -193,10 +193,82 @@ Begin ContainerControl date_container
          Width           =   27
       End
    End
+   Begin TextField TextField_UserEdit
+      AcceptTabs      =   False
+      Alignment       =   0
+      AutoDeactivate  =   True
+      AutomaticallyCheckSpelling=   False
+      BackColor       =   &cFFFFFF00
+      Bold            =   False
+      Border          =   True
+      CueText         =   ""
+      DataField       =   ""
+      DataSource      =   ""
+      Enabled         =   True
+      Format          =   ""
+      Height          =   26
+      HelpTag         =   ""
+      Index           =   -2147483648
+      InitialParent   =   ""
+      Italic          =   False
+      Left            =   -42
+      LimitText       =   0
+      LockBottom      =   False
+      LockedInPosition=   False
+      LockLeft        =   True
+      LockRight       =   False
+      LockTop         =   True
+      Mask            =   ""
+      Password        =   False
+      ReadOnly        =   False
+      Scope           =   0
+      TabIndex        =   5
+      TabPanelIndex   =   0
+      TabStop         =   True
+      Text            =   ""
+      TextColor       =   &c00000000
+      TextFont        =   "FreeSerif"
+      TextSize        =   0.0
+      TextUnit        =   0
+      Top             =   20
+      Underline       =   False
+      UseFocusRing    =   True
+      Visible         =   True
+      Width           =   30
+   End
 End
 #tag EndWindow
 
 #tag WindowCode
+	#tag Event
+		Function MouseDown(X As Integer, Y As Integer) As Boolean
+		  SetPartState("Pressed",X,Y)
+		  Return True
+		End Function
+	#tag EndEvent
+
+	#tag Event
+		Sub MouseExit()
+		  ResetStatus
+		  DrawArrows
+		End Sub
+	#tag EndEvent
+
+	#tag Event
+		Sub MouseMove(X As Integer, Y As Integer)
+		  SetPartState("Hover",X,Y)
+		End Sub
+	#tag EndEvent
+
+	#tag Event
+		Sub MouseUp(X As Integer, Y As Integer)
+		  
+		  
+		  
+		  SetPartState("Up",X,Y)
+		End Sub
+	#tag EndEvent
+
 	#tag Event
 		Sub Open()
 		  
@@ -213,6 +285,121 @@ End
 		End Sub
 	#tag EndEvent
 
+
+	#tag Method, Flags = &h0
+		Sub ChangeHour(optional value as string)
+		  dim lb as otis_label = Label_Hour
+		  dim tf as TextField = TextField_UserEdit
+		  
+		  tf.Top = lb.Top
+		  tf.Left = lb.Left
+		  tf.Visible = True
+		  tf.Enabled = True
+		  tf.Text = lb.Text
+		  tf.SelectAll
+		  
+		End Sub
+	#tag EndMethod
+
+	#tag Method, Flags = &h0
+		Sub ChangeMinute(optional value as string)
+		  dim lb as otis_label = Label_Minute
+		  dim tf as TextField = TextField_UserEdit
+		  
+		  tf.Top = lb.Top
+		  tf.Left = lb.Left
+		  tf.Visible = True
+		  tf.Enabled = True
+		  tf.Text = lb.Text
+		  tf.SelectAll
+		End Sub
+	#tag EndMethod
+
+	#tag Method, Flags = &h0
+		Sub ChangePeriod(optional value as string)
+		  dim lb as otis_label = Label_period
+		  dim tf as TextField = TextField_UserEdit
+		  
+		  tf.Top = lb.Top
+		  tf.Left = lb.Left
+		  tf.Visible = True
+		  tf.Enabled = True
+		  tf.Text = lb.Text
+		  tf.SelectAll
+		End Sub
+	#tag EndMethod
+
+	#tag Method, Flags = &h0
+		Function DeterminePartClicked(X as integer, Y as integer) As string
+		  
+		  If (X > TriangleLeft(1) And X < TriangleRight(1)) And (Y > TriangleTop(1) And Y <  TriangleBottom(1)) then
+		    
+		    // Triangle 1
+		    Return "Triangle 1"
+		    
+		  End If
+		  If (X > TriangleLeft(2) And X < TriangleRight(2)) And (Y > TriangleTop(2) And Y <  TriangleBottom(2)) then
+		    
+		    // Triangle 2
+		    Return "Triangle 2"
+		    
+		  End If
+		  If (X > TriangleLeft(3) And X < TriangleRight(3)) And (Y > TriangleTop(3) And Y <  TriangleBottom(3)) then
+		    
+		    // Triangle 3
+		    Return "Triangle 3"
+		    
+		  End If
+		  If (X > TriangleLeft(4) And X < TriangleRight(4)) And (Y > TriangleTop(4) And Y <  TriangleBottom(4)) then
+		    
+		    // Triangle 4
+		    Return "Triangle 4"
+		    
+		  End If
+		  If (X > TriangleLeft(5) And X < TriangleRight(5)) And (Y > TriangleTop(5) And Y <  TriangleBottom(5)) then
+		    
+		    // Triangle 5
+		    Return "Triangle 5"
+		    
+		  End If
+		  If (X > TriangleLeft(6) And X < TriangleRight(6)) And (Y > TriangleTop(6) And Y <  TriangleBottom(6)) then
+		    
+		    // Triangle 6
+		    Return "Triangle 6"
+		    
+		  End If
+		  Dim LabelLeft,LabelRight,LabelTop,LabelBottom as integer
+		  
+		  LabelLeft = Label_Hour.Left
+		  LabelRight = Label_Hour.Left + Label_Hour.Width
+		  LabelTop = Label_Hour.Top
+		  LabelBottom = Label_Hour.Top + Label_Hour.Height
+		  If (X > LabelLeft And X < LabelRight) And (Y > LabelTop And Y < LabelBottom) Then
+		    Return "Label_Hour"
+		  End If
+		  
+		  LabelLeft = Label_Minute.Left
+		  LabelRight = Label_Minute.Left + Label_Minute.Width
+		  LabelTop = Label_Minute.Top
+		  LabelBottom = Label_Minute.Top + Label_Minute.Height
+		  If (X > LabelLeft And X < LabelRight) And (Y > LabelTop And Y < LabelBottom) Then
+		    Return "Label_Minute"
+		  End If
+		  
+		  LabelLeft = Label_Period.Left
+		  LabelRight = Label_Period.Left + Label_Period.Width
+		  LabelTop = Label_Period.Top
+		  LabelBottom = Label_Period.Top + Label_Period.Height
+		  If (X > LabelLeft And X < LabelRight) And (Y > LabelTop And Y < LabelBottom) Then
+		    Return "Label_Period"
+		  End If
+		  
+		  Return "None"
+		  
+		  
+		  
+		End Function
+	#tag EndMethod
 
 	#tag Method, Flags = &h0
 		Sub DrawArrows()
@@ -245,6 +432,180 @@ End
 	#tag EndMethod
 
 	#tag Method, Flags = &h0
+		Sub IncrementHour(UpDown as string)
+		  dim theHour as Integer
+		  
+		  
+		  theHour = Val(Label_Hour.Text)
+		  
+		  If UpDown = "Up" Then
+		    If theHour = 12 Then
+		      theHour = 1
+		    Else
+		      theHour = theHour + 1
+		    End If
+		  ElseIf UpDown = "Down" Then
+		    If theHour = 1 Then
+		      theHour = 12
+		    Else
+		      theHour = theHour - 1
+		    End If
+		  End If
+		  
+		  Label_Hour.Text = theHour.ToText
+		End Sub
+	#tag EndMethod
+
+	#tag Method, Flags = &h0
+		Sub IncrementMinute(UpDown as String)
+		  dim theMinute as Integer
+		  
+		  
+		  theMinute = Val(Label_Minute.Text)
+		  
+		  If UpDown = "Up" Then
+		    If theMinute = 59 Then
+		      theMinute = 1
+		    Else
+		      theMinute = theMinute + 1
+		    End If
+		  ElseIf UpDown = "Down" Then
+		    If theMinute = 1 Then
+		      theMinute = 59
+		    Else
+		      theMinute = theMinute - 1
+		    End If
+		  End If
+		  
+		  Label_Minute.Text = theMinute.ToText
+		End Sub
+	#tag EndMethod
+
+	#tag Method, Flags = &h0
+		Sub IncrementPeriod()
+		  dim thePeriod as String
+		  
+		  
+		  thePeriod = Label_Period.Text
+		  
+		  If Label_period.Text = "am" Then
+		    thePeriod = "pm"
+		  ElseIf Label_period.Text = "pm" Then
+		    thePeriod = "am"
+		  End If
+		  
+		  Label_Period.Text = thePeriod
+		End Sub
+	#tag EndMethod
+
+	#tag Method, Flags = &h0
+		Sub ResetStatus()
+		  // Triangle 1
+		  TriangleState(0) = "Normal"
+		  TriangleState(1) = "Normal"
+		  TriangleState(2) = "Normal"
+		  TriangleState(3) = "Normal"
+		  TriangleState(4) = "Normal"
+		  TriangleState(5) = "Normal"
+		  TriangleState(6) = "Normal"
+		  Label_Hour.state = "Normal"
+		  Label_Minute.state = "Normal"
+		  Label_period.state = "Normal"
+		End Sub
+	#tag EndMethod
+
+	#tag Method, Flags = &h0
+		Sub SetPartState(state as string, X as integer, Y as integer)
+		  
+		  ResetStatus
+		  
+		  
+		  // Check if the mouse is horizontaly in position
+		  Select Case DeterminePartClicked(X,Y)
+		  Case "Triangle 1"
+		    // Triangle 1
+		    TriangleState(1) = state
+		    if state = "Up" then
+		      IncrementHour("Up")
+		    end if
+		    
+		  Case "Triangle 2"
+		    
+		    // Triangle 2
+		    TriangleState(2) = state
+		    if state = "Up" then
+		      IncrementMinute("Up")
+		    end if
+		    
+		  Case "Triangle 3"
+		    
+		    // Triangle 3
+		    TriangleState(3) = state
+		    if state = "Up" then
+		      IncrementPeriod
+		    end if
+		    
+		  Case "Triangle 4"
+		    
+		    // Triangle 4
+		    TriangleState(4) = state
+		    if state = "Up" then
+		      IncrementHour("Down")
+		    end if
+		    
+		  Case "Triangle 5"
+		    
+		    // Triangle 5
+		    TriangleState(5) = state
+		    if state = "Up" then
+		      IncrementMinute("Down")
+		    end if
+		    
+		  Case "Triangle 6"
+		    
+		    // Triangle 6
+		    TriangleState(6) = state
+		    if state = "Up" then
+		      IncrementPeriod
+		    end if
+		    
+		  Case "Label_Hour"
+		    
+		    // Label_Hour
+		    Label_Hour.state = state
+		    if state = "Up" then
+		      ChangeHour
+		    end if
+		    
+		  Case "Label_Minute"
+		    
+		    // Label_Minute
+		    Label_Minute.state = state
+		    if state = "Up" then
+		      ChangeMinute
+		    end if
+		    
+		  Case "Label_Period"
+		    
+		    // Label_period
+		    Label_period.state = state
+		    if state = "Up" then
+		      ChangePeriod
+		    end if
+		    
+		  End Select
+		  
+		  if state = "Up" then
+		    ResetStatus
+		  end if
+		  
+		  DrawArrows
+		  
+		  
+		End Sub
+	#tag EndMethod
+
+	#tag Method, Flags = &h0
 		Sub SetShrunkArrowDown(state as string)
 		  
 		  // Lets crop the down arrow
@@ -261,7 +622,7 @@ End
 		  Case "Normal"
 		    p1 = arrow_down
 		  Case "Hover"
-		    p1 = arrow_down_24_white
+		    p1 = arrow_down_24_blue
 		  Case "Pressed"
 		    p1 = arrow_down_24_dark
 		  End Select
@@ -301,7 +662,7 @@ End
 		  Case "Normal"
 		    p1 = arrow_up
 		  Case "Hover"
-		    p1 = arrow_up_24_white
+		    p1 = arrow_up_24_blue
 		  Case "Pressed"
 		    p1 = arrow_up_24_dark
 		  End Select
@@ -381,7 +742,7 @@ End
 		  Case 1, 2, 3
 		    Return 2
 		  Case 4, 5, 6
-		    Return 27
+		    Return 28
 		  End Select
 		End Function
 	#tag EndMethod
@@ -402,83 +763,40 @@ End
 
 #tag EndWindowCode
 
-#tag Events Canvas_triangles
+#tag Events TextField_UserEdit
 	#tag Event
-		Sub Open()
-		  
-		End Sub
-	#tag EndEvent
-	#tag Event
-		Sub MouseEnter()
-		  
-		End Sub
-	#tag EndEvent
-	#tag Event
-		Sub MouseMove(X As Integer, Y As Integer)
-		  
-		  // Check if the mouse is horizontaly in position
-		  Select Case X
-		  Case TriangleLeft(1) To TriangleRight(1)
-		    Select Case Y
-		    Case TriangleTop(1) To TriangleBottom(1)
-		      
-		      // Triangle 1
-		      TriangleState(1) = "Hover"
-		      DrawArrows
-		      
-		    Case TriangleTop(4) To TriangleBottom(4)
-		      
-		      // Triangle 4
-		      TriangleState(4) = "Hover"
-		      DrawArrows
-		      
-		    End Select
-		  Case TriangleLeft(2) To TriangleRight(2)
-		    Select Case Y
-		    Case TriangleTop(2) To TriangleBottom(2)
-		      
-		      // Triangle 2
-		      TriangleState(2) = "Hover"
-		      DrawArrows
-		      
-		    Case TriangleTop(5) To TriangleBottom(5)
-		      
-		      // Triangle 5
-		      TriangleState(5) = "Hover"
-		      DrawArrows
-		      
-		    End Select
-		  Case TriangleLeft(3) To TriangleRight(3)
-		    Select Case Y
-		    Case TriangleTop(3) To TriangleBottom(3)
-		      
-		      // Triangle 3
-		      TriangleState(3) = "Hover"
-		      DrawArrows
-		      
-		    Case TriangleTop(6) To TriangleBottom(6)
-		      
-		      // Triangle 6
-		      TriangleState(6) = "Hover"
-		      DrawArrows
-		      
-		    End Select
-		  Else
-		    
-		    If TriangleState.IndexOf("Hover") > -1 Or TriangleState.IndexOf("Pressed") > -1 Then
-		      TriangleState(0) = "Normal"
-		      TriangleState(1) = "Normal"
-		      TriangleState(2) = "Normal"
-		      TriangleState(3) = "Normal"
-		      TriangleState(4) = "Normal"
-		      TriangleState(5) = "Normal"
-		      TriangleState(6) = "Normal"
-		      DrawArrows
-		    End If
-		    
+		Sub LostFocus()
+		  Select Case DeterminePartClicked(me.Left+1,me.Top+1)
+		  Case "Label_Hour"
+		    Label_Hour.Text = me.Text
+		  Case "Label_Minute"
+		    Label_Minute.Text = me.Text
+		  Case "Label_period"
+		    Label_period.Text = me.Text
 		  End Select
 		  
+		  me.Enabled = False
+		  me.Visible = False
+		  me.Text = ""
 		  
+		End Sub
+	#tag EndEvent
+	#tag Event
+		Sub KeyUp(Key As String)
+		  If key = Chr(13) Then
+		    Select Case DeterminePartClicked(me.Left+1,me.Top+1)
+		    Case "Label_Hour"
+		      Label_Hour.Text = me.Text
+		    Case "Label_Minute"
+		      Label_Minute.Text = me.Text
+		    Case "Label_period"
+		      Label_period.Text = me.Text
+		    End Select
+		    
+		    me.Enabled = False
+		    me.Visible = False
+		    me.Text = ""
+		  End If
 		End Sub
 	#tag EndEvent
 #tag EndEvents
