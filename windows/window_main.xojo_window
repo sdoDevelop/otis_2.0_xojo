@@ -51,7 +51,7 @@ Begin Window window_main
       InitialParent   =   ""
       InitialValue    =   ""
       Italic          =   False
-      Left            =   0
+      Left            =   1
       LockBottom      =   False
       LockedInPosition=   False
       LockLeft        =   True
@@ -87,7 +87,6 @@ Begin Window window_main
       Index           =   -2147483648
       InitialParent   =   ""
       Italic          =   False
-      last_click      =   0
       Left            =   286
       LockBottom      =   False
       LockedInPosition=   False
@@ -97,6 +96,7 @@ Begin Window window_main
       Multiline       =   False
       Scope           =   0
       Selectable      =   False
+      state           =   "Normal"
       TabIndex        =   1
       TabPanelIndex   =   0
       Text            =   "Untitled"
@@ -111,7 +111,7 @@ Begin Window window_main
       Visible         =   True
       Width           =   368
    End
-   Begin TextField textfield_event_name
+   Begin OtisTextField textfield_event_name
       AcceptTabs      =   False
       Alignment       =   0
       AutoDeactivate  =   True
@@ -153,38 +153,84 @@ Begin Window window_main
       Visible         =   False
       Width           =   288
    End
-   Begin date_container date_container1
-      AcceptFocus     =   False
-      AcceptTabs      =   True
+   Begin container_time EventStartTime
+      AcceptFocus     =   True
+      AcceptTabs      =   False
+      AllowTFLoseFocus=   True
       AutoDeactivate  =   True
       BackColor       =   &cFFFFFF00
       Backdrop        =   0
       Enabled         =   True
       EraseBackground =   True
       HasBackColor    =   False
-      Height          =   51
+      Height          =   40
       HelpTag         =   ""
       InitialParent   =   ""
-      Left            =   254
+      Left            =   226
       LockBottom      =   False
       LockedInPosition=   False
       LockLeft        =   True
       LockRight       =   False
       LockTop         =   True
       Scope           =   0
+      ShrunkArrowDown =   0
+      ShrunkArrowUp   =   0
       TabIndex        =   3
       TabPanelIndex   =   0
       TabStop         =   True
-      Top             =   139
+      Top             =   141
       Transparent     =   True
       UseFocusRing    =   False
       Visible         =   True
-      Width           =   81
+      Width           =   92
+   End
+   Begin container_time EventEndTime
+      AcceptFocus     =   True
+      AcceptTabs      =   False
+      AllowTFLoseFocus=   True
+      AutoDeactivate  =   True
+      BackColor       =   &cFFFFFF00
+      Backdrop        =   0
+      Enabled         =   True
+      EraseBackground =   True
+      HasBackColor    =   False
+      Height          =   40
+      HelpTag         =   ""
+      InitialParent   =   ""
+      Left            =   316
+      LockBottom      =   False
+      LockedInPosition=   False
+      LockLeft        =   True
+      LockRight       =   False
+      LockTop         =   True
+      Scope           =   0
+      ShrunkArrowDown =   0
+      ShrunkArrowUp   =   0
+      TabIndex        =   4
+      TabPanelIndex   =   0
+      TabStop         =   True
+      Top             =   141
+      Transparent     =   True
+      UseFocusRing    =   False
+      Visible         =   True
+      Width           =   92
    End
 End
 #tag EndWindow
 
 #tag WindowCode
+	#tag Event
+		Function KeyDown(Key As String) As Boolean
+		  Select Case key
+		  Case chr(9)
+		    
+		    AdvanceTab
+		    Return True
+		    
+		  End Select
+		End Function
+	#tag EndEvent
+
 	#tag Event
 		Sub Open()
 		  
@@ -208,12 +254,72 @@ End
 	#tag EndMenuHandler
 
 
+	#tag Method, Flags = &h0
+		Sub AdvanceTab()
+		  
+		  Select Case WhoHasFocus
+		  Case "EventStartTime"
+		    If EventStartTime.AdvanceTab Then
+		      
+		    Else
+		      'time picker has no more editable fields
+		      If EventEndTime.AdvanceTab Then
+		        
+		      End If
+		      
+		    End If
+		    
+		  Case "EventEndTime"
+		    If EventEndTime.AdvanceTab Then
+		      
+		    End If
+		  Else
+		    If EventStartTime.AdvanceTab Then
+		      
+		    End If
+		  End Select
+		End Sub
+	#tag EndMethod
+
+	#tag Method, Flags = &h0
+		Sub Untitled()
+		  
+		End Sub
+	#tag EndMethod
+
+	#tag Method, Flags = &h0
+		Sub Untitled1()
+		  
+		End Sub
+	#tag EndMethod
+
+	#tag Method, Flags = &h0
+		Sub Untitled3()
+		  
+		End Sub
+	#tag EndMethod
+
+	#tag Method, Flags = &h0
+		Function WhoHasFocus() As String
+		  If EventStartTime.IHaveFocus Then
+		    Return "EventStartTime"
+		  ElseIf EventEndTime.IHaveFocus Then
+		    Return "EventEndTime"
+		  End If
+		End Function
+	#tag EndMethod
+
+
 	#tag Property, Flags = &h0
 		pkid_events_ As String
 	#tag EndProperty
 
 	#tag Property, Flags = &h0
 		scripts As scripts_class
+	#tag EndProperty
+
+	#tag Property, Flags = &h0
+		Untitled2 As Integer
 	#tag EndProperty
 
 
@@ -312,7 +418,39 @@ End
 	#tag Event
 		Sub KeyUp(Key As String)
 		  if key = Chr(13) then
-		    me.Window.FocusNext
+		    dim db as otis_database_manager
+		    db = app.otis_db
+		    dim error as Boolean
+		    dim rs as RecordSet
+		    
+		    
+		    
+		    // save value to database
+		    
+		    
+		    
+		    // get rid of me
+		    me.Enabled = False
+		    me.Visible = False
+		    
+		    // check if the entered value is different than the label and if it is any text
+		    If me.Text <> label_event_name.Text And me.Text <> "" Then
+		      
+		      Try
+		        rs = db.execute( "Update", "events_", Array("name_"),Array("'" +me.Text + "'"),array("pkid = '" + pkid_events_ + "'"),"")
+		      Catch err as RuntimeException
+		        MsgBox("Error occured while updating event name")
+		        error = True
+		      End Try
+		      
+		      If Not error Then
+		        'set label to the name
+		        label_event_name.Text = me.Text
+		        scripts.load_event_listbox
+		        listbox_events.Index = scripts.GetEvent_Index_ByPkid(pkid_events_)
+		      End If
+		      
+		    End If
 		  end if
 		End Sub
 	#tag EndEvent

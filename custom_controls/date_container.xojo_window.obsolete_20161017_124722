@@ -98,7 +98,7 @@ Begin ContainerControl date_container
          Index           =   -2147483648
          InitialParent   =   "Canvas_triangles"
          Italic          =   False
-         Left            =   54
+         Left            =   57
          LockBottom      =   False
          LockedInPosition=   True
          LockLeft        =   True
@@ -204,7 +204,7 @@ Begin ContainerControl date_container
       CueText         =   ""
       DataField       =   ""
       DataSource      =   ""
-      Enabled         =   True
+      Enabled         =   False
       Format          =   ""
       Height          =   26
       HelpTag         =   ""
@@ -233,7 +233,7 @@ Begin ContainerControl date_container
       Top             =   20
       Underline       =   False
       UseFocusRing    =   True
-      Visible         =   True
+      Visible         =   False
       Width           =   30
    End
 End
@@ -251,6 +251,11 @@ End
 		Sub MouseExit()
 		  ResetStatus
 		  DrawArrows
+		  
+		  
+		  RaiseEvent SaveValue
+		  
+		  
 		End Sub
 	#tag EndEvent
 
@@ -287,7 +292,7 @@ End
 
 
 	#tag Method, Flags = &h0
-		Sub ChangeHour(optional value as string)
+		Sub ChangeHour()
 		  dim lb as otis_label = Label_Hour
 		  dim tf as TextField = TextField_UserEdit
 		  
@@ -297,12 +302,12 @@ End
 		  tf.Enabled = True
 		  tf.Text = lb.Text
 		  tf.SelectAll
-		  
+		  tf.SetFocus
 		End Sub
 	#tag EndMethod
 
 	#tag Method, Flags = &h0
-		Sub ChangeMinute(optional value as string)
+		Sub ChangeMinute()
 		  dim lb as otis_label = Label_Minute
 		  dim tf as TextField = TextField_UserEdit
 		  
@@ -312,11 +317,12 @@ End
 		  tf.Enabled = True
 		  tf.Text = lb.Text
 		  tf.SelectAll
+		  tf.SetFocus
 		End Sub
 	#tag EndMethod
 
 	#tag Method, Flags = &h0
-		Sub ChangePeriod(optional value as string)
+		Sub ChangePeriod()
 		  dim lb as otis_label = Label_period
 		  dim tf as TextField = TextField_UserEdit
 		  
@@ -326,43 +332,44 @@ End
 		  tf.Enabled = True
 		  tf.Text = lb.Text
 		  tf.SelectAll
+		  tf.SetFocus
 		End Sub
 	#tag EndMethod
 
 	#tag Method, Flags = &h0
 		Function DeterminePartClicked(X as integer, Y as integer) As string
 		  
-		  If (X > TriangleLeft(1) And X < TriangleRight(1)) And (Y > TriangleTop(1) And Y <  TriangleBottom(1)) then
+		  If (X >= TriangleLeft(1) And X <= TriangleRight(1)) And (Y >= TriangleTop(1) And Y <=  TriangleBottom(1)) then
 		    
 		    // Triangle 1
 		    Return "Triangle 1"
 		    
 		  End If
-		  If (X > TriangleLeft(2) And X < TriangleRight(2)) And (Y > TriangleTop(2) And Y <  TriangleBottom(2)) then
+		  If (X >= TriangleLeft(2) And X <= TriangleRight(2)) And (Y >= TriangleTop(2) And Y <=  TriangleBottom(2)) then
 		    
 		    // Triangle 2
 		    Return "Triangle 2"
 		    
 		  End If
-		  If (X > TriangleLeft(3) And X < TriangleRight(3)) And (Y > TriangleTop(3) And Y <  TriangleBottom(3)) then
+		  If (X >= TriangleLeft(3) And X <= TriangleRight(3)) And (Y >= TriangleTop(3) And Y <=  TriangleBottom(3)) then
 		    
 		    // Triangle 3
 		    Return "Triangle 3"
 		    
 		  End If
-		  If (X > TriangleLeft(4) And X < TriangleRight(4)) And (Y > TriangleTop(4) And Y <  TriangleBottom(4)) then
+		  If (X >= TriangleLeft(4) And X <= TriangleRight(4)) And (Y >= TriangleTop(4) And Y <=  TriangleBottom(4)) then
 		    
 		    // Triangle 4
 		    Return "Triangle 4"
 		    
 		  End If
-		  If (X > TriangleLeft(5) And X < TriangleRight(5)) And (Y > TriangleTop(5) And Y <  TriangleBottom(5)) then
+		  If (X >= TriangleLeft(5) And X <= TriangleRight(5)) And (Y >= TriangleTop(5) And Y <=  TriangleBottom(5)) then
 		    
 		    // Triangle 5
 		    Return "Triangle 5"
 		    
 		  End If
-		  If (X > TriangleLeft(6) And X < TriangleRight(6)) And (Y > TriangleTop(6) And Y <  TriangleBottom(6)) then
+		  If (X >= TriangleLeft(6) And X <= TriangleRight(6)) And (Y >= TriangleTop(6) And Y <=  TriangleBottom(6)) then
 		    
 		    // Triangle 6
 		    Return "Triangle 6"
@@ -374,7 +381,7 @@ End
 		  LabelRight = Label_Hour.Left + Label_Hour.Width
 		  LabelTop = Label_Hour.Top
 		  LabelBottom = Label_Hour.Top + Label_Hour.Height
-		  If (X > LabelLeft And X < LabelRight) And (Y > LabelTop And Y < LabelBottom) Then
+		  If (X >= LabelLeft And X <= LabelRight) And (Y >= LabelTop And Y <= LabelBottom) Then
 		    Return "Label_Hour"
 		  End If
 		  
@@ -382,7 +389,7 @@ End
 		  LabelRight = Label_Minute.Left + Label_Minute.Width
 		  LabelTop = Label_Minute.Top
 		  LabelBottom = Label_Minute.Top + Label_Minute.Height
-		  If (X > LabelLeft And X < LabelRight) And (Y > LabelTop And Y < LabelBottom) Then
+		  If (X >= LabelLeft And X <= LabelRight) And (Y >= LabelTop And Y <= LabelBottom) Then
 		    Return "Label_Minute"
 		  End If
 		  
@@ -390,7 +397,7 @@ End
 		  LabelRight = Label_Period.Left + Label_Period.Width
 		  LabelTop = Label_Period.Top
 		  LabelBottom = Label_Period.Top + Label_Period.Height
-		  If (X > LabelLeft And X < LabelRight) And (Y > LabelTop And Y < LabelBottom) Then
+		  If (X >= LabelLeft And X <= LabelRight) And (Y >= LabelTop And Y <= LabelBottom) Then
 		    Return "Label_Period"
 		  End If
 		  
@@ -413,7 +420,7 @@ End
 		  
 		  For i1 as integer = 1 To 6
 		    
-		     Select Case i1
+		    Select Case i1
 		    Case 1,2,3
 		      'draw up arrows
 		      SetShrunkArrowUp(TriangleState(i1))
@@ -748,6 +755,15 @@ End
 	#tag EndMethod
 
 
+	#tag Hook, Flags = &h0
+		Event SaveValue()
+	#tag EndHook
+
+
+	#tag Property, Flags = &h0
+		AllowTFLoseFocus As boolean = True
+	#tag EndProperty
+
 	#tag Property, Flags = &h0
 		ShrunkArrowDown As Picture
 	#tag EndProperty
@@ -766,31 +782,80 @@ End
 #tag Events TextField_UserEdit
 	#tag Event
 		Sub LostFocus()
-		  Select Case DeterminePartClicked(me.Left+1,me.Top+1)
-		  Case "Label_Hour"
-		    Label_Hour.Text = me.Text
-		  Case "Label_Minute"
-		    Label_Minute.Text = me.Text
-		  Case "Label_period"
-		    Label_period.Text = me.Text
-		  End Select
-		  
-		  me.Enabled = False
-		  me.Visible = False
-		  me.Text = ""
-		  
+		  If AllowTFLoseFocus Then
+		    Select Case DeterminePartClicked(me.Left+1,me.Top+1)
+		    Case "Label_Hour"
+		      If val(TextField_UserEdit.Text) > 0 And val(TextField_UserEdit.Text) < 13 Then
+		        Label_Hour.Text = me.Text
+		      Else
+		        AllowTFLoseFocus = False
+		        MsgBox("Enter a number between 1 and 12")
+		        Return
+		      End If
+		    Case "Label_Minute"
+		      If val(TextField_UserEdit.Text) > 0 And val(TextField_UserEdit.Text) < 60 Then
+		        Label_Minute.Text = me.Text
+		      Else
+		        AllowTFLoseFocus = False
+		        MsgBox("Enter a number between 1 and 59")
+		        Return
+		      End If
+		    Case "Label_period"
+		      If TextField_UserEdit.Text = "am" Then
+		        Label_period.Text = "am"
+		      ElseIf TextField_UserEdit.Text = "pm" Then
+		        Label_period.Text = "pm"
+		      Else
+		        AllowTFLoseFocus = False
+		        MsgBox("Enter a valid value: 'am' or 'pm'")
+		        Return
+		      End If
+		    End Select
+		    
+		    me.Enabled = False
+		    me.Visible = False
+		    me.Text = ""
+		    
+		  Else
+		    
+		    AllowTFLoseFocus = True
+		    
+		  End If
 		End Sub
 	#tag EndEvent
 	#tag Event
 		Sub KeyUp(Key As String)
+		  
+		  
 		  If key = Chr(13) Then
-		    Select Case DeterminePartClicked(me.Left+1,me.Top+1)
+		    Select Case DeterminePartClicked(me.Left+2,me.Top+2)
 		    Case "Label_Hour"
-		      Label_Hour.Text = me.Text
+		      If val(TextField_UserEdit.Text) > 0 And val(TextField_UserEdit.Text) < 13 Then
+		        Label_Hour.Text = me.Text
+		      Else
+		        AllowTFLoseFocus = False
+		        MsgBox("Enter a number between 1 and 12")
+		        Return
+		      End If
 		    Case "Label_Minute"
-		      Label_Minute.Text = me.Text
+		      If val(TextField_UserEdit.Text) > 0 And val(TextField_UserEdit.Text) < 60 Then
+		        Label_Minute.Text = me.Text
+		      Else
+		        AllowTFLoseFocus = False
+		        MsgBox("Enter a number between 1 and 59")
+		        Return
+		      End If
 		    Case "Label_period"
-		      Label_period.Text = me.Text
+		      
+		      If TextField_UserEdit.Text = "am" Then
+		        Label_period.Text = "am"
+		      ElseIf TextField_UserEdit.Text = "pm" Then
+		        Label_period.Text = "pm"
+		      Else
+		        AllowTFLoseFocus = False
+		        MsgBox("Enter a valid value: 'am' or 'pm'")
+		        Return
+		      End If
 		    End Select
 		    
 		    me.Enabled = False
@@ -816,6 +881,12 @@ End
 		InitialValue="True"
 		Type="Boolean"
 		EditorType="Boolean"
+	#tag EndViewProperty
+	#tag ViewProperty
+		Name="AllowTFLoseFocus"
+		Group="Behavior"
+		InitialValue="True"
+		Type="boolean"
 	#tag EndViewProperty
 	#tag ViewProperty
 		Name="AutoDeactivate"

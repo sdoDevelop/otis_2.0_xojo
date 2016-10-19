@@ -281,6 +281,7 @@ Protected Class otis_database_manager
 		  
 		  rs = remote_db.SQLSelect( "Select * From create_insert_statements();" )
 		  If remote_db.Error Then
+		    break
 		    err_manage("remote_db", remote_db.ErrorMessage)
 		  End If
 		  sql_string = rs.Field("create_insert_statements")
@@ -295,6 +296,7 @@ Protected Class otis_database_manager
 		    
 		    'check for errors
 		    If local_db.Error Then
+		      break
 		      err_manage( "local_db", "full_sync: " + local_db.ErrorMessage )
 		      errors = errors + 1
 		    End If
@@ -555,6 +557,25 @@ Protected Class otis_database_manager
 		    
 		    
 		End Function
+	#tag EndMethod
+
+	#tag Method, Flags = &h0
+		Sub SyncToServer(sql as string)
+		  
+		  
+		  If Not work_offline Then
+		    remote_db.SQLExecute(sql)
+		    If remote_db.Error Then
+		      MsgBox("Could Not Sync to server: " + remote_db.ErrorMessage)
+		    End If
+		    
+		  Else
+		    
+		    'we are offline log the querry to the querry database
+		    
+		    
+		  End If
+		End Sub
 	#tag EndMethod
 
 
