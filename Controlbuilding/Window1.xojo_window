@@ -1,6 +1,6 @@
 #tag Window
 Begin Window Window1
-   BackColor       =   &cFFFFFF00
+   BackColor       =   &c28282800
    Backdrop        =   0
    CloseButton     =   True
    Compatibility   =   ""
@@ -8,7 +8,7 @@ Begin Window Window1
    Frame           =   0
    FullScreen      =   False
    FullScreenButton=   False
-   HasBackColor    =   False
+   HasBackColor    =   True
    Height          =   400
    ImplicitInstance=   True
    LiveResize      =   True
@@ -26,42 +26,54 @@ Begin Window Window1
    Title           =   "Untitled"
    Visible         =   True
    Width           =   600
-   Begin ContainerTime ContainerTime1
+   Begin OtisTimeDate OtisTimeDate1
       AcceptFocus     =   True
       AcceptTabs      =   True
       AutoDeactivate  =   True
-      BackColor       =   
+      BackColor       =   &cFFFFFF00
       Backdrop        =   0
       Enabled         =   True
       EraseBackground =   True
       HasBackColor    =   False
       Height          =   40
       HelpTag         =   ""
-      Hour            =   0
-      Index           =   "-2147483648"
+      Index           =   -2147483648
       InitialParent   =   ""
-      Left            =   45
-      LockBottom      =   False
+      Left            =   20
+      LockBottom      =   True
       LockedInPosition=   False
       LockLeft        =   True
-      LockRight       =   False
+      LockRight       =   True
       LockTop         =   True
-      Minute          =   0
-      PeriodText      =   "pm"
-      Scope           =   "2"
+      Scope           =   0
       TabIndex        =   0
       TabPanelIndex   =   0
       TabStop         =   True
-      Top             =   125
+      Top             =   146
       Transparent     =   True
       UseFocusRing    =   True
       Visible         =   True
-      Width           =   75
+      Width           =   161
    End
 End
 #tag EndWindow
 
 #tag WindowCode
+	#tag Event
+		Function KeyDown(Key As String) As Boolean
+		  Select Case Key
+		  Case Chr(9)
+		    
+		    If Not OtisTimeDate1.AdvanceEdit Then
+		      
+		    End If
+		    
+		    Return True
+		  End Select
+		End Function
+	#tag EndEvent
+
+
 #tag EndWindowCode
 
 #tag ViewBehavior

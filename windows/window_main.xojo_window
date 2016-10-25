@@ -76,7 +76,7 @@ Begin Window window_main
       _ScrollOffset   =   0
       _ScrollWidth    =   -1
    End
-   Begin otis_label label_event_name
+   Begin OtisLabel label_event_name
       AutoDeactivate  =   True
       Bold            =   False
       DataField       =   ""
@@ -153,67 +153,33 @@ Begin Window window_main
       Visible         =   False
       Width           =   288
    End
-   Begin container_time EventStartTime
+   Begin EventDateTimes EventDateTimes1
       AcceptFocus     =   True
-      AcceptTabs      =   False
-      AllowTFLoseFocus=   True
+      AcceptTabs      =   True
       AutoDeactivate  =   True
       BackColor       =   &cFFFFFF00
       Backdrop        =   0
       Enabled         =   True
       EraseBackground =   True
       HasBackColor    =   False
-      Height          =   40
+      Height          =   48
       HelpTag         =   ""
       InitialParent   =   ""
-      Left            =   226
+      Left            =   314
       LockBottom      =   False
       LockedInPosition=   False
       LockLeft        =   True
       LockRight       =   False
       LockTop         =   True
       Scope           =   0
-      ShrunkArrowDown =   0
-      ShrunkArrowUp   =   0
       TabIndex        =   3
       TabPanelIndex   =   0
       TabStop         =   True
-      Top             =   141
+      Top             =   239
       Transparent     =   True
       UseFocusRing    =   False
       Visible         =   True
-      Width           =   92
-   End
-   Begin container_time EventEndTime
-      AcceptFocus     =   True
-      AcceptTabs      =   False
-      AllowTFLoseFocus=   True
-      AutoDeactivate  =   True
-      BackColor       =   &cFFFFFF00
-      Backdrop        =   0
-      Enabled         =   True
-      EraseBackground =   True
-      HasBackColor    =   False
-      Height          =   40
-      HelpTag         =   ""
-      InitialParent   =   ""
-      Left            =   316
-      LockBottom      =   False
-      LockedInPosition=   False
-      LockLeft        =   True
-      LockRight       =   False
-      LockTop         =   True
-      Scope           =   0
-      ShrunkArrowDown =   0
-      ShrunkArrowUp   =   0
-      TabIndex        =   4
-      TabPanelIndex   =   0
-      TabStop         =   True
-      Top             =   141
-      Transparent     =   True
-      UseFocusRing    =   False
-      Visible         =   True
-      Width           =   92
+      Width           =   160
    End
 End
 #tag EndWindow
@@ -222,11 +188,11 @@ End
 	#tag Event
 		Function KeyDown(Key As String) As Boolean
 		  Select Case key
-		  Case chr(9)
 		    
-		    AdvanceTab
-		    Return True
-		    
+		  Case chr(9) 
+		    If Not EventDateTimes1.AdvanceEdit Then
+		      
+		    End If
 		  End Select
 		End Function
 	#tag EndEvent
@@ -252,62 +218,6 @@ End
 			
 		End Function
 	#tag EndMenuHandler
-
-
-	#tag Method, Flags = &h0
-		Sub AdvanceTab()
-		  
-		  Select Case WhoHasFocus
-		  Case "EventStartTime"
-		    If EventStartTime.AdvanceTab Then
-		      
-		    Else
-		      'time picker has no more editable fields
-		      If EventEndTime.AdvanceTab Then
-		        
-		      End If
-		      
-		    End If
-		    
-		  Case "EventEndTime"
-		    If EventEndTime.AdvanceTab Then
-		      
-		    End If
-		  Else
-		    If EventStartTime.AdvanceTab Then
-		      
-		    End If
-		  End Select
-		End Sub
-	#tag EndMethod
-
-	#tag Method, Flags = &h0
-		Sub Untitled()
-		  
-		End Sub
-	#tag EndMethod
-
-	#tag Method, Flags = &h0
-		Sub Untitled1()
-		  
-		End Sub
-	#tag EndMethod
-
-	#tag Method, Flags = &h0
-		Sub Untitled3()
-		  
-		End Sub
-	#tag EndMethod
-
-	#tag Method, Flags = &h0
-		Function WhoHasFocus() As String
-		  If EventStartTime.IHaveFocus Then
-		    Return "EventStartTime"
-		  ElseIf EventEndTime.IHaveFocus Then
-		    Return "EventEndTime"
-		  End If
-		End Function
-	#tag EndMethod
 
 
 	#tag Property, Flags = &h0
@@ -670,6 +580,11 @@ End
 		Group="Frame"
 		InitialValue="Untitled"
 		Type="String"
+	#tag EndViewProperty
+	#tag ViewProperty
+		Name="Untitled2"
+		Group="Behavior"
+		Type="Integer"
 	#tag EndViewProperty
 	#tag ViewProperty
 		Name="Visible"

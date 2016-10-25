@@ -3,7 +3,10 @@ Protected Class App
 Inherits Application
 	#tag Event
 		Sub Open()
-		  login_scripts.start_script
+		  
+		  app.UseGDIPlus = True
+		  scripts = new scripts_class
+		  scripts.start_script
 		  window_main.Show
 		  
 		End Sub
@@ -27,6 +30,10 @@ Inherits Application
 
 	#tag Property, Flags = &h0
 		otis_db As otis_database_manager
+	#tag EndProperty
+
+	#tag Property, Flags = &h0
+		scripts As scripts_class
 	#tag EndProperty
 
 

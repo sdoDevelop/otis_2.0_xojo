@@ -1,26 +1,73 @@
 #tag Class
-Protected Class OtisTextField
-Inherits TextField
+Protected Class OtisCanvas
+Inherits Canvas
+	#tag Method, Flags = &h0
+		Function AdvanceMe() As Boolean
+		  Dim ReturnValue as Boolean
+		  
+		  
+		  If me IsA OtisTimePicker Then
+		    ReturnValue = OtisTimePicker(me).AdvanceEdit
+		  ElseIf me IsA OtisDatePicker Then
+		    ReturnValue = OtisDatePicker(me).AdvanceEdit
+		  End If
+		  
+		  If 1=2 Then //Not ReturnValue Then
+		    dim oc1 as OtisContainer = me.ParentContainer
+		    If oc1 <> Nil Then
+		      If Not oc1.AdvanceEdit Then
+		        
+		      End If
+		      
+		    End If
+		  End If
+		  
+		  Return ReturnValue
+		End Function
+	#tag EndMethod
+
+	#tag Method, Flags = &h0
+		Sub KillFocus()
+		  
+		  
+		  UniCloseUserEdit
+		End Sub
+	#tag EndMethod
+
+	#tag Method, Flags = &h0
+		Sub UniCloseUserEdit()
+		  
+		  
+		  If  me IsA OtisTimePicker Then
+		    OtisTimePicker(me).CloseUserEdit
+		  ElseIf me IsA OtisDatePicker Then
+		    OtisDatePicker(me).CloseUserEdit
+		  End If
+		End Sub
+	#tag EndMethod
+
+
+	#tag Property, Flags = &h0
+		CurrentEdit As String
+	#tag EndProperty
+
+	#tag Property, Flags = &h0
+		ParentContainer As OtisContainer
+	#tag EndProperty
+
+
 	#tag ViewBehavior
 		#tag ViewProperty
-			Name="AcceptTabs"
+			Name="AcceptFocus"
 			Visible=true
 			Group="Behavior"
 			Type="Boolean"
 		#tag EndViewProperty
 		#tag ViewProperty
-			Name="Alignment"
+			Name="AcceptTabs"
 			Visible=true
 			Group="Behavior"
-			InitialValue="0"
-			Type="Integer"
-			EditorType="Enum"
-			#tag EnumValues
-				"0 - Default"
-				"1 - Left"
-				"2 - Center"
-				"3 - Right"
-			#tag EndEnumValues
+			Type="Boolean"
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="AutoDeactivate"
@@ -30,52 +77,24 @@ Inherits TextField
 			Type="Boolean"
 		#tag EndViewProperty
 		#tag ViewProperty
-			Name="AutomaticallyCheckSpelling"
+			Name="Backdrop"
 			Visible=true
+			Group="Appearance"
+			Type="Picture"
+			EditorType="Picture"
+		#tag EndViewProperty
+		#tag ViewProperty
+			Name="CurrentEdit"
 			Group="Behavior"
-			InitialValue="False"
-			Type="boolean"
-		#tag EndViewProperty
-		#tag ViewProperty
-			Name="BackColor"
-			Visible=true
-			Group="Appearance"
-			InitialValue="&hFFFFFF"
-			Type="Color"
-		#tag EndViewProperty
-		#tag ViewProperty
-			Name="Bold"
-			Visible=true
-			Group="Font"
-			Type="Boolean"
-		#tag EndViewProperty
-		#tag ViewProperty
-			Name="Border"
-			Visible=true
-			Group="Appearance"
-			InitialValue="True"
-			Type="Boolean"
-		#tag EndViewProperty
-		#tag ViewProperty
-			Name="CueText"
-			Visible=true
-			Group="Initial State"
 			Type="String"
 			EditorType="MultiLineEditor"
 		#tag EndViewProperty
 		#tag ViewProperty
-			Name="DataField"
+			Name="DoubleBuffer"
 			Visible=true
-			Group="Database Binding"
-			Type="String"
-			EditorType="DataField"
-		#tag EndViewProperty
-		#tag ViewProperty
-			Name="DataSource"
-			Visible=true
-			Group="Database Binding"
-			Type="String"
-			EditorType="DataSource"
+			Group="Behavior"
+			InitialValue="False"
+			Type="Boolean"
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="Enabled"
@@ -85,16 +104,17 @@ Inherits TextField
 			Type="Boolean"
 		#tag EndViewProperty
 		#tag ViewProperty
-			Name="Format"
+			Name="EraseBackground"
 			Visible=true
-			Group="Appearance"
-			Type="String"
+			Group="Behavior"
+			InitialValue="True"
+			Type="Boolean"
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="Height"
 			Visible=true
 			Group="Position"
-			InitialValue="26"
+			InitialValue="100"
 			Type="Integer"
 		#tag EndViewProperty
 		#tag ViewProperty
@@ -112,22 +132,13 @@ Inherits TextField
 			EditorType="Integer"
 		#tag EndViewProperty
 		#tag ViewProperty
-			Name="Italic"
-			Visible=true
-			Group="Font"
-			Type="Boolean"
+			Name="InitialParent"
+			Type="String"
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="Left"
 			Visible=true
 			Group="Position"
-			Type="Integer"
-		#tag EndViewProperty
-		#tag ViewProperty
-			Name="LimitText"
-			Visible=true
-			Group="Behavior"
-			InitialValue="0"
 			Type="Integer"
 		#tag EndViewProperty
 		#tag ViewProperty
@@ -155,29 +166,11 @@ Inherits TextField
 			Type="Boolean"
 		#tag EndViewProperty
 		#tag ViewProperty
-			Name="Mask"
-			Visible=true
-			Group="Behavior"
-			Type="String"
-		#tag EndViewProperty
-		#tag ViewProperty
 			Name="Name"
 			Visible=true
 			Group="ID"
 			Type="String"
 			EditorType="String"
-		#tag EndViewProperty
-		#tag ViewProperty
-			Name="Password"
-			Visible=true
-			Group="Appearance"
-			Type="Boolean"
-		#tag EndViewProperty
-		#tag ViewProperty
-			Name="ReadOnly"
-			Visible=true
-			Group="Behavior"
-			Type="Boolean"
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="Super"
@@ -207,59 +200,18 @@ Inherits TextField
 			Type="Boolean"
 		#tag EndViewProperty
 		#tag ViewProperty
-			Name="Text"
-			Visible=true
-			Group="Initial State"
-			Type="String"
-			EditorType="MultiLineEditor"
-		#tag EndViewProperty
-		#tag ViewProperty
-			Name="TextColor"
-			Visible=true
-			Group="Appearance"
-			InitialValue="&h000000"
-			Type="Color"
-		#tag EndViewProperty
-		#tag ViewProperty
-			Name="TextFont"
-			Visible=true
-			Group="Font"
-			InitialValue="System"
-			Type="String"
-		#tag EndViewProperty
-		#tag ViewProperty
-			Name="TextSize"
-			Visible=true
-			Group="Font"
-			InitialValue="0"
-			Type="Single"
-		#tag EndViewProperty
-		#tag ViewProperty
-			Name="TextUnit"
-			Visible=true
-			Group="Font"
-			InitialValue="0"
-			Type="FontUnits"
-			EditorType="Enum"
-			#tag EnumValues
-				"0 - Default"
-				"1 - Pixel"
-				"2 - Point"
-				"3 - Inch"
-				"4 - Millimeter"
-			#tag EndEnumValues
-		#tag EndViewProperty
-		#tag ViewProperty
 			Name="Top"
 			Visible=true
 			Group="Position"
 			Type="Integer"
 		#tag EndViewProperty
 		#tag ViewProperty
-			Name="Underline"
+			Name="Transparent"
 			Visible=true
-			Group="Font"
+			Group="Behavior"
+			InitialValue="True"
 			Type="Boolean"
+			EditorType="Boolean"
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="UseFocusRing"
@@ -279,7 +231,7 @@ Inherits TextField
 			Name="Width"
 			Visible=true
 			Group="Position"
-			InitialValue="80"
+			InitialValue="100"
 			Type="Integer"
 		#tag EndViewProperty
 	#tag EndViewBehavior

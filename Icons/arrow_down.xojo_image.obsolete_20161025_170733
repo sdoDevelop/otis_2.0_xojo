@@ -1,9 +1,9 @@
 #tag MultiImage
 Image arrow_down
 	#tag ImageRepresentation
-		SaveInfo = APHRcwECAQAAAABCQzpcVXNlcnNcU2VhblxvdGlzXzIuMF94b2pvXGltZ1xUV0cgUmV0aW5hIEljb25zXGFycm93X2Rvd25fMjQucG5nAwAAAAABAAQAAAAAAQAAAAAAAAA=
-		FullPath = C:\Users\Sean\otis_2.0_xojo\img\TWG Retina Icons\arrow_down_24.png
-		PartialPath = img\TWG Retina Icons\arrow_down_24.png
+		SaveInfo = APHRcwECAQAAAAA3L2hvbWUvc2Vhbi9Eb3dubG9hZHMvVFdHIFJldGluYSBJY29ucy9hcnJvd19kb3duXzI0LnBuZwMAAAAAAQEEAAAAAAEAAAAAAAAA
+		FullPath = /home/sean/Downloads/TWG Retina Icons/arrow_down_24.png
+		PartialPath = ..\..\..\Downloads\TWG Retina Icons\arrow_down_24.png
 		#tag ImageSpecification
 			Comment = 
 			Device = 31

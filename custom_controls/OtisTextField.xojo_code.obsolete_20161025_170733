@@ -1,6 +1,11 @@
 #tag Class
 Protected Class OtisTextField
 Inherits TextField
+	#tag Hook, Flags = &h0
+		Event TabDown()
+	#tag EndHook
+
+
 	#tag ViewBehavior
 		#tag ViewProperty
 			Name="AcceptTabs"

@@ -137,6 +137,74 @@ Protected Class scripts_class
 		End Sub
 	#tag EndMethod
 
+	#tag Method, Flags = &h0
+		Sub start_script()
+		  // In this script we will be handling launcing all the necesarry methods to
+		  // Connect to the local database and create its structure 
+		  // Connect to the remote databse
+		  
+		  
+		  // Check for update
+		  
+		  dim f as new FolderItem 
+		  f = resource_management.get_filepath("otis_db_file")
+		  if f <> Nil Then
+		    if f.Exists Then
+		      f.Delete
+		    end if
+		  end if
+		  
+		  
+		  
+		  // Attempt connection to local database
+		  app.otis_db = new otis_database_manager
+		  Try 
+		    app.otis_db.connect_to_local
+		  Catch err as RuntimeException
+		    err_manage
+		    Return
+		  End Try
+		  
+		  // Check if the local database is initialized
+		  If Not app.otis_db.local_db.initialized Then
+		    
+		    'database not initialized we need to do so
+		    app.otis_db.initialize_local
+		  end if
+		  
+		  
+		  // Attempt Connection to remote database
+		  Try
+		    app.otis_db.connect_to_remote
+		  Catch err as RuntimeException
+		    err_manage( "remote_db", err.ErrorNumber, err.Message )
+		  End Try
+		  
+		  // Check the state of the data
+		  Select Case app.otis_db.data_state
+		  Case "full_sync"
+		    If app.otis_db.full_sync = 0 Then
+		      app.otis_db.work_offline = False
+		    Else
+		      MsgBox( "Errors occurred while doing a full sync from remote to local database" )
+		      app.otis_db.work_offline = False
+		    End If
+		  Case "half_sync"
+		    
+		  Case "offline"
+		    app.otis_db.work_offline = True
+		  Case "no_luck"
+		    
+		  End Select
+		  
+		  
+		  
+		  
+		  
+		  MsgBox( "running" )
+		End Sub
+	#tag EndMethod
+
 
 	#tag ViewBehavior
 		#tag ViewProperty

@@ -1,9 +1,8 @@
 #tag MultiImage
 Image arrow_up_48
 	#tag ImageRepresentation
-		SaveInfo = APHRcwECAQAAAAA1L2hvbWUvc2Vhbi9Eb3dubG9hZHMvVFdHIFJldGluYSBJY29ucy9hcnJvd191cF80OC5wbmcDAAAAAAEBBAAAAAABAAAAAAAAAA==
+		SaveInfo = APHRcwECAQAAAAA1L2hvbWUvc2Vhbi9Eb3dubG9hZHMvVFdHIFJldGluYSBJY29ucy9hcnJvd191cF80OC5wbmcDAAAAAAEABAAAAAABAAAAAAAAAA==
 		FullPath = /home/sean/Downloads/TWG Retina Icons/arrow_up_48.png
-		PartialPath = ..\..\..\Downloads\TWG Retina Icons\arrow_up_48.png
 		#tag ImageSpecification
 			Comment = 
 			Device = 31

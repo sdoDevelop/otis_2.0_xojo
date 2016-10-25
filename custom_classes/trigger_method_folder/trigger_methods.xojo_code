@@ -54,13 +54,18 @@ Protected Module trigger_methods
 		  c_set_up_dict
 		  method_names = c_trigger_exists
 		  
-		  If method_names.Ubound > -1 Then
+		  If method_names <> Nil Then
 		    
-		    For i1 as integer = 0 To method_names.Ubound
-		      dim caller as method_caller
-		      caller = method_directory.Value(method_names(i1))
-		      caller.Invoke
-		    Next
+		    If method_names.Ubound > -1 Then
+		      
+		      For i1 as integer = 0 To method_names.Ubound
+		        dim caller as method_caller
+		        caller = method_directory.Value(method_names(i1))
+		        caller.Invoke
+		      Next
+		      
+		    End If
+		    
 		    
 		  End If
 		End Function
@@ -88,50 +93,61 @@ Protected Module trigger_methods
 		  
 		  // get the contents of the trriggers file
 		  f = resource_management.get_filepath("triggers_file")
-		  tis = TextInputStream.open(f)
-		  textfile = tis.ReadAll
 		  
-		  // insert text file into json 
-		  triggers = new JSONItem(textfile)
-		  trigger_names = triggers.Names
-		  
-		  // loop through all of the triggers
-		  For i1 as integer = 0 To trigger_names.Ubound
-		    dim found as Boolean
-		    trigger = triggers.Value( trigger_names(i1) )
+		  If f.Exists then
+		    tis = TextInputStream.open(f)
 		    
-		    If trigger.Value("type") <> tg_library.type Then
-		      Continue
-		    End If
-		    If trigger.Value("when") <> tg_library.when Then
-		      Continue
-		    End If
-		    If trigger.Value("table") <> tg_library.table_name Then
-		      Continue
-		    End If
 		    
-		    dim trigger_columns() as string = Split( trigger.Value("columns"),",")
-		    If trigger_columns.Ubound > -1 Then
+		    textfile = tis.ReadAll
+		    
+		    // insert text file into json 
+		    triggers = new JSONItem(textfile)
+		    trigger_names = triggers.Names
+		    
+		    // loop through all of the triggers
+		    For i1 as integer = 0 To trigger_names.Ubound
+		      dim found as Boolean
+		      trigger = triggers.Value( trigger_names(i1) )
 		      
-		      For i2 as integer = 0 To tg_library.column_names.Ubound
-		        If trigger_columns.IndexOf(tg_library.column_names(i2)) = -1 Then
-		          Exit
-		        Else
-		          found = True
-		        End If
-		      Next
+		      If trigger.Value("type") <> tg_library.type Then
+		        Continue
+		      End If
+		      If trigger.Value("when") <> tg_library.when Then
+		        Continue
+		      End If
+		      If trigger.Value("table") <> tg_library.table_name Then
+		        Continue
+		      End If
 		      
-		    Else
-		      found = True
-		    End If
+		      dim trigger_columns() as string = Split( trigger.Value("columns"),",")
+		      If trigger_columns.Ubound > -1 Then
+		        
+		        For i2 as integer = 0 To tg_library.column_names.Ubound
+		          If trigger_columns.IndexOf(tg_library.column_names(i2)) = -1 Then
+		            Exit
+		          Else
+		            found = True
+		          End If
+		        Next
+		        
+		      Else
+		        found = True
+		      End If
+		      
+		      If found Then
+		        confirmed_triggers.Append(trigger.Value("method"))
+		      End If
+		      
+		    Next
 		    
-		    If found Then
-		      confirmed_triggers.Append(trigger.Value("method"))
-		    End If
 		    
-		  Next
+		    
+		    Return confirmed_triggers
+		  End If
 		  
-		  Return confirmed_triggers
+		  
+		  
+		  
 		End Function
 	#tag EndMethod
 
