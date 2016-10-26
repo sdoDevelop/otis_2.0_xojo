@@ -29,8 +29,12 @@ Inherits OtisCanvas
 
 	#tag Event
 		Function MouseDown(X As Integer, Y As Integer) As Boolean
+		  Dim theSection As String
 		  
-		  SetSectionState(FindPartByXY(X,Y),"Pressed")
+		  
+		  theSection = FindPartByXY(X,Y)
+		  SetSectionState(theSection,"Pressed")
+		  MouseDownSection = theSection
 		  
 		  Return True
 		End Function
@@ -68,10 +72,18 @@ Inherits OtisCanvas
 		  
 		  ZeroSectionStates
 		  
-		  thePart = FindPartByXY(X,Y)
-		  SetSectionState(thePart,"Hover")
-		  
-		  HandleEvents(thePart,"MouseUp")
+		  If X >= -1 And X <= me.Width And Y >=0 And Y <= me.Height Then
+		    
+		    thePart = FindPartByXY(X,Y)
+		    SetSectionState(thePart,"Hover")
+		    
+		    If thePart = MouseDownSection Then
+		      
+		      HandleEvents(thePart,"MouseUp")
+		      
+		    End If
+		    
+		  End If
 		  
 		End Sub
 	#tag EndEvent
@@ -98,8 +110,10 @@ Inherits OtisCanvas
 	#tag EndEvent
 
 	#tag Event
-		Sub Paint(g As Graphics, areas() As REALbasic.Rect)
+		Sub OtisPaint(g as Graphics)
 		  g = DrawCanvas(g)
+		  
+		  
 		End Sub
 	#tag EndEvent
 
@@ -314,16 +328,15 @@ Inherits OtisCanvas
 		End Function
 	#tag EndMethod
 
-	#tag Method, Flags = &h21
-		Private Function DrawBackground(GraphicObject as Graphics) As Graphics
+	#tag Method, Flags = &h0
+		Function DrawBackground(GraphicObject as Graphics) As Graphics
 		  Dim g1 as Graphics = GraphicObject
 		  
 		  
 		  If NotValid = True Then
-		    g1.Transparency = 50
-		    g1.ForeColor = get_color("Red",1)
-		    g1.FillRect(me.Left,me.Top,me.Width,me.Height)
-		    g1.Transparency = 0
+		    GoRed(g1)
+		  Else
+		    ResetBackground(g1)
 		  End If
 		  
 		  
@@ -371,7 +384,7 @@ Inherits OtisCanvas
 		  
 		  
 		  g1 = DrawBackground(g1)
-		  g1 = DrawBorders(g1)
+		  //g1 = DrawBorders(g1)
 		  
 		  g1 = DrawTextSection(g1,"MonthText")
 		  g1 = DrawTextSection(g1,"Seperator1")
@@ -774,7 +787,7 @@ Inherits OtisCanvas
 		Private Sub OpenUserEdit(EditingField as String)
 		  
 		  
-		  me.SetFocus
+		  
 		  
 		  If CurrentEdit <> "" Then
 		    CloseUserEdit
@@ -784,6 +797,7 @@ Inherits OtisCanvas
 		  CurrentEdit = EditingField
 		  ReDim ValueBuffer(-1)
 		  
+		  me.SetFocus
 		End Sub
 	#tag EndMethod
 
@@ -1029,7 +1043,7 @@ Inherits OtisCanvas
 		  
 		  
 		  // Check if this is valid
-		  If theDate.Month = MonthText Then
+		  If theDate.Month = MonthText And DateText <> 0 And YearText<> 0 Then
 		    
 		    NotValid = False
 		  Else
@@ -1046,7 +1060,7 @@ Inherits OtisCanvas
 		    
 		  Else
 		    
-		    MsgBox("notvalid")
+		    
 		    
 		  End If
 		End Sub
@@ -1167,6 +1181,10 @@ Inherits OtisCanvas
 
 	#tag Property, Flags = &h0
 		MonthText As Integer
+	#tag EndProperty
+
+	#tag Property, Flags = &h21
+		Private MouseDownSection As String
 	#tag EndProperty
 
 	#tag Property, Flags = &h21

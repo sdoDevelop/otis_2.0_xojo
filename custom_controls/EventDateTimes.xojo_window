@@ -1,7 +1,7 @@
 #tag Window
 Begin OtisContainer EventDateTimes
    AcceptFocus     =   False
-   AcceptTabs      =   True
+   AcceptTabs      =   False
    AutoDeactivate  =   True
    BackColor       =   &cFFFFFF00
    Backdrop        =   0
@@ -9,7 +9,7 @@ Begin OtisContainer EventDateTimes
    Enabled         =   True
    EraseBackground =   True
    HasBackColor    =   False
-   Height          =   48
+   Height          =   133
    HelpTag         =   ""
    InitialParent   =   ""
    Left            =   0
@@ -24,12 +24,77 @@ Begin OtisContainer EventDateTimes
    Transparent     =   True
    UseFocusRing    =   False
    Visible         =   True
-   Width           =   160
+   Width           =   335
+   Begin OtisDatePicker EventLoadOutDate
+      AcceptFocus     =   True
+      AcceptTabs      =   False
+      AutoDeactivate  =   True
+      Backdrop        =   0
+      CurrentEdit     =   ""
+      DateText        =   0
+      DoubleBuffer    =   False
+      Enabled         =   True
+      EraseBackground =   True
+      Height          =   40
+      HelpTag         =   ""
+      Index           =   -2147483648
+      InitialParent   =   ""
+      Left            =   247
+      LockBottom      =   False
+      LockedInPosition=   False
+      LockLeft        =   True
+      LockRight       =   False
+      LockTop         =   True
+      MonthText       =   0
+      Scope           =   0
+      TabIndex        =   13
+      TabPanelIndex   =   0
+      TabStop         =   True
+      Top             =   85
+      Transparent     =   True
+      UseFocusRing    =   True
+      Visible         =   True
+      Width           =   85
+      YearText        =   0
+   End
+   Begin OtisDatePicker EventLoadInDate
+      AcceptFocus     =   True
+      AcceptTabs      =   False
+      AutoDeactivate  =   True
+      Backdrop        =   0
+      CurrentEdit     =   ""
+      DateText        =   0
+      DoubleBuffer    =   False
+      Enabled         =   True
+      EraseBackground =   True
+      Height          =   40
+      HelpTag         =   ""
+      Index           =   -2147483648
+      InitialParent   =   ""
+      Left            =   247
+      LockBottom      =   False
+      LockedInPosition=   False
+      LockLeft        =   True
+      LockRight       =   False
+      LockTop         =   True
+      MonthText       =   0
+      Scope           =   0
+      TabIndex        =   14
+      TabPanelIndex   =   0
+      TabStop         =   True
+      Top             =   20
+      Transparent     =   True
+      UseFocusRing    =   True
+      Visible         =   True
+      Width           =   85
+      YearText        =   0
+   End
    Begin OtisTimePicker EventStartTime
       AcceptFocus     =   True
       AcceptTabs      =   False
       AutoDeactivate  =   True
       Backdrop        =   0
+      CurrentEdit     =   ""
       DoubleBuffer    =   False
       Enabled         =   True
       EraseBackground =   True
@@ -38,7 +103,7 @@ Begin OtisContainer EventDateTimes
       HourText        =   0
       Index           =   -2147483648
       InitialParent   =   ""
-      Left            =   0
+      Left            =   3
       LockBottom      =   False
       LockedInPosition=   False
       LockLeft        =   True
@@ -47,10 +112,10 @@ Begin OtisContainer EventDateTimes
       MinuteText      =   0
       PeriodText      =   "pm"
       Scope           =   0
-      TabIndex        =   0
+      TabIndex        =   15
       TabPanelIndex   =   0
       TabStop         =   True
-      Top             =   0
+      Top             =   20
       Transparent     =   True
       UseFocusRing    =   True
       Visible         =   True
@@ -61,6 +126,7 @@ Begin OtisContainer EventDateTimes
       AcceptTabs      =   False
       AutoDeactivate  =   True
       Backdrop        =   0
+      CurrentEdit     =   ""
       DateText        =   0
       DoubleBuffer    =   False
       Enabled         =   True
@@ -69,7 +135,7 @@ Begin OtisContainer EventDateTimes
       HelpTag         =   ""
       Index           =   -2147483648
       InitialParent   =   ""
-      Left            =   75
+      Left            =   80
       LockBottom      =   False
       LockedInPosition=   False
       LockLeft        =   True
@@ -77,20 +143,166 @@ Begin OtisContainer EventDateTimes
       LockTop         =   True
       MonthText       =   0
       Scope           =   0
-      TabIndex        =   1
+      TabIndex        =   16
       TabPanelIndex   =   0
       TabStop         =   True
-      Top             =   0
+      Top             =   20
       Transparent     =   True
       UseFocusRing    =   True
       Visible         =   True
       Width           =   85
       YearText        =   0
    End
+   Begin OtisTimePicker EventEndTime
+      AcceptFocus     =   True
+      AcceptTabs      =   False
+      AutoDeactivate  =   True
+      Backdrop        =   0
+      CurrentEdit     =   ""
+      DoubleBuffer    =   False
+      Enabled         =   True
+      EraseBackground =   True
+      Height          =   40
+      HelpTag         =   ""
+      HourText        =   0
+      Index           =   -2147483648
+      InitialParent   =   ""
+      Left            =   3
+      LockBottom      =   False
+      LockedInPosition=   False
+      LockLeft        =   True
+      LockRight       =   False
+      LockTop         =   True
+      MinuteText      =   0
+      PeriodText      =   "pm"
+      Scope           =   0
+      TabIndex        =   17
+      TabPanelIndex   =   0
+      TabStop         =   True
+      Top             =   85
+      Transparent     =   True
+      UseFocusRing    =   True
+      Visible         =   True
+      Width           =   75
+   End
+   Begin OtisDatePicker EventEndDate
+      AcceptFocus     =   True
+      AcceptTabs      =   False
+      AutoDeactivate  =   True
+      Backdrop        =   0
+      CurrentEdit     =   ""
+      DateText        =   0
+      DoubleBuffer    =   False
+      Enabled         =   True
+      EraseBackground =   True
+      Height          =   40
+      HelpTag         =   ""
+      Index           =   -2147483648
+      InitialParent   =   ""
+      Left            =   80
+      LockBottom      =   False
+      LockedInPosition=   False
+      LockLeft        =   True
+      LockRight       =   False
+      LockTop         =   True
+      MonthText       =   0
+      Scope           =   0
+      TabIndex        =   18
+      TabPanelIndex   =   0
+      TabStop         =   True
+      Top             =   85
+      Transparent     =   True
+      UseFocusRing    =   True
+      Visible         =   True
+      Width           =   85
+      YearText        =   0
+   End
+   Begin OtisTimePicker EventLoadInTime
+      AcceptFocus     =   True
+      AcceptTabs      =   False
+      AutoDeactivate  =   True
+      Backdrop        =   0
+      CurrentEdit     =   ""
+      DoubleBuffer    =   False
+      Enabled         =   True
+      EraseBackground =   True
+      Height          =   40
+      HelpTag         =   ""
+      HourText        =   0
+      Index           =   -2147483648
+      InitialParent   =   ""
+      Left            =   170
+      LockBottom      =   False
+      LockedInPosition=   False
+      LockLeft        =   True
+      LockRight       =   False
+      LockTop         =   True
+      MinuteText      =   0
+      PeriodText      =   "pm"
+      Scope           =   0
+      TabIndex        =   19
+      TabPanelIndex   =   0
+      TabStop         =   True
+      Top             =   20
+      Transparent     =   True
+      UseFocusRing    =   True
+      Visible         =   True
+      Width           =   75
+   End
+   Begin OtisTimePicker EventLoadOutTime
+      AcceptFocus     =   True
+      AcceptTabs      =   False
+      AutoDeactivate  =   True
+      Backdrop        =   0
+      CurrentEdit     =   ""
+      DoubleBuffer    =   False
+      Enabled         =   True
+      EraseBackground =   True
+      Height          =   40
+      HelpTag         =   ""
+      HourText        =   0
+      Index           =   -2147483648
+      InitialParent   =   ""
+      Left            =   170
+      LockBottom      =   False
+      LockedInPosition=   False
+      LockLeft        =   True
+      LockRight       =   False
+      LockTop         =   True
+      MinuteText      =   0
+      PeriodText      =   "pm"
+      Scope           =   0
+      TabIndex        =   20
+      TabPanelIndex   =   0
+      TabStop         =   True
+      Top             =   85
+      Transparent     =   True
+      UseFocusRing    =   True
+      Visible         =   True
+      Width           =   75
+   End
 End
 #tag EndWindow
 
 #tag WindowCode
+	#tag Method, Flags = &h0
+		Function DrawBackground(GraphicsObject as Graphics) As Graphics
+		  Dim TheCenter as integer
+		  Dim TheGapLeft,TheGapRight,TheGapHalf as integer
+		  Dim g1 as Graphics = GraphicsObject
+		  
+		  // Draw Lines
+		  g1.ForeColor = get_color("Gray",5)
+		  'vertical seperator
+		  TheGapLeft = EventStartDate.Left + EventStartDate.Width
+		  TheGapRight = EventLoadInTime.Left
+		  TheGapHalf = Floor( (TheGapRight - TheGapLeft) / 2 )
+		  TheCenter = TheGapLeft + TheGapHalf
+		  g1.DrawLine(TheCenter,0,TheCenter,Height)
+		End Function
+	#tag EndMethod
+
+
 #tag EndWindowCode
 
 #tag ViewBehavior

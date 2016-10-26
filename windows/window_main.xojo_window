@@ -154,18 +154,18 @@ Begin Window window_main
       Width           =   288
    End
    Begin EventDateTimes EventDateTimes1
-      AcceptFocus     =   True
-      AcceptTabs      =   True
+      AcceptFocus     =   False
+      AcceptTabs      =   False
       AutoDeactivate  =   True
       BackColor       =   &cFFFFFF00
       Backdrop        =   0
       Enabled         =   True
       EraseBackground =   True
       HasBackColor    =   False
-      Height          =   48
+      Height          =   133
       HelpTag         =   ""
       InitialParent   =   ""
-      Left            =   314
+      Left            =   250
       LockBottom      =   False
       LockedInPosition=   False
       LockLeft        =   True
@@ -175,11 +175,11 @@ Begin Window window_main
       TabIndex        =   3
       TabPanelIndex   =   0
       TabStop         =   True
-      Top             =   239
+      Top             =   189
       Transparent     =   True
       UseFocusRing    =   False
       Visible         =   True
-      Width           =   160
+      Width           =   335
    End
 End
 #tag EndWindow
@@ -193,6 +193,7 @@ End
 		    If Not EventDateTimes1.AdvanceEdit Then
 		      
 		    End If
+		    Return True
 		  End Select
 		End Function
 	#tag EndEvent
@@ -362,6 +363,18 @@ End
 		      
 		    End If
 		  end if
+		End Sub
+	#tag EndEvent
+#tag EndEvents
+#tag Events EventDateTimes1
+	#tag Event
+		Sub Paint(g As Graphics, areas() As REALbasic.Rect)
+		  
+		  g.ForeColor = get_color("Gray",2)
+		  g.FillRoundRect(0,0,me.Width,me.Height,6,6)
+		  
+		  
+		  
 		End Sub
 	#tag EndEvent
 #tag EndEvents

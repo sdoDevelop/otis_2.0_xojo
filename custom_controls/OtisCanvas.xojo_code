@@ -1,6 +1,21 @@
 #tag Class
 Protected Class OtisCanvas
 Inherits Canvas
+	#tag Event
+		Sub Paint(g As Graphics, areas() As REALbasic.Rect)
+		  
+		  
+		  // Draw Borders
+		  ResetBackground(g)
+		  
+		  
+		  
+		  // 
+		  RaiseEvent OtisPaint(g)
+		End Sub
+	#tag EndEvent
+
+
 	#tag Method, Flags = &h0
 		Function AdvanceMe() As Boolean
 		  Dim ReturnValue as Boolean
@@ -27,10 +42,40 @@ Inherits Canvas
 	#tag EndMethod
 
 	#tag Method, Flags = &h0
+		Sub GoRed(GraphicObject as Graphics)
+		  Dim g1 as Graphics = GraphicObject
+		  
+		  
+		  
+		  g1.Transparency = 50
+		  g1.ForeColor = get_color("Red",1)
+		  g1.FillRect(0,0,me.Width,me.Height)
+		  g1.Transparency = 0
+		  
+		  
+		  
+		  
+		End Sub
+	#tag EndMethod
+
+	#tag Method, Flags = &h0
 		Sub KillFocus()
 		  
 		  
 		  UniCloseUserEdit
+		End Sub
+	#tag EndMethod
+
+	#tag Method, Flags = &h0
+		Sub ResetBackground(GraphicsObject as Graphics)
+		  Dim g1 as Graphics = GraphicsObject
+		  
+		  
+		  
+		  
+		  
+		  g1.ForeColor = get_color("Gray",3)
+		  g1.FillRoundRect(0,0,me.Width,me.Height,2,2)
 		End Sub
 	#tag EndMethod
 
@@ -45,6 +90,11 @@ Inherits Canvas
 		  End If
 		End Sub
 	#tag EndMethod
+
+
+	#tag Hook, Flags = &h0
+		Event OtisPaint(g as Graphics)
+	#tag EndHook
 
 
 	#tag Property, Flags = &h0

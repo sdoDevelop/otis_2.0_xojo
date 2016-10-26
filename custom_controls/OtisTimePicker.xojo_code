@@ -5,6 +5,8 @@ Inherits OtisCanvas
 		Function KeyDown(Key As String) As Boolean
 		  
 		  
+		  
+		  
 		  If CurrentEdit <> "" Then
 		    
 		    If FilterInput(Key,CurrentEdit) Then
@@ -24,8 +26,12 @@ Inherits OtisCanvas
 
 	#tag Event
 		Function MouseDown(X As Integer, Y As Integer) As Boolean
+		  Dim theSection As String
 		  
-		  SetSectionState(FindPartByXY(X,Y),"Pressed")
+		  
+		  theSection = FindPartByXY(X,Y)
+		  SetSectionState(theSection,"Pressed")
+		  MouseDownSection = theSection
 		  
 		  Return True
 		End Function
@@ -63,10 +69,18 @@ Inherits OtisCanvas
 		  
 		  ZeroSectionStates
 		  
-		  thePart = FindPartByXY(X,Y)
-		  SetSectionState(thePart,"Hover")
-		  
-		  HandleEvents(thePart,"MouseUp")
+		  If X >= -1 And X <= me.Width And Y >=0 And Y <= me.Height Then
+		    
+		    thePart = FindPartByXY(X,Y)
+		    SetSectionState(thePart,"Hover")
+		    
+		    If thePart = MouseDownSection Then
+		      
+		      HandleEvents(thePart,"MouseUp")
+		      
+		    End If
+		    
+		  End If
 		  
 		End Sub
 	#tag EndEvent
@@ -93,7 +107,7 @@ Inherits OtisCanvas
 	#tag EndEvent
 
 	#tag Event
-		Sub Paint(g As Graphics, areas() As REALbasic.Rect)
+		Sub OtisPaint(g as Graphics)
 		  
 		  g = DrawCanvas(g)
 		End Sub
@@ -314,10 +328,9 @@ Inherits OtisCanvas
 		  
 		  
 		  If NotValid = True Then
-		    g1.Transparency = 50
-		    g1.ForeColor = get_color("Red",1)
-		    g1.FillRect(me.Left,me.Top,me.Width,me.Height)
-		    g1.Transparency = 0
+		    GoRed(g1)
+		  Else
+		    ResetBackground(g1)
 		  End If
 		  
 		  
@@ -365,7 +378,7 @@ Inherits OtisCanvas
 		  
 		  
 		  g1 = DrawBackground(g1)
-		  g1 = DrawBorders(g1)
+		  //g1 = DrawBorders(g1)
 		  
 		  g1 = DrawTextSection(g1,"HourText")
 		  g1 = DrawTextSection(g1,"ColonText")
@@ -996,6 +1009,7 @@ Inherits OtisCanvas
 		  theDate.Minute = MinuteText
 		  
 		  
+		  
 		  // Check if this is valid
 		  If theHour > 0 And MinuteText > 0 And (PeriodText = "am" Or PeriodText = "pm") Then
 		    If theHour < 24 And MinuteText < 60 Then
@@ -1015,7 +1029,7 @@ Inherits OtisCanvas
 		    
 		  Else
 		    
-		    MsgBox("notvalid")
+		    
 		    
 		  End If
 		End Sub
@@ -1136,6 +1150,10 @@ Inherits OtisCanvas
 
 	#tag Property, Flags = &h0
 		MinuteText As Integer
+	#tag EndProperty
+
+	#tag Property, Flags = &h21
+		Private MouseDownSection As String
 	#tag EndProperty
 
 	#tag Property, Flags = &h21
