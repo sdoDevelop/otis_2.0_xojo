@@ -44,6 +44,7 @@ Class=OtisCanvas;custom_controls/OtisCanvas.xojo_code;&h7B9C2FFF;&hD9BAFFF;false
 Window=EventDateTimes;custom_controls/EventDateTimes.xojo_window;&h2B3E1FFF;&hD9BAFFF;false
 MultiImage=arrow_down;Icons/arrow_down.xojo_image;&h35E327FF;&h272AAFFF;false
 MultiImage=arrow_up;Icons/arrow_up.xojo_image;&h49887FFF;&h272AAFFF;false
+Class=ExecuteReturn;custom_classes/database/ExecuteReturn.xojo_code;&h72E39FFF;&h1F2517FF;false
 AppMenuBar=MainMenuBar
 MajorVersion=1
 MinorVersion=0

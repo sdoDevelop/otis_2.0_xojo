@@ -15,49 +15,61 @@ Protected Class scripts_class
 
 	#tag Method, Flags = &h0
 		Function GetEvent_Index_ByPkid(pkid as string) As integer
+		  Dim lb1 as Listbox = window_main.listbox_events
 		  
+		  
+		  For i1 as integer = 1 To lb1.ListCount - 1
+		    
+		    Dim RowPKID as String
+		    RowPKID = lb1.RowTag(i1)
+		    
+		    If RowPKID = pkid Then
+		      Return i1
+		    End If
+		    
+		  Next
 		End Function
 	#tag EndMethod
 
 	#tag Method, Flags = &h0
 		Function load_event() As boolean
 		  dim db as otis_database_manager = app.otis_db
-		  dim lb as Listbox = window_main.listbox_events
+		  dim lb1 as Listbox = window_main.listbox_events
 		  dim rs as RecordSet
+		  Dim exre1 as New ExecuteReturn
 		  
 		  
-		  
-		  Try 
-		    rs = db.execute(_
-		    "Select", _
-		    "events_", _
-		    Array("pkid","name_","start_date","start_time","end_date","end_time","loadin_date","loadin_time","loadout_date","loadout_time","account_manager","details"),_
-		    Array(""),_
-		    Array(""),_
-		    "")
-		  Catch err as RuntimeException
-		    MsgBox("Could not load event")
-		    Return False
-		  End Try
-		  
-		  
-		  If rs <> Nil Then
+		  If lb1.ListIndex <> -1 Then
 		    
-		    window_main.pkid_events_ = rs.Field("pkid").StringValue
-		    If rs.Field("name_").StringValue <> "" Then window_main.label_event_name.Text = rs.Field("name_").StringValue Else window_main.label_event_name.Text = "Click Here To Name"
+		    // First we need to update the window event_pkid 
+		    Dim ThePKID as String
+		    ThePKID = lb1.RowTag(lb1.ListIndex)
+		    window_main.pkid_events_ = ThePKID
+		    
+		    // Load any extra controls
+		    exre1 = db.execute("Select","events_",_
+		    Split("name_,details",","),_
+		    Array(""),_
+		    Array("pkid = '" + ThePKID + "'") )
+		    
+		    'event name
+		    dim EventName as string = exre1.TheRecordSet.Field("name_").StringValue
+		    If EventName = "" Then
+		      EventName = "Click Here To Change"
+		    End If
+		    window_main.label_event_name.Text = EventName
+		    
+		    // Load the event date time container
+		    window_main.EventDateTimes1.LoadControls
+		    
 		    
 		    
 		  End If
 		  
 		  
 		  
-		  
-		  
-		  
-		  
-		  
-		  
 		  Return True
+		  
 		End Function
 	#tag EndMethod
 
@@ -66,6 +78,7 @@ Protected Class scripts_class
 		  dim rs as RecordSet
 		  dim db as otis_database_manager = app.otis_db
 		  dim lb as Listbox = window_main.listbox_events
+		  Dim exre1 as New ExecuteReturn
 		  
 		  
 		  
@@ -79,11 +92,15 @@ Protected Class scripts_class
 		  
 		  // Grab the event records
 		  Try
-		    rs = db.execute("Select","events_",Array("pkid","name_","start_date","start_time"),Array(""),Array(""),"")
+		    exre1 = db.execute("Select","events_",Array("pkid","name_","start_date","start_time"),Array(""),Array(""))
 		  Catch err as RuntimeException
 		    MsgBox("Could not load event listbox")
 		    Return
 		  End Try
+		  
+		  If exre1 <> Nil Then
+		    rs = exre1.TheRecordSet
+		  End If
 		  
 		  If rs <> Nil Then
 		    
@@ -99,6 +116,7 @@ Protected Class scripts_class
 		        lb.AddRow("Name","","")
 		      Else
 		        lb.AddRow(Array(name,start_date_,start_time_))
+		        lb.RowTag(i1) = rs.Field("pkid").StringValue
 		        rs.MoveNext
 		      End If
 		      
@@ -114,18 +132,22 @@ Protected Class scripts_class
 		  dim rs as RecordSet
 		  dim db as otis_database_manager = app.otis_db
 		  dim lb as listbox = window_main.listbox_events
-		  
+		  Dim exre1 as New ExecuteReturn
 		  
 		  
 		  
 		  Try
-		    rs = db.execute("Insert","events_",Array(""),Array(""),Array(""),"")
+		    exre1 = db.execute("Insert","events_",Array(""),Array(""),Array(""))
 		  Catch err as RuntimeException
 		    MsgBox("Could not create an event")
 		    Return
 		  End Try
 		  
-		  dim thepkid as string = rs.Field("pkid").StringValue
+		  If exre1 <> Nil Then
+		    rs = exre1.TheRecordSet
+		  End If
+		  
+		  dim thepkid as string = exre1.ThePKID
 		  window_main.pkid_events_ = thepkid
 		  
 		  load_event_listbox
@@ -133,7 +155,7 @@ Protected Class scripts_class
 		  
 		  
 		  
-		  lb.ListIndex = GetEvent_Index_ByPkid("thepkid")
+		  lb.ListIndex = GetEvent_Index_ByPkid(thepkid)
 		End Sub
 	#tag EndMethod
 
@@ -145,15 +167,24 @@ Protected Class scripts_class
 		  
 		  
 		  // Check for update
+		  ' ---tocome--
 		  
+		  
+		  // Try to delete database file
 		  dim f as new FolderItem 
 		  f = resource_management.get_filepath("otis_db_file")
 		  if f <> Nil Then
 		    if f.Exists Then
 		      f.Delete
+		      if f.LastErrorCode <> 0 Then
+		        'could not delete file
+		        err_manage( "local_db", "Could not delete sqlite database file" )
+		      end if
 		    end if
 		  end if
 		  
+		  // Perep triggers file
+		  trigger_methods.c_CreateTriggerFile
 		  
 		  
 		  // Attempt connection to local database

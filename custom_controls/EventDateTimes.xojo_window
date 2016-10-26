@@ -302,6 +302,70 @@ End
 		End Function
 	#tag EndMethod
 
+	#tag Method, Flags = &h0
+		Sub LoadControls()
+		  Dim rs1 as RecordSet
+		  Dim EndDate,EndTime,StartDate,StartTime,LoadinDate,LoadinTime,LoadoutDate,LoadoutTime As OtisDate
+		  Dim exre1 as New ExecuteReturn
+		  
+		  StartDate = New OtisDate
+		  EndDate = New OtisDate
+		  LoadinDate = New OtisDate
+		  LoadoutDate = New OtisDate
+		  
+		  StartTime = New OtisDate
+		  EndTime = New OtisDate
+		  LoadinTime = New OtisDate
+		  LoadoutTime = New OtisDate
+		  
+		  
+		  
+		  
+		  // Grab all of the information for Event Dates and Times from the localdb
+		  exre1 = app.otis_db.execute(_
+		  "Select","events_",_
+		  Split("start_time,end_time,loadin_time,loadout_time,start_date,end_date,loadin_date,loadout_date",","), _
+		  Array(""), _
+		  Array("pkid = '" + window_main.pkid_events_ + "'") )
+		  
+		  If exre1 <> Nil Then
+		    rs1 = exre1.TheRecordSet
+		  End If
+		  
+		  
+		  // Load the new found information into some date variables
+		  'dates
+		  StartDate.SQLDate = rs1.Field("start_date").StringValue
+		  EndDate.SQLDate = rs1.Field("end_date").StringValue
+		  LoadinDate.SQLDate = rs1.Field("loadin_date").StringValue
+		  LoadoutDate.SQLDate = rs1.Field("loadout_date").StringValue
+		  
+		  StartTime.SQLTime = rs1.Field("start_time").StringValue
+		  EndTime.SQLTime = rs1.Field("end_time").StringValue
+		  LoadinTime.SQLTime = rs1.Field("loadin_time").StringValue
+		  LoadoutTime.SQLTime = rs1.Field("loadout_time").StringValue
+		  
+		  EventStartDate.LoadControl(StartDate)
+		  EventEndDate.LoadControl(EndDate)
+		  EventLoadInDate.LoadControl(LoadinDate)
+		  EventLoadOutDate.LoadControl(LoadoutDate)
+		  
+		  EventStartTime.LoadControl(StartTime)
+		  EventEndTime.LoadControl(EndTime)
+		  EventLoadInTime.LoadControl(LoadinTime)
+		  EventLoadOutTime.LoadControl(LoadoutTime)
+		  
+		  
+		  
+		  Exception err as NilObjectException
+		    err_manage("EventDateTimes","A date or time is Null")
+		    
+		  Exception err as UnsupportedFormatException
+		    err_manage("EventDateTimes","A date or time is Null")
+		    
+		End Sub
+	#tag EndMethod
+
 
 #tag EndWindowCode
 

@@ -239,27 +239,35 @@ End
 #tag Events listbox_events
 	#tag Event
 		Sub Open()
-		  for i1 as integer = 0 to 10
-		    me.addRow
-		  next
+		  //for i1 as integer = 0 to 10
+		  //me.addRow
+		  //next
 		  
 		  
 		End Sub
 	#tag EndEvent
 	#tag Event
 		Function CellBackgroundPaint(g As Graphics, row As Integer, column As Integer) As Boolean
-		  If row Mod 2 = 0 Then
+		  If row = 0 Then
+		    g.ForeColor = get_color("Gray",2)
+		    g.FillRect(0,0,g.Width,g.Height)
+		  ElseIf row = me.ListIndex Then
+		    g.ForeColor = get_color("Blue",4)
+		    g.FillRect(0,0,g.Width,g.Height)
+		  ElseIf row Mod 2 = 0 Then
 		    g.ForeColor = get_color("Gray",5)
 		    g.FillRect(0, 0, g.Width, g.Height)
-		  End If
-		  If row Mod 2 = 1 Then
+		  Else
 		    g.ForeColor = get_color("Gray",4)
 		    g.FillRect(0, 0, g.Width, g.Height)
 		  End If
+		  
+		  Return True
 		End Function
 	#tag EndEvent
 	#tag Event
 		Sub Change()
+		  
 		  If scripts.load_event Then
 		    
 		  End If
@@ -295,6 +303,7 @@ End
 		  db = app.otis_db
 		  dim error as Boolean
 		  dim rs as RecordSet
+		  Dim exre1 as New ExecuteReturn
 		  
 		  
 		  
@@ -310,11 +319,15 @@ End
 		  If me.Text <> label_event_name.Text And me.Text <> "" Then
 		    
 		    Try
-		      rs = db.execute( "Update", "events_", Array("name_"),Array("'" +me.Text + "'"),array("pkid = '" + pkid_events_ + "'"),"")
+		      exre1 = db.execute( "Update", "events_", Array("name_"),Array("'" +me.Text + "'"),array("pkid = '" + pkid_events_ + "'"))
 		    Catch err as RuntimeException
 		      MsgBox("Error occured while updating event name")
 		      error = True
 		    End Try
+		    
+		    If exre1 <> Nil Then
+		      rs = exre1.TheRecordSet
+		    End If
 		    
 		    If Not error Then
 		      'set label to the name
@@ -333,6 +346,7 @@ End
 		    db = app.otis_db
 		    dim error as Boolean
 		    dim rs as RecordSet
+		    Dim exre1 as New ExecuteReturn
 		    
 		    
 		    
@@ -348,11 +362,15 @@ End
 		    If me.Text <> label_event_name.Text And me.Text <> "" Then
 		      
 		      Try
-		        rs = db.execute( "Update", "events_", Array("name_"),Array("'" +me.Text + "'"),array("pkid = '" + pkid_events_ + "'"),"")
+		        exre1 = db.execute( "Update", "events_", Array("name_"),Array("'" +me.Text + "'"),array("pkid = '" + pkid_events_ + "'"))
 		      Catch err as RuntimeException
 		        MsgBox("Error occured while updating event name")
 		        error = True
 		      End Try
+		      
+		      If exre1 <> Nil Then
+		        rs = exre1.TheRecordSet
+		      End If
 		      
 		      If Not error Then
 		        'set label to the name

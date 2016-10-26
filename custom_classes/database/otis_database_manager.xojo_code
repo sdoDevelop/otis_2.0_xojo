@@ -254,14 +254,41 @@ Protected Class otis_database_manager
 	#tag EndMethod
 
 	#tag Method, Flags = &h0
-		Function execute(querry_type as string, table as string, columns() as string, values() as string, conditions() as string, returning as string) As recordSet
+		Sub execute(querry_type as string, table as string, columns() as string, values() as string, conditions() as string)
 		  dim rs as RecordSet
+		  Dim exre1 as New ExecuteReturn
 		  
 		  
 		  
-		  rs = local_db.execute(querry_type,table,columns(),values(),conditions(),returning)
+		  exre1 = local_db.execute(querry_type,table,columns(),values(),conditions())
 		  
-		  Return rs
+		  If exre1 <> Nil Then
+		    rs = exre1.TheRecordSet
+		  End If
+		  
+		  
+		  
+		  Exception err as RuntimeException
+		    raise err
+		    
+		    
+		End Sub
+	#tag EndMethod
+
+	#tag Method, Flags = &h0
+		Function execute(querry_type as string, table as string, columns() as string, values() as string, conditions() as string) As ExecuteReturn
+		  dim rs as RecordSet
+		  Dim exre1 as New ExecuteReturn
+		  
+		  
+		  
+		  exre1 = local_db.execute(querry_type,table,columns(),values(),conditions())
+		  
+		  If exre1 <> Nil Then
+		    rs = exre1.TheRecordSet
+		  End If
+		  
+		  Return exre1
 		  
 		  Exception err as RuntimeException
 		    raise err

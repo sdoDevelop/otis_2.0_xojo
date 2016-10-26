@@ -1,6 +1,34 @@
 #tag Class
 Protected Class OtisDate
 Inherits Date
+	#tag Method, Flags = &h0
+		Function SQLTime() As String
+		  
+		  
+		  dim returnarray() as string
+		  
+		  returnarray = Split( me.SQLDateTime, " " )
+		  Return returnarray(1)
+		End Function
+	#tag EndMethod
+
+	#tag Method, Flags = &h0
+		Sub SQLTime(Assigns theTime as String)
+		  
+		  
+		  Dim theDate as New Date
+		  dim thesqldate as string
+		  dim thesqldatetime as string
+		  
+		  thesqldate = theDate.SQLDate
+		  
+		  thesqldatetime = thesqldate + " " + theTime
+		  
+		  me.SQLDateTime = thesqldatetime
+		End Sub
+	#tag EndMethod
+
+
 	#tag ViewBehavior
 		#tag ViewProperty
 			Name="AbbreviatedDate"

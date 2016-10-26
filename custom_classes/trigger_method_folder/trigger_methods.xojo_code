@@ -47,6 +47,63 @@ Protected Module trigger_methods
 	#tag EndMethod
 
 	#tag Method, Flags = &h0
+		Sub c_CreateTriggerFile()
+		  Dim Triggers as New JSONItem
+		  Dim TheTrigger as New JSONItem
+		  Dim f1 as FolderItem
+		  Dim tos1 as TextOutputStream
+		  Dim JSONSTRING as String
+		  
+		  
+		  // type,when,table,columns,method
+		  // testmet
+		  'TheTrigger.Clear
+		  'TheTrigger.Value("type") = "Select"
+		  'TheTrigger.Value("when") = "After"
+		  'TheTrigger.Value("table") = "events_"
+		  'TheTrigger.Value("columns") = ""
+		  'TheTrigger.Value("method") = "testmet"
+		  
+		  // Put into Triggers
+		  'Triggers.Value("testmet") = TheTrigger
+		  
+		  // type,when,table,columns,method
+		  // testmet
+		  TheTrigger.Clear
+		  TheTrigger.Value("type") = "Insert"
+		  TheTrigger.Value("when") = "After"
+		  TheTrigger.Value("table") = "events_"
+		  TheTrigger.Value("columns") = ""
+		  TheTrigger.Value("method") = "InsertTrigger_events_"
+		  
+		  // Put into Triggers
+		  Triggers.Value("InsertTrigger_events_") = TheTrigger
+		  
+		  
+		  
+		  
+		  
+		  // Write to file
+		  JSONSTRING = Triggers.ToString
+		  
+		  f1 = resource_management.get_filepath("triggers_file")
+		  
+		  If f1 <> Nil Then
+		    
+		    Try
+		      tos1 = TextOutputStream.Create(f1)
+		      tos1.Write(JSONSTRING)
+		      tos1 = Nil
+		    Catch err as IOException
+		      err_manage("TriggerWrite", "Error writing trigger file")
+		    End Try
+		    
+		  End If
+		  
+		End Sub
+	#tag EndMethod
+
+	#tag Method, Flags = &h0
 		Function c_execute_triggers() As boolean
 		  dim method_names() as string
 		  
@@ -73,8 +130,13 @@ Protected Module trigger_methods
 
 	#tag Method, Flags = &h0
 		Sub c_set_up_dict()
+		  
+		  
 		  method_directory = new Dictionary
 		  method_directory.Value("testmet") = AddressOf trigger_methods.testmet
+		  
+		  method_directory = new Dictionary
+		  method_directory.Value("InsertTrigger_events_") = AddressOf trigger_methods.InsertTrigger_events_
 		  
 		  
 		End Sub
@@ -90,6 +152,10 @@ Protected Module trigger_methods
 		  dim trigger_names() as string
 		  dim confirmed_triggers() as string
 		  
+		  
+		  If Not AllowTriggers Then
+		    Return Nil
+		  End If
 		  
 		  // get the contents of the trriggers file
 		  f = resource_management.get_filepath("triggers_file")
@@ -120,7 +186,7 @@ Protected Module trigger_methods
 		      End If
 		      
 		      dim trigger_columns() as string = Split( trigger.Value("columns"),",")
-		      If trigger_columns.Ubound > -1 Then
+		      If trigger_columns.Ubound > -1 And trigger_columns(0) <> "" Then
 		        
 		        For i2 as integer = 0 To tg_library.column_names.Ubound
 		          If trigger_columns.IndexOf(tg_library.column_names(i2)) = -1 Then
@@ -151,6 +217,51 @@ Protected Module trigger_methods
 		End Function
 	#tag EndMethod
 
+	#tag Method, Flags = &h0
+		Sub InsertTrigger_events_()
+		  // Insert,After,"",
+		  
+		  Dim TodaysDate as New OtisDate
+		  Dim NewPKID as String
+		  Dim TheDate,TheTime,TheTimeStamp as String
+		  
+		  
+		  AllowTriggers = False
+		  
+		  
+		  NewPKID = tg_library.new_rs.Field("pkid").StringValue
+		  
+		  // Set Date and Time fields
+		  TheDate = TodaysDate.SQLDate
+		  TheTime = TodaysDate.SQLTime
+		  TheTimeStamp = TodaysDate.SQLDateTime
+		  
+		  Dim TheColumnsArray(),TheColumns As String
+		  Dim TheValuesArray(), TheValues as String
+		  
+		  // Put single quotes on all values
+		  TheValuesArray = Array(TheTime,TheTime,TheTime,TheTime,TheDate,TheDate,TheDate,TheDate)
+		  TheValues = "'" + Join( TheValuesArray,"','" ) + "'"
+		  TheValuesArray = Split( TheValues,",")
+		  
+		  app.otis_db.execute(_
+		  "Update",_
+		  "events_",_
+		  Split( "start_time,end_time,loadin_time,loadout_time,start_date,end_date,loadin_date,loadout_date",","),_
+		  TheValuesArray,_
+		  Array("pkid = '" + NewPKID + "'" ) )
+		  
+		  
+		  
+		  
+		  
+		  
+		  
+		  
+		  AllowTriggers = True
+		End Sub
+	#tag EndMethod
+
 	#tag DelegateDeclaration, Flags = &h0
 		Delegate Sub method_caller()
 	#tag EndDelegateDeclaration
@@ -161,6 +272,10 @@ Protected Module trigger_methods
 		End Sub
 	#tag EndMethod
 
+
+	#tag Property, Flags = &h1
+		Protected AllowTriggers As Boolean = True
+	#tag EndProperty
 
 	#tag Property, Flags = &h0
 		method_directory As dictionary

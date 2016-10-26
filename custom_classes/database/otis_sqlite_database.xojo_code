@@ -60,7 +60,7 @@ Inherits SQLiteDatabase
 	#tag EndMethod
 
 	#tag Method, Flags = &h0
-		Function execute(querry_type as string, table as string, columns() as string, values() as string, conditions() as string, returning as string) As recordSet
+		Function execute(querry_type as string, table as string, columns() as string, values() as string, conditions() as string) As ExecuteReturn
 		  // querry_type = Insert, Update, Delete, Select
 		  // tables = ex. "contacts, contact_venue_data"
 		  // columns
@@ -75,6 +75,8 @@ Inherits SQLiteDatabase
 		  dim sql_string as string
 		  dim the_date as new date
 		  dim rs as RecordSet
+		  Dim exre1 as New ExecuteReturn
+		  
 		  
 		  
 		  
@@ -157,6 +159,7 @@ Inherits SQLiteDatabase
 		    End If
 		    
 		    dim theNewUUID as string = NewUUID
+		    exre1.ThePKID = theNewUUID
 		    mod_values.Append("'" + theNewUUID + "'")
 		    mod_values.Append("'" + the_date.SQLDateTime + "'")
 		    mod_values.Append("'" + the_date.SQLDateTime + "'")
@@ -167,8 +170,9 @@ Inherits SQLiteDatabase
 		    End If
 		    
 		    // execute our sql
-		    sql_string = "Insert Into " + table_string + " (" + column_string + ") " + "Values( " + value_string + ") Returning pkid;"
-		    rs = SQLSelect(sql_string)
+		    sql_string = "Insert Into " + table_string + " (" + column_string + ") " + "Values( " + value_string + ");"
+		    SQLExecute(sql_string)
+		    exre1.ThePKID = theNewUUID
 		    If Error Then
 		      dim err as new RuntimeException
 		      err.Message = ErrorMessage
@@ -178,6 +182,15 @@ Inherits SQLiteDatabase
 		      'Sync back to the server
 		      App.otis_db.SyncToServer(sql_string)
 		    End If
+		    
+		    //Fill the tg_library.new_rs
+		    sql = "Select * From " + table_string + " Where pkid = '" + theNewUUID + "';"
+		    
+		    tg_library.new_rs = SQLSelect(sql)
+		    If Error Then
+		      err_manage("local_db", ErrorMessage)
+		    End If
+		    
 		    
 		    // perform any after tasks
 		    ' set up our tg_library
@@ -232,6 +245,14 @@ Inherits SQLiteDatabase
 		      App.otis_db.SyncToServer(sql_string)
 		    End If
 		    
+		    //Fill the tg_library.new_rs
+		    sql = "Select * From " + table_string + condition_string + ";"
+		    
+		    tg_library.new_rs = SQLSelect(sql)
+		    If Error Then
+		      err_manage("local_db", ErrorMessage)
+		    End If
+		    
 		    
 		    // perform any after tasks
 		    ' set up our tg_library
@@ -278,7 +299,8 @@ Inherits SQLiteDatabase
 		  End Select
 		  
 		  
-		  Return rs
+		  exre1.TheRecordSet = rs
+		  Return exre1
 		  
 		  
 		  
