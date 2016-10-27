@@ -1,6 +1,6 @@
 #tag Class
 Protected Class OtisCanvas
-Inherits Canvas
+Inherits BaseCanvas
 	#tag Event
 		Sub Paint(g As Graphics, areas() As REALbasic.Rect)
 		  
@@ -72,9 +72,7 @@ Inherits Canvas
 		  
 		  
 		  
-		  
-		  
-		  g1.ForeColor = get_color("Gray",3)
+		  g1.ForeColor = get_color("Gray",4)
 		  g1.FillRoundRect(0,0,me.Width,me.Height,2,2)
 		End Sub
 	#tag EndMethod
@@ -134,10 +132,40 @@ Inherits Canvas
 			EditorType="Picture"
 		#tag EndViewProperty
 		#tag ViewProperty
+			Name="BackgroundColor"
+			Group="Behavior"
+			InitialValue="&c000000"
+			Type="Color"
+		#tag EndViewProperty
+		#tag ViewProperty
+			Name="CornerHeight"
+			Group="Behavior"
+			Type="Integer"
+		#tag EndViewProperty
+		#tag ViewProperty
+			Name="CornerWidth"
+			Group="Behavior"
+			Type="Integer"
+		#tag EndViewProperty
+		#tag ViewProperty
 			Name="CurrentEdit"
 			Group="Behavior"
 			Type="String"
 			EditorType="MultiLineEditor"
+		#tag EndViewProperty
+		#tag ViewProperty
+			Name="DefaultHeight"
+			Visible=true
+			Group="Position"
+			InitialValue="100"
+			Type="Double"
+		#tag EndViewProperty
+		#tag ViewProperty
+			Name="DefaultWidth"
+			Visible=true
+			Group="Position"
+			InitialValue="100"
+			Type="Double"
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="DoubleBuffer"
@@ -166,6 +194,11 @@ Inherits Canvas
 			Group="Position"
 			InitialValue="100"
 			Type="Integer"
+		#tag EndViewProperty
+		#tag ViewProperty
+			Name="HeightIsFixed"
+			Group="Behavior"
+			Type="Boolean"
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="HelpTag"
@@ -216,11 +249,26 @@ Inherits Canvas
 			Type="Boolean"
 		#tag EndViewProperty
 		#tag ViewProperty
+			Name="MaxHeight"
+			Group="Behavior"
+			Type="Integer"
+		#tag EndViewProperty
+		#tag ViewProperty
+			Name="MaxWidth"
+			Group="Behavior"
+			Type="Integer"
+		#tag EndViewProperty
+		#tag ViewProperty
 			Name="Name"
 			Visible=true
 			Group="ID"
 			Type="String"
 			EditorType="String"
+		#tag EndViewProperty
+		#tag ViewProperty
+			Name="RoundCorners"
+			Group="Behavior"
+			Type="Boolean"
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="Super"
@@ -283,6 +331,11 @@ Inherits Canvas
 			Group="Position"
 			InitialValue="100"
 			Type="Integer"
+		#tag EndViewProperty
+		#tag ViewProperty
+			Name="WidthIsFixed"
+			Group="Behavior"
+			Type="Boolean"
 		#tag EndViewProperty
 	#tag EndViewBehavior
 End Class

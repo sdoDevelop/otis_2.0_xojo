@@ -26,56 +26,6 @@ Begin Window window_main
    Title           =   "Untitled"
    Visible         =   True
    Width           =   938
-   Begin Listbox listbox_events
-      AutoDeactivate  =   True
-      AutoHideScrollbars=   True
-      Bold            =   False
-      Border          =   False
-      ColumnCount     =   1
-      ColumnsResizable=   True
-      ColumnWidths    =   ""
-      DataField       =   ""
-      DataSource      =   ""
-      DefaultRowHeight=   -1
-      Enabled         =   True
-      EnableDrag      =   True
-      EnableDragReorder=   False
-      GridLinesHorizontal=   0
-      GridLinesVertical=   0
-      HasHeading      =   False
-      HeadingIndex    =   -1
-      Height          =   510
-      HelpTag         =   ""
-      Hierarchical    =   True
-      Index           =   -2147483648
-      InitialParent   =   ""
-      InitialValue    =   ""
-      Italic          =   False
-      Left            =   1
-      LockBottom      =   False
-      LockedInPosition=   False
-      LockLeft        =   True
-      LockRight       =   False
-      LockTop         =   True
-      RequiresSelection=   False
-      Scope           =   0
-      ScrollbarHorizontal=   False
-      ScrollBarVertical=   True
-      SelectionType   =   1
-      TabIndex        =   0
-      TabPanelIndex   =   0
-      TabStop         =   True
-      TextFont        =   "FreeSerif"
-      TextSize        =   0.0
-      TextUnit        =   0
-      Top             =   60
-      Underline       =   False
-      UseFocusRing    =   True
-      Visible         =   True
-      Width           =   185
-      _ScrollOffset   =   0
-      _ScrollWidth    =   -1
-   End
    Begin OtisLabel label_event_name
       AutoDeactivate  =   True
       Bold            =   False
@@ -160,12 +110,12 @@ Begin Window window_main
       BackColor       =   &cFFFFFF00
       Backdrop        =   0
       Enabled         =   True
-      EraseBackground =   True
+      EraseBackground =   False
       HasBackColor    =   False
       Height          =   133
       HelpTag         =   ""
       InitialParent   =   ""
-      Left            =   250
+      Left            =   217
       LockBottom      =   False
       LockedInPosition=   False
       LockLeft        =   True
@@ -175,11 +125,44 @@ Begin Window window_main
       TabIndex        =   3
       TabPanelIndex   =   0
       TabStop         =   True
-      Top             =   189
-      Transparent     =   True
+      Top             =   116
+      Transparent     =   False
       UseFocusRing    =   False
       Visible         =   True
       Width           =   335
+   End
+   Begin ListboxContainer ListboxContainer_EventList
+      AcceptFocus     =   False
+      AcceptTabs      =   True
+      AutoDeactivate  =   True
+      BackColor       =   &cFFFFFF00
+      Backdrop        =   0
+      Enabled         =   True
+      EraseBackground =   False
+      HasBackColor    =   False
+      HeaderBackgroundColor=   &c00000000
+      HeaderBaseColor =   &c00000000
+      HeaderHeight    =   0
+      HeaderTextColor =   &c00000000
+      Height          =   528
+      HelpTag         =   ""
+      InitialParent   =   ""
+      Left            =   0
+      LockBottom      =   False
+      LockedInPosition=   False
+      LockLeft        =   True
+      LockRight       =   False
+      LockTop         =   True
+      Scope           =   0
+      TabIndex        =   4
+      TabPanelIndex   =   0
+      TabStop         =   True
+      Top             =   42
+      Transparent     =   False
+      Untitled        =   0
+      UseFocusRing    =   False
+      Visible         =   True
+      Width           =   205
    End
 End
 #tag EndWindow
@@ -202,10 +185,17 @@ End
 		Sub Open()
 		  
 		  
-		  me.BackColor = get_color("Gray",1)
+		  me.BackColor = get_color("Gray",0)
 		  scripts = new scripts_class
 		  
 		  scripts.load_event_listbox
+		End Sub
+	#tag EndEvent
+
+	#tag Event
+		Sub Resizing()
+		  
+		  me.ResizeControls
 		End Sub
 	#tag EndEvent
 
@@ -219,6 +209,97 @@ End
 			
 		End Function
 	#tag EndMenuHandler
+
+
+	#tag Method, Flags = &h0
+		Sub ResizeControls()
+		  Dim DefaultWidth as double
+		  dim MaxWidth as integer
+		  dim WidthIsFixed as Boolean
+		  Dim Events_ListboxRight as integer
+		  Dim RunningLeft as integer
+		  
+		  
+		  // Start with the events listbox
+		  DefaultWidth = 0.22
+		  MaxWidth = -1
+		  WidthIsFixed = False
+		  Events_ListboxRight = ResizeSpecificWidth(ListboxContainer_EventList,RunningLeft,DefaultWidth,MaxWidth,WidthIsFixed,me.Width)
+		  
+		  
+		  // Now all the controls that line up along the listbox
+		  
+		  ' add a gap between listbox and next controls
+		  RunningLeft = Events_ListboxRight + 8
+		  
+		  // EventDateTimes1
+		  DefaultWidth = 0.40
+		  MaxWidth = -1
+		  WidthIsFixed = False
+		  Events_ListboxRight = ResizeSpecificWidth(EventDateTimes1,RunningLeft,DefaultWidth,MaxWidth,WidthIsFixed,me.Width)
+		  
+		  
+		  ListboxContainer_EventList.Refresh
+		  EventDateTimes1.Refresh
+		  EventDateTimes1.RefreshControls
+		End Sub
+	#tag EndMethod
+
+	#tag Method, Flags = &h0
+		Sub ResizeSpecificWidth(TheControl as Variant, RunningLeft as integer, DefaultWidth as double, MaxWidth as integer, WidthIsFixed as Boolean,TotalWidth as integer)
+		  
+		  
+		  Dim x1 as integer
+		  
+		  x1 = ResizeSpecificWidth(TheControl,RunningLeft,DefaultWidth,MaxWidth,WidthIsFixed,TotalWidth)
+		End Sub
+	#tag EndMethod
+
+	#tag Method, Flags = &h0
+		Function ResizeSpecificWidth(TheControl as Variant, RunningLeft as integer, DefaultWidth as double, MaxWidth as integer, WidthIsFixed as Boolean,TotalWidth as integer) As integer
+		  
+		  
+		  
+		  Dim x1 as integer
+		  Dim theValue as integer
+		  Dim theReturn as integer
+		  
+		  If WidthIsFixed Then
+		    theValue = DefaultWidth
+		  Else
+		    
+		    x1 = DefaultWidth * TotalWidth
+		    
+		    If MaxWidth = -1 Then
+		      theValue = x1
+		    Else
+		      If x1 > MaxWidth Then
+		        theValue = MaxWidth
+		      Else
+		        theValue = x1
+		      End If
+		    End If
+		  End If
+		  
+		  
+		  
+		  If TheControl IsA ListboxContainer Then
+		    
+		    ListboxContainer(TheControl).Left = RunningLeft
+		    ListboxContainer(TheControl).Width = theValue
+		    
+		  ElseIf TheControl IsA EventDateTimes Then
+		    
+		    EventDateTimes(TheControl).Left = RunningLeft
+		    EventDateTimes(TheControl).Width = theValue
+		    
+		  End If
+		  
+		  theReturn = RunningLeft + theValue
+		  
+		  Return theReturn
+		End Function
+	#tag EndMethod
 
 
 	#tag Property, Flags = &h0
@@ -236,44 +317,6 @@ End
 
 #tag EndWindowCode
 
-#tag Events listbox_events
-	#tag Event
-		Sub Open()
-		  //for i1 as integer = 0 to 10
-		  //me.addRow
-		  //next
-		  
-		  
-		End Sub
-	#tag EndEvent
-	#tag Event
-		Function CellBackgroundPaint(g As Graphics, row As Integer, column As Integer) As Boolean
-		  If row = 0 Then
-		    g.ForeColor = get_color("Gray",2)
-		    g.FillRect(0,0,g.Width,g.Height)
-		  ElseIf row = me.ListIndex Then
-		    g.ForeColor = get_color("Blue",4)
-		    g.FillRect(0,0,g.Width,g.Height)
-		  ElseIf row Mod 2 = 0 Then
-		    g.ForeColor = get_color("Gray",5)
-		    g.FillRect(0, 0, g.Width, g.Height)
-		  Else
-		    g.ForeColor = get_color("Gray",4)
-		    g.FillRect(0, 0, g.Width, g.Height)
-		  End If
-		  
-		  Return True
-		End Function
-	#tag EndEvent
-	#tag Event
-		Sub Change()
-		  
-		  If scripts.load_event Then
-		    
-		  End If
-		End Sub
-	#tag EndEvent
-#tag EndEvents
 #tag Events label_event_name
 	#tag Event
 		Sub MouseEnter()
@@ -333,7 +376,7 @@ End
 		      'set label to the name
 		      label_event_name.Text = me.Text
 		      scripts.load_event_listbox
-		      listbox_events.Index = scripts.GetEvent_Index_ByPkid(pkid_events_)
+		      ListboxContainer_EventList.TheListbox.Index = scripts.GetEvent_Index_ByPkid(pkid_events_)
 		    End If
 		    
 		  End If
@@ -376,7 +419,7 @@ End
 		        'set label to the name
 		        label_event_name.Text = me.Text
 		        scripts.load_event_listbox
-		        listbox_events.Index = scripts.GetEvent_Index_ByPkid(pkid_events_)
+		        ListboxContainer_EventList.TheListbox.Index = scripts.GetEvent_Index_ByPkid(pkid_events_)
 		      End If
 		      
 		    End If
@@ -388,11 +431,18 @@ End
 	#tag Event
 		Sub Paint(g As Graphics, areas() As REALbasic.Rect)
 		  
-		  g.ForeColor = get_color("Gray",2)
+		  g.ForeColor = get_color("Gray",3)
 		  g.FillRoundRect(0,0,me.Width,me.Height,6,6)
 		  
 		  
 		  
+		End Sub
+	#tag EndEvent
+	#tag Event
+		Sub Resizing()
+		  
+		  
+		  me.RefreshControls
 		End Sub
 	#tag EndEvent
 #tag EndEvents

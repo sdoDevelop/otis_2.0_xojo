@@ -15,10 +15,10 @@ Protected Class scripts_class
 
 	#tag Method, Flags = &h0
 		Function GetEvent_Index_ByPkid(pkid as string) As integer
-		  Dim lb1 as Listbox = window_main.listbox_events
+		  Dim lb1 as Listbox = window_main.ListboxContainer_EventList.TheListbox
 		  
 		  
-		  For i1 as integer = 1 To lb1.ListCount - 1
+		  For i1 as integer = 0 To lb1.ListCount - 1
 		    
 		    Dim RowPKID as String
 		    RowPKID = lb1.RowTag(i1)
@@ -34,7 +34,7 @@ Protected Class scripts_class
 	#tag Method, Flags = &h0
 		Function load_event() As boolean
 		  dim db as otis_database_manager = app.otis_db
-		  dim lb1 as Listbox = window_main.listbox_events
+		  dim lb1 as Listbox = window_main.ListboxContainer_EventList.TheListbox
 		  dim rs as RecordSet
 		  Dim exre1 as New ExecuteReturn
 		  
@@ -77,7 +77,7 @@ Protected Class scripts_class
 		Sub load_event_listbox()
 		  dim rs as RecordSet
 		  dim db as otis_database_manager = app.otis_db
-		  dim lb as Listbox = window_main.listbox_events
+		  dim lb as Listbox = window_main.ListboxContainer_EventList.TheListbox
 		  Dim exre1 as New ExecuteReturn
 		  
 		  
@@ -131,7 +131,7 @@ Protected Class scripts_class
 		Sub new_event()
 		  dim rs as RecordSet
 		  dim db as otis_database_manager = app.otis_db
-		  dim lb as listbox = window_main.listbox_events
+		  dim lb as listbox = window_main.ListboxContainer_EventList.TheListbox
 		  Dim exre1 as New ExecuteReturn
 		  
 		  

@@ -8,19 +8,19 @@ Protected Module color_module
 		  Select Case base_color
 		  Case "Blue"
 		    
-		    c = RGB(13,78,146)
+		    c = &c011C38
 		    colors.Append(c)
 		    
-		    c = RGB(11,68,127)
+		    c = &c042C55
 		    colors.Append(c)
 		    
-		    c = RGB(23,136,255)
+		    c = &c07396C
 		    colors.Append(c)
 		    
-		    c = RGB(3,18,33)
+		    c = &c0E4782
 		    colors.Append(c)
 		    
-		    c = RGB(20,123,229)
+		    c = &c255E99
 		    colors.Append(c)
 		    
 		  Case "Red"
@@ -46,13 +46,19 @@ Protected Module color_module
 		    c = RGB(38,38,38)
 		    colors.Append(c)
 		    
-		    c = RGB(65,65,65)
+		    c = RGB(48,48,48)
 		    colors.Append(c)
 		    
-		    c = RGB(75,75,75)
+		    c = RGB(58,58,58)
 		    colors.Append(c)
 		    
-		    c = RGB(135,135,135)
+		    c = RGB(68,68,68)
+		    colors.Append(c)
+		    
+		    c = RGB(78,78,78)
+		    colors.Append(c)
+		    
+		    c = RGB(138,138,138)
 		    colors.Append(c)
 		    
 		    c = RGB(145,145,145)

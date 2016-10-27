@@ -15,6 +15,9 @@ Image arrow_up
 		#tag EndImageSpecification
 	#tag EndImageRepresentation
 	#tag ImageRepresentation
+		SaveInfo = APHRcwECAQAAAABAQzpcVXNlcnNcU2VhblxvdGlzXzIuMF94b2pvXGltZ1xUV0cgUmV0aW5hIEljb25zXGFycm93X3VwXzQ4LnBuZwMAAAAAAQAEAAAAAAEAAAAAAAAA
+		FullPath = C:\Users\Sean\otis_2.0_xojo\img\TWG Retina Icons\arrow_up_48.png
+		PartialPath = img\TWG Retina Icons\arrow_up_48.png
 		#tag ImageSpecification
 			Comment = 
 			Device = 31

@@ -30,8 +30,13 @@ Begin OtisContainer EventDateTimes
       AcceptTabs      =   False
       AutoDeactivate  =   True
       Backdrop        =   0
+      BackgroundColor =   &c00000000
+      CornerHeight    =   0
+      CornerWidth     =   0
       CurrentEdit     =   ""
       DateText        =   0
+      DefaultHeight   =   100.0
+      DefaultWidth    =   100.0
       DoubleBuffer    =   False
       Enabled         =   True
       EraseBackground =   True
@@ -45,12 +50,14 @@ Begin OtisContainer EventDateTimes
       LockLeft        =   True
       LockRight       =   False
       LockTop         =   True
+      MaxHeight       =   0
+      MaxWidth        =   0
       MonthText       =   0
       Scope           =   0
       TabIndex        =   13
       TabPanelIndex   =   0
       TabStop         =   True
-      Top             =   85
+      Top             =   89
       Transparent     =   True
       UseFocusRing    =   True
       Visible         =   True
@@ -62,8 +69,13 @@ Begin OtisContainer EventDateTimes
       AcceptTabs      =   False
       AutoDeactivate  =   True
       Backdrop        =   0
+      BackgroundColor =   &c00000000
+      CornerHeight    =   0
+      CornerWidth     =   0
       CurrentEdit     =   ""
       DateText        =   0
+      DefaultHeight   =   100.0
+      DefaultWidth    =   100.0
       DoubleBuffer    =   False
       Enabled         =   True
       EraseBackground =   True
@@ -77,12 +89,14 @@ Begin OtisContainer EventDateTimes
       LockLeft        =   True
       LockRight       =   False
       LockTop         =   True
+      MaxHeight       =   0
+      MaxWidth        =   0
       MonthText       =   0
       Scope           =   0
       TabIndex        =   14
       TabPanelIndex   =   0
       TabStop         =   True
-      Top             =   20
+      Top             =   24
       Transparent     =   True
       UseFocusRing    =   True
       Visible         =   True
@@ -94,7 +108,12 @@ Begin OtisContainer EventDateTimes
       AcceptTabs      =   False
       AutoDeactivate  =   True
       Backdrop        =   0
+      BackgroundColor =   &c00000000
+      CornerHeight    =   0
+      CornerWidth     =   0
       CurrentEdit     =   ""
+      DefaultHeight   =   100.0
+      DefaultWidth    =   100.0
       DoubleBuffer    =   False
       Enabled         =   True
       EraseBackground =   True
@@ -109,13 +128,15 @@ Begin OtisContainer EventDateTimes
       LockLeft        =   True
       LockRight       =   False
       LockTop         =   True
+      MaxHeight       =   0
+      MaxWidth        =   0
       MinuteText      =   0
       PeriodText      =   "pm"
       Scope           =   0
       TabIndex        =   15
       TabPanelIndex   =   0
       TabStop         =   True
-      Top             =   20
+      Top             =   24
       Transparent     =   True
       UseFocusRing    =   True
       Visible         =   True
@@ -126,8 +147,13 @@ Begin OtisContainer EventDateTimes
       AcceptTabs      =   False
       AutoDeactivate  =   True
       Backdrop        =   0
+      BackgroundColor =   &c00000000
+      CornerHeight    =   0
+      CornerWidth     =   0
       CurrentEdit     =   ""
       DateText        =   0
+      DefaultHeight   =   100.0
+      DefaultWidth    =   100.0
       DoubleBuffer    =   False
       Enabled         =   True
       EraseBackground =   True
@@ -141,12 +167,14 @@ Begin OtisContainer EventDateTimes
       LockLeft        =   True
       LockRight       =   False
       LockTop         =   True
+      MaxHeight       =   0
+      MaxWidth        =   0
       MonthText       =   0
       Scope           =   0
       TabIndex        =   16
       TabPanelIndex   =   0
       TabStop         =   True
-      Top             =   20
+      Top             =   24
       Transparent     =   True
       UseFocusRing    =   True
       Visible         =   True
@@ -158,7 +186,12 @@ Begin OtisContainer EventDateTimes
       AcceptTabs      =   False
       AutoDeactivate  =   True
       Backdrop        =   0
+      BackgroundColor =   &c00000000
+      CornerHeight    =   0
+      CornerWidth     =   0
       CurrentEdit     =   ""
+      DefaultHeight   =   100.0
+      DefaultWidth    =   100.0
       DoubleBuffer    =   False
       Enabled         =   True
       EraseBackground =   True
@@ -173,13 +206,15 @@ Begin OtisContainer EventDateTimes
       LockLeft        =   True
       LockRight       =   False
       LockTop         =   True
+      MaxHeight       =   0
+      MaxWidth        =   0
       MinuteText      =   0
       PeriodText      =   "pm"
       Scope           =   0
       TabIndex        =   17
       TabPanelIndex   =   0
       TabStop         =   True
-      Top             =   85
+      Top             =   89
       Transparent     =   True
       UseFocusRing    =   True
       Visible         =   True
@@ -190,8 +225,13 @@ Begin OtisContainer EventDateTimes
       AcceptTabs      =   False
       AutoDeactivate  =   True
       Backdrop        =   0
+      BackgroundColor =   &c00000000
+      CornerHeight    =   0
+      CornerWidth     =   0
       CurrentEdit     =   ""
       DateText        =   0
+      DefaultHeight   =   100.0
+      DefaultWidth    =   100.0
       DoubleBuffer    =   False
       Enabled         =   True
       EraseBackground =   True
@@ -205,12 +245,14 @@ Begin OtisContainer EventDateTimes
       LockLeft        =   True
       LockRight       =   False
       LockTop         =   True
+      MaxHeight       =   0
+      MaxWidth        =   0
       MonthText       =   0
       Scope           =   0
       TabIndex        =   18
       TabPanelIndex   =   0
       TabStop         =   True
-      Top             =   85
+      Top             =   89
       Transparent     =   True
       UseFocusRing    =   True
       Visible         =   True
@@ -222,7 +264,12 @@ Begin OtisContainer EventDateTimes
       AcceptTabs      =   False
       AutoDeactivate  =   True
       Backdrop        =   0
+      BackgroundColor =   &c00000000
+      CornerHeight    =   0
+      CornerWidth     =   0
       CurrentEdit     =   ""
+      DefaultHeight   =   100.0
+      DefaultWidth    =   100.0
       DoubleBuffer    =   False
       Enabled         =   True
       EraseBackground =   True
@@ -237,13 +284,15 @@ Begin OtisContainer EventDateTimes
       LockLeft        =   True
       LockRight       =   False
       LockTop         =   True
+      MaxHeight       =   0
+      MaxWidth        =   0
       MinuteText      =   0
       PeriodText      =   "pm"
       Scope           =   0
       TabIndex        =   19
       TabPanelIndex   =   0
       TabStop         =   True
-      Top             =   20
+      Top             =   24
       Transparent     =   True
       UseFocusRing    =   True
       Visible         =   True
@@ -254,7 +303,12 @@ Begin OtisContainer EventDateTimes
       AcceptTabs      =   False
       AutoDeactivate  =   True
       Backdrop        =   0
+      BackgroundColor =   &c00000000
+      CornerHeight    =   0
+      CornerWidth     =   0
       CurrentEdit     =   ""
+      DefaultHeight   =   100.0
+      DefaultWidth    =   100.0
       DoubleBuffer    =   False
       Enabled         =   True
       EraseBackground =   True
@@ -269,17 +323,159 @@ Begin OtisContainer EventDateTimes
       LockLeft        =   True
       LockRight       =   False
       LockTop         =   True
+      MaxHeight       =   0
+      MaxWidth        =   0
       MinuteText      =   0
       PeriodText      =   "pm"
       Scope           =   0
       TabIndex        =   20
       TabPanelIndex   =   0
       TabStop         =   True
-      Top             =   85
+      Top             =   89
       Transparent     =   True
       UseFocusRing    =   True
       Visible         =   True
       Width           =   75
+   End
+   Begin BaseCanvas StartLabel
+      AcceptFocus     =   False
+      AcceptTabs      =   False
+      AutoDeactivate  =   True
+      Backdrop        =   0
+      BackgroundColor =   &c00000000
+      CornerHeight    =   0
+      CornerWidth     =   0
+      DefaultHeight   =   100.0
+      DefaultWidth    =   100.0
+      DoubleBuffer    =   False
+      Enabled         =   True
+      EraseBackground =   True
+      Height          =   20
+      HelpTag         =   ""
+      Index           =   -2147483648
+      InitialParent   =   ""
+      Left            =   3
+      LockBottom      =   False
+      LockedInPosition=   False
+      LockLeft        =   True
+      LockRight       =   False
+      LockTop         =   True
+      MaxHeight       =   0
+      MaxWidth        =   0
+      Scope           =   0
+      TabIndex        =   21
+      TabPanelIndex   =   0
+      TabStop         =   True
+      Top             =   4
+      Transparent     =   True
+      UseFocusRing    =   True
+      Visible         =   True
+      Width           =   162
+   End
+   Begin BaseCanvas LoadInLabel
+      AcceptFocus     =   False
+      AcceptTabs      =   False
+      AutoDeactivate  =   True
+      Backdrop        =   0
+      BackgroundColor =   &c00000000
+      CornerHeight    =   0
+      CornerWidth     =   0
+      DefaultHeight   =   100.0
+      DefaultWidth    =   100.0
+      DoubleBuffer    =   False
+      Enabled         =   True
+      EraseBackground =   True
+      Height          =   20
+      HelpTag         =   ""
+      Index           =   -2147483648
+      InitialParent   =   ""
+      Left            =   170
+      LockBottom      =   False
+      LockedInPosition=   False
+      LockLeft        =   True
+      LockRight       =   False
+      LockTop         =   True
+      MaxHeight       =   0
+      MaxWidth        =   0
+      Scope           =   0
+      TabIndex        =   23
+      TabPanelIndex   =   0
+      TabStop         =   True
+      Top             =   4
+      Transparent     =   True
+      UseFocusRing    =   True
+      Visible         =   True
+      Width           =   162
+   End
+   Begin BaseCanvas EndLabel
+      AcceptFocus     =   False
+      AcceptTabs      =   False
+      AutoDeactivate  =   True
+      Backdrop        =   0
+      BackgroundColor =   &c00000000
+      CornerHeight    =   0
+      CornerWidth     =   0
+      DefaultHeight   =   100.0
+      DefaultWidth    =   100.0
+      DoubleBuffer    =   False
+      Enabled         =   True
+      EraseBackground =   True
+      Height          =   25
+      HelpTag         =   ""
+      Index           =   -2147483648
+      InitialParent   =   ""
+      Left            =   3
+      LockBottom      =   False
+      LockedInPosition=   False
+      LockLeft        =   True
+      LockRight       =   False
+      LockTop         =   True
+      MaxHeight       =   0
+      MaxWidth        =   0
+      Scope           =   0
+      TabIndex        =   25
+      TabPanelIndex   =   0
+      TabStop         =   True
+      Top             =   64
+      Transparent     =   True
+      UseFocusRing    =   True
+      Visible         =   True
+      Width           =   162
+   End
+   Begin BaseCanvas LoadOutLabel
+      AcceptFocus     =   False
+      AcceptTabs      =   False
+      AutoDeactivate  =   True
+      Backdrop        =   0
+      BackgroundColor =   &c00000000
+      CornerHeight    =   0
+      CornerWidth     =   0
+      DefaultHeight   =   100.0
+      DefaultWidth    =   100.0
+      DoubleBuffer    =   False
+      Enabled         =   True
+      EraseBackground =   True
+      Height          =   25
+      HelpTag         =   ""
+      Index           =   -2147483648
+      InitialParent   =   ""
+      Left            =   170
+      LockBottom      =   False
+      LockedInPosition=   False
+      LockLeft        =   True
+      LockRight       =   False
+      LockTop         =   True
+      MaxHeight       =   0
+      MaxWidth        =   0
+      Scope           =   0
+      TabIndex        =   27
+      TabPanelIndex   =   0
+      TabStop         =   True
+      Top             =   64
+      Transparent     =   True
+      UseFocusRing    =   True
+      Visible         =   True
+      Width           =   162
    End
 End
 #tag EndWindow
@@ -363,6 +559,361 @@ End
 		  Exception err as UnsupportedFormatException
 		    err_manage("EventDateTimes","A date or time is Null")
 		    
+		End Sub
+	#tag EndMethod
+
+	#tag Method, Flags = &h0
+		Sub RefreshControls()
+		  Dim RunninTop,RunnintLeft As Integer
+		  
+		  ResizeControl
+		  
+		  For i1 as integer = 0 To me.ControlCount - 1
+		    
+		    If me.Control(i1) IsA BaseCanvas Then
+		      BaseCanvas(me.Control(i1)).Refresh
+		    End If
+		    
+		  Next
+		End Sub
+	#tag EndMethod
+
+	#tag Method, Flags = &h0
+		Sub ResizeControl()
+		  Dim bc1 as BaseCanvas
+		  Dim TotalWidth,WorkingWidth as integer
+		  Dim TotalHeight,WorkingHeight as integer
+		  Dim GapWidths(),GapHeight() as Double
+		  Dim GapWidthTrue(4),GapHeightTrue(4) as integer
+		  Dim GapWidthMax(),GapHeightMax() as integer
+		  Dim GapWidthIsFixed(),GapHeightIsFixed() as Boolean
+		  
+		  
+		  If 1=1 Then
+		    // Set the width of each horizontal gap
+		    ReDim GapWidths(4)
+		    ReDim GapWidthMax(4)
+		    ReDim GapWidthIsFixed(4)
+		    GapWidths(0) = 0.01
+		    GapWidthMax(0) = -1
+		    GapWidthIsFixed(0) = False
+		    If GapWidthIsFixed(0) Then
+		      GapWidthTrue(0) = GapWidths(0)
+		    Else
+		      GapWidthTrue(0) = GapWidths(0) * me.Width
+		    End If
+		    
+		    GapWidths(1) = 0.01
+		    GapWidthMax(1) = -1
+		    GapWidthIsFixed(1) = False
+		    If GapWidthIsFixed(1) Then
+		      GapWidthTrue(1) = GapWidths(1)
+		    Else
+		      GapWidthTrue(1) = GapWidths(1) * me.Width
+		    End If
+		    
+		    GapWidths(2) = 0.02
+		    GapWidthMax(2) = -1
+		    GapWidthIsFixed(2) = False
+		    If GapWidthIsFixed(2) Then
+		      GapWidthTrue(2) = GapWidths(2)
+		    Else
+		      GapWidthTrue(2) = GapWidths(2) * me.Width
+		    End If
+		    
+		    GapWidths(3) = 0.01
+		    GapWidthMax(3) = -1
+		    GapWidthIsFixed(3) = False
+		    If GapWidthIsFixed(3) Then
+		      GapWidthTrue(3) = GapWidths(3)
+		    Else
+		      GapWidthTrue(3) = GapWidths(3) * me.Width
+		    End If
+		    
+		    GapWidths(4) = 0.01
+		    GapWidthMax(4) = -1
+		    GapWidthIsFixed(4) = False
+		    If GapWidthIsFixed(4) Then
+		      GapWidthTrue(4) = GapWidths(4)
+		    Else
+		      GapWidthTrue(4) = GapWidths(4) * me.Width
+		    End If
+		    
+		  End If
+		  If 1=1 Then
+		    // Set the Height of vertical gaps
+		    ReDim GapHeight(4)
+		    ReDim GapHeightMax(4)
+		    ReDim GapHeightIsFixed(4)
+		    
+		    GapHeight(0) = 0.03
+		    GapHeightMax(0) = -1
+		    GapHeightIsFixed(0) = False
+		    If GapHeightIsFixed(0) Then
+		      GapHeightTrue(0) = GapHeight(0)
+		    Else
+		      GapHeightTrue(0) = GapHeight(0) * me.Height
+		    End If
+		    
+		    GapHeight(1) = 0
+		    GapHeightMax(1) = -1
+		    GapHeightIsFixed(1) = False
+		    If GapHeightIsFixed(1) Then
+		      GapHeightTrue(1) = GapHeight(1)
+		    Else
+		      GapHeightTrue(1) = GapHeight(1) * me.Height
+		    End If
+		    
+		    GapHeight(2) = 0
+		    GapHeightMax(2) = -1
+		    GapHeightIsFixed(2) = False
+		    If GapHeightIsFixed(2) Then
+		      GapHeightTrue(2) = GapHeight(2)
+		    Else
+		      GapHeightTrue(2) = GapHeight(2) * me.Height
+		    End If
+		    
+		    GapHeight(3) = 0
+		    GapHeightMax(3) = -1
+		    GapHeightIsFixed(3) = False
+		    If GapHeightIsFixed(3) Then
+		      GapHeightTrue(3) = GapHeight(3)
+		    Else
+		      GapHeightTrue(3) = GapHeight(3) * me.Height
+		    End If
+		    
+		    GapHeight(4) = 0.03
+		    GapHeightMax(4) = -1
+		    GapHeightIsFixed(4) = False
+		    If GapHeightIsFixed(4) Then
+		      GapHeightTrue(4) = GapHeight(4)
+		    Else
+		      GapHeightTrue(4) = GapHeight(4) * me.Height
+		    End If
+		    
+		  End If
+		  
+		  
+		  TotalWidth = me.Width
+		  TotalHeight = me.Height
+		  WorkingWidth = TotalWidth
+		  
+		  
+		  If 1=1 Then
+		    Dim RunningLeft As integer
+		    Dim x1 as integer
+		    
+		    // Set up control dimmentions
+		    
+		    //
+		    RunningLeft = GapWidthTrue(0)
+		    
+		    
+		    
+		    bc1 = EventStartTime
+		    bc1.MaxWidth = -1
+		    bc1.DefaultWidth = 0.22
+		    bc1.WidthIsFixed = False
+		    x1 = bc1.SetWidth(RunningLeft,me.Width)
+		    
+		    bc1 = EventEndTime
+		    bc1.MaxWidth = -1
+		    bc1.DefaultWidth = 0.22
+		    bc1.WidthIsFixed = False
+		    x1 = bc1.SetWidth(RunningLeft,me.Width)
+		    
+		    //
+		    RunningLeft = x1 + GapWidthTrue(1)
+		    
+		    bc1 = EventStartDate
+		    bc1.MaxWidth = -1
+		    bc1.DefaultWidth = 0.25
+		    bc1.WidthIsFixed = False
+		    x1 = bc1.SetWidth(RunningLeft,me.Width)
+		    
+		    bc1 = EventEndDate
+		    bc1.MaxWidth = -1
+		    bc1.DefaultWidth = 0.25
+		    bc1.WidthIsFixed = False
+		    x1 = bc1.SetWidth(RunningLeft,me.Width)
+		    
+		    //
+		    RunningLeft = x1 + GapWidthTrue(2)
+		    
+		    bc1 = EventLoadInTime
+		    bc1.MaxWidth = -1
+		    bc1.DefaultWidth = 0.22
+		    bc1.WidthIsFixed = False
+		    x1 = bc1.SetWidth(RunningLeft,me.Width)
+		    
+		    bc1 = EventLoadOutTime
+		    bc1.MaxWidth = -1
+		    bc1.DefaultWidth = 0.22
+		    bc1.WidthIsFixed = False
+		    x1 = bc1.SetWidth(RunningLeft,me.Width)
+		    
+		    
+		    //
+		    RunningLeft = x1 + GapWidthTrue(3)
+		    
+		    bc1 = EventLoadInDate
+		    bc1.MaxWidth = -1
+		    bc1.DefaultWidth = 0.25
+		    bc1.WidthIsFixed = False
+		    x1 = bc1.SetWidth(RunningLeft,me.Width)
+		    
+		    bc1 = EventLoadOutDate
+		    bc1.MaxWidth = -1
+		    bc1.DefaultWidth = 0.25
+		    bc1.WidthIsFixed = False
+		    x1 = bc1.SetWidth(RunningLeft,me.Width)
+		    
+		    
+		    
+		    bc1 = StartLabel
+		    bc1.MaxWidth = -1
+		    bc1.DefaultWidth = GapWidths(1) + EventStartTime.DefaultWidth + EventStartDate.DefaultWidth
+		    bc1.WidthIsFixed = False
+		    x1 = bc1.SetWidth(GapWidthTrue(0), me.Width )
+		    
+		    bc1 = EndLabel
+		    bc1.MaxWidth = -1
+		    bc1.DefaultWidth = GapWidths(1) + EventEndTime.DefaultWidth + EventEndDate.DefaultWidth
+		    bc1.WidthIsFixed = False
+		    x1 = bc1.SetWidth(GapWidthTrue(0), me.Width )
+		    
+		    bc1 = LoadInLabel
+		    bc1.MaxWidth = -1
+		    bc1.DefaultWidth = GapWidths(3) + EventLoadInTime.DefaultWidth + EventLoadInDate.DefaultWidth
+		    bc1.WidthIsFixed = False
+		    x1 = bc1.SetWidth(GapWidthTrue(0) +GapWidthTrue(1) + EventStartTime.Width + EventStartDate.Width + GapWidthTrue(2),me.Width )
+		    
+		    bc1 = LoadOutLabel
+		    bc1.MaxWidth = -1
+		    bc1.DefaultWidth = GapWidths(3) + EventLoadOutTime.DefaultWidth + EventLoadOutDate.DefaultWidth
+		    bc1.WidthIsFixed = False
+		    x1 = bc1.SetWidth(GapWidthTrue(0) +GapWidthTrue(1) + EventStartTime.Width + EventStartDate.Width + GapWidthTrue(2),me.Width )
+		  End If
+		  
+		  
+		  If 1=1 Then
+		    Dim RunningTop As integer
+		    Dim x1 as integer
+		    
+		    // Set up control dimmentions
+		    
+		    //
+		    RunningTop = GapHeightTrue(0)
+		    
+		    bc1 = StartLabel
+		    bc1.MaxHeight = -1
+		    bc1.DefaultHeight = 0.17
+		    bc1.HeightIsFixed = False
+		    x1 = bc1.SetHeight(RunningTop,me.Height)
+		    
+		    bc1 = LoadInLabel
+		    bc1.MaxHeight = -1
+		    bc1.DefaultHeight = 0.17
+		    bc1.HeightIsFixed = False
+		    x1 = bc1.SetHeight(RunningTop,me.Height)
+		    
+		    //
+		    RunningTop = x1 + GapHeightTrue(1)
+		    
+		    bc1 = EventStartTime
+		    bc1.MaxHeight = -1
+		    bc1.DefaultHeight = 0.30
+		    bc1.HeightIsFixed = False
+		    x1 = bc1.SetHeight(RunningTop,me.Height)
+		    
+		    bc1 = EventStartDate
+		    bc1.MaxHeight = -1
+		    bc1.DefaultHeight = 0.30
+		    bc1.HeightIsFixed = False
+		    x1 = bc1.SetHeight(RunningTop,me.Height)
+		    
+		    bc1 = EventLoadInTime
+		    bc1.MaxHeight = -1
+		    bc1.DefaultHeight = 0.30
+		    bc1.HeightIsFixed = False
+		    x1 = bc1.SetHeight(RunningTop,me.Height)
+		    
+		    bc1 = EventLoadInDate
+		    bc1.MaxHeight = -1
+		    bc1.DefaultHeight = 0.30
+		    bc1.HeightIsFixed = False
+		    x1 = bc1.SetHeight(RunningTop,me.Height)
+		    
+		    //
+		    RunningTop = x1 + GapHeightTrue(2)
+		    
+		    bc1 = EndLabel
+		    bc1.MaxHeight = -1
+		    bc1.DefaultHeight = 0.17
+		    bc1.HeightIsFixed = False
+		    x1 = bc1.SetHeight(RunningTop,me.Height)
+		    
+		    bc1 = LoadOutLabel
+		    bc1.MaxHeight = -1
+		    bc1.DefaultHeight = 0.17
+		    bc1.HeightIsFixed = False
+		    x1 = bc1.SetHeight(RunningTop,me.Height)
+		    
+		    //
+		    RunningTop = x1 + GapHeightTrue(3)
+		    
+		    bc1 = EventEndTime
+		    bc1.MaxHeight = -1
+		    bc1.DefaultHeight = 0.30
+		    bc1.HeightIsFixed = False
+		    x1 = bc1.SetHeight(RunningTop,me.Height)
+		    
+		    bc1 = EventEndDate
+		    bc1.MaxHeight = -1
+		    bc1.DefaultHeight = 0.30
+		    bc1.HeightIsFixed = False
+		    x1 = bc1.SetHeight(RunningTop,me.Height)
+		    
+		    bc1 = EventLoadOutTime
+		    bc1.MaxHeight = -1
+		    bc1.DefaultHeight = 0.30
+		    bc1.HeightIsFixed = False
+		    x1 = bc1.SetHeight(RunningTop,me.Height)
+		    
+		    bc1 = EventLoadOutDate
+		    bc1.MaxHeight = -1
+		    bc1.DefaultHeight = 0.30
+		    bc1.HeightIsFixed = False
+		    x1 = bc1.SetHeight(RunningTop,me.Height)
+		    
+		  End If
+		  
+		  
+		  
+		  
+		  
+		  
+		  
+		  
+		  
+		  
+		  
+		  
+		  
+		  
+		  
+		  
+		  
+		  
+		  
+		  
+		  
+		  
+		  
+		  
+		  
+		  
+		  
 		End Sub
 	#tag EndMethod
 
