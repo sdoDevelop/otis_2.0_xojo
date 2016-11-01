@@ -109,7 +109,7 @@ Begin Window window_main
       AutoDeactivate  =   True
       BackColor       =   &cFFFFFF00
       Backdrop        =   0
-      Enabled         =   True
+      Enabled         =   False
       EraseBackground =   False
       HasBackColor    =   False
       Height          =   133
@@ -143,6 +143,7 @@ Begin Window window_main
       HeaderBackgroundColor=   &c00000000
       HeaderBaseColor =   &c00000000
       HeaderHeight    =   0
+      HeaderText      =   ""
       HeaderTextColor =   &c00000000
       Height          =   528
       HelpTag         =   ""
@@ -210,6 +211,15 @@ End
 		End Function
 	#tag EndMenuHandler
 
+
+	#tag Method, Flags = &h0
+		Sub EventControlsEnabled(Enable as Boolean)
+		  
+		  
+		  
+		  EventDateTimes1.Enabled = Enable
+		End Sub
+	#tag EndMethod
 
 	#tag Method, Flags = &h0
 		Sub ResizeControls()

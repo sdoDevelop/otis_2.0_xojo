@@ -292,7 +292,16 @@ End
 	#tag Event
 		Sub Change()
 		  
-		  If window_main.scripts.load_event Then
+		  If me.ListIndex <> -1 Then
+		    
+		    window_main.EventControlsEnabled(True)
+		    If window_main.scripts.load_event Then
+		      
+		    End If
+		    
+		  else
+		    
+		    window_main.EventControlsEnabled(False)
 		    
 		  End If
 		  

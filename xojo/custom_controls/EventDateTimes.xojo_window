@@ -41,6 +41,7 @@ Begin OtisContainer EventDateTimes
       Enabled         =   True
       EraseBackground =   True
       Height          =   40
+      HeightIsFixed   =   False
       HelpTag         =   ""
       Index           =   -2147483648
       InitialParent   =   ""
@@ -53,6 +54,7 @@ Begin OtisContainer EventDateTimes
       MaxHeight       =   0
       MaxWidth        =   0
       MonthText       =   0
+      RoundCorners    =   False
       Scope           =   0
       TabIndex        =   13
       TabPanelIndex   =   0
@@ -62,6 +64,7 @@ Begin OtisContainer EventDateTimes
       UseFocusRing    =   True
       Visible         =   True
       Width           =   85
+      WidthIsFixed    =   False
       YearText        =   0
    End
    Begin OtisDatePicker EventLoadInDate
@@ -80,6 +83,7 @@ Begin OtisContainer EventDateTimes
       Enabled         =   True
       EraseBackground =   True
       Height          =   40
+      HeightIsFixed   =   False
       HelpTag         =   ""
       Index           =   -2147483648
       InitialParent   =   ""
@@ -92,6 +96,7 @@ Begin OtisContainer EventDateTimes
       MaxHeight       =   0
       MaxWidth        =   0
       MonthText       =   0
+      RoundCorners    =   False
       Scope           =   0
       TabIndex        =   14
       TabPanelIndex   =   0
@@ -101,6 +106,7 @@ Begin OtisContainer EventDateTimes
       UseFocusRing    =   True
       Visible         =   True
       Width           =   85
+      WidthIsFixed    =   False
       YearText        =   0
    End
    Begin OtisTimePicker EventStartTime
@@ -118,6 +124,7 @@ Begin OtisContainer EventDateTimes
       Enabled         =   True
       EraseBackground =   True
       Height          =   40
+      HeightIsFixed   =   False
       HelpTag         =   ""
       HourText        =   0
       Index           =   -2147483648
@@ -132,6 +139,7 @@ Begin OtisContainer EventDateTimes
       MaxWidth        =   0
       MinuteText      =   0
       PeriodText      =   "pm"
+      RoundCorners    =   False
       Scope           =   0
       TabIndex        =   15
       TabPanelIndex   =   0
@@ -141,6 +149,7 @@ Begin OtisContainer EventDateTimes
       UseFocusRing    =   True
       Visible         =   True
       Width           =   75
+      WidthIsFixed    =   False
    End
    Begin OtisDatePicker EventStartDate
       AcceptFocus     =   True
@@ -158,6 +167,7 @@ Begin OtisContainer EventDateTimes
       Enabled         =   True
       EraseBackground =   True
       Height          =   40
+      HeightIsFixed   =   False
       HelpTag         =   ""
       Index           =   -2147483648
       InitialParent   =   ""
@@ -170,6 +180,7 @@ Begin OtisContainer EventDateTimes
       MaxHeight       =   0
       MaxWidth        =   0
       MonthText       =   0
+      RoundCorners    =   False
       Scope           =   0
       TabIndex        =   16
       TabPanelIndex   =   0
@@ -179,6 +190,7 @@ Begin OtisContainer EventDateTimes
       UseFocusRing    =   True
       Visible         =   True
       Width           =   85
+      WidthIsFixed    =   False
       YearText        =   0
    End
    Begin OtisTimePicker EventEndTime
@@ -196,6 +208,7 @@ Begin OtisContainer EventDateTimes
       Enabled         =   True
       EraseBackground =   True
       Height          =   40
+      HeightIsFixed   =   False
       HelpTag         =   ""
       HourText        =   0
       Index           =   -2147483648
@@ -210,6 +223,7 @@ Begin OtisContainer EventDateTimes
       MaxWidth        =   0
       MinuteText      =   0
       PeriodText      =   "pm"
+      RoundCorners    =   False
       Scope           =   0
       TabIndex        =   17
       TabPanelIndex   =   0
@@ -219,6 +233,7 @@ Begin OtisContainer EventDateTimes
       UseFocusRing    =   True
       Visible         =   True
       Width           =   75
+      WidthIsFixed    =   False
    End
    Begin OtisDatePicker EventEndDate
       AcceptFocus     =   True
@@ -236,6 +251,7 @@ Begin OtisContainer EventDateTimes
       Enabled         =   True
       EraseBackground =   True
       Height          =   40
+      HeightIsFixed   =   False
       HelpTag         =   ""
       Index           =   -2147483648
       InitialParent   =   ""
@@ -248,6 +264,7 @@ Begin OtisContainer EventDateTimes
       MaxHeight       =   0
       MaxWidth        =   0
       MonthText       =   0
+      RoundCorners    =   False
       Scope           =   0
       TabIndex        =   18
       TabPanelIndex   =   0
@@ -257,6 +274,7 @@ Begin OtisContainer EventDateTimes
       UseFocusRing    =   True
       Visible         =   True
       Width           =   85
+      WidthIsFixed    =   False
       YearText        =   0
    End
    Begin OtisTimePicker EventLoadInTime
@@ -274,6 +292,7 @@ Begin OtisContainer EventDateTimes
       Enabled         =   True
       EraseBackground =   True
       Height          =   40
+      HeightIsFixed   =   False
       HelpTag         =   ""
       HourText        =   0
       Index           =   -2147483648
@@ -288,6 +307,7 @@ Begin OtisContainer EventDateTimes
       MaxWidth        =   0
       MinuteText      =   0
       PeriodText      =   "pm"
+      RoundCorners    =   False
       Scope           =   0
       TabIndex        =   19
       TabPanelIndex   =   0
@@ -297,6 +317,7 @@ Begin OtisContainer EventDateTimes
       UseFocusRing    =   True
       Visible         =   True
       Width           =   75
+      WidthIsFixed    =   False
    End
    Begin OtisTimePicker EventLoadOutTime
       AcceptFocus     =   True
@@ -313,6 +334,7 @@ Begin OtisContainer EventDateTimes
       Enabled         =   True
       EraseBackground =   True
       Height          =   40
+      HeightIsFixed   =   False
       HelpTag         =   ""
       HourText        =   0
       Index           =   -2147483648
@@ -327,6 +349,7 @@ Begin OtisContainer EventDateTimes
       MaxWidth        =   0
       MinuteText      =   0
       PeriodText      =   "pm"
+      RoundCorners    =   False
       Scope           =   0
       TabIndex        =   20
       TabPanelIndex   =   0
@@ -336,13 +359,20 @@ Begin OtisContainer EventDateTimes
       UseFocusRing    =   True
       Visible         =   True
       Width           =   75
+      WidthIsFixed    =   False
    End
-   Begin BaseCanvas StartLabel
+   Begin BaseCanvas_TimeDateLabel StartLabel
       AcceptFocus     =   False
       AcceptTabs      =   False
       AutoDeactivate  =   True
       Backdrop        =   0
       BackgroundColor =   &c00000000
+      CalBottom       =   0
+      CalHeight       =   0
+      CalLeft         =   0
+      CalRight        =   0
+      CalTop          =   0
+      CalWidth        =   0
       CornerHeight    =   0
       CornerWidth     =   0
       DefaultHeight   =   100.0
@@ -351,9 +381,11 @@ Begin OtisContainer EventDateTimes
       Enabled         =   True
       EraseBackground =   True
       Height          =   20
+      HeightIsFixed   =   False
       HelpTag         =   ""
       Index           =   -2147483648
       InitialParent   =   ""
+      LabelCenter     =   0
       Left            =   3
       LockBottom      =   False
       LockedInPosition=   False
@@ -362,22 +394,34 @@ Begin OtisContainer EventDateTimes
       LockTop         =   True
       MaxHeight       =   0
       MaxWidth        =   0
+      RoundCorners    =   False
       Scope           =   0
       TabIndex        =   21
       TabPanelIndex   =   0
       TabStop         =   True
+      TextBottom      =   0
+      TextLeft        =   0
+      TextRight       =   0
+      TextTop         =   0
       Top             =   4
       Transparent     =   True
       UseFocusRing    =   True
       Visible         =   True
       Width           =   162
+      WidthIsFixed    =   False
    End
-   Begin BaseCanvas LoadInLabel
+   Begin BaseCanvas_TimeDateLabel LoadInLabel
       AcceptFocus     =   False
       AcceptTabs      =   False
       AutoDeactivate  =   True
       Backdrop        =   0
       BackgroundColor =   &c00000000
+      CalBottom       =   0
+      CalHeight       =   0
+      CalLeft         =   0
+      CalRight        =   0
+      CalTop          =   0
+      CalWidth        =   0
       CornerHeight    =   0
       CornerWidth     =   0
       DefaultHeight   =   100.0
@@ -386,9 +430,11 @@ Begin OtisContainer EventDateTimes
       Enabled         =   True
       EraseBackground =   True
       Height          =   20
+      HeightIsFixed   =   False
       HelpTag         =   ""
       Index           =   -2147483648
       InitialParent   =   ""
+      LabelCenter     =   0
       Left            =   170
       LockBottom      =   False
       LockedInPosition=   False
@@ -397,22 +443,34 @@ Begin OtisContainer EventDateTimes
       LockTop         =   True
       MaxHeight       =   0
       MaxWidth        =   0
+      RoundCorners    =   False
       Scope           =   0
       TabIndex        =   23
       TabPanelIndex   =   0
       TabStop         =   True
+      TextBottom      =   0
+      TextLeft        =   0
+      TextRight       =   0
+      TextTop         =   0
       Top             =   4
       Transparent     =   True
       UseFocusRing    =   True
       Visible         =   True
       Width           =   162
+      WidthIsFixed    =   False
    End
-   Begin BaseCanvas EndLabel
+   Begin BaseCanvas_TimeDateLabel EndLabel
       AcceptFocus     =   False
       AcceptTabs      =   False
       AutoDeactivate  =   True
       Backdrop        =   0
       BackgroundColor =   &c00000000
+      CalBottom       =   0
+      CalHeight       =   0
+      CalLeft         =   0
+      CalRight        =   0
+      CalTop          =   0
+      CalWidth        =   0
       CornerHeight    =   0
       CornerWidth     =   0
       DefaultHeight   =   100.0
@@ -420,10 +478,12 @@ Begin OtisContainer EventDateTimes
       DoubleBuffer    =   False
       Enabled         =   True
       EraseBackground =   True
-      Height          =   25
+      Height          =   20
+      HeightIsFixed   =   False
       HelpTag         =   ""
       Index           =   -2147483648
       InitialParent   =   ""
+      LabelCenter     =   0
       Left            =   3
       LockBottom      =   False
       LockedInPosition=   False
@@ -432,22 +492,34 @@ Begin OtisContainer EventDateTimes
       LockTop         =   True
       MaxHeight       =   0
       MaxWidth        =   0
+      RoundCorners    =   False
       Scope           =   0
       TabIndex        =   25
       TabPanelIndex   =   0
       TabStop         =   True
-      Top             =   64
+      TextBottom      =   0
+      TextLeft        =   0
+      TextRight       =   0
+      TextTop         =   0
+      Top             =   69
       Transparent     =   True
       UseFocusRing    =   True
       Visible         =   True
       Width           =   162
+      WidthIsFixed    =   False
    End
-   Begin BaseCanvas LoadOutLabel
+   Begin BaseCanvas_TimeDateLabel LoadOutLabel
       AcceptFocus     =   False
       AcceptTabs      =   False
       AutoDeactivate  =   True
       Backdrop        =   0
       BackgroundColor =   &c00000000
+      CalBottom       =   0
+      CalHeight       =   0
+      CalLeft         =   0
+      CalRight        =   0
+      CalTop          =   0
+      CalWidth        =   0
       CornerHeight    =   0
       CornerWidth     =   0
       DefaultHeight   =   100.0
@@ -455,10 +527,12 @@ Begin OtisContainer EventDateTimes
       DoubleBuffer    =   False
       Enabled         =   True
       EraseBackground =   True
-      Height          =   25
+      Height          =   20
+      HeightIsFixed   =   False
       HelpTag         =   ""
       Index           =   -2147483648
       InitialParent   =   ""
+      LabelCenter     =   0
       Left            =   170
       LockBottom      =   False
       LockedInPosition=   False
@@ -467,15 +541,21 @@ Begin OtisContainer EventDateTimes
       LockTop         =   True
       MaxHeight       =   0
       MaxWidth        =   0
+      RoundCorners    =   False
       Scope           =   0
       TabIndex        =   27
       TabPanelIndex   =   0
       TabStop         =   True
-      Top             =   64
+      TextBottom      =   0
+      TextLeft        =   0
+      TextRight       =   0
+      TextTop         =   0
+      Top             =   69
       Transparent     =   True
       UseFocusRing    =   True
       Visible         =   True
       Width           =   162
+      WidthIsFixed    =   False
    End
 End
 #tag EndWindow
@@ -920,6 +1000,206 @@ End
 
 #tag EndWindowCode
 
+#tag Events StartLabel
+	#tag Event
+		Sub Open()
+		  
+		  
+		  me.LabelText = "Event Start"
+		  me.LabelCenter = EventStartTime.Left + EventStartTime.Width
+		  me.PrepClass
+		  me.Refresh
+		End Sub
+	#tag EndEvent
+	#tag Event
+		Sub CalenderClicked(X as integer, Y as integer)
+		  Dim PickedDate as New OtisDate
+		  Dim CurrentDataDate as New OtisDate
+		  Dim TheDatePicker as OtisDatePicker = EventStartDate
+		  Dim TheCalenderWindow as New CalendarWindow
+		  Dim er1 as ExecuteReturn
+		  Dim rs1 as RecordSet
+		  Dim FieldName as string
+		  
+		  
+		  
+		  FieldName = "start_date"
+		  
+		  
+		  er1 = app.otis_db.execute("Select","events_",Array(FieldName),Array(""),Array("pkid = '" + window_main.pkid_events_ + "'"))
+		  If er1 <> Nil Then
+		    rs1 = er1.TheRecordSet
+		    If rs1 <> Nil Then
+		      CurrentDataDate.SQLDate = rs1.Field(FieldName).StringValue
+		    End If
+		  End If
+		  
+		  PickedDate.TotalSeconds = TheCalenderWindow.GetDate(CurrentDataDate,me.Window.MouseX,me.Window.MouseY)
+		  
+		  If PickedDate <> Nil Then
+		    
+		    If window_main.pkid_events_ <> "" Then
+		      // Save the new date
+		      app.otis_db.execute("Update","events_",Array(FieldName),Array("'" + PickedDate.SQLDate + "'"),Array("pkid = '" + window_main.pkid_events_ + "'"))
+		    End If
+		    
+		  End If
+		  
+		  // ReloadDatePicker
+		  LoadControls
+		End Sub
+	#tag EndEvent
+#tag EndEvents
+#tag Events LoadInLabel
+	#tag Event
+		Sub Open()
+		  
+		  
+		  me.LabelText = "Load In"
+		  me.LabelCenter = EventLoadInTime.Left + EventLoadInTime.Width
+		  me.PrepClass
+		  me.Refresh
+		End Sub
+	#tag EndEvent
+	#tag Event
+		Sub CalenderClicked(X as integer, Y as integer)
+		  Dim PickedDate as New OtisDate
+		  Dim CurrentDataDate as New OtisDate
+		  Dim TheDatePicker as OtisDatePicker = EventStartDate
+		  Dim TheCalenderWindow as New CalendarWindow
+		  Dim er1 as ExecuteReturn
+		  Dim rs1 as RecordSet
+		  Dim FieldName as string
+		  
+		  
+		  
+		  FieldName = "loadin_date"
+		  
+		  
+		  er1 = app.otis_db.execute("Select","events_",Array(FieldName),Array(""),Array("pkid = '" + window_main.pkid_events_ + "'"))
+		  If er1 <> Nil Then
+		    rs1 = er1.TheRecordSet
+		    If rs1 <> Nil Then
+		      CurrentDataDate.SQLDate = rs1.Field(FieldName).StringValue
+		    End If
+		  End If
+		  
+		  PickedDate.TotalSeconds = TheCalenderWindow.GetDate(CurrentDataDate,me.Window.MouseX,me.Window.MouseY)
+		  
+		  If PickedDate <> Nil Then
+		    
+		    If window_main.pkid_events_ <> "" Then
+		      // Save the new date
+		      app.otis_db.execute("Update","events_",Array(FieldName),Array("'" + PickedDate.SQLDate + "'"),Array("pkid = '" + window_main.pkid_events_ + "'"))
+		    End If
+		    
+		  End If
+		  
+		  // ReloadDatePicker
+		  LoadControls
+		End Sub
+	#tag EndEvent
+#tag EndEvents
+#tag Events EndLabel
+	#tag Event
+		Sub CalenderClicked(X as integer, Y as integer)
+		  Dim PickedDate as New OtisDate
+		  Dim CurrentDataDate as New OtisDate
+		  Dim TheDatePicker as OtisDatePicker = EventStartDate
+		  Dim TheCalenderWindow as New CalendarWindow
+		  Dim er1 as ExecuteReturn
+		  Dim rs1 as RecordSet
+		  Dim FieldName as string
+		  
+		  
+		  
+		  FieldName = "end_date"
+		  
+		  
+		  er1 = app.otis_db.execute("Select","events_",Array(FieldName),Array(""),Array("pkid = '" + window_main.pkid_events_ + "'"))
+		  If er1 <> Nil Then
+		    rs1 = er1.TheRecordSet
+		    If rs1 <> Nil Then
+		      CurrentDataDate.SQLDate = rs1.Field(FieldName).StringValue
+		    End If
+		  End If
+		  
+		  PickedDate.TotalSeconds = TheCalenderWindow.GetDate(CurrentDataDate,me.Window.MouseX,me.Window.MouseY)
+		  
+		  If PickedDate <> Nil Then
+		    
+		    If window_main.pkid_events_ <> "" Then
+		      // Save the new date
+		      app.otis_db.execute("Update","events_",Array(FieldName),Array("'" + PickedDate.SQLDate + "'"),Array("pkid = '" + window_main.pkid_events_ + "'"))
+		    End If
+		    
+		  End If
+		  
+		  // ReloadDatePicker
+		  LoadControls
+		End Sub
+	#tag EndEvent
+	#tag Event
+		Sub Open()
+		  
+		  
+		  me.LabelText = "Event End"
+		  me.LabelCenter = EventEndTime.Left + EventEndTime.Width
+		  me.PrepClass
+		  me.Refresh
+		End Sub
+	#tag EndEvent
+#tag EndEvents
+#tag Events LoadOutLabel
+	#tag Event
+		Sub CalenderClicked(X as integer, Y as integer)
+		  Dim PickedDate as New OtisDate
+		  Dim CurrentDataDate as New OtisDate
+		  Dim TheDatePicker as OtisDatePicker = EventStartDate
+		  Dim TheCalenderWindow as New CalendarWindow
+		  Dim er1 as ExecuteReturn
+		  Dim rs1 as RecordSet
+		  Dim FieldName as string
+		  
+		  
+		  
+		  FieldName = "loadout_date"
+		  
+		  
+		  er1 = app.otis_db.execute("Select","events_",Array(FieldName),Array(""),Array("pkid = '" + window_main.pkid_events_ + "'"))
+		  If er1 <> Nil Then
+		    rs1 = er1.TheRecordSet
+		    If rs1 <> Nil Then
+		      CurrentDataDate.SQLDate = rs1.Field(FieldName).StringValue
+		    End If
+		  End If
+		  
+		  PickedDate.TotalSeconds = TheCalenderWindow.GetDate(CurrentDataDate,me.Window.MouseX,me.Window.MouseY)
+		  
+		  If PickedDate <> Nil Then
+		    
+		    If window_main.pkid_events_ <> "" Then
+		      // Save the new date
+		      app.otis_db.execute("Update","events_",Array(FieldName),Array("'" + PickedDate.SQLDate + "'"),Array("pkid = '" + window_main.pkid_events_ + "'"))
+		    End If
+		    
+		  End If
+		  
+		  // ReloadDatePicker
+		  LoadControls
+		End Sub
+	#tag EndEvent
+	#tag Event
+		Sub Open()
+		  
+		  
+		  me.LabelText = "Load Out"
+		  me.LabelCenter = EventLoadOutTime.Left + EventLoadOutTime.Width
+		  me.PrepClass
+		  me.Refresh
+		End Sub
+	#tag EndEvent
+#tag EndEvents
 #tag ViewBehavior
 	#tag ViewProperty
 		Name="AcceptFocus"
