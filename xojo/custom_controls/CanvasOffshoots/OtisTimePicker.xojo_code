@@ -449,7 +449,7 @@ Inherits OtisCanvas
 		  TheBottom = PartCoordinates( TextSection, "Bottom" )
 		  HorizontalBuffer = PartCoordinates( "Buffer","Horizontal" )
 		  VerticalBuffer = PartCoordinates( "Buffer","Vertical" )
-		  
+		  break
 		  // Determine Text Coordinates 
 		  x1 = TheBottom - TheTop
 		  TextHeight = x1

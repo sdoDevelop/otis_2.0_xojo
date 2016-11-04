@@ -1,0 +1,187 @@
+  #tag Module
+  Protected Module StyledTextDrawing
+  #tag Method, Flags = &h21
+  Private Sub DrawLIne(theLine as DrawnLine, g as Graphics, x As Integer, y As Integer, theWidth As Integer)
+    #If Not DebugBuild
+      #pragma DisableBackgroundTasks
+      #pragma DisableBoundsChecking
+      #pragma DisableAutoWaitCursor
+    #EndIf
+    Dim currLineAscent As Integer = theLine.LineTextAscent
+    Dim s As DrawnSection
+    Dim currX As Integer
+    
+    Select Case theLine.LineAlignment
+    Case 0, 1  // normal (left aligned)
+      currX = x
+    Case 2 // centered
+      currX = x + (theWidth-theLine.LineWidth)/2
+    Case 3 // right aligned
+      currX = x + (theWidth-theLine.LineWidth)
+    End Select
+    
+    For Each s In theLine.Sections
+      s.SetTo g
+      If g.ForeColor=color_white And Dragging_Text_Mode=1 Then g.ForeColor=Color_OffWhite
+      g.DrawString s.SectionText, currX, y + currLineAscent
+      currX = currX + g.StringWidth(s.SectionText)
+    Next
+  End Sub
+  #tag EndMethod
+  
+  #tag Method, Flags = &h0
+  Sub DrawStyledText(g as Graphics, theStyledText as StyledText, x As Integer = 0, y As Integer = 0, wrapWidth As Integer = 9999)
+    #If Not DebugBuild
+      #pragma DisableBackgroundTasks
+      #pragma DisableBoundsChecking
+      #pragma DisableAutoWaitCursor
+    #EndIf
+    Dim line As DrawnLine
+    Dim lastY As Integer = y
+    Dim st As New FormattedText(theStyledText)
+    
+    SaveGraphicsSettings g
+    
+    While UBound(st.StyleRuns) >= 0
+      line = PrepareLine(st, wrapWidth)
+      DrawLIne line, g, x, lastY, wrapWidth
+      
+      lastY = lastY + line.LineTextHeight
+    Wend
+    
+    RestoreGraphicsSettings g
+  End Sub
+  #tag EndMethod
+  
+  #tag Method, Flags = &h21
+  Private Function PrepareLine(theStyledText as FormattedText, theWidth As Integer = 9999) As DrawnLine
+    #If Not DebugBuild
+      #pragma DisableBackgroundTasks
+      #pragma DisableBoundsChecking
+      #pragma DisableAutoWaitCursor
+    #EndIf
+    Dim lastWidth As Integer
+    Dim wordIdx As Integer
+    Dim numWords As Integer
+    Dim sec(), d As DrawnSection
+    Dim currRun As FormattedTextRun
+    Dim l As New DrawnLine
+    While (UBound(theStyledText.StyleRuns) >= 0) And Not UserCancelled
+      currRun = theStyledText.StyleRuns(0)
+      l.LineAlignment = currRun.Alignment // We store alignment on a per-line basis, since it's easier that way.
+      d = New DrawnSection
+      d.SetFrom currRun // Sets formatting aspects of the section we are trying to append
+      // First see if we can fit the whole run on the current line...
+      d.SectionText = currRun.Text
+      sec.Append d
+      If lastWidth + d.SectionWidth < theWidth Then
+        // we can fit the whole run on, so delete it from theStyledText...
+        theStyledText.StyleRuns.Remove 0
+        If InStr(d.SectionText, EndOfLine) > 0 Then Exit
+        lastWidth = lastWidth + d.SectionWidth
+      Else
+        // nope, doesn't fit the whole run on. Let's try it word-by-word...
+        d.SectionText = ""
+        wordIdx = 1
+        numWords = CountFields(currRun.Text, " ")
+        While (lastWidth + d.SectionWidth < theWidth) And (wordIdx <= numWords)
+          d.SectionText = d.SectionText + NthField(currRun.Text, " ", wordIdx) + " "
+          wordIdx = wordIdx + 1
+        Wend
+        // Now that we've found the shortest string that is too long,
+        // shave off the last word to make it fit...
+        d.SectionText = Mid(d.SectionText, 1, Len(d.SectionText)-Len(NthField(currRun.Text, " ", wordIdx-1))-1)
+        currRun.Text = Mid(currRun.Text, Len(d.SectionText)+1) // +1 to get rid of trailing space
+        Exit
+      End If
+    Wend
+    l.Sections = sec
+    Return l
+  End Function
+  #tag EndMethod
+  
+  #tag Method, Flags = &h21
+  Private Sub RestoreGraphicsSettings(g as Graphics)
+    g.TextFont = gTextFont
+    g.TextSize = gTextSize
+    g.ForeColor = gTextColor
+    g.Bold = gBold
+    g.Italic = gItalic
+    g.Underline = gUnderline
+  End Sub
+  #tag EndMethod
+  
+  #tag Method, Flags = &h21
+  Private Sub SaveGraphicsSettings(g as Graphics)
+    gTextFont = g.TextFont
+    gTextSize = g.TextSize
+    gTextColor = g.ForeColor
+    gBold = g.Bold
+    gItalic = g.Italic
+    gUnderline = g.Underline
+  End Sub
+  #tag EndMethod
+  
+  
+  #tag Property, Flags = &h21
+  Private gBold As Boolean
+  #tag EndProperty
+  
+  #tag Property, Flags = &h21
+  Private gItalic As Boolean
+  #tag EndProperty
+  
+  #tag Property, Flags = &h21
+  Private gTextColor As Color = &c000000
+  #tag EndProperty
+  
+  #tag Property, Flags = &h21
+  Private gTextFont As String
+  #tag EndProperty
+  
+  #tag Property, Flags = &h21
+  Private gTextSize As Integer
+  #tag EndProperty
+  
+  #tag Property, Flags = &h21
+  Private gUnderline As Boolean
+  #tag EndProperty
+  
+  
+  #tag ViewBehavior
+  #tag ViewProperty
+  Name="Index"
+  Visible=true
+  Group="ID"
+  InitialValue="-2147483648"
+  Type="Integer"
+  #tag EndViewProperty
+  #tag ViewProperty
+  Name="Left"
+  Visible=true
+  Group="Position"
+  InitialValue="0"
+  Type="Integer"
+  #tag EndViewProperty
+  #tag ViewProperty
+  Name="Name"
+  Visible=true
+  Group="ID"
+  Type="String"
+  #tag EndViewProperty
+  #tag ViewProperty
+  Name="Super"
+  Visible=true
+  Group="ID"
+  Type="String"
+  #tag EndViewProperty
+  #tag ViewProperty
+  Name="Top"
+  Visible=true
+  Group="Position"
+  InitialValue="0"
+  Type="Integer"
+  #tag EndViewProperty
+  #tag EndViewBehavior
+  End Module
+  #tag EndModule

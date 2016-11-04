@@ -386,6 +386,7 @@ Begin OtisContainer EventDateTimes
       Index           =   -2147483648
       InitialParent   =   ""
       LabelCenter     =   0
+      LabelText       =   ""
       Left            =   3
       LockBottom      =   False
       LockedInPosition=   False
@@ -394,6 +395,8 @@ Begin OtisContainer EventDateTimes
       LockTop         =   True
       MaxHeight       =   0
       MaxWidth        =   0
+      MouseDownOn     =   ""
+      Prepped         =   False
       RoundCorners    =   False
       Scope           =   0
       TabIndex        =   21
@@ -435,6 +438,7 @@ Begin OtisContainer EventDateTimes
       Index           =   -2147483648
       InitialParent   =   ""
       LabelCenter     =   0
+      LabelText       =   ""
       Left            =   170
       LockBottom      =   False
       LockedInPosition=   False
@@ -443,6 +447,8 @@ Begin OtisContainer EventDateTimes
       LockTop         =   True
       MaxHeight       =   0
       MaxWidth        =   0
+      MouseDownOn     =   ""
+      Prepped         =   False
       RoundCorners    =   False
       Scope           =   0
       TabIndex        =   23
@@ -484,6 +490,7 @@ Begin OtisContainer EventDateTimes
       Index           =   -2147483648
       InitialParent   =   ""
       LabelCenter     =   0
+      LabelText       =   ""
       Left            =   3
       LockBottom      =   False
       LockedInPosition=   False
@@ -492,6 +499,8 @@ Begin OtisContainer EventDateTimes
       LockTop         =   True
       MaxHeight       =   0
       MaxWidth        =   0
+      MouseDownOn     =   ""
+      Prepped         =   False
       RoundCorners    =   False
       Scope           =   0
       TabIndex        =   25
@@ -533,6 +542,7 @@ Begin OtisContainer EventDateTimes
       Index           =   -2147483648
       InitialParent   =   ""
       LabelCenter     =   0
+      LabelText       =   ""
       Left            =   170
       LockBottom      =   False
       LockedInPosition=   False
@@ -541,6 +551,8 @@ Begin OtisContainer EventDateTimes
       LockTop         =   True
       MaxHeight       =   0
       MaxWidth        =   0
+      MouseDownOn     =   ""
+      Prepped         =   False
       RoundCorners    =   False
       Scope           =   0
       TabIndex        =   27
