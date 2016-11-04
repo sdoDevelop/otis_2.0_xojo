@@ -1,21 +1,8 @@
 #tag Class
 Protected Class scripts_class
 	#tag Method, Flags = &h0
-		Sub EventName_ShowTextfield()
-		  dim t as TextField
-		  
-		  t = window_main.textfield_event_name
-		  t.Visible = True
-		  t.Enabled = True
-		  t.Text = window_main.label_event_name.Text
-		  t.SetFocus
-		  t.SelectAll
-		End Sub
-	#tag EndMethod
-
-	#tag Method, Flags = &h0
 		Function GetEvent_Index_ByPkid(pkid as string) As integer
-		  Dim lb1 as Listbox = window_main.ListboxContainer_EventList.TheListbox
+		  Dim lb1 as Listbox = window_main.TheListbox
 		  
 		  
 		  For i1 as integer = 0 To lb1.ListCount - 1
@@ -34,7 +21,7 @@ Protected Class scripts_class
 	#tag Method, Flags = &h0
 		Function load_event() As boolean
 		  dim db as otis_database_manager = app.otis_db
-		  dim lb1 as Listbox = window_main.ListboxContainer_EventList.TheListbox
+		  dim lb1 as Listbox = window_main.TheListbox
 		  dim rs as RecordSet
 		  Dim exre1 as New ExecuteReturn
 		  
@@ -57,10 +44,10 @@ Protected Class scripts_class
 		    If EventName = "" Then
 		      EventName = "Click Here To Change"
 		    End If
-		    window_main.label_event_name.Text = EventName
+		    'window_main.label_event_name.Text = EventName
 		    
 		    // Load the event date time container
-		    window_main.EventDateTimes1.LoadControls
+		    'window_main.EventDateTimes1.LoadControls
 		    
 		    
 		    
@@ -77,7 +64,7 @@ Protected Class scripts_class
 		Sub load_event_listbox()
 		  dim rs as RecordSet
 		  dim db as otis_database_manager = app.otis_db
-		  dim lb as Listbox = window_main.ListboxContainer_EventList.TheListbox
+		  dim lb as Listbox = window_main.TheListbox
 		  Dim exre1 as New ExecuteReturn
 		  
 		  
@@ -131,7 +118,7 @@ Protected Class scripts_class
 		Sub new_event()
 		  dim rs as RecordSet
 		  dim db as otis_database_manager = app.otis_db
-		  dim lb as listbox = window_main.ListboxContainer_EventList.TheListbox
+		  dim lb as listbox = window_main.TheListbox
 		  Dim exre1 as New ExecuteReturn
 		  
 		  
@@ -151,7 +138,7 @@ Protected Class scripts_class
 		  window_main.pkid_events_ = thepkid
 		  
 		  load_event_listbox
-		  EventName_ShowTextfield
+		  
 		  
 		  
 		  

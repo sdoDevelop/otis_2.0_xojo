@@ -26,18 +26,101 @@ Begin Window window_main
    Title           =   "Untitled"
    Visible         =   True
    Width           =   938
-   Begin OtisLabel label_event_name
+   Begin RubberViews RubberView1
+      AcceptFocus     =   False
+      AcceptTabs      =   True
+      AutoDeactivate  =   True
+      BackColor       =   &cFFFFFF00
+      Backdrop        =   0
+      Enabled         =   True
+      EraseBackground =   True
+      HasBackColor    =   False
+      Height          =   20
+      HelpTag         =   ""
+      Ignore          =   ""
+      InitialParent   =   ""
+      KeepRatios      =   ""
+      Left            =   -192
+      LockBottom      =   False
+      LockedInPosition=   False
+      LockLeft        =   True
+      LockRight       =   False
+      LockTop         =   True
+      NoContentResizes=   ""
+      Scope           =   0
+      sizWin          =   "0"
+      StretchWindowBackdrop=   False
+      TabIndex        =   5
+      TabPanelIndex   =   0
+      TabStop         =   True
+      Top             =   109
+      Transparent     =   True
+      UseFocusRing    =   False
+      Visible         =   True
+      Width           =   20
+   End
+   Begin OtisListBox TheListbox
+      AutoDeactivate  =   True
+      AutoHideScrollbars=   True
+      Bold            =   False
+      Border          =   False
+      ColumnCount     =   1
+      ColumnsResizable=   True
+      ColumnWidths    =   ""
+      DataField       =   ""
+      DataSource      =   ""
+      DefaultRowHeight=   -1
+      Enabled         =   False
+      EnableDrag      =   True
+      EnableDragReorder=   True
+      GridLinesHorizontal=   0
+      GridLinesVertical=   0
+      HasHeading      =   False
+      HeadingIndex    =   -1
+      Height          =   513
+      HelpTag         =   ""
+      Hierarchical    =   True
+      Index           =   -2147483648
+      InitialParent   =   ""
+      InitialValue    =   ""
+      Italic          =   False
+      Left            =   0
+      LockBottom      =   False
+      LockedInPosition=   False
+      LockLeft        =   True
+      LockRight       =   False
+      LockTop         =   True
+      RequiresSelection=   False
+      Scope           =   0
+      ScrollbarHorizontal=   False
+      ScrollBarVertical=   True
+      SelectionType   =   1
+      TabIndex        =   6
+      TabPanelIndex   =   0
+      TabStop         =   True
+      TextFont        =   "System"
+      TextSize        =   0.0
+      TextUnit        =   0
+      Top             =   57
+      Underline       =   False
+      UseFocusRing    =   True
+      Visible         =   False
+      Width           =   224
+      _ScrollOffset   =   0
+      _ScrollWidth    =   -1
+   End
+   Begin Label EventListboxHeader
       AutoDeactivate  =   True
       Bold            =   False
       DataField       =   ""
       DataSource      =   ""
       Enabled         =   True
-      Height          =   20
+      Height          =   27
       HelpTag         =   ""
       Index           =   -2147483648
       InitialParent   =   ""
       Italic          =   False
-      Left            =   286
+      Left            =   6
       LockBottom      =   False
       LockedInPosition=   False
       LockLeft        =   True
@@ -46,142 +129,52 @@ Begin Window window_main
       Multiline       =   False
       Scope           =   0
       Selectable      =   False
-      state           =   "Normal"
-      TabIndex        =   1
+      TabIndex        =   7
       TabPanelIndex   =   0
-      Text            =   "Untitled"
-      TextAlign       =   1
+      Text            =   "Events"
+      TextAlign       =   0
       TextColor       =   &c00000000
-      TextFont        =   "FreeSerif"
-      TextSize        =   18.0
+      TextFont        =   "System"
+      TextSize        =   15.0
       TextUnit        =   0
-      Top             =   60
+      Top             =   31
       Transparent     =   True
       Underline       =   False
       Visible         =   True
-      Width           =   368
+      Width           =   218
    End
-   Begin OtisTextField textfield_event_name
-      AcceptTabs      =   False
-      Alignment       =   0
-      AutoDeactivate  =   True
-      AutomaticallyCheckSpelling=   False
-      BackColor       =   &cFFFFFF00
-      Bold            =   False
-      Border          =   True
-      CueText         =   ""
-      DataField       =   ""
-      DataSource      =   ""
-      Enabled         =   False
-      Format          =   ""
-      Height          =   26
-      HelpTag         =   ""
-      Index           =   -2147483648
-      Italic          =   False
-      Left            =   323
-      LimitText       =   0
-      LockBottom      =   False
-      LockedInPosition=   False
-      LockLeft        =   True
-      LockRight       =   False
-      LockTop         =   True
-      Mask            =   ""
-      Password        =   False
-      ReadOnly        =   False
-      Scope           =   0
-      TabIndex        =   2
-      TabPanelIndex   =   0
-      TabStop         =   True
-      Text            =   ""
-      TextColor       =   &c00000000
-      TextFont        =   "FreeSerif"
-      TextSize        =   0.0
-      TextUnit        =   0
-      Top             =   70
-      Underline       =   False
-      UseFocusRing    =   True
-      Visible         =   False
-      Width           =   288
-   End
-   Begin EventDateTimes EventDateTimes1
-      AcceptFocus     =   False
-      AcceptTabs      =   False
-      AutoDeactivate  =   True
-      BackColor       =   &cFFFFFF00
-      Backdrop        =   0
-      Enabled         =   False
-      EraseBackground =   False
-      HasBackColor    =   False
-      Height          =   133
-      HelpTag         =   ""
-      InitialParent   =   ""
-      Left            =   217
-      LockBottom      =   False
-      LockedInPosition=   False
-      LockLeft        =   True
-      LockRight       =   False
-      LockTop         =   True
-      Scope           =   0
-      TabIndex        =   3
-      TabPanelIndex   =   0
-      TabStop         =   True
-      Top             =   116
-      Transparent     =   False
-      UseFocusRing    =   False
-      Visible         =   True
-      Width           =   335
-   End
-   Begin ListboxContainer ListboxContainer_EventList
-      AcceptFocus     =   False
+   Begin ContainerControl_EventDateTimes ContainerControl_EventDateTimes1
+      AcceptFocus     =   True
       AcceptTabs      =   True
       AutoDeactivate  =   True
       BackColor       =   &cFFFFFF00
       Backdrop        =   0
       Enabled         =   True
-      EraseBackground =   False
+      EraseBackground =   True
       HasBackColor    =   False
-      HeaderBackgroundColor=   &c00000000
-      HeaderBaseColor =   &c00000000
-      HeaderHeight    =   0
-      HeaderText      =   ""
-      HeaderTextColor =   &c00000000
-      Height          =   528
+      Height          =   228
       HelpTag         =   ""
       InitialParent   =   ""
-      Left            =   0
+      Left            =   251
       LockBottom      =   False
       LockedInPosition=   False
       LockLeft        =   True
       LockRight       =   False
       LockTop         =   True
       Scope           =   0
-      TabIndex        =   4
+      TabIndex        =   8
       TabPanelIndex   =   0
       TabStop         =   True
-      Top             =   42
-      Transparent     =   False
-      Untitled        =   0
+      Top             =   83
+      Transparent     =   True
       UseFocusRing    =   False
       Visible         =   True
-      Width           =   205
+      Width           =   348
    End
 End
 #tag EndWindow
 
 #tag WindowCode
-	#tag Event
-		Function KeyDown(Key As String) As Boolean
-		  Select Case key
-		    
-		  Case chr(9) 
-		    If Not EventDateTimes1.AdvanceEdit Then
-		      
-		    End If
-		    Return True
-		  End Select
-		End Function
-	#tag EndEvent
-
 	#tag Event
 		Sub Open()
 		  
@@ -190,13 +183,31 @@ End
 		  scripts = new scripts_class
 		  
 		  scripts.load_event_listbox
+		  
+		  RubberView1.Init(Self) 
+		End Sub
+	#tag EndEvent
+
+	#tag Event
+		Sub Resized()
+		  
+		  
+		  
+		  RubberView1.StretchWindowBackdrop = True
+		  RubberView1.SizAll(self, false, False)
+		  
 		End Sub
 	#tag EndEvent
 
 	#tag Event
 		Sub Resizing()
 		  
-		  me.ResizeControls
+		  'me.ResizeControls
+		  
+		  RubberView1.StretchWindowBackdrop = True
+		  
+		  RubberView1.SizAll(Self,False, False)
+		  
 		End Sub
 	#tag EndEvent
 
@@ -217,98 +228,8 @@ End
 		  
 		  
 		  
-		  EventDateTimes1.Enabled = Enable
+		  
 		End Sub
-	#tag EndMethod
-
-	#tag Method, Flags = &h0
-		Sub ResizeControls()
-		  Dim DefaultWidth as double
-		  dim MaxWidth as integer
-		  dim WidthIsFixed as Boolean
-		  Dim Events_ListboxRight as integer
-		  Dim RunningLeft as integer
-		  
-		  
-		  // Start with the events listbox
-		  DefaultWidth = 0.22
-		  MaxWidth = -1
-		  WidthIsFixed = False
-		  Events_ListboxRight = ResizeSpecificWidth(ListboxContainer_EventList,RunningLeft,DefaultWidth,MaxWidth,WidthIsFixed,me.Width)
-		  
-		  
-		  // Now all the controls that line up along the listbox
-		  
-		  ' add a gap between listbox and next controls
-		  RunningLeft = Events_ListboxRight + 8
-		  
-		  // EventDateTimes1
-		  DefaultWidth = 0.40
-		  MaxWidth = -1
-		  WidthIsFixed = False
-		  Events_ListboxRight = ResizeSpecificWidth(EventDateTimes1,RunningLeft,DefaultWidth,MaxWidth,WidthIsFixed,me.Width)
-		  
-		  
-		  ListboxContainer_EventList.Refresh
-		  EventDateTimes1.Refresh
-		  EventDateTimes1.RefreshControls
-		End Sub
-	#tag EndMethod
-
-	#tag Method, Flags = &h0
-		Sub ResizeSpecificWidth(TheControl as Variant, RunningLeft as integer, DefaultWidth as double, MaxWidth as integer, WidthIsFixed as Boolean,TotalWidth as integer)
-		  
-		  
-		  Dim x1 as integer
-		  
-		  x1 = ResizeSpecificWidth(TheControl,RunningLeft,DefaultWidth,MaxWidth,WidthIsFixed,TotalWidth)
-		End Sub
-	#tag EndMethod
-
-	#tag Method, Flags = &h0
-		Function ResizeSpecificWidth(TheControl as Variant, RunningLeft as integer, DefaultWidth as double, MaxWidth as integer, WidthIsFixed as Boolean,TotalWidth as integer) As integer
-		  
-		  
-		  
-		  Dim x1 as integer
-		  Dim theValue as integer
-		  Dim theReturn as integer
-		  
-		  If WidthIsFixed Then
-		    theValue = DefaultWidth
-		  Else
-		    
-		    x1 = DefaultWidth * TotalWidth
-		    
-		    If MaxWidth = -1 Then
-		      theValue = x1
-		    Else
-		      If x1 > MaxWidth Then
-		        theValue = MaxWidth
-		      Else
-		        theValue = x1
-		      End If
-		    End If
-		  End If
-		  
-		  
-		  
-		  If TheControl IsA ListboxContainer Then
-		    
-		    ListboxContainer(TheControl).Left = RunningLeft
-		    ListboxContainer(TheControl).Width = theValue
-		    
-		  ElseIf TheControl IsA EventDateTimes Then
-		    
-		    EventDateTimes(TheControl).Left = RunningLeft
-		    EventDateTimes(TheControl).Width = theValue
-		    
-		  End If
-		  
-		  theReturn = RunningLeft + theValue
-		  
-		  Return theReturn
-		End Function
 	#tag EndMethod
 
 
@@ -327,132 +248,76 @@ End
 
 #tag EndWindowCode
 
-#tag Events label_event_name
+#tag Events TheListbox
 	#tag Event
-		Sub MouseEnter()
-		  me.TextColor = get_color( "Blue", 4 )
+		Sub Change()
+		  
+		  If me.ListIndex <> -1 Then
+		    
+		    window_main.EventControlsEnabled(True)
+		    If window_main.scripts.load_event Then
+		      
+		    End If
+		    
+		  else
+		    
+		    window_main.EventControlsEnabled(False)
+		    
+		  End If
+		  
+		  
 		End Sub
 	#tag EndEvent
 	#tag Event
-		Sub MouseExit()
-		  me.TextColor = get_color( "Text", 0 )
-		End Sub
+		Function CellTextPaint(g As Graphics, row As Integer, column As Integer, x as Integer, y as Integer) As Boolean
+		  Dim g1 as Graphics = g
+		  
+		  
+		  
+		  
+		  
+		  // Set Text Color
+		  g1.ForeColor = get_color("Text",0)
+		  
+		  
+		  
+		  Return False
+		End Function
 	#tag EndEvent
 	#tag Event
-		Sub MouseUp(X As Integer, Y As Integer)
-		  scripts.EventName_ShowTextfield
-		End Sub
-	#tag EndEvent
-	#tag Event
-		Function MouseDown(X As Integer, Y As Integer) As Boolean
+		Function CellBackgroundPaint(g As Graphics, row As Integer, column As Integer) As Boolean
+		  
+		  
+		  If row = me.ListIndex Then
+		    
+		    // Selected Row
+		    g.ForeColor = get_color("Blue",4)
+		    g.FillRect(0,-1,g.Width,g.Height + 1)
+		    
+		  ElseIf row Mod 2 = 0 Then
+		    
+		    // Event Row
+		    g.ForeColor = get_color("Gray",5)
+		    g.FillRect(0,-1, g.Width, g.Height + 1)
+		    
+		  Else
+		    
+		    // Odd Row
+		    g.ForeColor = get_color("Gray",4)
+		    g.FillRect(0,-1, g.Width, g.Height + 1 )
+		    
+		  End If
+		  
 		  Return True
 		End Function
 	#tag EndEvent
 #tag EndEvents
-#tag Events textfield_event_name
+#tag Events EventListboxHeader
 	#tag Event
-		Sub LostFocus()
-		  dim db as otis_database_manager
-		  db = app.otis_db
-		  dim error as Boolean
-		  dim rs as RecordSet
-		  Dim exre1 as New ExecuteReturn
+		Sub Open()
 		  
 		  
-		  
-		  // save value to database
-		  
-		  
-		  
-		  // get rid of me
-		  me.Enabled = False
-		  me.Visible = False
-		  
-		  // check if the entered value is different than the label and if it is any text
-		  If me.Text <> label_event_name.Text And me.Text <> "" Then
-		    
-		    Try
-		      exre1 = db.execute( "Update", "events_", Array("name_"),Array("'" +me.Text + "'"),array("pkid = '" + pkid_events_ + "'"))
-		    Catch err as RuntimeException
-		      MsgBox("Error occured while updating event name")
-		      error = True
-		    End Try
-		    
-		    If exre1 <> Nil Then
-		      rs = exre1.TheRecordSet
-		    End If
-		    
-		    If Not error Then
-		      'set label to the name
-		      label_event_name.Text = me.Text
-		      scripts.load_event_listbox
-		      ListboxContainer_EventList.TheListbox.Index = scripts.GetEvent_Index_ByPkid(pkid_events_)
-		    End If
-		    
-		  End If
-		End Sub
-	#tag EndEvent
-	#tag Event
-		Sub KeyUp(Key As String)
-		  if key = Chr(13) then
-		    dim db as otis_database_manager
-		    db = app.otis_db
-		    dim error as Boolean
-		    dim rs as RecordSet
-		    Dim exre1 as New ExecuteReturn
-		    
-		    
-		    
-		    // save value to database
-		    
-		    
-		    
-		    // get rid of me
-		    me.Enabled = False
-		    me.Visible = False
-		    
-		    // check if the entered value is different than the label and if it is any text
-		    If me.Text <> label_event_name.Text And me.Text <> "" Then
-		      
-		      Try
-		        exre1 = db.execute( "Update", "events_", Array("name_"),Array("'" +me.Text + "'"),array("pkid = '" + pkid_events_ + "'"))
-		      Catch err as RuntimeException
-		        MsgBox("Error occured while updating event name")
-		        error = True
-		      End Try
-		      
-		      If exre1 <> Nil Then
-		        rs = exre1.TheRecordSet
-		      End If
-		      
-		      If Not error Then
-		        'set label to the name
-		        label_event_name.Text = me.Text
-		        scripts.load_event_listbox
-		        ListboxContainer_EventList.TheListbox.Index = scripts.GetEvent_Index_ByPkid(pkid_events_)
-		      End If
-		      
-		    End If
-		  end if
-		End Sub
-	#tag EndEvent
-#tag EndEvents
-#tag Events EventDateTimes1
-	#tag Event
-		Sub Paint(g As Graphics, areas() As REALbasic.Rect)
-		  
-		  g.ForeColor = get_color("Gray",3)
-		  g.FillRoundRect(0,0,me.Width,me.Height,6,6)
-		  
-		  
-		  
-		End Sub
-	#tag EndEvent
-	#tag Event
-		Sub Resizing()
-		  
-		  
-		  me.RefreshControls
+		  me.TextColor = get_color("Text",0)
 		End Sub
 	#tag EndEvent
 #tag EndEvents

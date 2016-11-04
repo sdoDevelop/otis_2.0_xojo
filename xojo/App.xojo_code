@@ -29,6 +29,14 @@ Inherits Application
 
 
 	#tag Property, Flags = &h0
+		MSNameL As String
+	#tag EndProperty
+
+	#tag Property, Flags = &h0
+		MSRubberViewsL As String
+	#tag EndProperty
+
+	#tag Property, Flags = &h0
 		otis_db As otis_database_manager
 	#tag EndProperty
 
