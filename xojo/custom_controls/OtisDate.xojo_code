@@ -2,6 +2,31 @@
 Protected Class OtisDate
 Inherits Date
 	#tag Method, Flags = &h0
+		Sub Period(Assigns ThePeriod as String)
+		  
+		  
+		  
+		  If ThePeriod = "am" Then
+		    
+		    If me.Hour = 12 Then
+		      me.Hour = 0
+		    ElseIf me.Hour >= 1 And me.Hour <= 11 Then
+		      
+		    End If
+		    
+		  ElseIf ThePeriod = "pm" Then
+		    
+		    If me.Hour = 12 Then
+		      
+		    ElseIf me.Hour >= 1 And me.Hour <=11 Then
+		      me.Hour = me.Hour + 12
+		    End If
+		    
+		  End If
+		End Sub
+	#tag EndMethod
+
+	#tag Method, Flags = &h0
 		Function SQLTime() As String
 		  
 		  

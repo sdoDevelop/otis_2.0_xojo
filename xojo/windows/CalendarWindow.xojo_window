@@ -1831,6 +1831,7 @@ Begin Window CalendarWindow
       Selectable      =   False
       TabIndex        =   42
       TabPanelIndex   =   0
+      TabStop         =   True
       Text            =   "S"
       TextAlign       =   1
       TextColor       =   &c00000000
@@ -1865,6 +1866,7 @@ Begin Window CalendarWindow
       Selectable      =   False
       TabIndex        =   43
       TabPanelIndex   =   0
+      TabStop         =   True
       Text            =   "M"
       TextAlign       =   1
       TextColor       =   &c00000000
@@ -1899,6 +1901,7 @@ Begin Window CalendarWindow
       Selectable      =   False
       TabIndex        =   44
       TabPanelIndex   =   0
+      TabStop         =   True
       Text            =   "T"
       TextAlign       =   1
       TextColor       =   &c00000000
@@ -1933,6 +1936,7 @@ Begin Window CalendarWindow
       Selectable      =   False
       TabIndex        =   45
       TabPanelIndex   =   0
+      TabStop         =   True
       Text            =   "W"
       TextAlign       =   1
       TextColor       =   &c00000000
@@ -1967,6 +1971,7 @@ Begin Window CalendarWindow
       Selectable      =   False
       TabIndex        =   46
       TabPanelIndex   =   0
+      TabStop         =   True
       Text            =   "T"
       TextAlign       =   1
       TextColor       =   &c00000000
@@ -2001,6 +2006,7 @@ Begin Window CalendarWindow
       Selectable      =   False
       TabIndex        =   47
       TabPanelIndex   =   0
+      TabStop         =   True
       Text            =   "F"
       TextAlign       =   1
       TextColor       =   &c00000000
@@ -2035,6 +2041,7 @@ Begin Window CalendarWindow
       Selectable      =   False
       TabIndex        =   48
       TabPanelIndex   =   0
+      TabStop         =   True
       Text            =   "S"
       TextAlign       =   1
       TextColor       =   &c00000000

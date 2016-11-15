@@ -1,109 +1,124 @@
 #tag Class
-Protected Class sdoCanvas
+Protected Class CalenderButton
 Inherits Canvas
+	#tag Event
+		Function MouseDown(X As Integer, Y As Integer) As Boolean
+		  
+		  
+		  me.State = "Pressed"
+		  
+		  Refresh
+		  
+		  Return True
+		  
+		  
+		End Function
+	#tag EndEvent
+
+	#tag Event
+		Sub MouseEnter()
+		  
+		  
+		  me.State = "Hover"
+		  me.Refresh
+		End Sub
+	#tag EndEvent
+
+	#tag Event
+		Sub MouseExit()
+		  
+		  
+		  me.State = "Normal"
+		  me.Refresh
+		End Sub
+	#tag EndEvent
+
+	#tag Event
+		Sub MouseUp(X As Integer, Y As Integer)
+		  
+		  
+		  If X >= 0 And X <= me.Width And Y >= 0 And Y <= me.Height Then
+		    
+		    me.State = "Hover"
+		    
+		    Refresh
+		    
+		    LaunchCalenderPicker
+		    
+		  End If
+		End Sub
+	#tag EndEvent
+
 	#tag Event
 		Sub Open()
 		  
 		  
-		  
-		  
-		  ' do all initial value settings in this event
 		  RaiseEvent Initialize
 		  
-		  OpenMethod
-		  
-		  
-		  RaiseEvent PropogateOpen
+		  State = "Normal"
 		End Sub
 	#tag EndEvent
 
 	#tag Event
 		Sub Paint(g As Graphics, areas() As REALbasic.Rect)
-		  Dim g1 as Graphics = g
 		  
 		  
 		  
-		  PaintMethod(g1)
-		  
-		  PropogatePaint(g1)
+		  DrawCalender(g)
 		End Sub
 	#tag EndEvent
 
 
-	#tag Method, Flags = &h1
-		Protected Sub DrawBackground(GraphicsObject as Graphics)
+	#tag Method, Flags = &h21
+		Private Sub DrawCalender(GraphicsObject as Graphics)
 		  Dim g1 as Graphics = GraphicsObject
+		  Dim TheCalender as Picture
 		  
 		  
 		  
-		  If Not IsValid Then
-		    g1.ForeColor = rgb(255,0,0)
-		    g1.Transparency = 50
+		  Select Case me.State
+		  Case "Normal"
+		    TheCalender = Calender_Picture
+		  Case "Hover"
+		    TheCalender = Calender_Picture_Hover
+		  Case "Pressed"
+		    TheCalender = Calender_Picture_Pressed
+		  Case "Disabled"
+		    TheCalender = Calender_Picture_Disabled
+		  End Select
+		  
+		  
+		  g1.DrawPicture(TheCalender,0,0,me.Width,me.Height,0,0,TheCalender.Width,TheCalender.Height)
+		End Sub
+	#tag EndMethod
+
+	#tag Method, Flags = &h21
+		Private Sub LaunchCalenderPicker()
+		  Dim TheDate as new date
+		  Dim TheMonth, TheDay, TheYear as Integer
+		  Dim cw1 as New CalendarWindow
+		  
+		  
+		  TheMonth = val( PairedControl.Sections.Data(PairedControl.Sections.NameIndex("Month")).TheText )
+		  TheDay = val( PairedControl.Sections.Data(PairedControl.Sections.NameIndex("Date")).TheText )
+		  TheYear = val( PairedControl.Sections.Data(PairedControl.Sections.NameIndex("Year")).TheText )
+		  
+		  If TheMonth = 0 Or TheDay = 0 Or TheYear = 0 Then
+		    
 		  Else
-		    g1.ForeColor = BackgroundColor
-		    g1.Transparency = 0
+		    TheDate.Month = TheMonth
+		    TheDate.Day = TheDay
+		    TheDate.Year = TheYear + 2000
 		  End If
 		  
-		  g1.FillRoundRect(0,0,me.Width,me.Height,CornerArc,CornerArc)
-		End Sub
-	#tag EndMethod
-
-	#tag Method, Flags = &h1
-		Protected Sub DrawBorders(GraphicsObject as Graphics)
-		  Dim g1 as Graphics = GraphicsObject
 		  
+		  TheDate.TotalSeconds = cw1.GetDate(TheDate)
 		  
+		  PairedControl.EnterRawData(TheDate.SQLDate)
+		  me.PairedControl.RaiseSave
 		  
-		  g1.ForeColor = BorderColor
-		  g1.DrawRoundRect(0,0,me.Width,me.Height,CornerArc,CornerArc)
-		End Sub
-	#tag EndMethod
-
-	#tag Method, Flags = &h21
-		Private Sub OpenMethod()
+		  me.PairedControl.LoadFromDB
 		  
-		  
-		  #If TargetWin32 Then
-		    DoubleBuffer = True
-		  #Else
-		    DoubleBuffer = False
-		  #endif
-		  
-		  
-		  me.AcceptFocus = True
-		  
-		  
-		  SetCoordinates
-		End Sub
-	#tag EndMethod
-
-	#tag Method, Flags = &h21
-		Private Sub PaintMethod(GraphicsObject as Graphics)
-		  Dim g1 as Graphics = GraphicsObject
-		  
-		  
-		  SetCoordinates
-		  
-		  If Not Transparent Then
-		    DrawBackground(g1)
-		  End If
-		  
-		  If Borders Then
-		    DrawBorders(g1)
-		  End If
-		End Sub
-	#tag EndMethod
-
-	#tag Method, Flags = &h1
-		Protected Sub SetCoordinates()
-		  
-		  
-		  HalfHorizontal = Width / 2
-		  HalfVertical = Height / 2
-		  CenterHorizontal = Left + Floor( Width / 2 )
-		  CenterVertical = Top + Floor(Height / 2)
-		  Right = Left + Width
-		  Bottom = Top + Height
 		End Sub
 	#tag EndMethod
 
@@ -113,75 +128,16 @@ Inherits Canvas
 	#tag EndHook
 
 	#tag Hook, Flags = &h0
-		Event PropogateOpen()
-	#tag EndHook
-
-	#tag Hook, Flags = &h0
-		Event PropogatePaint(g as Graphics)
-	#tag EndHook
-
-	#tag Hook, Flags = &h0
-		Event sdoOpen()
+		Event SaveValue(TheDate as date)
 	#tag EndHook
 
 
 	#tag Property, Flags = &h0
-		BackgroundColor As Color
+		PairedControl As sdoLabel_Date
 	#tag EndProperty
 
-	#tag Property, Flags = &h0
-		BorderColor As Color
-	#tag EndProperty
-
-	#tag Property, Flags = &h0
-		Borders As Boolean
-	#tag EndProperty
-
-	#tag Property, Flags = &h1
-		Protected Bottom As Integer
-	#tag EndProperty
-
-	#tag Property, Flags = &h1
-		Protected CenterHorizontal As Integer
-	#tag EndProperty
-
-	#tag Property, Flags = &h1
-		Protected CenterVertical As Integer
-	#tag EndProperty
-
-	#tag Property, Flags = &h0
-		CornerArc As Integer
-	#tag EndProperty
-
-	#tag Property, Flags = &h1
-		Protected HalfHorizontal As Integer
-	#tag EndProperty
-
-	#tag Property, Flags = &h1
-		Protected HalfVertical As Integer
-	#tag EndProperty
-
-	#tag Property, Flags = &h1
-		Protected IsValid As Boolean = True
-	#tag EndProperty
-
-	#tag Property, Flags = &h1
-		Protected Right As Integer
-	#tag EndProperty
-
-	#tag Property, Flags = &h1
-		#tag Note
-			
-			Normal
-			Hover
-			Pressed
-			Disabled
-		#tag EndNote
-		Protected State As Dictionary
-	#tag EndProperty
-
-	#tag Property, Flags = &h1
-		Protected Transparent As Boolean
+	#tag Property, Flags = &h21
+		Private State As String
 	#tag EndProperty
 
 
@@ -211,28 +167,6 @@ Inherits Canvas
 			Group="Appearance"
 			Type="Picture"
 			EditorType="Picture"
-		#tag EndViewProperty
-		#tag ViewProperty
-			Name="BackgroundColor"
-			Group="Behavior"
-			InitialValue="&c000000"
-			Type="Color"
-		#tag EndViewProperty
-		#tag ViewProperty
-			Name="BorderColor"
-			Group="Behavior"
-			InitialValue="&c000000"
-			Type="Color"
-		#tag EndViewProperty
-		#tag ViewProperty
-			Name="Borders"
-			Group="Behavior"
-			Type="Boolean"
-		#tag EndViewProperty
-		#tag ViewProperty
-			Name="CornerArc"
-			Group="Behavior"
-			Type="Integer"
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="DoubleBuffer"
@@ -354,6 +288,7 @@ Inherits Canvas
 			Name="Transparent"
 			Visible=true
 			Group="Behavior"
+			InitialValue="True"
 			Type="Boolean"
 			EditorType="Boolean"
 		#tag EndViewProperty

@@ -2,12 +2,41 @@
 Protected Class sdoLabel
 Inherits sdoCanvas
 	#tag Event
+		Function ConstructContextualMenu(base as MenuItem, x as Integer, y as Integer) As Boolean
+		  
+		  
+		  base.Append( New MenuItem("Clear") )
+		End Function
+	#tag EndEvent
+
+	#tag Event
+		Function ContextualMenuAction(hitItem as MenuItem) As Boolean
+		  
+		  
+		  Select Case hitItem.Text
+		  Case "Clear"
+		    me.EnterRawData( "" )
+		    RaiseSave
+		  End Select
+		End Function
+	#tag EndEvent
+
+	#tag Event
 		Function KeyDown(Key As String) As Boolean
 		  
 		  
 		  
 		  Return KeyDownMethod(Key)
 		End Function
+	#tag EndEvent
+
+	#tag Event
+		Sub LostFocus()
+		  
+		  
+		  RaiseSave
+		  ExitEditMode
+		End Sub
 	#tag EndEvent
 
 	#tag Event
@@ -70,7 +99,9 @@ Inherits sdoCanvas
 		    
 		  Else
 		    
-		    RaiseSave
+		    If  CheckValue Then
+		      RaiseSave
+		    End If
 		    RaiseEvent DoneEditingSection
 		    
 		  End If
@@ -133,6 +164,23 @@ Inherits sdoCanvas
 		    Return False
 		  Else 
 		    Return True
+		  End If
+		End Function
+	#tag EndMethod
+
+	#tag Method, Flags = &h21
+		Private Function CheckValue() As Boolean
+		  
+		  
+		  
+		  If RaiseEvent CheckValueDef Then
+		    me.IsValid = True
+		    Refresh
+		    Return True
+		  Else
+		    me.IsValid = False
+		    Refresh
+		    Return False
 		  End If
 		End Function
 	#tag EndMethod
@@ -352,8 +400,22 @@ Inherits sdoCanvas
 		End Sub
 	#tag EndMethod
 
-	#tag Method, Flags = &h21
-		Private Sub EnterValueArrayIntoSections(TheValues() as string)
+	#tag Method, Flags = &h0
+		Sub EnterRawData(TheRawData as Variant)
+		  
+		  
+		  me.RawData = TheRawData
+		  me.LabelText = TheRawData
+		  RaiseEvent CreateTextFromRaw
+		  
+		  Refresh
+		  
+		  
+		End Sub
+	#tag EndMethod
+
+	#tag Method, Flags = &h1
+		Protected Sub EnterValueArrayIntoSections(TheValues() as string)
 		  
 		  
 		  For i1 as integer = 0 To TheValues.Ubound
@@ -367,6 +429,9 @@ Inherits sdoCanvas
 	#tag Method, Flags = &h21
 		Private Sub ExitEditMode()
 		  
+		  If  CheckValue Then
+		    
+		  End If
 		  
 		  CurrentEditSection = -1
 		  ReDim TextBuffer(-1)
@@ -431,12 +496,12 @@ Inherits sdoCanvas
 		      Refresh
 		      
 		      // Check if that puts us over at or over max for the current section
-		      If Sections.Data(CurrentEditSection).MaxCharacters <= TextBuffer.Ubound + 1 Then
+		      If Sections.Data(CurrentEditSection).MaxCharacters <= TextBuffer.Ubound + 1 And Sections.Data(CurrentEditSection).MaxCharacters <> -1 Then
 		        'We are at or exceeding max characters....exceed shouldn't be able to happen
 		        
 		        If RaiseEvent CheckSectionValue(CurrentEditSection) Then
 		          'Value is valid
-		          'RaiseSave
+		          
 		          
 		          // Advance the edit field
 		          AdvanceEditThroughParts
@@ -446,6 +511,8 @@ Inherits sdoCanvas
 		          ReDim TextBuffer(-1)
 		        End If
 		        '
+		      ElseIf Sections.Data(CurrentEditSection).MaxCharacters = -1 Then
+		        'There is no max character limit
 		      Else
 		        'We are still below max characters
 		      End If
@@ -459,6 +526,23 @@ Inherits sdoCanvas
 		        IncrementSection(CurrentEditSection,"up")
 		      Case Chr(31)  'DownArrow
 		        IncrementSection(CurrentEditSection,"Down")
+		      Case Chr(8)  'Backspace
+		        If TextBuffer.Ubound <> -1 Then
+		          // Remove the last character from the buffer
+		          Dim index1 as integer = TextBuffer.Ubound
+		          TextBuffer.Remove(index1)
+		        Else
+		          TextBuffer = Split(me.LabelText,"")
+		          // Remove the last character from the buffer
+		          Dim index1 as integer = TextBuffer.Ubound
+		          TextBuffer.Remove(index1)
+		          
+		        End If
+		        
+		        
+		        // Write Text to screen
+		        Sections.Data(CurrentEditSection).TheText = Join(TextBuffer(),"")
+		        Refresh
 		      End Select
 		    End If
 		    
@@ -467,6 +551,20 @@ Inherits sdoCanvas
 		    'do nothing
 		  End If
 		End Function
+	#tag EndMethod
+
+	#tag Method, Flags = &h0
+		Sub LoadFromDB()
+		  
+		  
+		  RawData = RaiseEvent LoadFromDB
+		  
+		  If me.RawData <> Nil Then
+		    RaiseEvent CreateTextFromRaw
+		  End If
+		  
+		  Refresh
+		End Sub
 	#tag EndMethod
 
 	#tag Method, Flags = &h21
@@ -548,12 +646,7 @@ Inherits sdoCanvas
 		  
 		  RaiseEvent PropogateOpen
 		  
-		  
-		  
-		  
-		  
-		  'RaiseEvent BreakTextIntoParts
-		  EnterValueArrayIntoSections( RaiseEvent LoadValues )
+		  RaiseEvent CreateTextFromRaw
 		  
 		  
 		  
@@ -573,9 +666,11 @@ Inherits sdoCanvas
 		End Sub
 	#tag EndMethod
 
-	#tag Method, Flags = &h21
-		Private Sub RaiseSave()
-		  
+	#tag Method, Flags = &h0
+		Sub RaiseSave()
+		  // save gets raised in 2 scenarios
+		  //     - The control loses focus
+		  //     - The end of its AdvanceEditThroughParts is hit
 		  
 		  RaiseEvent SaveEvent
 		End Sub
@@ -636,15 +731,15 @@ Inherits sdoCanvas
 
 
 	#tag Hook, Flags = &h0
-		Event BreakTextIntoParts()
-	#tag EndHook
-
-	#tag Hook, Flags = &h0
 		Event CheckSectionValue(TheSection as integer) As Boolean
 	#tag EndHook
 
 	#tag Hook, Flags = &h0
-		Event CheckValue()
+		Event CheckValueDef() As Boolean
+	#tag EndHook
+
+	#tag Hook, Flags = &h0
+		Event CreateTextFromRaw()
 	#tag EndHook
 
 	#tag Hook, Flags = &h0
@@ -652,7 +747,7 @@ Inherits sdoCanvas
 	#tag EndHook
 
 	#tag Hook, Flags = &h0
-		Event LoadValues() As String()
+		Event LoadFromDB() As Variant
 	#tag EndHook
 
 	#tag Hook, Flags = &h0
@@ -696,8 +791,8 @@ Inherits sdoCanvas
 		Private KeyInputBuffer() As String
 	#tag EndProperty
 
-	#tag Property, Flags = &h0
-		LabelText As String
+	#tag Property, Flags = &h1
+		Protected LabelText As String
 	#tag EndProperty
 
 	#tag Property, Flags = &h0
@@ -706,6 +801,10 @@ Inherits sdoCanvas
 
 	#tag Property, Flags = &h1
 		Protected MouseDownPart As String
+	#tag EndProperty
+
+	#tag Property, Flags = &h0
+		RawData As Variant
 	#tag EndProperty
 
 	#tag Property, Flags = &h0
@@ -890,13 +989,6 @@ Inherits sdoCanvas
 			Name="JustificationHorizontal"
 			Group="Behavior"
 			Type="Integer"
-		#tag EndViewProperty
-		#tag ViewProperty
-			Name="LabelText"
-			Visible=true
-			Group="Behavior"
-			Type="String"
-			EditorType="MultiLineEditor"
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="Left"

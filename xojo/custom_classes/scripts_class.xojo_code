@@ -40,14 +40,28 @@ Protected Class scripts_class
 		    Array("pkid = '" + ThePKID + "'") )
 		    
 		    'event name
-		    dim EventName as string = exre1.TheRecordSet.Field("name_").StringValue
-		    If EventName = "" Then
-		      EventName = "Click Here To Change"
+		    dim TheEventName as string = exre1.TheRecordSet.Field("name_").StringValue
+		    If TheEventName = "" Then
+		      TheEventName = "Click Here To Change"
 		    End If
-		    'window_main.label_event_name.Text = EventName
+		    window_main.EventName.Text = TheEventName
+		    
+		    'Acount Manager
+		    window_main.AccountManager.LoadFromDB
+		    
+		    'Details
+		    window_main.EventDetails.LoadFromDB
 		    
 		    // Load the event date time container
-		    'window_main.EventDateTimes1.LoadControls
+		    window_main.ContainerControl_EventDateTimes1.Enabled = True
+		    window_main.ContainerControl_EventDateTimes1.StartDate.LoadFromDB
+		    window_main.ContainerControl_EventDateTimes1.StartTime.LoadFromDB
+		    window_main.ContainerControl_EventDateTimes1.EndTime.LoadFromDB
+		    window_main.ContainerControl_EventDateTimes1.EndDate.LoadFromDB
+		    window_main.ContainerControl_EventDateTimes1.LoadInTime.LoadFromDB
+		    window_main.ContainerControl_EventDateTimes1.LoadInDate.LoadFromDB
+		    window_main.ContainerControl_EventDateTimes1.LoadOutTime.LoadFromDB
+		    window_main.ContainerControl_EventDateTimes1.LoadOutDate.LoadFromDB
 		    
 		    
 		    
@@ -143,6 +157,23 @@ Protected Class scripts_class
 		  
 		  
 		  lb.ListIndex = GetEvent_Index_ByPkid(thepkid)
+		End Sub
+	#tag EndMethod
+
+	#tag Method, Flags = &h0
+		Sub SelectEventByPKID(ThePKID as string)
+		  Dim lb1 as Listbox = window_main.TheListbox
+		  
+		  
+		  
+		  For i1 as integer = 0 To lb1.ListCount - 1
+		    
+		    If lb1.RowTag(i1) = ThePKID Then
+		      lb1.ListIndex = i1
+		      Return
+		    End If
+		    
+		  Next
 		End Sub
 	#tag EndMethod
 

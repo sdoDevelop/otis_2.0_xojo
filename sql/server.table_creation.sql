@@ -22,7 +22,7 @@
         end_date text,
         loadin_date text,
         loadout_date text,
-        details_ text,
+        details text,
         account_manager text
         );
 

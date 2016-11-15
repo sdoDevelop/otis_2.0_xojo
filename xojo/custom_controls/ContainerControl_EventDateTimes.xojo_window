@@ -1,5 +1,5 @@
 #tag Window
-Begin ContainerControl ContainerControl_EventDateTimes
+Begin ContainerControl ContainerControl_EventDateTimes Implements LoadFromDB
    AcceptFocus     =   True
    AcceptTabs      =   True
    AutoDeactivate  =   True
@@ -24,39 +24,7 @@ Begin ContainerControl ContainerControl_EventDateTimes
    Transparent     =   True
    UseFocusRing    =   False
    Visible         =   True
-   Width           =   284
-   Begin sdoLabel_Time StartTime
-      AcceptFocus     =   True
-      AcceptTabs      =   True
-      AutoDeactivate  =   True
-      Backdrop        =   0
-      BackgroundColor =   &c00000000
-      BorderColor     =   &c00000000
-      CornerArc       =   0
-      DoubleBuffer    =   False
-      Enabled         =   True
-      EraseBackground =   True
-      Height          =   20
-      HelpTag         =   ""
-      Index           =   -2147483648
-      InitialParent   =   ""
-      JustificationHorizontal=   0
-      Left            =   20
-      LockBottom      =   False
-      LockedInPosition=   False
-      LockLeft        =   True
-      LockRight       =   False
-      LockTop         =   True
-      Scope           =   0
-      TabIndex        =   0
-      TabPanelIndex   =   0
-      TabStop         =   True
-      Top             =   30
-      Transparent     =   False
-      UseFocusRing    =   True
-      Visible         =   True
-      Width           =   100
-   End
+   Width           =   278
    Begin sdoLabel_Date StartDate
       AcceptFocus     =   True
       AcceptTabs      =   True
@@ -64,6 +32,7 @@ Begin ContainerControl ContainerControl_EventDateTimes
       Backdrop        =   0
       BackgroundColor =   &c00000000
       BorderColor     =   &c00000000
+      Borders         =   False
       CornerArc       =   0
       DoubleBuffer    =   False
       Enabled         =   True
@@ -89,40 +58,6 @@ Begin ContainerControl ContainerControl_EventDateTimes
       Visible         =   True
       Width           =   100
    End
-   Begin Label StartLabel
-      AutoDeactivate  =   True
-      Bold            =   False
-      DataField       =   ""
-      DataSource      =   ""
-      Enabled         =   True
-      Height          =   20
-      HelpTag         =   ""
-      Index           =   -2147483648
-      InitialParent   =   ""
-      Italic          =   False
-      Left            =   20
-      LockBottom      =   False
-      LockedInPosition=   False
-      LockLeft        =   True
-      LockRight       =   False
-      LockTop         =   True
-      Multiline       =   False
-      Scope           =   2
-      Selectable      =   False
-      TabIndex        =   2
-      TabPanelIndex   =   0
-      Text            =   "Event Start"
-      TextAlign       =   1
-      TextColor       =   &c00000000
-      TextFont        =   "System"
-      TextSize        =   0.0
-      TextUnit        =   0
-      Top             =   10
-      Transparent     =   True
-      Underline       =   False
-      Visible         =   True
-      Width           =   100
-   End
    Begin RubberViews RubberView1
       AcceptFocus     =   False
       AcceptTabs      =   True
@@ -145,6 +80,9 @@ Begin ContainerControl ContainerControl_EventDateTimes
       LockTop         =   True
       NoContentResizes=   ""
       Scope           =   2
+      sizGood         =   False
+      sizKeepRatio    =   False
+      sizNoContentResize=   False
       sizWin          =   "0"
       StretchWindowBackdrop=   False
       TabIndex        =   3
@@ -156,13 +94,42 @@ Begin ContainerControl ContainerControl_EventDateTimes
       Visible         =   True
       Width           =   20
    End
-   Begin sdoLabel_Time EndTime
-      AcceptFocus     =   True
-      AcceptTabs      =   True
+   Begin CalenderButton StartCalender
+      AcceptFocus     =   False
+      AcceptTabs      =   False
+      AutoDeactivate  =   True
+      Backdrop        =   0
+      DoubleBuffer    =   False
+      Enabled         =   True
+      EraseBackground =   True
+      Height          =   14
+      HelpTag         =   ""
+      Index           =   -2147483648
+      InitialParent   =   ""
+      Left            =   119
+      LockBottom      =   False
+      LockedInPosition=   False
+      LockLeft        =   True
+      LockRight       =   False
+      LockTop         =   True
+      Scope           =   0
+      TabIndex        =   13
+      TabPanelIndex   =   0
+      TabStop         =   True
+      Top             =   52
+      Transparent     =   True
+      UseFocusRing    =   True
+      Visible         =   True
+      Width           =   14
+   End
+   Begin sdoLabel_Time StartTime
+      AcceptFocus     =   False
+      AcceptTabs      =   False
       AutoDeactivate  =   True
       Backdrop        =   0
       BackgroundColor =   &c00000000
       BorderColor     =   &c00000000
+      Borders         =   False
       CornerArc       =   0
       DoubleBuffer    =   False
       Enabled         =   True
@@ -172,14 +139,14 @@ Begin ContainerControl ContainerControl_EventDateTimes
       Index           =   -2147483648
       InitialParent   =   ""
       JustificationHorizontal=   0
-      Left            =   152
+      Left            =   20
       LockBottom      =   False
       LockedInPosition=   False
       LockLeft        =   True
       LockRight       =   False
       LockTop         =   True
       Scope           =   0
-      TabIndex        =   4
+      TabIndex        =   14
       TabPanelIndex   =   0
       TabStop         =   True
       Top             =   30
@@ -188,39 +155,7 @@ Begin ContainerControl ContainerControl_EventDateTimes
       Visible         =   True
       Width           =   100
    End
-   Begin sdoLabel_Date EndDate
-      AcceptFocus     =   True
-      AcceptTabs      =   True
-      AutoDeactivate  =   True
-      Backdrop        =   0
-      BackgroundColor =   &c00000000
-      BorderColor     =   &c00000000
-      CornerArc       =   0
-      DoubleBuffer    =   False
-      Enabled         =   True
-      EraseBackground =   True
-      Height          =   20
-      HelpTag         =   ""
-      Index           =   -2147483648
-      InitialParent   =   ""
-      JustificationHorizontal=   0
-      Left            =   152
-      LockBottom      =   False
-      LockedInPosition=   False
-      LockLeft        =   True
-      LockRight       =   False
-      LockTop         =   True
-      Scope           =   0
-      TabIndex        =   5
-      TabPanelIndex   =   0
-      TabStop         =   True
-      Top             =   50
-      Transparent     =   False
-      UseFocusRing    =   True
-      Visible         =   True
-      Width           =   100
-   End
-   Begin Label EndLabel
+   Begin Label Start_Label
       AutoDeactivate  =   True
       Bold            =   False
       DataField       =   ""
@@ -231,16 +166,144 @@ Begin ContainerControl ContainerControl_EventDateTimes
       Index           =   -2147483648
       InitialParent   =   ""
       Italic          =   False
-      Left            =   152
+      Left            =   20
       LockBottom      =   False
       LockedInPosition=   False
       LockLeft        =   True
       LockRight       =   False
       LockTop         =   True
       Multiline       =   False
-      Scope           =   2
+      Scope           =   0
       Selectable      =   False
-      TabIndex        =   6
+      TabIndex        =   15
+      TabPanelIndex   =   0
+      Text            =   "Event Start"
+      TextAlign       =   1
+      TextColor       =   &c00000000
+      TextFont        =   "System"
+      TextSize        =   0.0
+      TextUnit        =   0
+      Top             =   10
+      Transparent     =   True
+      Underline       =   False
+      Visible         =   True
+      Width           =   100
+   End
+   Begin sdoLabel_Date EndDate
+      AcceptFocus     =   True
+      AcceptTabs      =   True
+      AutoDeactivate  =   True
+      Backdrop        =   0
+      BackgroundColor =   &c00000000
+      BorderColor     =   &c00000000
+      Borders         =   False
+      CornerArc       =   0
+      DoubleBuffer    =   False
+      Enabled         =   True
+      EraseBackground =   True
+      Height          =   20
+      HelpTag         =   ""
+      Index           =   -2147483648
+      InitialParent   =   ""
+      JustificationHorizontal=   0
+      Left            =   145
+      LockBottom      =   False
+      LockedInPosition=   False
+      LockLeft        =   True
+      LockRight       =   False
+      LockTop         =   True
+      Scope           =   0
+      TabIndex        =   16
+      TabPanelIndex   =   0
+      TabStop         =   True
+      Top             =   50
+      Transparent     =   False
+      UseFocusRing    =   True
+      Visible         =   True
+      Width           =   100
+   End
+   Begin CalenderButton EndCalender
+      AcceptFocus     =   False
+      AcceptTabs      =   False
+      AutoDeactivate  =   True
+      Backdrop        =   0
+      DoubleBuffer    =   False
+      Enabled         =   True
+      EraseBackground =   True
+      Height          =   14
+      HelpTag         =   ""
+      Index           =   -2147483648
+      InitialParent   =   ""
+      Left            =   244
+      LockBottom      =   False
+      LockedInPosition=   False
+      LockLeft        =   True
+      LockRight       =   False
+      LockTop         =   True
+      Scope           =   0
+      TabIndex        =   17
+      TabPanelIndex   =   0
+      TabStop         =   True
+      Top             =   52
+      Transparent     =   True
+      UseFocusRing    =   True
+      Visible         =   True
+      Width           =   14
+   End
+   Begin sdoLabel_Time EndTime
+      AcceptFocus     =   False
+      AcceptTabs      =   False
+      AutoDeactivate  =   True
+      Backdrop        =   0
+      BackgroundColor =   &c00000000
+      BorderColor     =   &c00000000
+      Borders         =   False
+      CornerArc       =   0
+      DoubleBuffer    =   False
+      Enabled         =   True
+      EraseBackground =   True
+      Height          =   20
+      HelpTag         =   ""
+      Index           =   -2147483648
+      InitialParent   =   ""
+      JustificationHorizontal=   0
+      Left            =   145
+      LockBottom      =   False
+      LockedInPosition=   False
+      LockLeft        =   True
+      LockRight       =   False
+      LockTop         =   True
+      Scope           =   0
+      TabIndex        =   18
+      TabPanelIndex   =   0
+      TabStop         =   True
+      Top             =   30
+      Transparent     =   False
+      UseFocusRing    =   True
+      Visible         =   True
+      Width           =   100
+   End
+   Begin Label End_Label
+      AutoDeactivate  =   True
+      Bold            =   False
+      DataField       =   ""
+      DataSource      =   ""
+      Enabled         =   True
+      Height          =   20
+      HelpTag         =   ""
+      Index           =   -2147483648
+      InitialParent   =   ""
+      Italic          =   False
+      Left            =   145
+      LockBottom      =   False
+      LockedInPosition=   False
+      LockLeft        =   True
+      LockRight       =   False
+      LockTop         =   True
+      Multiline       =   False
+      Scope           =   0
+      Selectable      =   False
+      TabIndex        =   19
       TabPanelIndex   =   0
       Text            =   "Event End"
       TextAlign       =   1
@@ -254,13 +317,14 @@ Begin ContainerControl ContainerControl_EventDateTimes
       Visible         =   True
       Width           =   100
    End
-   Begin sdoLabel_Time StartTime2
+   Begin sdoLabel_Date LoadInDate
       AcceptFocus     =   True
       AcceptTabs      =   True
       AutoDeactivate  =   True
       Backdrop        =   0
       BackgroundColor =   &c00000000
       BorderColor     =   &c00000000
+      Borders         =   False
       CornerArc       =   0
       DoubleBuffer    =   False
       Enabled         =   True
@@ -277,39 +341,7 @@ Begin ContainerControl ContainerControl_EventDateTimes
       LockRight       =   False
       LockTop         =   True
       Scope           =   0
-      TabIndex        =   7
-      TabPanelIndex   =   0
-      TabStop         =   True
-      Top             =   102
-      Transparent     =   False
-      UseFocusRing    =   True
-      Visible         =   True
-      Width           =   100
-   End
-   Begin sdoLabel_Date StartDate2
-      AcceptFocus     =   True
-      AcceptTabs      =   True
-      AutoDeactivate  =   True
-      Backdrop        =   0
-      BackgroundColor =   &c00000000
-      BorderColor     =   &c00000000
-      CornerArc       =   0
-      DoubleBuffer    =   False
-      Enabled         =   True
-      EraseBackground =   True
-      Height          =   20
-      HelpTag         =   ""
-      Index           =   -2147483648
-      InitialParent   =   ""
-      JustificationHorizontal=   0
-      Left            =   20
-      LockBottom      =   False
-      LockedInPosition=   False
-      LockLeft        =   True
-      LockRight       =   False
-      LockTop         =   True
-      Scope           =   0
-      TabIndex        =   8
+      TabIndex        =   20
       TabPanelIndex   =   0
       TabStop         =   True
       Top             =   122
@@ -318,139 +350,7 @@ Begin ContainerControl ContainerControl_EventDateTimes
       Visible         =   True
       Width           =   100
    End
-   Begin Label StartLabel2
-      AutoDeactivate  =   True
-      Bold            =   False
-      DataField       =   ""
-      DataSource      =   ""
-      Enabled         =   True
-      Height          =   20
-      HelpTag         =   ""
-      Index           =   -2147483648
-      InitialParent   =   ""
-      Italic          =   False
-      Left            =   20
-      LockBottom      =   False
-      LockedInPosition=   False
-      LockLeft        =   True
-      LockRight       =   False
-      LockTop         =   True
-      Multiline       =   False
-      Scope           =   2
-      Selectable      =   False
-      TabIndex        =   9
-      TabPanelIndex   =   0
-      Text            =   "Event Start"
-      TextAlign       =   1
-      TextColor       =   &c00000000
-      TextFont        =   "System"
-      TextSize        =   0.0
-      TextUnit        =   0
-      Top             =   82
-      Transparent     =   True
-      Underline       =   False
-      Visible         =   True
-      Width           =   100
-   End
-   Begin sdoLabel_Time StartTime3
-      AcceptFocus     =   True
-      AcceptTabs      =   True
-      AutoDeactivate  =   True
-      Backdrop        =   0
-      BackgroundColor =   &c00000000
-      BorderColor     =   &c00000000
-      CornerArc       =   0
-      DoubleBuffer    =   False
-      Enabled         =   True
-      EraseBackground =   True
-      Height          =   20
-      HelpTag         =   ""
-      Index           =   -2147483648
-      InitialParent   =   ""
-      JustificationHorizontal=   0
-      Left            =   152
-      LockBottom      =   False
-      LockedInPosition=   False
-      LockLeft        =   True
-      LockRight       =   False
-      LockTop         =   True
-      Scope           =   0
-      TabIndex        =   10
-      TabPanelIndex   =   0
-      TabStop         =   True
-      Top             =   102
-      Transparent     =   False
-      UseFocusRing    =   True
-      Visible         =   True
-      Width           =   100
-   End
-   Begin sdoLabel_Date StartDate3
-      AcceptFocus     =   True
-      AcceptTabs      =   True
-      AutoDeactivate  =   True
-      Backdrop        =   0
-      BackgroundColor =   &c00000000
-      BorderColor     =   &c00000000
-      CornerArc       =   0
-      DoubleBuffer    =   False
-      Enabled         =   True
-      EraseBackground =   True
-      Height          =   20
-      HelpTag         =   ""
-      Index           =   -2147483648
-      InitialParent   =   ""
-      JustificationHorizontal=   0
-      Left            =   152
-      LockBottom      =   False
-      LockedInPosition=   False
-      LockLeft        =   True
-      LockRight       =   False
-      LockTop         =   True
-      Scope           =   0
-      TabIndex        =   11
-      TabPanelIndex   =   0
-      TabStop         =   True
-      Top             =   122
-      Transparent     =   False
-      UseFocusRing    =   True
-      Visible         =   True
-      Width           =   100
-   End
-   Begin Label StartLabel3
-      AutoDeactivate  =   True
-      Bold            =   False
-      DataField       =   ""
-      DataSource      =   ""
-      Enabled         =   True
-      Height          =   20
-      HelpTag         =   ""
-      Index           =   -2147483648
-      InitialParent   =   ""
-      Italic          =   False
-      Left            =   152
-      LockBottom      =   False
-      LockedInPosition=   False
-      LockLeft        =   True
-      LockRight       =   False
-      LockTop         =   True
-      Multiline       =   False
-      Scope           =   2
-      Selectable      =   False
-      TabIndex        =   12
-      TabPanelIndex   =   0
-      Text            =   "Event Start"
-      TextAlign       =   1
-      TextColor       =   &c00000000
-      TextFont        =   "System"
-      TextSize        =   0.0
-      TextUnit        =   0
-      Top             =   82
-      Transparent     =   True
-      Underline       =   False
-      Visible         =   True
-      Width           =   100
-   End
-   Begin Canvas Canvas1
+   Begin CalenderButton LoadInCalender
       AcceptFocus     =   False
       AcceptTabs      =   False
       AutoDeactivate  =   True
@@ -458,7 +358,7 @@ Begin ContainerControl ContainerControl_EventDateTimes
       DoubleBuffer    =   False
       Enabled         =   True
       EraseBackground =   True
-      Height          =   20
+      Height          =   14
       HelpTag         =   ""
       Index           =   -2147483648
       InitialParent   =   ""
@@ -468,15 +368,210 @@ Begin ContainerControl ContainerControl_EventDateTimes
       LockLeft        =   True
       LockRight       =   False
       LockTop         =   True
-      Scope           =   2
-      TabIndex        =   13
+      Scope           =   0
+      TabIndex        =   21
       TabPanelIndex   =   0
       TabStop         =   True
-      Top             =   50
+      Top             =   124
       Transparent     =   True
       UseFocusRing    =   True
       Visible         =   True
-      Width           =   20
+      Width           =   14
+   End
+   Begin sdoLabel_Time LoadInTime
+      AcceptFocus     =   False
+      AcceptTabs      =   False
+      AutoDeactivate  =   True
+      Backdrop        =   0
+      BackgroundColor =   &c00000000
+      BorderColor     =   &c00000000
+      Borders         =   False
+      CornerArc       =   0
+      DoubleBuffer    =   False
+      Enabled         =   True
+      EraseBackground =   True
+      Height          =   20
+      HelpTag         =   ""
+      Index           =   -2147483648
+      InitialParent   =   ""
+      JustificationHorizontal=   0
+      Left            =   20
+      LockBottom      =   False
+      LockedInPosition=   False
+      LockLeft        =   True
+      LockRight       =   False
+      LockTop         =   True
+      Scope           =   0
+      TabIndex        =   22
+      TabPanelIndex   =   0
+      TabStop         =   True
+      Top             =   102
+      Transparent     =   False
+      UseFocusRing    =   True
+      Visible         =   True
+      Width           =   100
+   End
+   Begin Label LoadIn_Label
+      AutoDeactivate  =   True
+      Bold            =   False
+      DataField       =   ""
+      DataSource      =   ""
+      Enabled         =   True
+      Height          =   20
+      HelpTag         =   ""
+      Index           =   -2147483648
+      InitialParent   =   ""
+      Italic          =   False
+      Left            =   20
+      LockBottom      =   False
+      LockedInPosition=   False
+      LockLeft        =   True
+      LockRight       =   False
+      LockTop         =   True
+      Multiline       =   False
+      Scope           =   0
+      Selectable      =   False
+      TabIndex        =   23
+      TabPanelIndex   =   0
+      Text            =   "Load In"
+      TextAlign       =   1
+      TextColor       =   &c00000000
+      TextFont        =   "System"
+      TextSize        =   0.0
+      TextUnit        =   0
+      Top             =   82
+      Transparent     =   True
+      Underline       =   False
+      Visible         =   True
+      Width           =   100
+   End
+   Begin sdoLabel_Date LoadOutDate
+      AcceptFocus     =   True
+      AcceptTabs      =   True
+      AutoDeactivate  =   True
+      Backdrop        =   0
+      BackgroundColor =   &c00000000
+      BorderColor     =   &c00000000
+      Borders         =   False
+      CornerArc       =   0
+      DoubleBuffer    =   False
+      Enabled         =   True
+      EraseBackground =   True
+      Height          =   20
+      HelpTag         =   ""
+      Index           =   -2147483648
+      InitialParent   =   ""
+      JustificationHorizontal=   0
+      Left            =   145
+      LockBottom      =   False
+      LockedInPosition=   False
+      LockLeft        =   True
+      LockRight       =   False
+      LockTop         =   True
+      Scope           =   0
+      TabIndex        =   24
+      TabPanelIndex   =   0
+      TabStop         =   True
+      Top             =   122
+      Transparent     =   False
+      UseFocusRing    =   True
+      Visible         =   True
+      Width           =   100
+   End
+   Begin CalenderButton LoadOutCalender
+      AcceptFocus     =   False
+      AcceptTabs      =   False
+      AutoDeactivate  =   True
+      Backdrop        =   0
+      DoubleBuffer    =   False
+      Enabled         =   True
+      EraseBackground =   True
+      Height          =   14
+      HelpTag         =   ""
+      Index           =   -2147483648
+      InitialParent   =   ""
+      Left            =   244
+      LockBottom      =   False
+      LockedInPosition=   False
+      LockLeft        =   True
+      LockRight       =   False
+      LockTop         =   True
+      Scope           =   0
+      TabIndex        =   25
+      TabPanelIndex   =   0
+      TabStop         =   True
+      Top             =   124
+      Transparent     =   True
+      UseFocusRing    =   True
+      Visible         =   True
+      Width           =   14
+   End
+   Begin sdoLabel_Time LoadOutTime
+      AcceptFocus     =   False
+      AcceptTabs      =   False
+      AutoDeactivate  =   True
+      Backdrop        =   0
+      BackgroundColor =   &c00000000
+      BorderColor     =   &c00000000
+      Borders         =   False
+      CornerArc       =   0
+      DoubleBuffer    =   False
+      Enabled         =   True
+      EraseBackground =   True
+      Height          =   20
+      HelpTag         =   ""
+      Index           =   -2147483648
+      InitialParent   =   ""
+      JustificationHorizontal=   0
+      Left            =   145
+      LockBottom      =   False
+      LockedInPosition=   False
+      LockLeft        =   True
+      LockRight       =   False
+      LockTop         =   True
+      Scope           =   0
+      TabIndex        =   26
+      TabPanelIndex   =   0
+      TabStop         =   True
+      Top             =   102
+      Transparent     =   False
+      UseFocusRing    =   True
+      Visible         =   True
+      Width           =   100
+   End
+   Begin Label LoadOut_Label
+      AutoDeactivate  =   True
+      Bold            =   False
+      DataField       =   ""
+      DataSource      =   ""
+      Enabled         =   True
+      Height          =   20
+      HelpTag         =   ""
+      Index           =   -2147483648
+      InitialParent   =   ""
+      Italic          =   False
+      Left            =   145
+      LockBottom      =   False
+      LockedInPosition=   False
+      LockLeft        =   True
+      LockRight       =   False
+      LockTop         =   True
+      Multiline       =   False
+      Scope           =   0
+      Selectable      =   False
+      TabIndex        =   27
+      TabPanelIndex   =   0
+      Text            =   "Load Out"
+      TextAlign       =   1
+      TextColor       =   &c00000000
+      TextFont        =   "System"
+      TextSize        =   0.0
+      TextUnit        =   0
+      Top             =   82
+      Transparent     =   True
+      Underline       =   False
+      Visible         =   True
+      Width           =   100
    End
 End
 #tag EndWindow
@@ -518,25 +613,6 @@ End
 
 #tag EndWindowCode
 
-#tag Events StartTime
-	#tag Event
-		Sub Initialize()
-		  
-		  
-		  
-		  // Set up background
-		  me.BackgroundColor = get_color("Gray",1)
-		  me.CornerArc = 4
-		  me.BorderColor = get_color("Gray",3)
-		  me.Borders = True
-		  
-		  // Set up Text
-		  me.LabelText = "9:15 pm"
-		  me.JustificationHorizontal = 1
-		  
-		End Sub
-	#tag EndEvent
-#tag EndEvents
 #tag Events StartDate
 	#tag Event
 		Sub Initialize()
@@ -550,22 +626,100 @@ End
 		  me.Borders = True
 		  
 		  // Set up Text
-		  me.LabelText = "12/15/13"
 		  me.JustificationHorizontal = 1
 		  
 		End Sub
 	#tag EndEvent
-#tag EndEvents
-#tag Events StartLabel
 	#tag Event
-		Sub Open()
+		Function LoadFromDB() As Variant
+		  Dim db1 as otis_database_manager = app.otis_db
+		  Dim exr1 as ExecuteReturn
+		  dim rs1 as RecordSet
+		  Dim ReturnValue as String
 		  
 		  
-		  me.TextColor = get_color("Text",0)
+		  Dim FieldName as string = "start_date"
+		  
+		  exr1 = db1.execute("Select","events_",Array(FieldName),Array(""),Array("pkid = '" + window_main.pkid_events_ + "'"))
+		  If exr1 <> Nil Then
+		    rs1 = exr1.TheRecordSet
+		    
+		    
+		    ReturnValue = rs1.Field(FieldName).StringValue
+		    
+		    
+		  End If
+		  
+		  
+		  Return ReturnValue
+		End Function
+	#tag EndEvent
+	#tag Event
+		Sub SaveEvent()
+		  Dim db1 as otis_database_manager = app.otis_db
+		  Dim er1 as ExecuteReturn
+		  Dim rs1 as RecordSet
+		  Dim StoredDBValue as New OtisDate
+		  Dim EnteredValue as New OtisDate
+		  
+		  
+		  
+		  Dim FieldName as string = "start_date"
+		  
+		  
+		  // save this mothafucking shit
+		  
+		  
+		  // First we need to grab the currently stored value in the local database
+		  er1 = db1.execute("Select","events_",Array(FieldName),Array(""),Array("pkid = '" + window_main.pkid_events_ + "'") )
+		  rs1 = er1.TheRecordSet
+		  If rs1 <> Nil Then
+		    If rs1.RecordCount > 0 Then
+		      
+		      If rs1.Field(FieldName).StringValue <> "" Then
+		        StoredDBValue.SQLDate = rs1.Field(FieldName).StringValue
+		      Else
+		        StoredDBValue.Day = 1
+		        StoredDBValue.Month = 1
+		        StoredDBValue.Year = 1900
+		      End If
+		    End If
+		  End If
+		  
+		  // Get the control in otisdate form
+		  EnteredValue = me.GetOtisDateForm
+		  
+		  // Now we check to see if the StoredDBValue and our new value are different
+		  If StoredDBValue.ShortDate <> EnteredValue.ShortDate Then
+		    'The values are different
+		    'we should continue on with saving
+		    
+		    Dim TheValue as string
+		    
+		    If me.RawData = "" Then
+		      TheValue = "''"
+		    Else
+		      TheValue = "'" + EnteredValue.SQLDate + "'"
+		    End If
+		    db1.execute("Update","events_",Array(FieldName),Array(TheValue),Array("pkid = '" + window_main.pkid_events_ + "'") )
+		    
+		  Else 
+		    'The values are the same
+		    
+		  End If
 		End Sub
 	#tag EndEvent
 #tag EndEvents
-#tag Events EndTime
+#tag Events StartCalender
+	#tag Event
+		Sub Initialize()
+		  
+		  
+		  me.PairedControl = StartDate
+		End Sub
+	#tag EndEvent
+#tag EndEvents
+#tag Events StartTime
 	#tag Event
 		Sub Initialize()
 		  
@@ -578,9 +732,98 @@ End
 		  me.Borders = True
 		  
 		  // Set up Text
-		  me.LabelText = "9:15 pm"
 		  me.JustificationHorizontal = 1
 		  
+		End Sub
+	#tag EndEvent
+	#tag Event
+		Function LoadFromDB() As Variant
+		  Dim db1 as otis_database_manager = app.otis_db
+		  Dim exr1 as ExecuteReturn
+		  dim rs1 as RecordSet
+		  Dim ReturnValue as String
+		  
+		  
+		  
+		  Dim FieldName as string = "start_time"
+		  
+		  exr1 = db1.execute("Select","events_",Array(FieldName),Array(""),Array("pkid = '" + window_main.pkid_events_ + "'"))
+		  If exr1 <> Nil Then
+		    rs1 = exr1.TheRecordSet
+		    
+		    
+		    ReturnValue = rs1.Field(FieldName).StringValue
+		    
+		    
+		  End If
+		  
+		  
+		  Return ReturnValue
+		End Function
+	#tag EndEvent
+	#tag Event
+		Sub SaveEvent()
+		  Dim db1 as otis_database_manager = app.otis_db
+		  Dim er1 as ExecuteReturn
+		  Dim rs1 as RecordSet
+		  Dim StoredDBValue as New OtisDate
+		  Dim EnteredValue as New OtisDate
+		  
+		  
+		  
+		  Dim FieldName as String = "start_time"
+		  
+		  // save this mothafucking shit
+		  
+		  
+		  // First we need to grab the currently stored value in the local database
+		  er1 = db1.execute("Select","events_",Array(FieldName),Array(""),Array("pkid = '" + window_main.pkid_events_ + "'") )
+		  rs1 = er1.TheRecordSet
+		  If rs1 <> Nil Then
+		    If rs1.RecordCount > 0 Then
+		      
+		      If rs1.Field(FieldName).StringValue <> "" Then
+		        StoredDBValue.SQLTime = rs1.Field(FieldName).StringValue
+		      Else
+		        StoredDBValue.Hour = 1
+		        StoredDBValue.Minute = 1
+		      End If
+		    End If
+		  End If
+		  
+		  // Get the control in otisdate form
+		  EnteredValue = me.GetOtisDateForm
+		  
+		  // Now we check to see if the StoredDBValue and our new value are different
+		  If StoredDBValue.ShortTime <> EnteredValue.ShortTime Then
+		    'The values are different
+		    'we should continue on with saving
+		    
+		    Dim TheValue as string
+		    
+		    If me.RawData = "" Then
+		      TheValue = "''"
+		    Else
+		      TheValue = "'" + EnteredValue.SQLTime + "'"
+		    End If
+		    db1.execute("Update","events_",Array(FieldName),Array(TheValue),Array("pkid = '" + window_main.pkid_events_ + "'") )
+		    
+		  Else 
+		    'The values are the same
+		    
+		  End If
+		End Sub
+	#tag EndEvent
+#tag EndEvents
+#tag Events Start_Label
+	#tag Event
+		Sub Open()
+		  
+		  
+		  
+		  
+		  
+		  me.TextColor = get_color("Text",0)
 		End Sub
 	#tag EndEvent
 #tag EndEvents
@@ -597,22 +840,210 @@ End
 		  me.Borders = True
 		  
 		  // Set up Text
-		  me.LabelText = "12/15/13"
 		  me.JustificationHorizontal = 1
 		  
 		End Sub
 	#tag EndEvent
+	#tag Event
+		Function LoadFromDB() As Variant
+		  Dim db1 as otis_database_manager = app.otis_db
+		  Dim exr1 as ExecuteReturn
+		  dim rs1 as RecordSet
+		  Dim ReturnValue as String
+		  
+		  
+		  Dim FieldName as string = "end_date"
+		  
+		  exr1 = db1.execute("Select","events_",Array(FieldName),Array(""),Array("pkid = '" + window_main.pkid_events_ + "'"))
+		  If exr1 <> Nil Then
+		    rs1 = exr1.TheRecordSet
+		    
+		    
+		    ReturnValue = rs1.Field(FieldName).StringValue
+		    
+		    
+		  End If
+		  
+		  
+		  Return ReturnValue
+		End Function
+	#tag EndEvent
+	#tag Event
+		Sub SaveEvent()
+		  Dim db1 as otis_database_manager = app.otis_db
+		  Dim er1 as ExecuteReturn
+		  Dim rs1 as RecordSet
+		  Dim StoredDBValue as New OtisDate
+		  Dim EnteredValue as New OtisDate
+		  
+		  
+		  
+		  Dim FieldName as string = "end_date"
+		  
+		  
+		  // save this mothafucking shit
+		  
+		  
+		  // First we need to grab the currently stored value in the local database
+		  er1 = db1.execute("Select","events_",Array(FieldName),Array(""),Array("pkid = '" + window_main.pkid_events_ + "'") )
+		  rs1 = er1.TheRecordSet
+		  If rs1 <> Nil Then
+		    If rs1.RecordCount > 0 Then
+		      
+		      If rs1.Field(FieldName).StringValue <> "" Then
+		        StoredDBValue.SQLDate = rs1.Field(FieldName).StringValue
+		      Else
+		        StoredDBValue.Day = 1
+		        StoredDBValue.Month = 1
+		        StoredDBValue.Year = 1900
+		      End If
+		    End If
+		  End If
+		  
+		  // Get the control in otisdate form
+		  EnteredValue = me.GetOtisDateForm
+		  
+		  // Now we check to see if the StoredDBValue and our new value are different
+		  If StoredDBValue.ShortDate <> EnteredValue.ShortDate Then
+		    'The values are different
+		    'we should continue on with saving
+		    
+		    Dim TheValue as string
+		    
+		    If me.RawData = "" Then
+		      TheValue = "''"
+		    Else
+		      TheValue = "'" + EnteredValue.SQLDate + "'"
+		    End If
+		    db1.execute("Update","events_",Array(FieldName),Array(TheValue),Array("pkid = '" + window_main.pkid_events_ + "'") )
+		    
+		  Else 
+		    'The values are the same
+		    
+		  End If
+		End Sub
+	#tag EndEvent
 #tag EndEvents
-#tag Events EndLabel
+#tag Events EndCalender
+	#tag Event
+		Sub Initialize()
+		  
+		  
+		  me.PairedControl = EndDate
+		  
+		  
+		End Sub
+	#tag EndEvent
+#tag EndEvents
+#tag Events EndTime
+	#tag Event
+		Sub Initialize()
+		  
+		  
+		  
+		  // Set up background
+		  me.BackgroundColor = get_color("Gray",1)
+		  me.CornerArc = 4
+		  me.BorderColor = get_color("Gray",3)
+		  me.Borders = True
+		  
+		  // Set up Text
+		  me.JustificationHorizontal = 1
+		  
+		End Sub
+	#tag EndEvent
+	#tag Event
+		Function LoadFromDB() As Variant
+		  Dim db1 as otis_database_manager = app.otis_db
+		  Dim exr1 as ExecuteReturn
+		  dim rs1 as RecordSet
+		  Dim ReturnValue as String
+		  
+		  
+		  
+		  Dim FieldName as string = "end_time"
+		  
+		  exr1 = db1.execute("Select","events_",Array(FieldName),Array(""),Array("pkid = '" + window_main.pkid_events_ + "'"))
+		  If exr1 <> Nil Then
+		    rs1 = exr1.TheRecordSet
+		    
+		    
+		    ReturnValue = rs1.Field(FieldName).StringValue
+		    
+		    
+		  End If
+		  
+		  
+		  Return ReturnValue
+		End Function
+	#tag EndEvent
+	#tag Event
+		Sub SaveEvent()
+		  Dim db1 as otis_database_manager = app.otis_db
+		  Dim er1 as ExecuteReturn
+		  Dim rs1 as RecordSet
+		  Dim StoredDBValue as New OtisDate
+		  Dim EnteredValue as New OtisDate
+		  
+		  
+		  
+		  Dim FieldName as String = "end_time"
+		  
+		  // save this mothafucking shit
+		  
+		  
+		  // First we need to grab the currently stored value in the local database
+		  er1 = db1.execute("Select","events_",Array(FieldName),Array(""),Array("pkid = '" + window_main.pkid_events_ + "'") )
+		  rs1 = er1.TheRecordSet
+		  If rs1 <> Nil Then
+		    If rs1.RecordCount > 0 Then
+		      
+		      If rs1.Field(FieldName).StringValue <> "" Then
+		        StoredDBValue.SQLTime = rs1.Field(FieldName).StringValue
+		      Else
+		        StoredDBValue.Hour = 1
+		        StoredDBValue.Minute = 1
+		      End If
+		    End If
+		  End If
+		  
+		  // Get the control in otisdate form
+		  EnteredValue = me.GetOtisDateForm
+		  
+		  // Now we check to see if the StoredDBValue and our new value are different
+		  If StoredDBValue.ShortTime <> EnteredValue.ShortTime Then
+		    'The values are different
+		    'we should continue on with saving
+		    
+		    Dim TheValue as string
+		    
+		    If me.RawData = "" Then
+		      TheValue = "''"
+		    Else
+		      TheValue = "'" + EnteredValue.SQLTime + "'"
+		    End If
+		    db1.execute("Update","events_",Array(FieldName),Array(TheValue),Array("pkid = '" + window_main.pkid_events_ + "'") )
+		    
+		  Else 
+		    'The values are the same
+		    
+		  End If
+		End Sub
+	#tag EndEvent
+#tag EndEvents
+#tag Events End_Label
 	#tag Event
 		Sub Open()
+		  
+		  
+		  
 		  
 		  
 		  me.TextColor = get_color("Text",0)
 		End Sub
 	#tag EndEvent
 #tag EndEvents
-#tag Events StartTime2
+#tag Events LoadInDate
 	#tag Event
 		Sub Initialize()
 		  
@@ -625,13 +1056,100 @@ End
 		  me.Borders = True
 		  
 		  // Set up Text
-		  me.LabelText = "9:15 pm"
 		  me.JustificationHorizontal = 1
 		  
 		End Sub
 	#tag EndEvent
+	#tag Event
+		Function LoadFromDB() As Variant
+		  Dim db1 as otis_database_manager = app.otis_db
+		  Dim exr1 as ExecuteReturn
+		  dim rs1 as RecordSet
+		  Dim ReturnValue as String
+		  
+		  
+		  Dim FieldName as string = "loadin_date"
+		  
+		  exr1 = db1.execute("Select","events_",Array(FieldName),Array(""),Array("pkid = '" + window_main.pkid_events_ + "'"))
+		  If exr1 <> Nil Then
+		    rs1 = exr1.TheRecordSet
+		    
+		    
+		    ReturnValue = rs1.Field(FieldName).StringValue
+		    
+		    
+		  End If
+		  
+		  
+		  Return ReturnValue
+		End Function
+	#tag EndEvent
+	#tag Event
+		Sub SaveEvent()
+		  Dim db1 as otis_database_manager = app.otis_db
+		  Dim er1 as ExecuteReturn
+		  Dim rs1 as RecordSet
+		  Dim StoredDBValue as New OtisDate
+		  Dim EnteredValue as New OtisDate
+		  
+		  
+		  
+		  Dim FieldName as string = "loadin_date"
+		  
+		  
+		  // save this mothafucking shit
+		  
+		  
+		  // First we need to grab the currently stored value in the local database
+		  er1 = db1.execute("Select","events_",Array(FieldName),Array(""),Array("pkid = '" + window_main.pkid_events_ + "'") )
+		  rs1 = er1.TheRecordSet
+		  If rs1 <> Nil Then
+		    If rs1.RecordCount > 0 Then
+		      
+		      If rs1.Field(FieldName).StringValue <> "" Then
+		        StoredDBValue.SQLDate = rs1.Field(FieldName).StringValue
+		      Else
+		        StoredDBValue.Day = 1
+		        StoredDBValue.Month = 1
+		        StoredDBValue.Year = 1900
+		      End If
+		    End If
+		  End If
+		  
+		  // Get the control in otisdate form
+		  EnteredValue = me.GetOtisDateForm
+		  
+		  // Now we check to see if the StoredDBValue and our new value are different
+		  If StoredDBValue.ShortDate <> EnteredValue.ShortDate Or me.RawData = "" Then
+		    'The values are different
+		    'we should continue on with saving
+		    
+		    Dim TheValue as string
+		    
+		    If me.RawData = "" Then
+		      TheValue = "''"
+		    Else
+		      TheValue = "'" + EnteredValue.SQLDate + "'"
+		    End If
+		    db1.execute("Update","events_",Array(FieldName),Array(TheValue),Array("pkid = '" + window_main.pkid_events_ + "'") )
+		    
+		  Else 
+		    'The values are the same
+		    
+		  End If
+		End Sub
+	#tag EndEvent
 #tag EndEvents
-#tag Events StartDate2
+#tag Events LoadInCalender
+	#tag Event
+		Sub Initialize()
+		  
+		  
+		  me.PairedControl = LoadInDate
+		End Sub
+	#tag EndEvent
+#tag EndEvents
+#tag Events LoadInTime
 	#tag Event
 		Sub Initialize()
 		  
@@ -644,22 +1162,102 @@ End
 		  me.Borders = True
 		  
 		  // Set up Text
-		  me.LabelText = "12/15/13"
 		  me.JustificationHorizontal = 1
 		  
 		End Sub
 	#tag EndEvent
+	#tag Event
+		Function LoadFromDB() As Variant
+		  Dim db1 as otis_database_manager = app.otis_db
+		  Dim exr1 as ExecuteReturn
+		  dim rs1 as RecordSet
+		  Dim ReturnValue as String
+		  
+		  
+		  
+		  Dim FieldName as string = "loadin_time"
+		  
+		  exr1 = db1.execute("Select","events_",Array(FieldName),Array(""),Array("pkid = '" + window_main.pkid_events_ + "'"))
+		  If exr1 <> Nil Then
+		    rs1 = exr1.TheRecordSet
+		    
+		    
+		    ReturnValue = rs1.Field(FieldName).StringValue
+		    
+		    
+		  End If
+		  
+		  
+		  Return ReturnValue
+		End Function
+	#tag EndEvent
+	#tag Event
+		Sub SaveEvent()
+		  Dim db1 as otis_database_manager = app.otis_db
+		  Dim er1 as ExecuteReturn
+		  Dim rs1 as RecordSet
+		  Dim StoredDBValue as New OtisDate
+		  Dim EnteredValue as New OtisDate
+		  
+		  
+		  
+		  Dim FieldName as String = "loadin_time"
+		  
+		  // save this mothafucking shit
+		  
+		  
+		  // First we need to grab the currently stored value in the local database
+		  er1 = db1.execute("Select","events_",Array(FieldName),Array(""),Array("pkid = '" + window_main.pkid_events_ + "'") )
+		  rs1 = er1.TheRecordSet
+		  If rs1 <> Nil Then
+		    If rs1.RecordCount > 0 Then
+		      
+		      If rs1.Field(FieldName).StringValue <> "" Then
+		        StoredDBValue.SQLTime = rs1.Field(FieldName).StringValue
+		      Else
+		        StoredDBValue.Hour = 1
+		        StoredDBValue.Minute = 1
+		      End If
+		    End If
+		  End If
+		  
+		  // Get the control in otisdate form
+		  EnteredValue = me.GetOtisDateForm
+		  
+		  // Now we check to see if the StoredDBValue and our new value are different
+		  If StoredDBValue.ShortTime <> EnteredValue.ShortTime Then
+		    'The values are different
+		    'we should continue on with saving
+		    
+		    Dim TheValue as string
+		    
+		    If me.RawData = "" Then
+		      TheValue = "''"
+		    Else
+		      TheValue = "'" + EnteredValue.SQLTime + "'"
+		    End If
+		    db1.execute("Update","events_",Array(FieldName),Array(TheValue),Array("pkid = '" + window_main.pkid_events_ + "'") )
+		    
+		  Else 
+		    'The values are the same
+		    
+		  End If
+		End Sub
+	#tag EndEvent
 #tag EndEvents
-#tag Events StartLabel2
+#tag Events LoadIn_Label
 	#tag Event
 		Sub Open()
+		  
+		  
+		  
 		  
 		  
 		  me.TextColor = get_color("Text",0)
 		End Sub
 	#tag EndEvent
 #tag EndEvents
-#tag Events StartTime3
+#tag Events LoadOutDate
 	#tag Event
 		Sub Initialize()
 		  
@@ -672,13 +1270,100 @@ End
 		  me.Borders = True
 		  
 		  // Set up Text
-		  me.LabelText = "9:15 pm"
 		  me.JustificationHorizontal = 1
 		  
 		End Sub
 	#tag EndEvent
+	#tag Event
+		Function LoadFromDB() As Variant
+		  Dim db1 as otis_database_manager = app.otis_db
+		  Dim exr1 as ExecuteReturn
+		  dim rs1 as RecordSet
+		  Dim ReturnValue as String
+		  
+		  
+		  Dim FieldName as string = "loadout_date"
+		  
+		  exr1 = db1.execute("Select","events_",Array(FieldName),Array(""),Array("pkid = '" + window_main.pkid_events_ + "'"))
+		  If exr1 <> Nil Then
+		    rs1 = exr1.TheRecordSet
+		    
+		    
+		    ReturnValue = rs1.Field(FieldName).StringValue
+		    
+		    
+		  End If
+		  
+		  
+		  Return ReturnValue
+		End Function
+	#tag EndEvent
+	#tag Event
+		Sub SaveEvent()
+		  Dim db1 as otis_database_manager = app.otis_db
+		  Dim er1 as ExecuteReturn
+		  Dim rs1 as RecordSet
+		  Dim StoredDBValue as New OtisDate
+		  Dim EnteredValue as New OtisDate
+		  
+		  
+		  
+		  Dim FieldName as string = "loadout_date"
+		  
+		  
+		  // save this mothafucking shit
+		  
+		  
+		  // First we need to grab the currently stored value in the local database
+		  er1 = db1.execute("Select","events_",Array(FieldName),Array(""),Array("pkid = '" + window_main.pkid_events_ + "'") )
+		  rs1 = er1.TheRecordSet
+		  If rs1 <> Nil Then
+		    If rs1.RecordCount > 0 Then
+		      
+		      If rs1.Field(FieldName).StringValue <> "" Then
+		        StoredDBValue.SQLDate = rs1.Field(FieldName).StringValue
+		      Else
+		        StoredDBValue.Day = 1
+		        StoredDBValue.Month = 1
+		        StoredDBValue.Year = 1900
+		      End If
+		    End If
+		  End If
+		  
+		  // Get the control in otisdate form
+		  EnteredValue = me.GetOtisDateForm
+		  
+		  // Now we check to see if the StoredDBValue and our new value are different
+		  If StoredDBValue.ShortDate <> EnteredValue.ShortDate Then
+		    'The values are different
+		    'we should continue on with saving
+		    
+		    Dim TheValue as string
+		    
+		    If me.RawData = "" Then
+		      TheValue = "''"
+		    Else
+		      TheValue = "'" + EnteredValue.SQLDate + "'"
+		    End If
+		    db1.execute("Update","events_",Array(FieldName),Array(TheValue),Array("pkid = '" + window_main.pkid_events_ + "'") )
+		    
+		  Else 
+		    'The values are the same
+		    
+		  End If
+		End Sub
+	#tag EndEvent
 #tag EndEvents
-#tag Events StartDate3
+#tag Events LoadOutCalender
+	#tag Event
+		Sub Initialize()
+		  
+		  
+		  me.PairedControl = LoadOutDate
+		End Sub
+	#tag EndEvent
+#tag EndEvents
+#tag Events LoadOutTime
 	#tag Event
 		Sub Initialize()
 		  
@@ -691,29 +1376,98 @@ End
 		  me.Borders = True
 		  
 		  // Set up Text
-		  me.LabelText = "12/15/13"
 		  me.JustificationHorizontal = 1
 		  
 		End Sub
 	#tag EndEvent
+	#tag Event
+		Function LoadFromDB() As Variant
+		  Dim db1 as otis_database_manager = app.otis_db
+		  Dim exr1 as ExecuteReturn
+		  dim rs1 as RecordSet
+		  Dim ReturnValue as String
+		  
+		  
+		  
+		  Dim FieldName as string = "loadout_time"
+		  
+		  exr1 = db1.execute("Select","events_",Array(FieldName),Array(""),Array("pkid = '" + window_main.pkid_events_ + "'"))
+		  If exr1 <> Nil Then
+		    rs1 = exr1.TheRecordSet
+		    
+		    
+		    ReturnValue = rs1.Field(FieldName).StringValue
+		    
+		    
+		  End If
+		  
+		  
+		  Return ReturnValue
+		End Function
+	#tag EndEvent
+	#tag Event
+		Sub SaveEvent()
+		  Dim db1 as otis_database_manager = app.otis_db
+		  Dim er1 as ExecuteReturn
+		  Dim rs1 as RecordSet
+		  Dim StoredDBValue as New OtisDate
+		  Dim EnteredValue as New OtisDate
+		  
+		  
+		  
+		  Dim FieldName as String = "loadout_time"
+		  
+		  // save this mothafucking shit
+		  
+		  
+		  // First we need to grab the currently stored value in the local database
+		  er1 = db1.execute("Select","events_",Array(FieldName),Array(""),Array("pkid = '" + window_main.pkid_events_ + "'") )
+		  rs1 = er1.TheRecordSet
+		  If rs1 <> Nil Then
+		    If rs1.RecordCount > 0 Then
+		      
+		      If rs1.Field(FieldName).StringValue <> "" Then
+		        StoredDBValue.SQLDate = rs1.Field(FieldName).StringValue
+		      Else
+		        StoredDBValue.Hour = 1
+		        StoredDBValue.Minute = 1
+		      End If
+		    End If
+		  End If
+		  
+		  // Get the control in otisdate form
+		  EnteredValue = me.GetOtisDateForm
+		  
+		  // Now we check to see if the StoredDBValue and our new value are different
+		  If StoredDBValue.ShortTime <> EnteredValue.ShortTime Then
+		    'The values are different
+		    'we should continue on with saving
+		    
+		    Dim TheValue as string
+		    
+		    If me.RawData = "" Then
+		      TheValue = "''"
+		    Else
+		      TheValue = "'" + EnteredValue.SQLTime + "'"
+		    End If
+		    db1.execute("Update","events_",Array(FieldName),Array(TheValue),Array("pkid = '" + window_main.pkid_events_ + "'") )
+		    
+		  Else 
+		    'The values are the same
+		    
+		  End If
+		End Sub
+	#tag EndEvent
 #tag EndEvents
-#tag Events StartLabel3
+#tag Events LoadOut_Label
 	#tag Event
 		Sub Open()
 		  
 		  
+		  
+		  
+		  
 		  me.TextColor = get_color("Text",0)
-		End Sub
-	#tag EndEvent
-#tag EndEvents
-#tag Events Canvas1
-	#tag Event
-		Sub Paint(g As Graphics, areas() As REALbasic.Rect)
-		  Dim g1 as Graphics = g
-		  
-		  
-		  
-		  g1.DrawPicture(Calender_Picture,0,0,me.Width,me.Height,0,0,Calender_Picture.Width,Calender_Picture.Height)
 		End Sub
 	#tag EndEvent
 #tag EndEvents

@@ -69,6 +69,23 @@ Protected Module color_module
 		    c = RGB(235,235,235)
 		    Return c
 		    
+		  Case "Red"
+		    
+		    c = RGB(28,28,28)
+		    colors.Append(c)
+		    
+		    c = RGB(38,38,38)
+		    colors.Append(c)
+		    
+		    c = RGB(48,48,48)
+		    colors.Append(c)
+		    
+		    c = RGB(58,58,58)
+		    colors.Append(c)
+		    
+		    c = RGB(68,68,68)
+		    colors.Append(c)
+		    
 		  End Select
 		  
 		  Return colors(index)

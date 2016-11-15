@@ -13,6 +13,10 @@ Protected Class SectionClass
 	#tag EndProperty
 
 	#tag Property, Flags = &h0
+		BooleanValue As Boolean
+	#tag EndProperty
+
+	#tag Property, Flags = &h0
 		Bottom As Integer
 	#tag EndProperty
 
@@ -34,6 +38,10 @@ Protected Class SectionClass
 
 	#tag Property, Flags = &h0
 		Name As String
+	#tag EndProperty
+
+	#tag Property, Flags = &h0
+		PictureValue As Picture
 	#tag EndProperty
 
 	#tag Property, Flags = &h0

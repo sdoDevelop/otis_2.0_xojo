@@ -9,7 +9,7 @@ Begin Window window_main
    FullScreen      =   False
    FullScreenButton=   False
    HasBackColor    =   True
-   Height          =   570
+   Height          =   534
    ImplicitInstance=   True
    LiveResize      =   True
    MacProcID       =   0
@@ -25,7 +25,7 @@ Begin Window window_main
    Resizeable      =   True
    Title           =   "Untitled"
    Visible         =   True
-   Width           =   938
+   Width           =   950
    Begin RubberViews RubberView1
       AcceptFocus     =   False
       AcceptTabs      =   True
@@ -48,6 +48,9 @@ Begin Window window_main
       LockTop         =   True
       NoContentResizes=   ""
       Scope           =   0
+      sizGood         =   False
+      sizKeepRatio    =   False
+      sizNoContentResize=   False
       sizWin          =   "0"
       StretchWindowBackdrop=   False
       TabIndex        =   5
@@ -70,14 +73,14 @@ Begin Window window_main
       DataField       =   ""
       DataSource      =   ""
       DefaultRowHeight=   -1
-      Enabled         =   False
+      Enabled         =   True
       EnableDrag      =   True
       EnableDragReorder=   True
       GridLinesHorizontal=   0
       GridLinesVertical=   0
       HasHeading      =   False
       HeadingIndex    =   -1
-      Height          =   513
+      Height          =   477
       HelpTag         =   ""
       Hierarchical    =   True
       Index           =   -2147483648
@@ -104,7 +107,7 @@ Begin Window window_main
       Top             =   57
       Underline       =   False
       UseFocusRing    =   True
-      Visible         =   False
+      Visible         =   True
       Width           =   224
       _ScrollOffset   =   0
       _ScrollWidth    =   -1
@@ -149,10 +152,10 @@ Begin Window window_main
       AutoDeactivate  =   True
       BackColor       =   &cFFFFFF00
       Backdrop        =   0
-      Enabled         =   True
+      Enabled         =   False
       EraseBackground =   True
       HasBackColor    =   False
-      Height          =   228
+      Height          =   161
       HelpTag         =   ""
       InitialParent   =   ""
       Left            =   251
@@ -165,11 +168,291 @@ Begin Window window_main
       TabIndex        =   8
       TabPanelIndex   =   0
       TabStop         =   True
-      Top             =   83
+      Top             =   89
       Transparent     =   True
       UseFocusRing    =   False
       Visible         =   True
-      Width           =   348
+      Width           =   274
+   End
+   Begin sdoTextField EventName
+      AcceptTabs      =   False
+      Alignment       =   2
+      AutoDeactivate  =   True
+      AutomaticallyCheckSpelling=   False
+      BackColor       =   &cFFFFFF00
+      Bold            =   False
+      Border          =   False
+      CueText         =   ""
+      DataField       =   ""
+      DataSource      =   ""
+      Enabled         =   True
+      Format          =   ""
+      Height          =   32
+      HelpTag         =   ""
+      Index           =   -2147483648
+      Italic          =   False
+      Left            =   341
+      LimitText       =   0
+      LockBottom      =   False
+      LockedInPosition=   False
+      LockLeft        =   True
+      LockRight       =   False
+      LockTop         =   True
+      Mask            =   ""
+      Password        =   False
+      ReadOnly        =   False
+      Scope           =   0
+      TabIndex        =   10
+      TabPanelIndex   =   0
+      TabStop         =   True
+      Text            =   ""
+      TextColor       =   &c00000000
+      TextFont        =   "System"
+      TextSize        =   0.0
+      TextUnit        =   0
+      Top             =   35
+      Underline       =   False
+      UseFocusRing    =   True
+      Visible         =   True
+      Width           =   370
+   End
+   Begin Label AcountManagerLabel
+      AutoDeactivate  =   True
+      Bold            =   False
+      DataField       =   ""
+      DataSource      =   ""
+      Enabled         =   True
+      Height          =   20
+      HelpTag         =   ""
+      Index           =   -2147483648
+      InitialParent   =   ""
+      Italic          =   False
+      Left            =   275
+      LockBottom      =   False
+      LockedInPosition=   False
+      LockLeft        =   True
+      LockRight       =   False
+      LockTop         =   True
+      Multiline       =   False
+      Scope           =   0
+      Selectable      =   False
+      TabIndex        =   12
+      TabPanelIndex   =   0
+      Text            =   "AcountManager"
+      TextAlign       =   0
+      TextColor       =   &c00000000
+      TextFont        =   "System"
+      TextSize        =   0.0
+      TextUnit        =   0
+      Top             =   251
+      Transparent     =   True
+      Underline       =   False
+      Visible         =   True
+      Width           =   219
+   End
+   Begin sdoTextField AccountManager
+      AcceptTabs      =   False
+      Alignment       =   1
+      AutoDeactivate  =   True
+      AutomaticallyCheckSpelling=   False
+      BackColor       =   &cFFFFFF00
+      Bold            =   False
+      Border          =   False
+      CueText         =   ""
+      DataField       =   ""
+      DataSource      =   ""
+      Enabled         =   True
+      Format          =   ""
+      Height          =   22
+      HelpTag         =   ""
+      Index           =   -2147483648
+      Italic          =   False
+      Left            =   275
+      LimitText       =   0
+      LockBottom      =   False
+      LockedInPosition=   False
+      LockLeft        =   True
+      LockRight       =   False
+      LockTop         =   True
+      Mask            =   ""
+      Password        =   False
+      ReadOnly        =   False
+      Scope           =   0
+      TabIndex        =   13
+      TabPanelIndex   =   0
+      TabStop         =   True
+      Text            =   ""
+      TextColor       =   &c00000000
+      TextFont        =   "System"
+      TextSize        =   0.0
+      TextUnit        =   0
+      Top             =   272
+      Underline       =   False
+      UseFocusRing    =   True
+      Visible         =   True
+      Width           =   250
+   End
+   Begin Label EventDetailsLabel
+      AutoDeactivate  =   True
+      Bold            =   False
+      DataField       =   ""
+      DataSource      =   ""
+      Enabled         =   True
+      Height          =   20
+      HelpTag         =   ""
+      Index           =   -2147483648
+      InitialParent   =   ""
+      Italic          =   False
+      Left            =   275
+      LockBottom      =   False
+      LockedInPosition=   False
+      LockLeft        =   True
+      LockRight       =   False
+      LockTop         =   True
+      Multiline       =   False
+      Scope           =   0
+      Selectable      =   False
+      TabIndex        =   14
+      TabPanelIndex   =   0
+      Text            =   "Details"
+      TextAlign       =   0
+      TextColor       =   &c00000000
+      TextFont        =   "System"
+      TextSize        =   0.0
+      TextUnit        =   0
+      Top             =   300
+      Transparent     =   True
+      Underline       =   False
+      Visible         =   True
+      Width           =   219
+   End
+   Begin sdoTextArea EventDetails
+      AcceptTabs      =   False
+      Alignment       =   0
+      AutoDeactivate  =   True
+      AutomaticallyCheckSpelling=   True
+      BackColor       =   &cFFFFFF00
+      Bold            =   False
+      Border          =   False
+      DataField       =   ""
+      DataSource      =   ""
+      Enabled         =   True
+      Format          =   ""
+      Height          =   171
+      HelpTag         =   ""
+      HideSelection   =   True
+      Index           =   -2147483648
+      Italic          =   False
+      Left            =   275
+      LimitText       =   0
+      LineHeight      =   0.0
+      LineSpacing     =   1.0
+      LockBottom      =   False
+      LockedInPosition=   False
+      LockLeft        =   True
+      LockRight       =   False
+      LockTop         =   True
+      Mask            =   ""
+      Multiline       =   True
+      ReadOnly        =   False
+      Scope           =   0
+      ScrollbarHorizontal=   False
+      ScrollbarVertical=   True
+      Styled          =   True
+      TabIndex        =   15
+      TabPanelIndex   =   0
+      TabStop         =   True
+      Text            =   ""
+      TextColor       =   &c00000000
+      TextFont        =   "System"
+      TextSize        =   0.0
+      TextUnit        =   0
+      Top             =   321
+      Underline       =   False
+      UseFocusRing    =   True
+      Visible         =   True
+      Width           =   250
+   End
+   Begin ContactVenueListbox ContactVenueListbox1
+      AutoDeactivate  =   True
+      AutoHideScrollbars=   True
+      Bold            =   False
+      Border          =   True
+      ColumnCount     =   1
+      ColumnsResizable=   False
+      ColumnWidths    =   ""
+      DataField       =   ""
+      DataSource      =   ""
+      DefaultRowHeight=   -1
+      Enabled         =   True
+      EnableDrag      =   False
+      EnableDragReorder=   False
+      GridLinesHorizontal=   0
+      GridLinesVertical=   0
+      HasHeading      =   False
+      HeadingIndex    =   -1
+      Height          =   115
+      HelpTag         =   ""
+      Hierarchical    =   False
+      Index           =   -2147483648
+      InitialParent   =   ""
+      InitialValue    =   ""
+      Italic          =   False
+      Left            =   537
+      LockBottom      =   False
+      LockedInPosition=   False
+      LockLeft        =   True
+      LockRight       =   False
+      LockTop         =   True
+      RequiresSelection=   False
+      Scope           =   2
+      ScrollbarHorizontal=   False
+      ScrollBarVertical=   True
+      SelectionType   =   0
+      TabIndex        =   16
+      TabPanelIndex   =   0
+      TabStop         =   True
+      TextFont        =   "System"
+      TextSize        =   0.0
+      TextUnit        =   0
+      Top             =   89
+      Underline       =   False
+      UseFocusRing    =   True
+      Visible         =   True
+      Width           =   260
+      _ScrollOffset   =   0
+      _ScrollWidth    =   -1
+   End
+   Begin PushButton PushButton1
+      AutoDeactivate  =   True
+      Bold            =   False
+      ButtonStyle     =   "0"
+      Cancel          =   False
+      Caption         =   "Button"
+      Default         =   False
+      Enabled         =   True
+      Height          =   22
+      HelpTag         =   ""
+      Index           =   -2147483648
+      InitialParent   =   ""
+      Italic          =   False
+      Left            =   801
+      LockBottom      =   False
+      LockedInPosition=   False
+      LockLeft        =   True
+      LockRight       =   False
+      LockTop         =   True
+      Scope           =   2
+      TabIndex        =   17
+      TabPanelIndex   =   0
+      TabStop         =   True
+      TextFont        =   "System"
+      TextSize        =   0.0
+      TextUnit        =   0
+      Top             =   89
+      Underline       =   False
+      Visible         =   True
+      Width           =   80
    End
 End
 #tag EndWindow
@@ -177,9 +460,17 @@ End
 #tag WindowCode
 	#tag Event
 		Sub Open()
+		  Dim p1 as new Picture(me.Width,me.Height)
+		  Dim g1 as Graphics = p1.Graphics
+		  
+		  
 		  
 		  
 		  me.BackColor = get_color("Gray",0)
+		  
+		  'g1.ForeColor = me.BackColor
+		  'g1.FillRect(0,0,me.Width,me.Height)
+		  'me.Backdrop = p1
 		  scripts = new scripts_class
 		  
 		  scripts.load_event_listbox
@@ -318,6 +609,317 @@ End
 		  
 		  
 		  me.TextColor = get_color("Text",0)
+		End Sub
+	#tag EndEvent
+#tag EndEvents
+#tag Events EventName
+	#tag Event
+		Function LoadFromDB() As String
+		  Dim db1 as otis_database_manager = app.otis_db
+		  Dim exr1 as ExecuteReturn
+		  dim rs1 as RecordSet
+		  Dim ReturnValue as String
+		  
+		  
+		  Dim FieldName as string = "name_"
+		  
+		  exr1 = db1.execute("Select","events_",Array(FieldName),Array(""),Array("pkid = '" + window_main.pkid_events_ + "'"))
+		  If exr1 <> Nil Then
+		    rs1 = exr1.TheRecordSet
+		    
+		    
+		    ReturnValue = rs1.Field(FieldName).StringValue
+		    
+		    
+		  End If
+		  
+		  
+		  Return ReturnValue
+		End Function
+	#tag EndEvent
+	#tag Event
+		Sub Initialize()
+		  
+		  
+		  
+		  me.TextColor = get_color("Text",0)
+		  me.BackColor = get_color("Gray",0)
+		  me.TextSize = 20
+		End Sub
+	#tag EndEvent
+	#tag Event
+		Sub SaveEvent()
+		  Dim db1 as otis_database_manager = app.otis_db
+		  Dim er1 as ExecuteReturn
+		  Dim rs1 as RecordSet
+		  Dim StoredDBValue as String
+		  Dim EnteredValue as String
+		  
+		  
+		  
+		  Dim FieldName as String = "name_"
+		  
+		  // save this mothafucking shit
+		  
+		  
+		  // First we need to grab the currently stored value in the local database
+		  er1 = db1.execute("Select","events_",Array(FieldName),Array(""),Array("pkid = '" + window_main.pkid_events_ + "'") )
+		  rs1 = er1.TheRecordSet
+		  If rs1 <> Nil Then
+		    If rs1.RecordCount > 0 Then
+		      
+		      StoredDBValue = rs1.Field(FieldName).StringValue
+		      
+		    End If
+		  End If
+		  
+		  // Get the control in text form
+		  EnteredValue = me.Text
+		  
+		  // Now we check to see if the StoredDBValue and our new value are different
+		  If StoredDBValue <> EnteredValue Then
+		    'The values are different
+		    'we should continue on with saving
+		    
+		    Dim TheValue as string
+		    
+		    TheValue = "'" + EnteredValue + "'"
+		    
+		    db1.execute("Update","events_",Array(FieldName),Array(TheValue),Array("pkid = '" + window_main.pkid_events_ + "'") )
+		    
+		    
+		  Else 
+		    'The values are the same
+		    
+		  End If
+		  
+		  
+		End Sub
+	#tag EndEvent
+	#tag Event
+		Sub Saved()
+		  
+		  
+		  
+		  scripts.load_event_listbox
+		  scripts.SelectEventByPKID(pkid_events_)
+		  
+		End Sub
+	#tag EndEvent
+#tag EndEvents
+#tag Events AcountManagerLabel
+	#tag Event
+		Sub Open()
+		  
+		  
+		  me.TextColor = get_color("Text",0)
+		End Sub
+	#tag EndEvent
+#tag EndEvents
+#tag Events AccountManager
+	#tag Event
+		Sub Initialize()
+		  
+		  
+		  me.BackColor = get_color("Gray",1)
+		  me.TextColor = get_color("Text",0)
+		End Sub
+	#tag EndEvent
+	#tag Event
+		Sub SaveEvent()
+		  Dim db1 as otis_database_manager = app.otis_db
+		  Dim er1 as ExecuteReturn
+		  Dim rs1 as RecordSet
+		  Dim StoredDBValue as String
+		  Dim EnteredValue as String
+		  
+		  
+		  
+		  Dim FieldName as String = "account_manager"
+		  
+		  // save this mothafucking shit
+		  
+		  
+		  // First we need to grab the currently stored value in the local database
+		  er1 = db1.execute("Select","events_",Array(FieldName),Array(""),Array("pkid = '" + window_main.pkid_events_ + "'") )
+		  rs1 = er1.TheRecordSet
+		  If rs1 <> Nil Then
+		    If rs1.RecordCount > 0 Then
+		      
+		      StoredDBValue = rs1.Field(FieldName).StringValue
+		      
+		    End If
+		  End If
+		  
+		  // Get the control in text form
+		  EnteredValue = me.Text
+		  
+		  // Now we check to see if the StoredDBValue and our new value are different
+		  If StoredDBValue <> EnteredValue Then
+		    'The values are different
+		    'we should continue on with saving
+		    
+		    Dim TheValue as string
+		    
+		    TheValue = "'" + EnteredValue + "'"
+		    
+		    db1.execute("Update","events_",Array(FieldName),Array(TheValue),Array("pkid = '" + window_main.pkid_events_ + "'") )
+		    
+		    
+		  Else 
+		    'The values are the same
+		    
+		  End If
+		  
+		  
+		End Sub
+	#tag EndEvent
+	#tag Event
+		Sub Saved()
+		  
+		End Sub
+	#tag EndEvent
+	#tag Event
+		Function LoadFromDB() As String
+		  Dim db1 as otis_database_manager = app.otis_db
+		  Dim exr1 as ExecuteReturn
+		  dim rs1 as RecordSet
+		  Dim ReturnValue as String
+		  
+		  
+		  Dim FieldName as string = "account_manager"
+		  
+		  exr1 = db1.execute("Select","events_",Array(FieldName),Array(""),Array("pkid = '" + window_main.pkid_events_ + "'"))
+		  If exr1 <> Nil Then
+		    rs1 = exr1.TheRecordSet
+		    
+		    
+		    ReturnValue = rs1.Field(FieldName).StringValue
+		    
+		    
+		  End If
+		  
+		  
+		  Return ReturnValue
+		End Function
+	#tag EndEvent
+#tag EndEvents
+#tag Events EventDetailsLabel
+	#tag Event
+		Sub Open()
+		  
+		  
+		  me.TextColor = get_color("Text",0)
+		End Sub
+	#tag EndEvent
+#tag EndEvents
+#tag Events EventDetails
+	#tag Event
+		Function LoadFromDB() As String
+		  Dim db1 as otis_database_manager = app.otis_db
+		  Dim exr1 as ExecuteReturn
+		  dim rs1 as RecordSet
+		  Dim ReturnValue as String
+		  
+		  
+		  Dim FieldName as string = "details"
+		  
+		  exr1 = db1.execute("Select","events_",Array(FieldName),Array(""),Array("pkid = '" + window_main.pkid_events_ + "'"))
+		  If exr1 <> Nil Then
+		    rs1 = exr1.TheRecordSet
+		    
+		    
+		    ReturnValue = rs1.Field(FieldName).StringValue
+		    
+		    
+		  End If
+		  
+		  
+		  Return ReturnValue
+		End Function
+	#tag EndEvent
+	#tag Event
+		Sub Initialize()
+		  
+		  
+		  me.BackColor = get_color("Gray",1)
+		  me.TextColor = get_color("Text",0)
+		End Sub
+	#tag EndEvent
+	#tag Event
+		Sub SaveEvent()
+		  Dim db1 as otis_database_manager = app.otis_db
+		  Dim er1 as ExecuteReturn
+		  Dim rs1 as RecordSet
+		  Dim StoredDBValue as String
+		  Dim EnteredValue as String
+		  
+		  
+		  
+		  Dim FieldName as String = "details"
+		  
+		  // save this mothafucking shit
+		  
+		  
+		  // First we need to grab the currently stored value in the local database
+		  er1 = db1.execute("Select","events_",Array(FieldName),Array(""),Array("pkid = '" + window_main.pkid_events_ + "'") )
+		  rs1 = er1.TheRecordSet
+		  If rs1 <> Nil Then
+		    If rs1.RecordCount > 0 Then
+		      
+		      StoredDBValue = rs1.Field(FieldName).StringValue
+		      
+		    End If
+		  End If
+		  
+		  // Get the control in text form
+		  EnteredValue = me.Text
+		  
+		  // Now we check to see if the StoredDBValue and our new value are different
+		  If StoredDBValue <> EnteredValue Then
+		    'The values are different
+		    'we should continue on with saving
+		    
+		    Dim TheValue as string
+		    
+		    TheValue = "'" + EnteredValue + "'"
+		    
+		    db1.execute("Update","events_",Array(FieldName),Array(TheValue),Array("pkid = '" + window_main.pkid_events_ + "'") )
+		    
+		    
+		  Else 
+		    'The values are the same
+		    
+		  End If
+		  
+		  
+		End Sub
+	#tag EndEvent
+	#tag Event
+		Sub Saved()
+		  
+		End Sub
+	#tag EndEvent
+#tag EndEvents
+#tag Events ContactVenueListbox1
+	#tag Event
+		Sub Initialize()
+		  
+		  
+		  
+		  
+		  me.DefaultRowHeight = me.Height / 2
+		  
+		  
+		End Sub
+	#tag EndEvent
+#tag EndEvents
+#tag Events PushButton1
+	#tag Event
+		Sub Action()
+		  
+		  
+		  ContactVenueListbox1.InsertData(Calender_Picture,"This is line 1", "This should be line 2","Wooo it might have actually worked",True)
 		End Sub
 	#tag EndEvent
 #tag EndEvents

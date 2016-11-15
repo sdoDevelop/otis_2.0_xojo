@@ -2,34 +2,6 @@
 Protected Class sdoLabel_Time
 Inherits sdoLabel
 	#tag Event
-		Sub BreakTextIntoParts()
-		  Dim WT1 as String = me.LabelText
-		  Dim WT1array() as String
-		  
-		  // We need to break apart the time text into its seperate sections so that they can be seperatly selectable
-		  
-		  // Hour Section
-		  WT1array = Split(WT1,":")
-		  Sections.Data(0).TheText = WT1array(0)
-		  
-		  // Colon Section
-		  Sections.Data(1).TheText = ":"
-		  
-		  // Minute Section
-		  WT1 = WT1array(1)
-		  WT1array = Split(WT1," ")
-		  Sections.Data(2).TheText = WT1array(0)
-		  
-		  // Space Section
-		  Sections.Data(3).TheText = " "
-		  
-		  // Period Section
-		  Sections.Data(4).TheText = WT1array(1)
-		  
-		End Sub
-	#tag EndEvent
-
-	#tag Event
 		Function CheckSectionValue(TheSection as integer) As Boolean
 		  Dim TheValue as String
 		  Dim ReturnValue as Boolean
@@ -56,34 +28,92 @@ Inherits sdoLabel
 	#tag EndEvent
 
 	#tag Event
-		Function LoadValues() As String()
-		  Dim TheDate as New date
+		Function CheckValueDef() As Boolean
+		  Dim ADate1 as New OtisDate
+		  Dim SectionIndex as integer
+		  Dim ReturnValue as Boolean
+		  
+		  SectionIndex = Sections.NameIndex("Hour")
+		  Dim TheHour as integer = val( Sections.Data(SectionIndex).TheText )
+		  SectionIndex = Sections.NameIndex("Minute")
+		  Dim TheMinute as integer = val( Sections.Data(SectionIndex).TheText )
+		  SectionIndex = Sections.NameIndex("Period")
+		  Dim ThePeriod as string = Sections.Data(SectionIndex).TheText 
+		  
+		  
+		  If TheHour >= 1 And TheHour <= 12 Then
+		    'hour is valid
+		    If TheMinute >= 1 And TheMinute <= 59 Then
+		      'Minute is valid
+		      If ThePeriod = "am" Or ThePeriod = "pm" Then
+		        'Period is valid
+		        ReturnValue = True
+		      Else
+		        'Period is not valid
+		        ReturnValue = False
+		      End If
+		    Else
+		      'Minute is not valid
+		      ReturnValue = False
+		    End If
+		  Else
+		    'Hour is not valid
+		    ReturnValue = False
+		  End If
+		  
+		  
+		  
+		  Return ReturnValue
+		  
+		End Function
+	#tag EndEvent
+
+	#tag Event
+		Sub CreateTextFromRaw()
+		  Dim TheDate as New otisdate
 		  Dim TheReturn() as string
 		  Dim TheHour,TheMinute,ThePeriod as string
-		  
-		  Dim WT1 as String = me.LabelText
-		  Dim WT1array() as String
-		  
-		  // We need to break apart the time text into its seperate sections so that they can be seperatly selectable
-		  
-		  // Hour Section
-		  WT1array = Split(WT1,":")
-		  TheHour = WT1array(0)
-		  
-		  // Minute Section
-		  WT1 = WT1array(1)
-		  WT1array = Split(WT1," ")
-		  TheMinute = WT1array(0)
-		  
-		  // Period Section
-		  ThePeriod = WT1array(1)
+		  Dim ForSlash1,ForSlash2 as string
 		  
 		  
 		  
-		  TheReturn = Array(TheHour,":",TheMinute," ",ThePeriod)
+		  If me.RawData <> "" Then
+		    // Take the raw data...should be an in sqltime format...and turn it into desired text
+		    TheDate.SQLTime = me.RawData
+		    me.LabelText = TheDate.ShortTime
+		    
+		    
+		    Dim anarray() as string
+		    // Month Section
+		    anarray = Split(me.LabelText,":")
+		    TheHour = anarray(0)
+		    
+		    // Date Section
+		    TheMinute = TheDate.Minute.ToText
+		    If val( TheMinute ) >=0 And val( TheMinute ) <= 9 Then
+		      TheMinute = "0" + TheMinute
+		    End If
+		    
+		    // Year Section
+		    
+		    anarray = Split(me.LabelText," ")
+		    ThePeriod = anarray(1)
+		    
+		    ForSlash1 = ":"
+		    ForSlash2 = " "
+		    
+		  Else
+		    
+		    
+		  End If
 		  
-		  Return TheReturn()
-		End Function
+		  // Return an array of the sections values
+		  TheReturn = Array(TheHour,ForSlash1,TheMinute,ForSlash2,ThePeriod)
+		  
+		  me.EnterValueArrayIntoSections( TheReturn() )
+		  
+		  
+		End Sub
 	#tag EndEvent
 
 	#tag Event
@@ -115,6 +145,30 @@ Inherits sdoLabel
 		  
 		End Sub
 	#tag EndEvent
+
+
+	#tag Method, Flags = &h0
+		Function GetOtisDateForm() As OtisDate
+		  Dim ADate1 as New OtisDate
+		  Dim SectionIndex as integer
+		  Dim ReturnValue as Boolean
+		  
+		  SectionIndex = Sections.NameIndex("Hour")
+		  Dim TheHour as integer = val( Sections.Data(SectionIndex).TheText )
+		  SectionIndex = Sections.NameIndex("Minute")
+		  Dim TheMinute as integer = val( Sections.Data(SectionIndex).TheText )
+		  SectionIndex = Sections.NameIndex("Period")
+		  Dim ThePeriod as string = Sections.Data(SectionIndex).TheText 
+		  
+		  // Put everything into a date
+		  ADate1.Hour = TheHour
+		  ADate1.Minute = TheMinute
+		  ADate1.Period = ThePeriod
+		  
+		  
+		  Return ADate1
+		End Function
+	#tag EndMethod
 
 
 	#tag ViewBehavior
@@ -217,12 +271,6 @@ Inherits sdoLabel
 			Name="JustificationHorizontal"
 			Group="Behavior"
 			Type="Integer"
-		#tag EndViewProperty
-		#tag ViewProperty
-			Name="LabelText"
-			Group="Behavior"
-			Type="String"
-			EditorType="MultiLineEditor"
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="Left"
