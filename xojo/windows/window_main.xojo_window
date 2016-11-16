@@ -185,7 +185,7 @@ Begin Window window_main
       CueText         =   ""
       DataField       =   ""
       DataSource      =   ""
-      Enabled         =   True
+      Enabled         =   False
       Format          =   ""
       Height          =   32
       HelpTag         =   ""
@@ -261,7 +261,7 @@ Begin Window window_main
       CueText         =   ""
       DataField       =   ""
       DataSource      =   ""
-      Enabled         =   True
+      Enabled         =   False
       Format          =   ""
       Height          =   22
       HelpTag         =   ""
@@ -336,7 +336,7 @@ Begin Window window_main
       Border          =   False
       DataField       =   ""
       DataSource      =   ""
-      Enabled         =   True
+      Enabled         =   False
       Format          =   ""
       Height          =   171
       HelpTag         =   ""
@@ -373,7 +373,7 @@ Begin Window window_main
       Visible         =   True
       Width           =   250
    End
-   Begin ContactVenueListbox ContactVenueListbox1
+   Begin ContactVenueListbox EventContactsAndVenues
       AutoDeactivate  =   True
       AutoHideScrollbars=   True
       Bold            =   False
@@ -384,7 +384,7 @@ Begin Window window_main
       DataField       =   ""
       DataSource      =   ""
       DefaultRowHeight=   -1
-      Enabled         =   True
+      Enabled         =   False
       EnableDrag      =   False
       EnableDragReorder=   False
       GridLinesHorizontal=   0
@@ -405,7 +405,7 @@ Begin Window window_main
       LockRight       =   False
       LockTop         =   True
       RequiresSelection=   False
-      Scope           =   2
+      Scope           =   0
       ScrollbarHorizontal=   False
       ScrollBarVertical=   True
       SelectionType   =   0
@@ -423,14 +423,14 @@ Begin Window window_main
       _ScrollOffset   =   0
       _ScrollWidth    =   -1
    End
-   Begin PushButton PushButton1
+   Begin PushButton NewContact
       AutoDeactivate  =   True
       Bold            =   False
       ButtonStyle     =   "0"
       Cancel          =   False
-      Caption         =   "Button"
+      Caption         =   "C"
       Default         =   False
-      Enabled         =   True
+      Enabled         =   False
       Height          =   22
       HelpTag         =   ""
       Index           =   -2147483648
@@ -442,7 +442,7 @@ Begin Window window_main
       LockLeft        =   True
       LockRight       =   False
       LockTop         =   True
-      Scope           =   2
+      Scope           =   0
       TabIndex        =   17
       TabPanelIndex   =   0
       TabStop         =   True
@@ -452,7 +452,38 @@ Begin Window window_main
       Top             =   89
       Underline       =   False
       Visible         =   True
-      Width           =   80
+      Width           =   20
+   End
+   Begin PushButton NewVenue
+      AutoDeactivate  =   True
+      Bold            =   False
+      ButtonStyle     =   "0"
+      Cancel          =   False
+      Caption         =   "V"
+      Default         =   False
+      Enabled         =   False
+      Height          =   22
+      HelpTag         =   ""
+      Index           =   -2147483648
+      InitialParent   =   ""
+      Italic          =   False
+      Left            =   820
+      LockBottom      =   False
+      LockedInPosition=   False
+      LockLeft        =   True
+      LockRight       =   False
+      LockTop         =   True
+      Scope           =   0
+      TabIndex        =   18
+      TabPanelIndex   =   0
+      TabStop         =   True
+      TextFont        =   "System"
+      TextSize        =   0.0
+      TextUnit        =   0
+      Top             =   89
+      Underline       =   False
+      Visible         =   True
+      Width           =   20
    End
 End
 #tag EndWindow
@@ -901,7 +932,7 @@ End
 		End Sub
 	#tag EndEvent
 #tag EndEvents
-#tag Events ContactVenueListbox1
+#tag Events EventContactsAndVenues
 	#tag Event
 		Sub Initialize()
 		  
@@ -913,13 +944,169 @@ End
 		  
 		End Sub
 	#tag EndEvent
+	#tag Event
+		Sub LoadFromDB()
+		  Dim exre1 as ExecuteReturn
+		  Dim db1 as otis_database_manager = app.otis_db
+		  Dim RecordSetCVD, RecordSetCV as RecordSet
+		  Dim TableName,Columns() as string
+		  
+		  
+		  
+		  // Grab all of the contact venue data records for this event
+		  exre1 = db1.execute(_
+		  "Select",_
+		  "contact_venue_data",_
+		  Array("fkparent_table","parent_table","fkcontact_or_venue","contact_or_venue","fkparent_table","parent_table","primary_"),_
+		  Array(""),_
+		  Array("fkparent_table = '" + pkid_events_ + "'") )
+		  
+		  If exre1.TheRecordSet = Nil Then
+		    break
+		    Return
+		  End If
+		  
+		  RecordSetCVD = exre1.TheRecordSet
+		  
+		  // Loop through each record, find its match and add it to the listbox
+		  For i1 as integer = 0 To RecordSetCVD.RecordCount - 1
+		    
+		    Dim ContactOrVenue as string
+		    Dim ContactOrVenuePKID as string
+		    ContactOrVenue = RecordSetCVD.Field("contact_or_venue").StringValue
+		    ContactOrVenuePKID = RecordSetCVD.Field("fkcontact_or_venue").StringValue
+		    Select Case ContactOrVenue
+		    Case "Contact"
+		      TableName = "contacts_"
+		      Columns() = Array("name_first","name_last","company","phone_number","email")
+		    Case "Venue"
+		      TableName = "venues_"
+		      Columns() = Array("name_","company","email","phone_number")
+		    End Select
+		    
+		    
+		    exre1 = db1.execute("Select",TableName,Columns(),Array(""),Array("pkid = '" + ContactOrVenuePKID + "'") )
+		    
+		    If exre1.TheRecordSet = Nil Then
+		      break
+		      Return
+		    End If
+		    
+		    RecordSetCV = exre1.TheRecordSet
+		    
+		    Dim Line1,Line2,Line3 as String
+		    Dim TheDefault as Boolean
+		    
+		    Select Case ContactOrVenue
+		    Case "Contact"
+		      Line1 = RecordSetCV.Field("name_first").StringValue + " " + RecordSetCV.Field("name_last").StringValue
+		    Case "Venue"
+		      Line1 = RecordSetCV.Field("name_").StringValue
+		    End Select
+		    
+		    Line2 = RecordSetCV.Field("phone_number").StringValue
+		    Line3 = RecordSetCV.Field("email").StringValue
+		    TheDefault = RecordSetCVD.Field("primary_")
+		    
+		    me.InsertData(Line1,Line2,Line3,TheDefault)
+		    
+		    
+		  Next
+		  
+		  
+		  
+		  
+		  
+		  
+		  
+		  
+		  
+		  
+		  
+		  
+		  
+		  
+		  
+		  
+		  
+		  
+		  
+		  
+		  
+		End Sub
+	#tag EndEvent
+	#tag Event
+		Function ConstructContextualMenu(base as MenuItem, x as Integer, y as Integer) As Boolean
+		  
+		  
+		  
+		  
+		  base.Append(MenuItem.
+		End Function
+	#tag EndEvent
 #tag EndEvents
-#tag Events PushButton1
+#tag Events NewContact
 	#tag Event
 		Sub Action()
 		  
 		  
-		  ContactVenueListbox1.InsertData(Calender_Picture,"This is line 1", "This should be line 2","Wooo it might have actually worked",True)
+		  'EventContactsAndVenues.InsertData(Calender_Picture,"This is line 1", "This should be line 2","Wooo it might have actually worked",True)
+		  
+		  
+		  dim TheWindow as New window_ContactInfo
+		  Dim ContactorVenue as string
+		  ContactorVenue = "Contact"
+		  TheWindow.ContactOrVenue = ContactorVenue
+		  
+		  Dim ThePKID as string
+		  ThePKID = TheWindow.NewContactVenue 
+		  
+		  If ThePKID <> "" Then
+		    
+		    Dim Columns() as string
+		    Dim Values() as string
+		    Dim db1 as otis_database_manager = app.otis_db
+		    
+		    Columns = Array("fkparent_table","parent_table","fkcontact_or_venue","contact_or_venue")
+		    Values = Array("'" + pkid_events_ + "'","'events_'","'" + ThePKID + "'","'" + ContactorVenue + "'")
+		    
+		    db1.execute("Insert","contact_venue_data",Columns(),Values(),Array(""))
+		    EventContactsAndVenues.LoadFromDB
+		    
+		  End If
+		End Sub
+	#tag EndEvent
+#tag EndEvents
+#tag Events NewVenue
+	#tag Event
+		Sub Action()
+		  
+		  
+		  'EventContactsAndVenues.InsertData(Calender_Picture,"This is line 1", "This should be line 2","Wooo it might have actually worked",True)
+		  
+		  
+		  dim TheWindow as New window_ContactInfo
+		  Dim ContactorVenue as string
+		  ContactorVenue = "Venue"
+		  TheWindow.ContactOrVenue = ContactorVenue
+		  
+		  Dim ThePKID as string
+		  ThePKID = TheWindow.NewContactVenue 
+		  
+		  If ThePKID <> "" Then
+		    
+		    Dim Columns() as string
+		    Dim Values() as string
+		    Dim db1 as otis_database_manager = app.otis_db
+		    
+		    Columns = Array("fkparent_table","parent_table","fkcontact_or_venue","contact_or_venue")
+		    Values = Array("'" + pkid_events_ + "'","'events_'","'" + ThePKID + "'","'" + ContactorVenue + "'")
+		    
+		    db1.execute("Insert","contact_venue_data",Columns(),Values(),Array(""))
+		    EventContactsAndVenues.LoadFromDB
+		    
+		    
+		  End If
 		End Sub
 	#tag EndEvent
 #tag EndEvents

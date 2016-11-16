@@ -6,7 +6,7 @@
 CREATE PROCEDURAL LANGUAGE 'plpythonu' HANDLER plpython_call_handler; 
 
 -- Create Functions
-CREATE FUNCTION public.create_insert_statements()
+CREATE Or Replace FUNCTION public.create_insert_statements()
     RETURNS text
     LANGUAGE 'plpythonu'
     NOT LEAKPROOF 
@@ -22,6 +22,7 @@ column_data_types = {}
 insert_st_list = []
 tup_list = None
 cursor = None
+
 
 # Get all the names of tables that contain our data
 sql = "Select table_name From information_schema.tables Where table_schema = 'public'"
@@ -70,9 +71,9 @@ for table_dict in table_names:
                     column_values.append("0")
             elif column_data_types[name] == "boolean":
                 if value:
-                    column_values.append(str(value))
+                    column_values.append("'" + str(value) + "'")
                 else:
-                    column_values.append("False")
+                    column_values.append("'False'")
             elif column_data_types[name] in array_types:
                 if value:
                     column_values.append("'" + str(value) + "'")
@@ -84,11 +85,13 @@ for table_dict in table_names:
                 else:
                     column_values.append("''")
 
+
         # create our insert statment
         insert_statement = "Insert Into " + table + " (" + ','.join(column_names) + ") Values(" + ','.join(column_values) + ");"
 
         # append insert statment to or array
         insert_st_list.append(insert_statement)
+
 
 return '|'.join(insert_st_list)
 $function$;

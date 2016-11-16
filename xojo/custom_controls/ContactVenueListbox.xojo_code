@@ -407,13 +407,12 @@ Inherits ListBox
 	#tag EndMethod
 
 	#tag Method, Flags = &h0
-		Sub InsertData(Line1 as string, Line2 as string, Line3 as String)
+		Sub InsertData(Line1 as string, Line2 as string, Line3 as String, TheDefault as Boolean)
 		  Dim p1 as picture
 		  
 		  
 		  
-		  
-		  'InsertData(p1,Line1,Line2,Line3)
+		  InsertData(p1,Line1,Line2,Line3,TheDefault)
 		End Sub
 	#tag EndMethod
 
@@ -423,9 +422,17 @@ Inherits ListBox
 		  Dim exr1 as ExecuteReturn
 		  Dim rs1 as RecordSet
 		  
+		  me.Enabled = True
 		  
+		  me.DeleteAllRows
 		  
 		  RaiseEvent LoadFromDB
+		End Sub
+	#tag EndMethod
+
+	#tag Method, Flags = &h0
+		Sub NewRecord(ContactOrVenue as String)
+		  
 		End Sub
 	#tag EndMethod
 

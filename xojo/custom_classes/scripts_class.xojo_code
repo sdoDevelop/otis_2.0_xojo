@@ -63,6 +63,11 @@ Protected Class scripts_class
 		    window_main.ContainerControl_EventDateTimes1.LoadOutTime.LoadFromDB
 		    window_main.ContainerControl_EventDateTimes1.LoadOutDate.LoadFromDB
 		    
+		    'Contacts and Venues
+		    window_main.EventContactsAndVenues.LoadFromDB
+		    window_main.NewContact.Enabled = True
+		    window_main.NewVenue.Enabled = True
+		    
 		    
 		    
 		  End If
@@ -125,6 +130,99 @@ Protected Class scripts_class
 		    Next
 		    
 		  End If
+		End Sub
+	#tag EndMethod
+
+	#tag Method, Flags = &h0
+		Sub NewContactVenue()
+		  
+		End Sub
+	#tag EndMethod
+
+	#tag Method, Flags = &h0
+		Sub NewContactVenue(ContactOrVenue as string, ParentTable as string, ParentTablePKID as string, Columns() as string, Values() as string)
+		  Dim db1 as otis_database_manager = app.otis_db
+		  Dim TableName,TheColumns(),TheValues(),TheConditions() as String
+		  Dim exre1 as ExecuteReturn
+		  Dim COVpkid as String
+		  
+		  
+		  // Loop through the columns and values and seperate them into appropriate tables
+		  Dim ColumnsCV(),ColumnsCVD() as string
+		  Dim ValuesCV(),ValuesCVD() as string
+		  For i1 as integer = 0 To Columns.Ubound
+		    If InStr(Columns(i1),"contact_venue_data") > 0 Then
+		      ColumnsCVD.Append(Columns(i1))
+		      ValuesCVD.Append(Values(i1))
+		    Else
+		      ColumnsCV.Append(Columns(i1))
+		      ValuesCV.Append(Values(i1))
+		    End If
+		  Next
+		  
+		  // Create the New Contact Or Venue
+		  
+		  'Set TableName
+		  Select Case ContactOrVenue
+		  Case "Contact"
+		    TableName = "contacts_"
+		  Case "Venue"
+		    TableName = "venues_"
+		  End Select
+		  
+		  'Set Other values
+		  TheColumns = ColumnsCV()
+		  TheValues = ValuesCV()
+		  TheConditions = Array("")
+		  
+		  'Execute on db to create the contact or venue
+		  exre1 = db1.execute("Insert",TableName,ColumnsCV(),ValuesCV(),TheConditions() ) 
+		  If exre1.ThePKID = "" Then
+		    'error has occured contact was not made or no pkid was created exit out before we do any damage
+		    err_manage("NewContactVenue", "Could not create the " + ContactOrVenue + " run for your life!")
+		    Return
+		  End If
+		  
+		  // Link the Contact Or Venue to the desired table
+		  
+		  'Lets start by filling in the information we already know
+		  ColumnsCVD.Append("fkcontact_or_venue")
+		  ColumnsCVD.Append("contact_or_venue")
+		  ColumnsCVD.Append("fkparent_table")
+		  ColumnsCVD.Append("parent_table")
+		  ValuesCVD.Append(exre1.ThePKID)
+		  ValuesCVD.Append(ContactOrVenue)
+		  ValuesCVD.Append(ParentTablePKID)
+		  ValuesCVD.Append(ParentTable)
+		  
+		  'Set Other values
+		  TableName = "contact_venue_data"
+		  TheColumns = ColumnsCVD()
+		  TheValues = ValuesCVD()
+		  TheConditions = Array("")
+		  
+		  'Execute on db to link tables
+		  exre1 = db1.execute("Insert",TableName,ColumnsCVD(),ValuesCVD(),TheConditions() ) 
+		  
+		  
+		  
+		  
+		  
+		  
+		  
+		  
+		  
+		  
+		  
+		  
+		  
+		  
+		  
+		  
+		  
+		  
+		  
+		  
 		End Sub
 	#tag EndMethod
 

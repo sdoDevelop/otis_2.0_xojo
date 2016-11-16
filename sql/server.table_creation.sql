@@ -120,15 +120,15 @@
     -- contact_venue_data
     CREATE TABLE contact_venue_data 
         (
-        pkid text,
-        row_created_ timestamp,
-        row_modified_ timestamp,
-        row_username_ text,
-        fkcontacts_ text,
-        fkvenues_ text,
-        fkevents_ text,
-        fkeipl_ text,
-        primary_ boolean
+        pkid                text,
+        row_created_        timestamp,
+        row_modified_       timestamp,
+        row_username_       text,
+        fkparent_table      text,
+        parent_table        text,
+        fkcontact_or_venue  text,
+        contact_or_venue    text,
+        primary_            boolean
         );
 
     -- contacts

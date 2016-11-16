@@ -58,7 +58,7 @@ Inherits TextArea
 		Sub LoadFromDB()
 		  Dim TheValue as String
 		  
-		  
+		  me.Enabled = True
 		  
 		  TheValue = RaiseEvent LoadFromDB
 		  
