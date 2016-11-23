@@ -20,12 +20,50 @@ Inherits ListBox
 		    
 		    DetermineSectionCoordinates
 		    DetermineSectionColors
+		    Sections = me.RowTag(row)
 		    DrawMe(g)
 		    
 		  End If
 		  
 		  
 		End Function
+	#tag EndEvent
+
+	#tag Event
+		Sub MouseExit()
+		  
+		  
+		  ResetStates
+		  me.InvalidateCell(-1,-1)
+		End Sub
+	#tag EndEvent
+
+	#tag Event
+		Sub MouseMove(X As Integer, Y As Integer)
+		  Dim RowIndex,PartIndex,x1() as integer
+		  
+		  
+		  
+		  x1 = DeterminePartByXY(X,Y)
+		  RowIndex = x1(0)
+		  PartIndex = x1(1)
+		  
+		  ResetStates
+		  me.InvalidateCell(-1,-1)
+		  
+		  If RowIndex <> -1 And PartIndex <> -1 Then
+		    Sections = me.RowTag(RowIndex)
+		    
+		    Select Case PartIndex
+		    Case 4
+		      Sections.Data(PartIndex).State = "Hover"
+		    End Select
+		    
+		    me.RowTag(RowIndex) = Sections
+		    
+		    me.InvalidateCell(-1,-1)
+		  End If
+		End Sub
 	#tag EndEvent
 
 	#tag Event
@@ -40,37 +78,111 @@ Inherits ListBox
 		  'For i1 as integer = 0 To Sections.Data.Ubound
 		  'Sections.Data(i1) = new SectionsModule.SectionClass
 		  'Next
+		  For i2 as integer = 0 To Sections.Data.Ubound
+		    
+		    Sections.Data(i2).State = "Normal"
+		    
+		  Next
+		  
+		  DetermineSectionColors
+		  
 		  
 		  RaiseEvent Initialize
+		  
 		End Sub
 	#tag EndEvent
 
 
 	#tag Method, Flags = &h0
+		Function DeterminePartByXY(X as integer, Y as integer) As integer()
+		  Dim currY1,prevY1 as integer
+		  Dim RowIndex as integer = -1
+		  Dim SectionIndex as integer = -1
+		  
+		  
+		  // Determine which row was clicked
+		  For i1 as integer = 1 To me.ListCount
+		    
+		    currY1 = prevY1 + RowHeight
+		    
+		    If Y >= prevY1 And Y <= currY1 Then
+		      RowIndex = i1 - 1
+		      Exit
+		    End If
+		    prevY1 = currY1
+		  Next
+		  
+		  If RowIndex = -1 Then
+		    'no row clicked Abort!
+		    Return Array( -1,-1)
+		  End If
+		  
+		  
+		  
+		  // Set up retlative x y coordinates relative to the boundries of the row clicked
+		  Dim RelX, RelY as integer 
+		  RelY = Y - RowIndex * RowHeight
+		  RelX = X
+		  
+		  Sections = me.RowTag(RowIndex)
+		  
+		  // Loop through each section checking if we are in it
+		  For i1 as integer = 0 To Sections.Data.Ubound
+		    Dim TheLeft,TheRight,TheBottom,TheTop as integer
+		    TheLeft = Sections.Data(i1).Left
+		    TheRight = Sections.Data(i1).Right
+		    TheTop = Sections.Data(i1).Top
+		    TheBottom = Sections.Data(i1).Bottom
+		    If RelX >= TheLeft And RelX <= TheRight And RelY >= TheTop And RelY <= TheBottom Then
+		      SectionIndex = i1
+		    End If
+		  Next
+		  
+		  Return Array(RowIndex,SectionIndex)
+		End Function
+	#tag EndMethod
+
+	#tag Method, Flags = &h0
 		Sub DetermineSectionColors()
 		  
 		  
-		  
-		  For x1 as integer = 0 To Sections.Data.Ubound
+		  For i1 as integer = 0 To me.ListCount - 1
 		    
-		    Select Case x1
-		    Case 0
+		    Sections = me.RowTag(i1)
+		    
+		    For x1 as integer = 0 To Sections.Data.Ubound
 		      
-		      Sections.Data(x1).BackgroundColor = get_color("Gray",3)
-		      
-		    Case 1 To 3
-		      
-		      Sections.Data(x1).TextColor = get_color("Text",0)
-		      Sections.Data(x1).BackgroundColor = get_color("Gray",3)
-		      
-		    Case 4
-		      
-		      If Sections.Data(x1).BooleanValue Then
-		        Sections.Data(x1).BackgroundColor = RGB(0,255,0)
+		      Select Case x1
+		      Case 0
+		        
 		        Sections.Data(x1).BackgroundColor = get_color("Gray",3)
-		      End If
+		        
+		      Case 1 To 3
+		        
+		        Sections.Data(x1).TextColor = get_color("Text",0)
+		        Sections.Data(x1).BackgroundColor = get_color("Gray",3)
+		        
+		      Case 4
+		        
+		        Select Case  Sections.Data(x1).State
+		        Case "Normal"
+		          If Sections.Data(x1).BooleanValue Then
+		            Sections.Data(x1).BackgroundColor = RGB(0,255,0)
+		          Else
+		            Sections.Data(x1).BackgroundColor = get_color("Gray",6)
+		          End If
+		        Case "Hover"
+		          Sections.Data(x1).BackgroundColor = get_color("Blue",4)
+		        Case "Pressed"
+		          Sections.Data(x1).BackgroundColor = get_color("Blue",2)
+		        End Select
+		        
+		      End Select
 		      
-		    End Select
+		    Next
+		    RowTag(i1) = Sections
+		    
+		    
 		    
 		  Next
 		  
@@ -135,7 +247,7 @@ Inherits ListBox
 		  If 1=1 then
 		    x1 = 4
 		    SectionHeight = RowHeight
-		    SectionWidth = Floor( me.Width * 0.06 )
+		    SectionWidth = Floor( me.Width * 0.25 )
 		    SectionLeft = me.Width - SectionWidth
 		    SectionTop = 0
 		    SectionRight = SectionLeft + SectionWidth
@@ -242,13 +354,7 @@ Inherits ListBox
 		  
 		  
 		  
-		  If row = me.ListIndex Then
-		    
-		    // Selected Row
-		    g1.ForeColor = get_color("Blue",4)
-		    g1.FillRect(0,-1,g1.Width,g1.Height + 1)
-		    
-		  ElseIf row Mod 2 = 0 Then
+		  If row Mod 2 = 0 Then
 		    
 		    // Event Row
 		    g1.ForeColor = get_color("Gray",5)
@@ -275,6 +381,9 @@ Inherits ListBox
 		  
 		  
 		  
+		  
+		  DetermineSectionCoordinates
+		  DetermineSectionColors
 		  
 		  // First We draw the Picture
 		  Dim x1 as integer
@@ -386,7 +495,7 @@ Inherits ListBox
 	#tag EndMethod
 
 	#tag Method, Flags = &h0
-		Sub InsertData(ThePicture as Picture, Line1 as string, Line2 as string, Line3 as String, TheDefault as Boolean)
+		Sub InsertData(ThePKID as string, ThePicture as Picture, Line1 as string, Line2 as string, Line3 as String, TheDefault as Boolean)
 		  
 		  
 		  
@@ -398,21 +507,24 @@ Inherits ListBox
 		  Sections.Data(2).TheText = Line2
 		  Sections.Data(3).TheText = Line3
 		  Sections.Data(4).BooleanValue = TheDefault
+		  Sections.ThePKID = ThePKID
 		  
 		  
 		  me.AddRow
 		  me.RowTag(me.ListCount - 1) = Sections
+		  DetermineSectionColors
+		  InvalidateCell(-1,-1)
 		  Refresh
 		End Sub
 	#tag EndMethod
 
 	#tag Method, Flags = &h0
-		Sub InsertData(Line1 as string, Line2 as string, Line3 as String, TheDefault as Boolean)
+		Sub InsertData(ThePKID as string, Line1 as string, Line2 as string, Line3 as String, TheDefault as Boolean)
 		  Dim p1 as picture
 		  
 		  
 		  
-		  InsertData(p1,Line1,Line2,Line3,TheDefault)
+		  InsertData(ThePKID,p1,Line1,Line2,Line3,TheDefault)
 		End Sub
 	#tag EndMethod
 
@@ -431,8 +543,22 @@ Inherits ListBox
 	#tag EndMethod
 
 	#tag Method, Flags = &h0
-		Sub NewRecord(ContactOrVenue as String)
+		Sub ResetStates()
 		  
+		  
+		  For i1 as integer = 0 To me.ListCount - 1
+		    
+		    Sections = me.RowTag(i1)
+		    
+		    For i2 as integer = 0 To Sections.Data.Ubound
+		      
+		      Sections.Data(i2).State = "Normal"
+		      
+		    Next
+		    
+		    me.RowTag(i1) = Sections
+		    
+		  Next
 		End Sub
 	#tag EndMethod
 

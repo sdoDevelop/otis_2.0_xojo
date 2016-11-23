@@ -509,7 +509,7 @@ Begin Window window_ContactInfo
       Index           =   7
       InitialParent   =   ""
       Italic          =   False
-      Left            =   20
+      Left            =   249
       LockBottom      =   False
       LockedInPosition=   False
       LockLeft        =   True
@@ -526,7 +526,7 @@ Begin Window window_ContactInfo
       TextFont        =   "System"
       TextSize        =   0.0
       TextUnit        =   0
-      Top             =   233
+      Top             =   62
       Transparent     =   True
       Underline       =   False
       Visible         =   True
@@ -560,7 +560,7 @@ Begin Window window_ContactInfo
       TextFont        =   "System"
       TextSize        =   0.0
       TextUnit        =   0
-      Top             =   62
+      Top             =   20
       Transparent     =   True
       Underline       =   False
       Visible         =   True
@@ -594,7 +594,7 @@ Begin Window window_ContactInfo
       TextFont        =   "System"
       TextSize        =   0.0
       TextUnit        =   0
-      Top             =   191
+      Top             =   232
       Transparent     =   True
       Underline       =   False
       Visible         =   True
@@ -611,7 +611,7 @@ Begin Window window_ContactInfo
       Index           =   4
       InitialParent   =   ""
       Italic          =   False
-      Left            =   249
+      Left            =   20
       LockBottom      =   False
       LockedInPosition=   False
       LockLeft        =   True
@@ -628,7 +628,7 @@ Begin Window window_ContactInfo
       TextFont        =   "System"
       TextSize        =   0.0
       TextUnit        =   0
-      Top             =   20
+      Top             =   190
       Transparent     =   True
       Underline       =   False
       Visible         =   True
@@ -864,7 +864,7 @@ Begin Window window_ContactInfo
       TextFont        =   "System"
       TextSize        =   0.0
       TextUnit        =   0
-      Top             =   102
+      Top             =   190
       Transparent     =   True
       Underline       =   False
       Visible         =   True
@@ -932,7 +932,7 @@ Begin Window window_ContactInfo
       TextFont        =   "System"
       TextSize        =   0.0
       TextUnit        =   0
-      Top             =   190
+      Top             =   103
       Transparent     =   True
       Underline       =   False
       Visible         =   True
@@ -1252,6 +1252,16 @@ End
 		Type="Boolean"
 	#tag EndViewProperty
 	#tag ViewProperty
+		Name="ContactOrVenue"
+		Group="Behavior"
+		Type="String"
+	#tag EndViewProperty
+	#tag ViewProperty
+		Name="ContactVenuePKID"
+		Group="Behavior"
+		Type="String"
+	#tag EndViewProperty
+	#tag ViewProperty
 		Name="Frame"
 		Visible=true
 		Group="Frame"
@@ -1431,6 +1441,11 @@ End
 		Group="Frame"
 		InitialValue="Untitled"
 		Type="String"
+	#tag EndViewProperty
+	#tag ViewProperty
+		Name="UserAbort"
+		Group="Behavior"
+		Type="Boolean"
 	#tag EndViewProperty
 	#tag ViewProperty
 		Name="Visible"

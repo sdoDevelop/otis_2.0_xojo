@@ -352,6 +352,12 @@ Protected Class scripts_class
 		End Sub
 	#tag EndMethod
 
+	#tag Method, Flags = &h0
+		Sub Untitled()
+		  
+		End Sub
+	#tag EndMethod
+
 
 	#tag ViewBehavior
 		#tag ViewProperty

@@ -67,6 +67,7 @@ Interface=LoadFromDB;custom_classes/LoadFromDB.xojo_code;&h21A3E7FF;&h60341FFF;f
 Class=sdoLabel_StraightText;custom_controls/sdoLabels/sdoLabel_StraightText.xojo_code;&h1B7A27FF;&h7D9247FF;false
 Class=ContactVenueListbox;custom_controls/ContactVenueListbox.xojo_code;&h7647FFFF;&hD9BAFFF;false
 Window=window_ContactInfo;windows/window_ContactInfo.xojo_window;&hA6437FF;&h2E9D0FFF;false
+Class=ConVenListbox;custom_controls/ConVenListbox.xojo_code;&h4ADF27FF;&hD9BAFFF;false
 AppMenuBar=MainMenuBar
 MajorVersion=1
 MinorVersion=0

@@ -36,6 +36,14 @@ Protected Class SectionsArray
 		Data() As SectionsModule.SectionClass
 	#tag EndProperty
 
+	#tag Property, Flags = &h0
+		LinkingTablePKID As String
+	#tag EndProperty
+
+	#tag Property, Flags = &h0
+		ThePKID As String
+	#tag EndProperty
+
 
 	#tag ViewBehavior
 		#tag ViewProperty
@@ -62,6 +70,11 @@ Protected Class SectionsArray
 			Name="Super"
 			Visible=true
 			Group="ID"
+			Type="String"
+		#tag EndViewProperty
+		#tag ViewProperty
+			Name="ThePKID"
+			Group="Behavior"
 			Type="String"
 		#tag EndViewProperty
 		#tag ViewProperty
