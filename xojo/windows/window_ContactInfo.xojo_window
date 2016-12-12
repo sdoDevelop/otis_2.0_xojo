@@ -90,6 +90,7 @@ Begin Window window_ContactInfo
       Selectable      =   False
       TabIndex        =   1
       TabPanelIndex   =   0
+      TabStop         =   True
       Text            =   "Untitled"
       TextAlign       =   0
       TextColor       =   &c00000000
@@ -166,6 +167,7 @@ Begin Window window_ContactInfo
       Selectable      =   False
       TabIndex        =   3
       TabPanelIndex   =   0
+      TabStop         =   True
       Text            =   "Untitled"
       TextAlign       =   0
       TextColor       =   &c00000000
@@ -284,6 +286,7 @@ Begin Window window_ContactInfo
       Selectable      =   False
       TabIndex        =   6
       TabPanelIndex   =   0
+      TabStop         =   True
       Text            =   "Untitled"
       TextAlign       =   0
       TextColor       =   &c00000000
@@ -318,6 +321,7 @@ Begin Window window_ContactInfo
       Selectable      =   False
       TabIndex        =   7
       TabPanelIndex   =   0
+      TabStop         =   True
       Text            =   "Untitled"
       TextAlign       =   0
       TextColor       =   &c00000000
@@ -520,6 +524,7 @@ Begin Window window_ContactInfo
       Selectable      =   False
       TabIndex        =   12
       TabPanelIndex   =   0
+      TabStop         =   True
       Text            =   "Untitled"
       TextAlign       =   0
       TextColor       =   &c00000000
@@ -554,6 +559,7 @@ Begin Window window_ContactInfo
       Selectable      =   False
       TabIndex        =   13
       TabPanelIndex   =   0
+      TabStop         =   True
       Text            =   "Untitled"
       TextAlign       =   0
       TextColor       =   &c00000000
@@ -588,6 +594,7 @@ Begin Window window_ContactInfo
       Selectable      =   False
       TabIndex        =   14
       TabPanelIndex   =   0
+      TabStop         =   True
       Text            =   "Untitled"
       TextAlign       =   0
       TextColor       =   &c00000000
@@ -622,6 +629,7 @@ Begin Window window_ContactInfo
       Selectable      =   False
       TabIndex        =   15
       TabPanelIndex   =   0
+      TabStop         =   True
       Text            =   "Untitled"
       TextAlign       =   0
       TextColor       =   &c00000000
@@ -824,6 +832,7 @@ Begin Window window_ContactInfo
       Selectable      =   False
       TabIndex        =   20
       TabPanelIndex   =   0
+      TabStop         =   True
       Text            =   "Untitled"
       TextAlign       =   0
       TextColor       =   &c00000000
@@ -858,6 +867,7 @@ Begin Window window_ContactInfo
       Selectable      =   False
       TabIndex        =   21
       TabPanelIndex   =   0
+      TabStop         =   True
       Text            =   "Untitled"
       TextAlign       =   0
       TextColor       =   &c00000000
@@ -892,6 +902,7 @@ Begin Window window_ContactInfo
       Selectable      =   False
       TabIndex        =   22
       TabPanelIndex   =   0
+      TabStop         =   True
       Text            =   "Untitled"
       TextAlign       =   0
       TextColor       =   &c00000000
@@ -926,6 +937,7 @@ Begin Window window_ContactInfo
       Selectable      =   False
       TabIndex        =   23
       TabPanelIndex   =   0
+      TabStop         =   True
       Text            =   "Untitled"
       TextAlign       =   0
       TextColor       =   &c00000000
@@ -1255,11 +1267,13 @@ End
 		Name="ContactOrVenue"
 		Group="Behavior"
 		Type="String"
+		EditorType="MultiLineEditor"
 	#tag EndViewProperty
 	#tag ViewProperty
 		Name="ContactVenuePKID"
 		Group="Behavior"
 		Type="String"
+		EditorType="MultiLineEditor"
 	#tag EndViewProperty
 	#tag ViewProperty
 		Name="Frame"

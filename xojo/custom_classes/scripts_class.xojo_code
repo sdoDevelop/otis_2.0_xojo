@@ -233,7 +233,7 @@ Protected Class scripts_class
 		  dim lb as listbox = window_main.TheListbox
 		  Dim exre1 as New ExecuteReturn
 		  
-		  
+		  break
 		  
 		  Try
 		    exre1 = db.execute("Insert","events_",Array(""),Array(""),Array(""))
@@ -255,6 +255,18 @@ Protected Class scripts_class
 		  
 		  
 		  lb.ListIndex = GetEvent_Index_ByPkid(thepkid)
+		End Sub
+	#tag EndMethod
+
+	#tag Method, Flags = &h0
+		Sub PrepSQLValues(TheValues() as Variant)
+		  
+		End Sub
+	#tag EndMethod
+
+	#tag Method, Flags = &h0
+		Sub PrepSQLValues(TheValue as Variant)
+		  
 		End Sub
 	#tag EndMethod
 
@@ -349,12 +361,6 @@ Protected Class scripts_class
 		  
 		  
 		  MsgBox( "running" )
-		End Sub
-	#tag EndMethod
-
-	#tag Method, Flags = &h0
-		Sub Untitled()
-		  
 		End Sub
 	#tag EndMethod
 

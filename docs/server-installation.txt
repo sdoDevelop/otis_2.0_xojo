@@ -1,0 +1,61 @@
+
+This Document will provide all steps necesarry to sucsefully set up otis server
+
+service --status-all shows all services running
+
+
+- Reinstall Ubuntu Server so we are working fresh
+	- Initializing things
+		- sudo apt-get update
+		- sudo apt-get upgrade
+
+- Install Postgresql
+	- Run commands
+		- sudo apt-get install postgresql-9.5
+		- sudo apt-get install postgresql-contrib-9.5
+		- sudo apt-get install libpq-dev
+		- sudo apt-get install postgresql-server-dev-9.5
+
+- Configure Postgresql
+	- Log into the postgres user and psql
+		- sudo -i -u postgres
+		- psql
+			- psql commands available at
+				https://www.postgresql.org/docs/9.5/static/app-psql.html
+
+	- Change the postgres user password to an actual password
+		- ALTER USER Postgres WITH PASSWORD '<newpassword>';
+
+	- Exit out of psql and postgres user
+		- \q
+		- exit
+
+	- Edit /etc/postgresql/9.5/main/pg_hba.conf
+		- Find the following lines
+		  # IPv4 local connections:
+		  host    all             all             127.0.0.1/32            md5
+
+		- Comment out the original entry
+		- Create an identical entry with * instead of ip address
+		  # IPv4 local connections:
+		  host    all             all             127.0.0.1/32            md5
+		  host    all             all             0.0.0.0/0               md5
+
+	- Edit /etc/postgresql/9.5/main/postgresql.conf
+		- Change
+			listen_addresses='localhost'
+			To
+			listen_addresses='*'
+
+	- Restart Postgresql
+		- /etc/init.d/postgresql reload
+		- /etc/init.d/postgresql restart
+
+
+- Install Symetric DS
+	- Install java
+		sudo apt-get install default-jdk
+	- Download symmetric jar to /opt
+	- run the jar
+		java -jar symmetric-setup.jar
+		

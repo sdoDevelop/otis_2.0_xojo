@@ -254,13 +254,13 @@ Protected Class otis_database_manager
 	#tag EndMethod
 
 	#tag Method, Flags = &h0
-		Sub execute(querry_type as string, table as string, columns() as string, values() as string, conditions() as string)
+		Sub execute(querry_type as string, table as string, columns() as string, values() as variant, conditions() as string, optional ConditionBindValues)
 		  dim rs as RecordSet
 		  Dim exre1 as New ExecuteReturn
 		  
 		  
 		  
-		  exre1 = local_db.execute(querry_type,table,columns(),values(),conditions())
+		  exre1 = local_db.execute(querry_type,table,columns(),values(),conditions(),condiConditionBindValues())
 		  
 		  If exre1 <> Nil Then
 		    rs = exre1.TheRecordSet
@@ -276,13 +276,13 @@ Protected Class otis_database_manager
 	#tag EndMethod
 
 	#tag Method, Flags = &h0
-		Function execute(querry_type as string, table as string, columns() as string, values() as string, conditions() as string) As ExecuteReturn
+		Function execute(querry_type as string, table as string, columns() as string, values() as variant, conditions() as string, optional ConditionBindValues() as Variant) As ExecuteReturn
 		  dim rs as RecordSet
 		  Dim exre1 as New ExecuteReturn
 		  
 		  
 		  
-		  exre1 = local_db.execute(querry_type,table,columns(),values(),conditions())
+		  exre1 = local_db.execute(querry_type,table,columns(),values(),conditions(),ConditionBindValues())
 		  
 		  If exre1 <> Nil Then
 		    rs = exre1.TheRecordSet
@@ -587,11 +587,17 @@ Protected Class otis_database_manager
 	#tag EndMethod
 
 	#tag Method, Flags = &h0
-		Sub SyncToServer(sql as string)
-		  
+		Sub SyncToServer(sql as string,values() as Variant)
+		  Dim ps as PostgreSQLPreparedStatement
 		  
 		  If Not work_offline Then
-		    remote_db.SQLExecute(sql)
+		    ps = remote_db.Prepare(sql)
+		    
+		    For i1 as integer = 0 To values.Ubound
+		      ps.Bind(i1,values(i1))
+		    Next
+		    ps.SQLExecute
+		    'remote_db.SQLExecute(sql)
 		    If remote_db.Error Then
 		      MsgBox("Could Not Sync to server: " + remote_db.ErrorMessage)
 		    End If

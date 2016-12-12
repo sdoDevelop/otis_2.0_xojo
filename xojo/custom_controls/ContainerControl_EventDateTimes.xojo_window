@@ -70,6 +70,7 @@ Begin ContainerControl ContainerControl_EventDateTimes Implements LoadFromDB
       Height          =   20
       HelpTag         =   ""
       Ignore          =   ""
+      Index           =   -2147483648
       InitialParent   =   ""
       KeepRatios      =   ""
       Left            =   -114
@@ -177,6 +178,7 @@ Begin ContainerControl ContainerControl_EventDateTimes Implements LoadFromDB
       Selectable      =   False
       TabIndex        =   15
       TabPanelIndex   =   0
+      TabStop         =   True
       Text            =   "Event Start"
       TextAlign       =   1
       TextColor       =   &c00000000
@@ -305,6 +307,7 @@ Begin ContainerControl ContainerControl_EventDateTimes Implements LoadFromDB
       Selectable      =   False
       TabIndex        =   19
       TabPanelIndex   =   0
+      TabStop         =   True
       Text            =   "Event End"
       TextAlign       =   1
       TextColor       =   &c00000000
@@ -433,6 +436,7 @@ Begin ContainerControl ContainerControl_EventDateTimes Implements LoadFromDB
       Selectable      =   False
       TabIndex        =   23
       TabPanelIndex   =   0
+      TabStop         =   True
       Text            =   "Load In"
       TextAlign       =   1
       TextColor       =   &c00000000
@@ -561,6 +565,7 @@ Begin ContainerControl ContainerControl_EventDateTimes Implements LoadFromDB
       Selectable      =   False
       TabIndex        =   27
       TabPanelIndex   =   0
+      TabStop         =   True
       Text            =   "Load Out"
       TextAlign       =   1
       TextColor       =   &c00000000

@@ -24,7 +24,7 @@ Protected Module tg_library
 	#tag EndProperty
 
 	#tag Property, Flags = &h1
-		Protected values() As string
+		Protected values() As variant
 	#tag EndProperty
 
 	#tag Property, Flags = &h1

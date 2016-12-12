@@ -38,6 +38,7 @@ Begin Window window_main
       Height          =   20
       HelpTag         =   ""
       Ignore          =   ""
+      Index           =   -2147483648
       InitialParent   =   ""
       KeepRatios      =   ""
       Left            =   -192
@@ -134,6 +135,7 @@ Begin Window window_main
       Selectable      =   False
       TabIndex        =   7
       TabPanelIndex   =   0
+      TabStop         =   True
       Text            =   "Events"
       TextAlign       =   0
       TextColor       =   &c00000000
@@ -157,6 +159,7 @@ Begin Window window_main
       HasBackColor    =   False
       Height          =   161
       HelpTag         =   ""
+      Index           =   -2147483648
       InitialParent   =   ""
       Left            =   251
       LockBottom      =   False
@@ -238,6 +241,7 @@ Begin Window window_main
       Selectable      =   False
       TabIndex        =   12
       TabPanelIndex   =   0
+      TabStop         =   True
       Text            =   "AcountManager"
       TextAlign       =   0
       TextColor       =   &c00000000
@@ -314,6 +318,7 @@ Begin Window window_main
       Selectable      =   False
       TabIndex        =   14
       TabPanelIndex   =   0
+      TabStop         =   True
       Text            =   "Details"
       TextAlign       =   0
       TextColor       =   &c00000000
@@ -381,6 +386,7 @@ Begin Window window_main
       ColumnCount     =   1
       ColumnsResizable=   False
       ColumnWidths    =   ""
+      ContextualMenuRow=   -1
       DataField       =   ""
       DataSource      =   ""
       DefaultRowHeight=   -1
@@ -507,6 +513,7 @@ Begin Window window_main
       Selectable      =   False
       TabIndex        =   19
       TabPanelIndex   =   0
+      TabStop         =   True
       Text            =   "Untitled"
       TextAlign       =   0
       TextColor       =   &c00000000

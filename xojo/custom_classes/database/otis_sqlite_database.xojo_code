@@ -60,7 +60,7 @@ Inherits SQLiteDatabase
 	#tag EndMethod
 
 	#tag Method, Flags = &h0
-		Function execute(querry_type as string, table as string, columns() as string, values() as string, conditions() as string) As ExecuteReturn
+		Function execute(querry_type as string, table as string, columns() as string, values() as variant, conditions() as string, optional ConditionBindValues() as Variant) As ExecuteReturn
 		  // querry_type = Insert, Update, Delete, Select
 		  // tables = ex. "contacts, contact_venue_data"
 		  // columns
@@ -76,14 +76,16 @@ Inherits SQLiteDatabase
 		  dim the_date as new date
 		  dim rs as RecordSet
 		  Dim exre1 as New ExecuteReturn
-		  
+		  Dim column_types() as string
+		  Dim BindPosts as string
+		  Dim ps1 as SQLitePreparedStatement
 		  
 		  
 		  
 		  // Concat our sql sections
 		  table_string = table
 		  column_string = Join( columns,"," )
-		  value_string = Join( values,"," )
+		  'value_string = Join( values,"," )
 		  If conditions(0) <> "" Then
 		    condition_string = " Where " +  Join( conditions," " )
 		  End If
@@ -153,26 +155,39 @@ Inherits SQLiteDatabase
 		    mod_columns.Append("row_created_")
 		    mod_columns.Append("row_modified_")
 		    If column_string <> "" Then
-		      column_string = Join( Array( Join(mod_columns,", "), column_string), ", " )
+		      column_string = Join( Array( Join(mod_columns,","), column_string), "," )
 		    Else
-		      column_string  = Join(mod_columns,", ")
+		      column_string  = Join(mod_columns,",")
 		    End If
+		    columns = Split(column_string,",")
 		    
 		    'Create a Unique pkid and save it to our return object
 		    dim theNewUUID as string = NewUUID
 		    exre1.ThePKID = theNewUUID
-		    mod_values.Append("'" + theNewUUID + "'")
-		    mod_values.Append("'" + the_date.SQLDateTime + "'")
-		    mod_values.Append("'" + the_date.SQLDateTime + "'")
+		    mod_values.Append(theNewUUID)
+		    mod_values.Append(the_date.SQLDateTime)
+		    mod_values.Append(the_date.SQLDateTime)
 		    If value_string <> "" Then
-		      value_string = Join(  Array(   Join(mod_values,", ")  , value_string), ", " ) 
+		      value_string = Join(  Array(   Join(mod_values,",")  , value_string), "," ) 
 		    Else
-		      value_string = Join(mod_values, ", ")
+		      value_string = Join(mod_values, ",")
 		    End If
+		    values = Split(value_string,",")
+		    
+		    'Obtain Column Types
+		    column_types = GetTableColumnTypes(table,columns() )
+		    BindPosts = Join( SetBindPosts(columns()), "," )
 		    
 		    // execute our sql
-		    sql_string = "Insert Into " + table_string + " (" + column_string + ") " + "Values( " + value_string + ");"
-		    SQLExecute(sql_string)
+		    sql_string = "Insert Into " + table_string + " (" + column_string + ") " + "Values( " + BindPosts + ");"
+		    ps1 = Prepare(sql_string)
+		    ps1 = SetBindTypes(column_types,ps1)
+		    
+		    For i1 as integer = 0 To values.Ubound
+		      ps1.Bind(i1,values(i1))
+		    Next
+		    
+		    ps1.SQLExecute()'values())
 		    exre1.ThePKID = theNewUUID
 		    If Error Then
 		      dim err as new RuntimeException
@@ -181,7 +196,7 @@ Inherits SQLiteDatabase
 		      raise err
 		    Else
 		      'Sync back to the server
-		      App.otis_db.SyncToServer(sql_string)
+		      App.otis_db.SyncToServer(sql_string,values())
 		    End If
 		    
 		    //Fill the tg_library.new_rs
@@ -218,24 +233,37 @@ Inherits SQLiteDatabase
 		    dim mod_values() as string
 		    
 		    mod_columns.Append("row_modified_")
-		    column_string = Join( Array( Join(mod_columns,", "), column_string), ", " )
+		    column_string = Join( Array( Join(mod_columns,","), column_string), "," )
+		    columns = Split(column_string,",")
 		    
 		    mod_values.Append(the_date.SQLDateTime)
-		    value_string = Join( Array( Join(mod_values,", "), value_string), ", " )
+		    value_string = Join( Array( Join(mod_values,","), value_string), "," )
+		    values = Split(value_string,",")
+		    
+		    'Obtain Column Types
+		    column_types = GetTableColumnTypes(table,columns() )
+		    BindPosts = Join( SetBindPosts(columns()), "," )
 		    
 		    // execute our sql
 		    dim column_value_string as string
 		    dim column_value_array(-1) as string
 		    dim s as string
 		    For i1 as integer = 0 To columns.Ubound
-		      s = columns(i1) + " = " + values(i1)
+		      s = columns(i1) + " = " + "?"
 		      ReDim column_value_array(i1)
 		      column_value_array(i1) = s
 		      column_value_string = Join( column_value_array, ", " )
 		    Next
 		    
 		    sql_string = "Update " + table_string + " Set " + column_value_string + condition_string + ";"
-		    SQLExecute(sql_string)
+		    ps1 = Prepare(sql_string)
+		    ps1 = SetBindTypes(column_types,ps1)
+		    
+		    For i1 as integer = 0 To values.Ubound
+		      ps1.Bind(i1,values(i1))
+		    Next
+		    
+		    ps1.SQLExecute()'values()) 
 		    If Error Then
 		      dim err as new RuntimeException
 		      err.Message = ErrorMessage
@@ -243,7 +271,7 @@ Inherits SQLiteDatabase
 		      raise err
 		    Else
 		      'Sync back to the server
-		      App.otis_db.SyncToServer(sql_string)
+		      App.otis_db.SyncToServer(sql_string,values())
 		    End If
 		    
 		    //Fill the tg_library.new_rs
@@ -284,7 +312,7 @@ Inherits SQLiteDatabase
 		      raise err
 		    Else
 		      'Sync back to the server
-		      App.otis_db.SyncToServer(sql_string)
+		      App.otis_db.SyncToServer(sql_string,values())
 		    End If
 		    
 		    
@@ -310,6 +338,89 @@ Inherits SQLiteDatabase
 		  
 		  
 		  
+		End Function
+	#tag EndMethod
+
+	#tag Method, Flags = &h0
+		Function GetTableColumnTypes(TheTable as string, TheColumns() as string) As String()
+		  Dim x1, x2 as integer
+		  Dim rs1 as RecordSet
+		  Dim column_types(),TheColumnType as string
+		  
+		  ReDim column_types(TheColumns.Ubound)
+		  
+		  // Get the column Types
+		  rs1 = me.SQLSelect("Pragma table_info (" + TheTable + ");")
+		  If me.Error Then
+		    err_manage("local_db",me.ErrorMessage)
+		  End If
+		  
+		  'Loop through the records 
+		  For i1 as integer = 0 To rs1.RecordCount - 1
+		    
+		    'Check if the current record is in our columns
+		    Dim CurrentFieldName as string
+		    CurrentFieldName = rs1.Field("name").StringValue
+		    x1 = TheColumns.IndexOf(CurrentFieldName)
+		    
+		    If x1 <> -1 Then
+		      'This means that there is a record for this column
+		      
+		      'Now we get the column type from it
+		      TheColumnType = rs1.Field("type").StringValue
+		      column_types(x1) = TheColumnType
+		      
+		    End If
+		    
+		    rs1.MoveNext
+		    
+		  Next
+		  
+		  Return column_types()
+		  
+		  
+		  
+		  
+		End Function
+	#tag EndMethod
+
+	#tag Method, Flags = &h0
+		Function SetBindPosts(columns() as string) As string()
+		  Dim AnArray() as string
+		  
+		  
+		  
+		  For i1 as integer = 0 To columns.Ubound
+		    
+		    AnArray.Append("?")
+		    
+		    
+		  Next
+		  
+		  
+		  Return AnArray()
+		End Function
+	#tag EndMethod
+
+	#tag Method, Flags = &h0
+		Function SetBindTypes(ColumnTypes() as string,ps1 as SQLitePreparedStatement) As SQLitePreparedStatement
+		  
+		  
+		  
+		  For i1 as integer = 0 To ColumnTypes.Ubound
+		    
+		    Select Case ColumnTypes(i1)
+		    Case "text"
+		      ps1.BindType(i1,SQLitePreparedStatement.SQLITE_TEXT)
+		    Case "boolean"
+		      ps1.BindType(i1,SQLitePreparedStatement.SQLITE_BOOLEAN)
+		    Case "integer"
+		      ps1.BindType(i1,SQLitePreparedStatement.SQLITE_INTEGER)
+		    End Select
+		    
+		  Next
+		  
+		  Return ps1
 		End Function
 	#tag EndMethod
 
@@ -462,7 +573,7 @@ Inherits SQLiteDatabase
 
 
 	#tag Constant, Name = client_table_creation, Type = String, Dynamic = False, Default = \"", Scope = Private
-		#Tag Instance, Platform = Any, Language = Default, Definition  = \"-- ##################################\r\n-- ###### Create Otis Database ######\r\n-- ##################################\r\n\r\n\r\n\r\n-- User Tables\r\n    \r\n    -- events_\r\n    Create Table events_\r\n        (\r\n        pkid text\x2C\r\n        row_created_ timestamp\x2C\r\n        row_modified_ timestamp\x2C\r\n        row_username_ text\x2C\r\n        name_ text\x2C\r\n        start_time text\x2C\r\n        end_time text\x2C\r\n        loadin_time text\x2C\r\n        loadout_time text\x2C\r\n        start_date text\x2C\r\n        end_date text\x2C\r\n        loadin_date text\x2C\r\n        loadout_date text\x2C\r\n        details text\x2C\r\n        account_manager text\r\n        );\r\n\r\n    -- lineitems_\r\n    Create Table lineitems_ \r\n        (\r\n        pkid text\x2C\r\n        row_created_ timestamp\x2C\r\n        row_modified_ timestamp\x2C\r\n        row_username_ text\x2C\r\n        fkeipl_ text\x2C\r\n        fkinventory_ text\x2C\r\n        name_ text\x2C\r\n        manufacturer_ text\x2C\r\n        model_ text\x2C\r\n        department_ text\x2C\r\n        category_ text\x2C\r\n        subcategory_ text\x2C\r\n        description_ text\x2C -- from inventory\r\n        type_ text\x2C\r\n        price_  integer\x2C\r\n        note_ text\x2C --line item specific\r\n        rate_ text\x2C\r\n        discount_percent_ integer\x2C\r\n        discount_amount_ integer\x2C\r\n        total_ integer\x2C\r\n        time_ integer\x2C\r\n        taxable_ boolean\x2C\r\n        taxtotal_ integer\x2C\r\n        quantity_ double precision\x2C\r\n        ignore_price_discrepency boolean\r\n        );\r\n\r\n\r\n    -- inventory\r\n    CREATE TABLE inventory_ \r\n        (\r\n        pkid                       text\x2C\r\n        row_created_        timestamp\x2C\r\n        row_modified_    timestamp\x2C\r\n        row_username_    text\x2C\r\n        name_            text\x2C\r\n        manufacturer_   text\x2C\r\n        model_          text\x2C\r\n        department_     text\x2C\r\n        category_       text\x2C\r\n        subcategory_    text\x2C\r\n        description_    text\x2C\r\n        type_           text\x2C\r\n        quantity_       integer\x2C\r\n        price_          integer\x2C\r\n        owner_          text\x2C\r\n        taxable_        text\r\n        );\r\n\r\n\r\n    -- eipl_\r\n    Create Table eipl_ \r\n        (\r\n        pkid text\x2C\r\n        row_created_ timestamp\x2C\r\n        row_modified_ timestamp\x2C\r\n        row_username_ text\x2C\r\n        fkevents_ text\x2C\r\n        eipl_number_ integer\x2C\r\n        due_date_ text\x2C\r\n        type_ text\x2C\r\n        balance_ integer\x2C\r\n        grand_total_ integer\x2C\r\n        subtotal_ integer\x2C\r\n        totalpaid_ integer\x2C\r\n        discount_amount_ integer\x2C\r\n        discount_percent_ integer\x2C\r\n        shipping_method_ text\x2C\r\n        tax_total_ integer\x2C\r\n        discount_total_ integer\r\n        );\r\n\r\n\r\n    -- payments_\r\n    Create Table payments_ \r\n        (\r\n        pkid text\x2C\r\n        row_created_        timestamp\x2C\r\n        row_modified_       timestamp\x2C\r\n        row_username_       text\x2C\r\n        fkeipl_             text\x2C\r\n        payment_date        date\x2C\r\n        memo_               text\x2C\r\n        payment_amount      integer\x2C\r\n        payment_type        text\r\n        );\r\n\r\n\r\n    -- contact_venue_data\r\n    CREATE TABLE contact_venue_data \r\n        (\r\n        pkid                text\x2C\r\n        row_created_        timestamp\x2C\r\n        row_modified_       timestamp\x2C\r\n        row_username_       text\x2C\r\n        fkparent_table      text\x2C\r\n        parent_table        text\x2C\r\n        fkcontact_or_venue  text\x2C\r\n        contact_or_venue    text\x2C\r\n        primary_            boolean\r\n        );\r\n\r\n    -- contacts\r\n    CREATE TABLE contacts_ \r\n        (\r\n        pkid text\x2C\r\n        row_created_        timestamp\x2C\r\n        row_modified_       timestamp\x2C\r\n        row_username_       text\x2C\r\n        fkconven            text\x2C\r\n        primary_            text\x2C\r\n        name_first          text\x2C\r\n        name_last           text\x2C\r\n        job_title           text\x2C\r\n        company             text\x2C\r\n        email               text\x2C\r\n        phone_number        text\x2C\r\n        address_line1       text\x2C\r\n        address_line2       text\x2C\r\n        address_city        text\x2C\r\n        address_state       text\x2C\r\n        address_zip         text\x2C\r\n        address_country     text\r\n        );\r\n\r\n\r\n    -- venues\r\n    CREATE TABLE venues_ \r\n        (\r\n        pkid text\x2C\r\n        row_created_        timestamp\x2C\r\n        row_modified_       timestamp\x2C\r\n        row_username_       text\x2C\r\n        fkconven            text\x2C\r\n        primary_            text\x2C\r\n        name_               text\x2C\r\n        venue_type          text\x2C\r\n        company             text\x2C\r\n        email               text\x2C\r\n        phone_number        text\x2C\r\n        address_line1       text\x2C\r\n        address_line2       text\x2C\r\n        address_city        text\x2C\r\n        address_state       text\x2C\r\n        address_zip         text\x2C\r\n        address_country     text\r\n        );\r\n\r\n\r\n    -- discounts_\r\n    CREATE TABLE discounts_\r\n        (\r\n        pkid text\x2C\r\n        row_created_        timestamp\x2C\r\n        row_modified_       timestamp\x2C\r\n        row_username_       text\x2C\r\n        fkeipl_             text\x2C\r\n        department_         text\x2C\r\n        type_               text\x2C\r\n        amount_             integer\x2C\r\n        grand_total_        integer\x2C\r\n        subtotal            integer\x2C\r\n        discount_percent_   integer\x2C\r\n        discount_amount_    integer\r\n        );\r\n\r\n\r\n-- Utility Tables\r\n\r\n    -- trigger_log\r\n    CREATE TABLE trigger_log\r\n        (\r\n        pkid                text\x2C\r\n        row_created_        timestamp\x2C\r\n        table_name          text\x2C\r\n        new_variable        text\x2C \r\n        old_variable        text \x2C\r\n        statement_type text            \r\n\r\n        );\r\n\r\n    -- sql_log\r\n    Create Table sql_log\r\n        (\r\n            pkid text\x2C\r\n            row_created_ timestamp\x2C\r\n            sql_statement_ text\x2C\r\n            table_name text\x2C\r\n            columns_ text\x2C\r\n            row_checked boolean\r\n\r\n            );\r\n\r\n"
+		#Tag Instance, Platform = Any, Language = Default, Definition  = \"-- ##################################\r\n-- ###### Create Otis Database ######\r\n-- ##################################\r\n\r\n\r\n\r\n-- User Tables\r\n    \r\n    -- events_\r\n    Create Table events_\r\n        (\r\n        pkid text\x2C\r\n        row_created_ text\x2C\r\n        row_modified_ text\x2C\r\n        row_username_ text\x2C\r\n        name_ text\x2C\r\n        start_time text\x2C\r\n        end_time text\x2C\r\n        loadin_time text\x2C\r\n        loadout_time text\x2C\r\n        start_date text\x2C\r\n        end_date text\x2C\r\n        loadin_date text\x2C\r\n        loadout_date text\x2C\r\n        details text\x2C\r\n        account_manager text\r\n        );\r\n\r\n    -- lineitems_\r\n    Create Table lineitems_ \r\n        (\r\n        pkid text\x2C\r\n        row_created_ text\x2C\r\n        row_modified_ text\x2C\r\n        row_username_ text\x2C\r\n        fkeipl_ text\x2C\r\n        fkinventory_ text\x2C\r\n        name_ text\x2C\r\n        manufacturer_ text\x2C\r\n        model_ text\x2C\r\n        department_ text\x2C\r\n        category_ text\x2C\r\n        subcategory_ text\x2C\r\n        description_ text\x2C -- from inventory\r\n        type_ text\x2C\r\n        price_  integer\x2C\r\n        note_ text\x2C --line item specific\r\n        rate_ text\x2C\r\n        discount_percent_ integer\x2C\r\n        discount_amount_ integer\x2C\r\n        total_ integer\x2C\r\n        time_ integer\x2C\r\n        taxable_ boolean\x2C\r\n        taxtotal_ integer\x2C\r\n        quantity_ double precision\x2C\r\n        ignore_price_discrepency boolean\r\n        );\r\n\r\n\r\n    -- inventory\r\n    CREATE TABLE inventory_ \r\n        (\r\n        pkid                       text\x2C\r\n        row_created_        text\x2C\r\n        row_modified_    text\x2C\r\n        row_username_    text\x2C\r\n        name_            text\x2C\r\n        manufacturer_   text\x2C\r\n        model_          text\x2C\r\n        department_     text\x2C\r\n        category_       text\x2C\r\n        subcategory_    text\x2C\r\n        description_    text\x2C\r\n        type_           text\x2C\r\n        quantity_       integer\x2C\r\n        price_          integer\x2C\r\n        owner_          text\x2C\r\n        taxable_        text\r\n        );\r\n\r\n\r\n    -- eipl_\r\n    Create Table eipl_ \r\n        (\r\n        pkid text\x2C\r\n        row_created_ text\x2C\r\n        row_modified_ text\x2C\r\n        row_username_ text\x2C\r\n        fkevents_ text\x2C\r\n        eipl_number_ integer\x2C\r\n        due_date_ text\x2C\r\n        type_ text\x2C\r\n        balance_ integer\x2C\r\n        grand_total_ integer\x2C\r\n        subtotal_ integer\x2C\r\n        totalpaid_ integer\x2C\r\n        discount_amount_ integer\x2C\r\n        discount_percent_ integer\x2C\r\n        shipping_method_ text\x2C\r\n        tax_total_ integer\x2C\r\n        discount_total_ integer\r\n        );\r\n\r\n\r\n    -- payments_\r\n    Create Table payments_ \r\n        (\r\n        pkid text\x2C\r\n        row_created_        text\x2C\r\n        row_modified_       text\x2C\r\n        row_username_       text\x2C\r\n        fkeipl_             text\x2C\r\n        payment_date        date\x2C\r\n        memo_               text\x2C\r\n        payment_amount      integer\x2C\r\n        payment_type        text\r\n        );\r\n\r\n\r\n    -- contact_venue_data\r\n    CREATE TABLE contact_venue_data \r\n        (\r\n        pkid                text\x2C\r\n        row_created_        text\x2C\r\n        row_modified_       text\x2C\r\n        row_username_       text\x2C\r\n        fkparent_table      text\x2C\r\n        parent_table        text\x2C\r\n        fkcontact_or_venue  text\x2C\r\n        contact_or_venue    text\x2C\r\n        primary_            boolean\r\n        );\r\n\r\n    -- contacts\r\n    CREATE TABLE contacts_ \r\n        (\r\n        pkid text\x2C\r\n        row_created_        text\x2C\r\n        row_modified_       text\x2C\r\n        row_username_       text\x2C\r\n        fkconven            text\x2C\r\n        primary_            text\x2C\r\n        name_first          text\x2C\r\n        name_last           text\x2C\r\n        job_title           text\x2C\r\n        company             text\x2C\r\n        email               text\x2C\r\n        phone_number        text\x2C\r\n        address_line1       text\x2C\r\n        address_line2       text\x2C\r\n        address_city        text\x2C\r\n        address_state       text\x2C\r\n        address_zip         text\x2C\r\n        address_country     text\r\n        );\r\n\r\n\r\n    -- venues\r\n    CREATE TABLE venues_ \r\n        (\r\n        pkid text\x2C\r\n        row_created_        text\x2C\r\n        row_modified_       text\x2C\r\n        row_username_       text\x2C\r\n        fkconven            text\x2C\r\n        primary_            text\x2C\r\n        name_               text\x2C\r\n        venue_type          text\x2C\r\n        company             text\x2C\r\n        email               text\x2C\r\n        phone_number        text\x2C\r\n        address_line1       text\x2C\r\n        address_line2       text\x2C\r\n        address_city        text\x2C\r\n        address_state       text\x2C\r\n        address_zip         text\x2C\r\n        address_country     text\r\n        );\r\n\r\n\r\n    -- discounts_\r\n    CREATE TABLE discounts_\r\n        (\r\n        pkid text\x2C\r\n        row_created_        text\x2C\r\n        row_modified_       text\x2C\r\n        row_username_       text\x2C\r\n        fkeipl_             text\x2C\r\n        department_         text\x2C\r\n        type_               text\x2C\r\n        amount_             integer\x2C\r\n        grand_total_        integer\x2C\r\n        subtotal            integer\x2C\r\n        discount_percent_   integer\x2C\r\n        discount_amount_    integer\r\n        );\r\n\r\n\r\n-- Utility Tables\r\n\r\n    -- trigger_log\r\n    CREATE TABLE trigger_log\r\n        (\r\n        pkid                text\x2C\r\n        row_created_        text\x2C\r\n        table_name          text\x2C\r\n        new_variable        text\x2C \r\n        old_variable        text \x2C\r\n        statement_type text            \r\n\r\n        );\r\n\r\n    -- sql_log\r\n    Create Table sql_log\r\n        (\r\n            pkid text\x2C\r\n            row_created_ text\x2C\r\n            sql_statement_ text\x2C\r\n            table_name text\x2C\r\n            columns_ text\x2C\r\n            row_checked boolean\r\n\r\n            );\r\n"
 	#tag EndConstant
 
 
