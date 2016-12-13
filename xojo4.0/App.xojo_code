@@ -120,7 +120,7 @@ Inherits Application
 		  
 		  
 		  If Not Logic.HaveClientID Then
-		    Logic.GetClientID
+		    Logic.GetNewClientID
 		  End If
 		  
 		  If Not Logic.IsInitialized Then

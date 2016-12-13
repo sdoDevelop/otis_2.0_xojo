@@ -53,7 +53,7 @@ Begin Window window_login
       Alignment       =   0
       AutoDeactivate  =   True
       AutomaticallyCheckSpelling=   False
-      BackColor       =   &cFFFFFF00
+      BackColor       =   &cFFFF00FF
       Bold            =   False
       Border          =   True
       CueText         =   ""
@@ -112,7 +112,6 @@ Begin Window window_login
       Selectable      =   False
       TabIndex        =   2
       TabPanelIndex   =   0
-      TabStop         =   True
       Text            =   "Username"
       TextAlign       =   0
       TextColor       =   &c00000000
@@ -147,7 +146,6 @@ Begin Window window_login
       Selectable      =   False
       TabIndex        =   3
       TabPanelIndex   =   0
-      TabStop         =   True
       Text            =   "Password"
       TextAlign       =   0
       TextColor       =   &c00000000
@@ -165,7 +163,7 @@ Begin Window window_login
       Alignment       =   0
       AutoDeactivate  =   True
       AutomaticallyCheckSpelling=   False
-      BackColor       =   &cFFFFFF00
+      BackColor       =   &cFFFF00FF
       Bold            =   False
       Border          =   True
       CueText         =   ""
@@ -382,10 +380,9 @@ Begin Window window_login
       Selectable      =   False
       TabIndex        =   10
       TabPanelIndex   =   0
-      TabStop         =   True
       Text            =   "Authentication Failed"
       TextAlign       =   0
-      TextColor       =   &cE30A0A00
+      TextColor       =   &c0A0A00E3
       TextFont        =   "FreeSerif"
       TextSize        =   10.0
       TextUnit        =   0

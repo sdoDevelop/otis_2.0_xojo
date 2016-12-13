@@ -18,7 +18,7 @@ Protected Module Logic
 		  If grab_saved_data Then
 		    // First we need to see if we can aquire a saved user name as password
 		    Try
-		      user_data = get_user_data
+		      user_data = UserInfo.GetUserInfo
 		    Catch err as RuntimeException
 		      dont_have_ud = True
 		      ErrManage( "App.RegDb", "could not get user credentials" )
@@ -155,11 +155,12 @@ Protected Module Logic
 		        
 		      End If
 		      
-		      if save_user_data( user_data(0), user_data(1), user_data(2) ) then
-		        MsgBox("saved")
+		      if UserInfo.SaveLoginInfo( user_data(0), user_data(1), user_data(2) ) then
+		        'MsgBox("saved")
 		      end if
 		    End If
 		    
+		    UserInfo.CurrentUser = username
 		    Return True
 		    
 		  Else 
@@ -191,6 +192,12 @@ Protected Module Logic
 
 	#tag Method, Flags = &h1
 		Protected Sub GetClientID()
+		  
+		End Sub
+	#tag EndMethod
+
+	#tag Method, Flags = &h21
+		Private Sub GetNewClientID()
 		  Dim rs1 as RecordSet
 		  
 		  
@@ -206,7 +213,7 @@ Protected Module Logic
 		    
 		    
 		    If rs1 <> Nil Then
-		      app.ClientID = rs1.Field("fnc_get_new_client_id").Value
+		      UserInfo.ClientID = rs1.Field("fnc_get_new_client_id").Value
 		      SaveClientID
 		    End If
 		    
@@ -219,86 +226,11 @@ Protected Module Logic
 	#tag EndMethod
 
 	#tag Method, Flags = &h1
-		Protected Function get_user_data() As variant()
-		  dim udf as FolderItem
-		  dim db as new SQLiteDatabase
-		  dim ps as SQLitePreparedStatement
-		  dim rs as RecordSet
-		  Dim rd1 as New Logic.ResourceDirectories
-		  
-		  
-		  
-		  // find the filepath to our user data database
-		  udf = rd1.user_data_file.FilePath
-		  ' if the database already exists 
-		  If Not udf.Exists Then
-		    Return Array( "", "", False )
-		  End If
-		  
-		  'Now we connect to the database file
-		  db.DatabaseFile = udf
-		  If Not db.Connect Then
-		    ' cannot open the database file for some reaseon 
-		    dim err as RuntimeException
-		    err = new RuntimeException
-		    err.Message = "cannot connect to user info database for some reason"
-		    Raise err
-		  End If
-		  
-		  ' now we grab the user data fromt he database
-		  dim sql as string
-		  sql = "Select * from udf_;"
-		  ps = db.Prepare(sql)
-		  rs = ps.SQLSelect
-		  If db.Error Then
-		    dim err as new RuntimeException
-		    err.Message = "cannot get user data for some reaseon" + db.ErrorMessage
-		    Raise err
-		  End If
-		  
-		  If rs.RecordCount = 0 Then
-		    dim err as new RuntimeException
-		    err.Message = "cannot get user data for some reaseon" + db.ErrorMessage
-		    Raise err
-		  Else
-		    dim username as string
-		    dim password as string
-		    dim auto_login as Boolean
-		    username = rs.Field( "username_" )
-		    password = rs.Field( "password_" )
-		    auto_login = rs.Field( "auto_login" )
-		    Return Array( username, password, auto_login )
-		  End If
-		  
-		  
-		  
-		  
-		  
-		  
-		  
-		  
-		  
-		  
-		  
-		  
-		  
-		  
-		  
-		  
-		  
-		  
-		  
-		  
-		  
-		End Function
-	#tag EndMethod
-
-	#tag Method, Flags = &h1
 		Protected Function HaveClientID() As Boolean
 		  
 		  If LoadClientID Then
 		    
-		    If app.ClientID = 0 Then
+		    If UserInfo.ClientID = 0 Then
 		      Return False
 		    Else
 		      Return True
@@ -318,8 +250,7 @@ Protected Module Logic
 		  
 		  
 		  
-		  
-		  OtisDBModule.ResetDatabase
+		  ResetDatabase
 		  
 		  // Create the database and tables
 		  OtisDBModule.CreateDatabase
@@ -334,6 +265,16 @@ Protected Module Logic
 		  // Create the Utility database
 		  OtisDBModule.CreateDatabase(RD1.utility_db_file.FilePath,OtisDBModule.UtilityDatabaseCreationScript)
 		  If Not OtisDBModule.CheckDatabase(rd1.utility_db_file.FilePath,OtisDBModule.UtilityDatabaseCheckScript) Then
+		    'Database creation did not work
+		    dim err as New RuntimeException
+		    err.Message = "Something wrong with utility database creation"
+		    ErrManage( "InitializeClient",err.Message + " | " + Join(err.Stack,",") )
+		    raise err
+		  End If
+		  Break
+		  // Create the Sync database
+		  OtisDBModule.CreateDatabase(RD1.sync_db.FilePath,OtisDBModule.SyncDatabaseCreationScript)
+		  If Not OtisDBModule.CheckDatabase(rd1.sync_db.FilePath,OtisDBModule.SyncDatabaseCheckScript) Then
 		    'Database creation did not work
 		    dim err as New RuntimeException
 		    err.Message = "Something wrong with utility database creation"
@@ -396,11 +337,12 @@ Protected Module Logic
 		  Else
 		    ' Initialized file says we are initialized, but we can't entirely trust
 		    ' First we check if all of the tables are actually created correctly in the database
-		    Dim bool1,bool2 as Boolean
+		    Dim bool1,bool2,bool3 as Boolean
 		    bool1 = OtisDBModule.CheckDatabase
 		    bool2 = OtisDBModule.CheckDatabase(rd1.utility_db_file.FilePath,OtisDBModule.UtilityDatabaseCheckScript)
+		    bool3 = OtisDBModule.CheckDatabase(rd1.sync_db.FilePath,OtisDBModule.SyncDatabaseCheckScript)
 		    rd1 = nil
-		    If bool1 And bool2 Then
+		    If bool1 And bool2 And bool3 Then
 		      ' All tables are created correctly we can be pretty sure that we are ready to go
 		      Return True
 		    Else
@@ -411,8 +353,8 @@ Protected Module Logic
 		End Function
 	#tag EndMethod
 
-	#tag Method, Flags = &h1
-		Protected Function LoadClientID() As Boolean
+	#tag Method, Flags = &h21
+		Private Function LoadClientID() As Boolean
 		  Dim rd1 as New Logic.ResourceDirectories
 		  
 		  
@@ -423,7 +365,7 @@ Protected Module Logic
 		      Dim t As TextInputStream
 		      Try
 		        t = TextInputStream.Open(f)
-		        app.ClientID = val( t.ReadAll )
+		        UserInfo.ClientID = val( t.ReadAll )
 		        t.Close
 		      Catch e As IOException
 		        Return False
@@ -441,6 +383,42 @@ Protected Module Logic
 	#tag EndMethod
 
 	#tag Method, Flags = &h1
+		Protected Sub ResetDatabase()
+		  Dim db1 as New SQLiteDatabase
+		  Dim rd1 as New Logic.ResourceDirectories
+		  
+		  
+		  If rd1.db_file.FilePath.Exists Then
+		    ' database file exists lets delete it
+		    rd1.db_file.FilePath.Delete
+		  End If
+		  
+		  If rd1.utility_db_file.FilePath.Exists Then
+		    ' database file exists lets delete it
+		    rd1.utility_db_file.FilePath.Delete
+		    dim f as FolderItem = rd1.utility_db_file.FilePath
+		    If f.LastErrorCode > 0 then
+		      MsgBox Str(f.LastErrorCode)
+		    Else
+		      'MsgBox "File deleted!"
+		    End if
+		  End If
+		  
+		  
+		  If rd1.sync_db.FilePath.Exists Then
+		    ' database file exists lets delete it
+		    rd1.sync_db.FilePath.Delete
+		    dim f as FolderItem = rd1.sync_db.FilePath
+		    If f.LastErrorCode > 0 then
+		      MsgBox Str(f.LastErrorCode)
+		    Else
+		      'MsgBox "File deleted!"
+		    End if
+		  End If
+		End Sub
+	#tag EndMethod
+
+	#tag Method, Flags = &h1
 		Protected Sub SaveClientID()
 		  Dim rd1 As New Logic.ResourceDirectories
 		  
@@ -451,7 +429,7 @@ Protected Module Logic
 		    Try
 		      //TextOutputStream.Create raises an IOException if it can't open the file for some reason.
 		      Dim t As TextOutputStream = TextOutputStream.Create(f)
-		      t.Write(App.ClientID.ToText)
+		      t.Write(UserInfo.ClientID.ToText)
 		      t = Nil
 		    Catch e As IOException
 		      //handle
@@ -459,86 +437,6 @@ Protected Module Logic
 		  End If
 		  
 		End Sub
-	#tag EndMethod
-
-	#tag Method, Flags = &h1
-		Protected Function save_user_data(username as string, password as string, auto_login as boolean) As boolean
-		  dim udf as FolderItem
-		  dim db as new SQLiteDatabase
-		  dim ps as SQLitePreparedStatement
-		  dim rd1 as New Logic.ResourceDirectories
-		  
-		  
-		  
-		  // find the filepath to our user data database
-		  udf = rd1.user_data_file.FilePath
-		  ' if the database already exists 
-		  If udf.Exists Then
-		    udf.Delete
-		  End If
-		  
-		  'Now we create a database file
-		  db.DatabaseFile = udf
-		  If Not db.CreateDatabaseFile Then
-		    ' cannot open the database file for some reaseon 
-		    dim err as RuntimeException
-		    err = new RuntimeException
-		    err.Message = "cannot connect to user info database for some reason"
-		    Raise err
-		  End If
-		  
-		  'Now we create the table and columns
-		  dim sql as string
-		  sql = "Create Table udf_ (username_ text, password_ text, auto_login Boolean );"
-		  db.SQLExecute(sql)
-		  If db.Error Then
-		    dim err as RuntimeException
-		    err = new RuntimeException
-		    err.Message = "could not create user data table" + db.ErrorMessage
-		    Raise err
-		  End If
-		  
-		  'Finally we add the data to the table
-		  sql = "Insert into udf_ ( username_, password_, auto_login ) Values( '" + username + "', '" + password + "', '" + str(auto_login) + "' );"
-		  'ps = db.Prepare( sql )
-		  'ps.Bind( 0, username )
-		  'ps.Bind( 1, password )
-		  'ps.Bind( 2, auto_login )
-		  'ps.SQLExecute
-		  db.SQLExecute(sql)
-		  If db.Error Then
-		    dim err as new RuntimeException
-		    err.Message = "could not instert user data" + db.ErrorMessage
-		    Raise err
-		  End If
-		  
-		  Return True
-		  
-		  
-		  
-		  Exception err as runtimeException
-		    Return False
-		    
-		    
-		    
-		    
-		    
-		    
-		    
-		    
-		    
-		    
-		    
-		    
-		    
-		    
-		    
-		    
-		    
-		    
-		    
-		    
-		End Function
 	#tag EndMethod
 
 

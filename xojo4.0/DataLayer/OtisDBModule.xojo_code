@@ -91,7 +91,7 @@ Protected Module OtisDBModule
 		    
 		    Dim rs2 as RecordSet
 		    // Now we check the count of tables
-		    rs2 = db1.SQLSelect("Select count(*) From sqlite_master;")
+		    rs2 = db1.SQLSelect("Select count(*) From sqlite_master Where type = 'table';")
 		    If db1.Error Then
 		      break
 		    End If
@@ -194,20 +194,7 @@ Protected Module OtisDBModule
 		  Dim NewPKID as Int64
 		  
 		  // Get the clientID
-		  Dim f As FolderItem = rd1.client_id_file.FilePath
-		  If f <> Nil Then
-		    If f.Exists Then
-		      // Be aware that TextInputStream.Open coud raise an exception
-		      Dim t As TextInputStream
-		      Try
-		        t = TextInputStream.Open(f)
-		        clientID = val( t.ReadAll )
-		        t.Close
-		      Catch e As IOException
-		        MsgBox("Error accessing file.")
-		      End Try
-		    End If
-		  End If
+		  clientID = Logic.Loadcli
 		  
 		  If clientID = 0 Then
 		    'something is wrong no client id
@@ -242,35 +229,17 @@ Protected Module OtisDBModule
 		End Function
 	#tag EndMethod
 
-	#tag Method, Flags = &h1
-		Protected Sub ResetDatabase()
-		  Dim db1 as New SQLiteDatabase
-		  Dim rd1 as New Logic.ResourceDirectories
-		  
-		  
-		  If rd1.db_file.FilePath.Exists Then
-		    ' database file exists lets delete it
-		    rd1.db_file.FilePath.Delete
-		  End If
-		  
-		  If rd1.utility_db_file.FilePath.Exists Then
-		    ' database file exists lets delete it
-		    rd1.utility_db_file.FilePath.Delete
-		    dim f as FolderItem = rd1.utility_db_file.FilePath
-		    If f.LastErrorCode > 0 then
-		      MsgBox Str(f.LastErrorCode)
-		    Else
-		      'MsgBox "File deleted!"
-		    End if
-		    
-		  End If
-		  
-		End Sub
-	#tag EndMethod
-
 
 	#tag Constant, Name = LocalDatabaseCheckScript, Type = String, Dynamic = False, Default = \"", Scope = Public
 		#Tag Instance, Platform = Any, Language = Default, Definition  = \"--local_database_check\r\n\r\n\r\n-- User Tables\r\n    \r\n    -- events_\r\n    Select \r\n        pkid                \x2C\r\n        row_created         \x2C\r\n        row_modified        \x2C\r\n        row_username        \x2C\r\n        event_name          \x2C\r\n        start_time          \x2C\r\n        end_time            \x2C\r\n        loadin_time         \x2C\r\n        loadout_time        \x2C\r\n        start_date          \x2C\r\n        end_date            \x2C\r\n        loadin_date         \x2C\r\n        loadout_date        \x2C\r\n        event_details       \x2C\r\n        account_manager     \r\n        From tbl_events;\r\n\r\n    -- lineitems_\r\n    Select\r\n        pkid                        \x2C\r\n        row_created                 \x2C\r\n        row_modified                \x2C\r\n        row_username                \x2C\r\n        fkeipl                      \x2C\r\n        fkinventory                 \x2C\r\n        li_name                     \x2C\r\n        li_manufacturer             \x2C\r\n        li_model                    \x2C\r\n        li_department               \x2C\r\n        li_category                 \x2C\r\n        li_subcategory              \x2C\r\n        li_description              \x2C \r\n        li_type                     \x2C\r\n        li_price                    \x2C\r\n        li_note                     \x2C \r\n        li_rate                     \x2C\r\n        discount_percent            \x2C\r\n        discount_amount             \x2C\r\n        li_total                    \x2C\r\n        li_time                     \x2C\r\n        li_taxable                  \x2C\r\n        li_taxtotal                 \x2C\r\n        li_quantity                  \x2C\r\n        ignore_price_discrepency    \r\n        From tbl_lineitems\r\n        ;\r\n\r\n\r\n    -- inventory\r\n    Select \r\n        pkid                        \x2C\r\n        row_created                 \x2C\r\n        row_modified                \x2C\r\n        row_username                \x2C\r\n        item_name                   \x2C\r\n        item_manufacturer           \x2C\r\n        item_model                  \x2C\r\n        item_department             \x2C\r\n        item_category               \x2C\r\n        item_subcategory            \x2C\r\n        item_description            \x2C\r\n        item_type                   \x2C\r\n        item_quantity               \x2C\r\n        item_price                  \x2C\r\n        item_owner                  \x2C\r\n        item_taxable                \r\n        From tbl_inventory\r\n        ;\r\n\r\n\r\n    -- eipl_\r\n    Select \r\n        pkid                        \x2C\r\n        row_created                 \x2C\r\n        row_modified                \x2C\r\n        row_username                \x2C\r\n        fkevents                    \x2C\r\n        eipl_number                 \x2C\r\n        due_date                    \x2C\r\n        eipl_type                   \x2C\r\n        eipl_balance                \x2C\r\n        eipl_grand_total            \x2C\r\n        eipl_subtotal               \x2C\r\n        eipl_total_paid             \x2C\r\n        discount_amount             \x2C\r\n        discount_percent            \x2C\r\n        shipping_method             \x2C\r\n        tax_total                   \x2C\r\n        discount_total              \r\n        From tbl_eipl\r\n        ;\r\n\r\n\r\n    -- payments_\r\n    Select  \r\n        pkid                        \x2C\r\n        row_created                 \x2C\r\n        row_modified                \x2C\r\n        row_username                \x2C\r\n        fkeipl                      \x2C\r\n        payment_date                \x2C\r\n        payment_memo                \x2C\r\n        payment_amount              \x2C\r\n        payment_type                \r\n        From tbl_payments\r\n        ;\r\n\r\n\r\n    -- contact_venue_data\r\n    Select \r\n        pkid                        \x2C\r\n        row_created                 \x2C\r\n        row_modified                \x2C\r\n        row_username                \x2C\r\n        fkcontacts                  \x2C\r\n        fkvenues                    \x2C\r\n        fkevents                    \x2C\r\n        fkeipl                      \x2C\r\n        cvd_primary                 \r\n        From tbl_contact_venue_data\r\n        ;\r\n\r\n    -- contacts\r\n    Select\r\n        pkid                        \x2C\r\n        row_created                 \x2C\r\n        row_modified                \x2C\r\n        row_username                \x2C\r\n        fkconven                    \x2C\r\n        name_first                  \x2C\r\n        name_last                   \x2C\r\n        job_title                   \x2C\r\n        contact_company             \x2C\r\n        contact_email               \x2C\r\n        phone_number                \x2C\r\n        address_line1               \x2C\r\n        address_line2               \x2C\r\n        address_city                \x2C\r\n        address_state               \x2C\r\n        address_zip                 \x2C\r\n        address_country             \r\n        From tbl_contacts\r\n        ;\r\n\r\n\r\n    -- venues\r\n    Select\r\n        pkid                        \x2C\r\n        row_created                 \x2C\r\n        row_modified                \x2C\r\n        row_username                \x2C\r\n        fkconven                    \x2C\r\n        venue_name                  \x2C\r\n        venue_type                  \x2C\r\n        venue_company               \x2C\r\n        venue_email                 \x2C\r\n        phone_number                \x2C\r\n        address_line1               \x2C\r\n        address_line2               \x2C\r\n        address_city                \x2C\r\n        address_state               \x2C\r\n        address_zip                 \x2C\r\n        address_country             \r\n        From tbl_venues\r\n        ;\r\n\r\n\r\n    -- tbl_departments\r\n    Select\r\n        pkid                        \x2C\r\n        row_created                 \x2C\r\n        row_modified                \x2C\r\n        row_username                \x2C\r\n        fkeipl                      \x2C\r\n        department                  \x2C\r\n        grand_total                 \x2C\r\n        discount_subtotal           \x2C\r\n        discount_percent            \x2C\r\n        discount_amount             \r\n        From tbl_departments\r\n        ;\r\n"
+	#tag EndConstant
+
+	#tag Constant, Name = SyncDatabaseCheckScript, Type = String, Dynamic = False, Default = \"", Scope = Protected
+		#Tag Instance, Platform = Any, Language = Default, Definition  = \"Select \r\n\tpkid\t\t\x2C\r\n\tjson_info\t\x2C\r\n\tpushed\t\t\r\nFrom\r\n\tchanges_raw\r\n\t;\r\n\r\nSelect \r\n\tpkid\t\t\x2C\r\n\tjson_info\t\x2C\r\n\tpushed \t\t\r\nFrom\r\n\tchanges_consolidated\r\n\t;"
+	#tag EndConstant
+
+	#tag Constant, Name = SyncDatabaseCreationScript, Type = String, Dynamic = False, Default = \"", Scope = Protected
+		#Tag Instance, Platform = Any, Language = Default, Definition  = \"Create Table changes_raw\r\n\t(\r\n\tpkid\t\tText\tPrimary Key\x2C\r\n\tjson_info\tText\t\x2C\r\n\tpushed\t\tBoolean\t\r\n\t\t);\r\n\r\nCreate Table changes_consolidated\r\n\t(\r\n\tpkid\t\tText\tPrimary Key\x2C\r\n\tjson_info\tText\t\x2C\r\n\tpushed\t\tBoolean\t\r\n\t\t);"
 	#tag EndConstant
 
 	#tag Constant, Name = TableCreationScript, Type = String, Dynamic = False, Default = \"", Scope = Public

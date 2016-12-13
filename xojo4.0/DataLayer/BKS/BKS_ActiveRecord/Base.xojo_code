@@ -133,14 +133,17 @@ Protected Class Base
 	#tag EndMethod
 
 	#tag Method, Flags = &h0
-		Sub GetMyFieldValues()
+		Function GetMyFieldValues() As JSONItem
 		  Dim da1 as BKS_ActiveRecord.DatabaseAdapter
 		  Dim oJSON as JSONItem
 		  
+		  // Get the database adapter 
 		  da1 = me.GetDatabaseAdapter
 		  
+		  // Grab the field value pairs in the form of JSON and return it
 		  oJSON = da1.GetFieldValPairs(self)
-		End Sub
+		  Return oJSON
+		End Function
 	#tag EndMethod
 
 	#tag Method, Flags = &h0

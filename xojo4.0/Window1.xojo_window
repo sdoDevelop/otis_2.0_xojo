@@ -77,7 +77,7 @@ End
 		  break
 		  
 		  Dim oJSON as JSONItem
-		  NewContact.GetMyFieldValues
+		  oJSON = NewContact.GetMyFieldValues
 		End Sub
 	#tag EndEvent
 #tag EndEvents

@@ -1,15 +1,15 @@
 #tag Window
-Begin Window winPrefs
+Begin Window window_login
    BackColor       =   &cFFFFFF00
    Backdrop        =   0
-   CloseButton     =   False
+   CloseButton     =   True
    Compatibility   =   ""
    Composite       =   False
    Frame           =   1
    FullScreen      =   False
    FullScreenButton=   False
    HasBackColor    =   False
-   Height          =   400
+   Height          =   234
    ImplicitInstance=   False
    LiveResize      =   True
    MacProcID       =   0
@@ -23,153 +23,160 @@ Begin Window winPrefs
    MinWidth        =   64
    Placement       =   0
    Resizeable      =   False
-   Title           =   "#app.kPreferences"
+   Title           =   "Login"
    Visible         =   True
-   Width           =   600
-   Begin ccOKCancel ccOKCancel1
-      AcceptFocus     =   False
-      AcceptTabs      =   False
-      AutoDeactivate  =   True
-      BackColor       =   &cFFFF00FF
-      Backdrop        =   0
-      Enabled         =   True
-      EraseBackground =   False
-      HasBackColor    =   False
-      Height          =   27
-      HelpTag         =   ""
-      Index           =   -2147483648
-      InitialParent   =   ""
-      Left            =   408
-      LockBottom      =   True
-      LockedInPosition=   False
-      LockLeft        =   False
-      LockRight       =   True
-      LockTop         =   False
-      Scope           =   0
-      TabIndex        =   0
-      TabPanelIndex   =   0
-      TabStop         =   True
-      Top             =   353
-      Transparent     =   True
-      UseFocusRing    =   False
-      Visible         =   True
-      Width           =   172
-   End
-   Begin Label Label1
-      AutoDeactivate  =   True
-      Bold            =   True
-      DataField       =   ""
-      DataSource      =   ""
-      Enabled         =   False
-      Height          =   90
-      HelpTag         =   ""
-      Index           =   -2147483648
-      InitialParent   =   ""
-      Italic          =   False
-      Left            =   20
-      LockBottom      =   False
-      LockedInPosition=   False
-      LockLeft        =   True
-      LockRight       =   True
-      LockTop         =   True
-      Multiline       =   True
-      Scope           =   2
-      Selectable      =   False
-      TabIndex        =   1
-      TabPanelIndex   =   0
-      TabStop         =   True
-      Text            =   "Note: chkSUCheckAtStartup is an example of Getting/Setting preferences. \nCurrently in this project the preference does nothing....\nAgain, this is only an example."
-      TextAlign       =   0
-      TextColor       =   &c00000000
-      TextFont        =   "System"
-      TextSize        =   18.0
-      TextUnit        =   0
-      Top             =   20
-      Transparent     =   True
-      Underline       =   False
-      Visible         =   False
-      Width           =   560
-   End
-   Begin CheckBox chkSUCheckAtStartup
-      AutoDeactivate  =   True
-      Bold            =   False
-      Caption         =   "Check for updates on launch"
-      DataField       =   ""
-      DataSource      =   ""
-      Enabled         =   False
-      Height          =   18
-      HelpTag         =   ""
-      Index           =   -2147483648
-      InitialParent   =   ""
-      Italic          =   False
-      Left            =   20
-      LockBottom      =   False
-      LockedInPosition=   False
-      LockLeft        =   False
-      LockRight       =   False
-      LockTop         =   False
-      Scope           =   0
-      State           =   0
-      TabIndex        =   2
-      TabPanelIndex   =   0
-      TabStop         =   True
-      TextFont        =   "System"
-      TextSize        =   0.0
-      TextUnit        =   0
-      Top             =   122
-      Underline       =   False
-      Value           =   False
-      Visible         =   False
-      Width           =   223
-   End
+   Width           =   582
 End
 #tag EndWindow
 
 #tag WindowCode
-	#tag Method, Flags = &h0
-		Sub Display()
-		  'Note: chkSUCheckAtStartup is an example of Getting/Setting preferences. 
-		  'Currently in this project the preference does nothing....
-		  'Again, this is only an example.
-		  chkSUCheckAtStartup.value = Preferences.BooleanValue(kCheckUpdatesAtStartup, true)
+	#tag Event
+		Sub Activate()
+		  textfield_username.Text = username
+		  textfield_password.Text = password
+		  If authentication_failed Then
+		    me.label_authentication_failed.Visible = True
+		  Else
+		    me.label_authentication_failed.Visible = False
+		  End If
+		End Sub
+	#tag EndEvent
+
+	#tag Event
+		Sub Close()
+		  username = textfield_username.Text
+		  password = textfield_password.Text
+		  save_username = checkbox_save_username.Value
+		  save_password = checkbox_save_password.Value
+		  auto_login = checkbox_auto_login.Value
 		  
+		End Sub
+	#tag EndEvent
+
+
+	#tag Method, Flags = &h0
+		Sub change_checkboxes()
+		  
+		  
+		  If checkbox_save_username.Value Then
+		    
+		    checkbox_save_password.Enabled = True
+		    If checkbox_save_password.Value Then
+		      
+		      checkbox_auto_login.Enabled = True
+		      
+		    Else
+		      
+		      checkbox_auto_login.Value = False
+		      checkbox_auto_login.Enabled = False
+		      
+		    End If
+		    
+		  Else
+		    
+		    checkbox_save_password.Value = False
+		    checkbox_save_password.Enabled = False
+		    checkbox_auto_login.Value = False
+		    checkbox_auto_login.Enabled = False
+		    
+		  End If
 		End Sub
 	#tag EndMethod
 
 	#tag Method, Flags = &h0
-		Sub Save()
-		  'Note: chkSUCheckAtStartup is an example of Getting/Setting preferences. 
-		  'Currently in this project the preference does nothing....
-		  'Again, this is only an example.
-		  Preferences.BooleanValue(kCheckUpdatesAtStartup) = chkSUCheckAtStartup.value
-		  Preferences.save
+		Sub my_open()
+		  textfield_username.Text = username
+		  textfield_password.Text = password
+		  If authentication_failed Then
+		    me.label_authentication_failed.Visible = True
+		  Else
+		    me.label_authentication_failed.Visible = False
+		  End If
 		End Sub
 	#tag EndMethod
+
+	#tag Method, Flags = &h0
+		Sub my_open(p_username as string, p_password as string, p_server_address as string, p_server_port as integer, p_db_name as String)
+		  username = p_username
+		  password = p_password
+		  server_address = p_server_address
+		  server_port = p_server_port
+		  db_name = p_db_name
+		  
+		  my_open
+		End Sub
+	#tag EndMethod
+
+
+	#tag Note, Name = PurposeOfWindow
+		
+		This windows purpose is to:
+		
+		Get user login info from the user and ask if it sould be saved
+		This window does not login in any way shape or form
+		It is simply here to obtain information
+	#tag EndNote
+
+
+	#tag Property, Flags = &h0
+		aborted As boolean
+	#tag EndProperty
+
+	#tag Property, Flags = &h0
+		authentication_failed As boolean
+	#tag EndProperty
+
+	#tag Property, Flags = &h0
+		auto_login As boolean
+	#tag EndProperty
+
+	#tag Property, Flags = &h0
+		db_name As string
+	#tag EndProperty
+
+	#tag Property, Flags = &h0
+		password As string
+	#tag EndProperty
+
+	#tag Property, Flags = &h0
+		save_password As boolean
+	#tag EndProperty
+
+	#tag Property, Flags = &h0
+		save_username As boolean
+	#tag EndProperty
+
+	#tag Property, Flags = &h0
+		server_address As String
+	#tag EndProperty
+
+	#tag Property, Flags = &h0
+		server_port As Integer
+	#tag EndProperty
+
+	#tag Property, Flags = &h0
+		username As string
+	#tag EndProperty
 
 
 #tag EndWindowCode
 
-#tag Events ccOKCancel1
-	#tag Event
-		Sub CancelClicked()
-		  self.Close
-		End Sub
-	#tag EndEvent
-	#tag Event
-		Sub OKClicked()
-		  Save
-		  Self.close
-		End Sub
-	#tag EndEvent
-#tag EndEvents
-#tag Events chkSUCheckAtStartup
-	#tag Event
-		Sub Action()
-		  Preferences.BooleanValue(kCheckUpdatesAtStartup) = me.value
-		End Sub
-	#tag EndEvent
-#tag EndEvents
 #tag ViewBehavior
+	#tag ViewProperty
+		Name="aborted"
+		Group="Behavior"
+		Type="boolean"
+	#tag EndViewProperty
+	#tag ViewProperty
+		Name="authentication_failed"
+		Group="Behavior"
+		Type="boolean"
+	#tag EndViewProperty
+	#tag ViewProperty
+		Name="auto_login"
+		Group="Behavior"
+		Type="boolean"
+	#tag EndViewProperty
 	#tag ViewProperty
 		Name="BackColor"
 		Visible=true
@@ -197,6 +204,12 @@ End
 		Group="OS X (Carbon)"
 		InitialValue="False"
 		Type="Boolean"
+	#tag EndViewProperty
+	#tag ViewProperty
+		Name="db_name"
+		Group="Behavior"
+		Type="string"
+		EditorType="MultiLineEditor"
 	#tag EndViewProperty
 	#tag ViewProperty
 		Name="Frame"
@@ -343,6 +356,12 @@ End
 		EditorType="String"
 	#tag EndViewProperty
 	#tag ViewProperty
+		Name="password"
+		Group="Behavior"
+		Type="string"
+		EditorType="MultiLineEditor"
+	#tag EndViewProperty
+	#tag ViewProperty
 		Name="Placement"
 		Visible=true
 		Group="Behavior"
@@ -366,6 +385,27 @@ End
 		EditorType="Boolean"
 	#tag EndViewProperty
 	#tag ViewProperty
+		Name="save_password"
+		Group="Behavior"
+		Type="boolean"
+	#tag EndViewProperty
+	#tag ViewProperty
+		Name="save_username"
+		Group="Behavior"
+		Type="boolean"
+	#tag EndViewProperty
+	#tag ViewProperty
+		Name="server_address"
+		Group="Behavior"
+		Type="String"
+		EditorType="MultiLineEditor"
+	#tag EndViewProperty
+	#tag ViewProperty
+		Name="server_port"
+		Group="Behavior"
+		Type="Integer"
+	#tag EndViewProperty
+	#tag ViewProperty
 		Name="Super"
 		Visible=true
 		Group="ID"
@@ -378,6 +418,12 @@ End
 		Group="Frame"
 		InitialValue="Untitled"
 		Type="String"
+	#tag EndViewProperty
+	#tag ViewProperty
+		Name="username"
+		Group="Behavior"
+		Type="string"
+		EditorType="MultiLineEditor"
 	#tag EndViewProperty
 	#tag ViewProperty
 		Name="Visible"
