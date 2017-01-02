@@ -1,5 +1,3 @@
--- Sync Database Check Script
-
 Select 
 	pkid		,
 	json_info	,

@@ -1,8 +1,4 @@
--- utility database check
-
-
-    -- tbl_incrementing
-    Select
+Select
     	pkid
     	From tbl_incrementing
     	;

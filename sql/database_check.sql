@@ -1,9 +1,3 @@
---local_database_check
-
-
--- User Tables
-    
-    -- events_
     Select 
         pkid                ,
         row_created         ,
@@ -74,6 +68,35 @@
         From tbl_inventory
         ;
 
+    -- inventory_expanded
+    Select 
+        pkid,         
+        row_created,
+        row_modified,
+        row_username,
+        fkinventory,  
+        item_barcode,    
+        item_rfid_code 
+        From tbl_inv_ex
+        ;
+
+    -- Maintenance Logs
+    Select 
+        pkid,                   
+        row_created,                 
+        row_modified,                
+        row_username,               
+        fkinv_ex,                
+        entry_date,                  
+        exit_date,                 
+        due_date,                  
+        work_cost,                  
+        work_summary,                
+        work_description,            
+        work_comments,           
+        work_type                   
+        From tbl_maintenance_Logs
+        ;
 
     -- eipl_
     Select 

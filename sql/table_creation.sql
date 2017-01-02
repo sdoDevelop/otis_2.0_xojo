@@ -1,13 +1,4 @@
--- ##################################
--- ###### Create Otis Database ######
--- ##################################
-
-
-
--- User Tables
-    
-    -- events_
-    Create Table tbl_events
+Create Table tbl_events
         (
         pkid                integer Primary Key,
         row_created         timestamp,
@@ -77,6 +68,36 @@
         item_owner                  text,
         item_taxable                text
         );
+
+    -- inventory_expanded
+    Create Table tbl_inv_ex
+        (
+        pkid                        integer Primary Key,
+        row_created                 timestamp,
+        row_modified                timestamp,
+        row_username                text,
+        fkinventory                 integer,
+        item_barcode                text,
+        item_rfid_code              text
+        )
+
+    -- Maintenance Logs
+    Create Table tbl_maintenance_Logs
+        (
+        pkid                        integer Primary Key,
+        row_created                 timestamp,
+        row_modified                timestamp,
+        row_username                text,
+        fkinv_ex                    integer,
+        entry_date                  text,
+        exit_date                   text,
+        due_date                    text,
+        work_cost                   integer,
+        work_summary                text,
+        work_description            text,
+        work_comments               text,
+        work_type                   text
+        )
 
 
     -- eipl_
