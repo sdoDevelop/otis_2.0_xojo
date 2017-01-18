@@ -223,90 +223,155 @@ End
 
 	#tag Method, Flags = &h0
 		Sub AddItem()
-		  dim n1 as integer
-		  
-		  n1 = oItems.aroItems.Ubound + 1
-		  
 		  dim oInventoryItem as New DataFile.tbl_inventory
+		  lbItems.InsertRow(0)
 		  
+		  LoadRow(0,oInventoryItem)
 		  
-		  oItems.aroItems.Insert(0,oInventoryItem)
-		  
-		  LoadItemsIntoListbox
-		  
-		  lbItems.ListIndex = 0
-		  lbItems.CellEdit(0,0)
 		End Sub
 	#tag EndMethod
 
 	#tag Method, Flags = &h0
 		Sub Constructor()
 		  oItems = new cInventory
+		  oItems.bGrouped = True
+		  oItems.sGroupBy = "item_department"
 		  oItems.LoadMe
+		  
 		  
 		  
 		End Sub
 	#tag EndMethod
 
 	#tag Method, Flags = &h0
-		Sub DeleteItem(index as integer,IdentifyingName as String)
+		Sub DeleteDepartment()
+		  
+		End Sub
+	#tag EndMethod
+
+	#tag Method, Flags = &h0
+		Sub DeleteItem(oRowTag as lbrowtag, IdentifyingName as String)
+		  
+		  
 		  
 		  If MsgBox("Are you sure you want to delete " + IdentifyingName, 4) = 6 Then
 		    
-		    oItems.aroItems(index).Delete
-		    RefreshInventory
+		    dim otblObject as DataFile.tbl_inventory = oRowTag.vtblRecord
+		    
+		    dim iPKID as integer = oRowTag.pkid
+		    
+		    otblObject.Delete
+		    
+		    dim n1 as integer = lbItems.FindByPKID(iPKID)
+		    If  n1 <> -1 Then
+		      lbItems.RemoveRow(n1)
+		    End If
 		    
 		  End If
+		  
 		End Sub
 	#tag EndMethod
 
 	#tag Method, Flags = &h0
 		Sub LoadItemsIntoListbox()
-		  dim oTheItems() as DataFile.tbl_inventory = oItems.aroItems
 		  
+		  // Delete all current rows in listbox
 		  lbItems.DeleteAllRows
 		  
-		  For i1 as integer = 0 To oTheItems.Ubound
+		  dim sKeys() as Variant
+		  sKeys = oItems.jsGroupedItems.Keys
+		  
+		  // Loop through all the groups and create folders with rowtags filled with children
+		  For i1 as integer = 0 To sKeys.Ubound
+		    dim oRowTag as New lbRowTag
+		    oRowTag.isFolder = True
+		    dim n1 as integer = oRowTag.sFolderValues.Ubound + 1
+		    Redim oRowTag.sFolderValues(n1)
+		    oRowTag.sFolderValues(n1) = sKeys(i1)
 		    
-		    dim currItem as DataFile.tbl_inventory
-		    currItem = oTheItems(i1)
+		    Dim oSingleGroup() as DataFile.tbl_inventory
+		    oSingleGroup = oItems.jsGroupedItems.Value(sKeys(i1))
 		    
-		    dim jsFieldVals as JSONItem
-		    jsFieldVals = currItem.GetMyFieldValues(True)
-		    
-		    // Add a new row to the listbox
-		    lbItems.AddRow("")
-		    lbItems.RowTag(i1) = i1
-		    
-		    // Loop through each column 
-		    For i2 as integer = 0 To lbItems.ColumnCount - 1
+		    // Loop through all reacords in group to create children rowtags
+		    For i2 as integer = 0 To oSingleGroup.Ubound
+		      dim currentRecord as DataFile.tbl_inventory
+		      currentRecord = oSingleGroup(i2)
+		      dim oRecordRowTag as New lbRowTag( currentRecord,sFieldNames)
 		      
-		      dim currValue as string = jsFieldVals.Value(sFieldNames(i2))
-		      lbItems.Cell(i1,i2) = currValue
-		      
+		      oRowTag.aroChildren.Append(oRecordRowTag)
 		    Next
 		    
+		    lbItems.AddFolder(oRowTag.sFolderValues(0))
+		    lbItems.RowTag(lbItems.LastIndex) = oRowTag
 		    
 		  Next
-		  
-		  
 		End Sub
 	#tag EndMethod
 
 	#tag Method, Flags = &h0
-		Sub RefreshInventory()
+		Sub LoadRow(row as integer, oRecord as DataFile.tbl_inventory)
 		  
+		  dim oRowTag as New lbRowTag(oRecord,sFieldNames)
+		  
+		  lbItems.RowTag(row) = oRowTag
+		  
+		  // Populate cells
+		  For i1 as integer = row To sFieldNames.ubound
+		    lbItems.Cell(row,i1) = oRowTag.vColumnValues(i1)
+		  Next
+		End Sub
+	#tag EndMethod
+
+	#tag Method, Flags = &h0
+		Sub RefreshInventory(bMaintainUIState as Boolean = False)
+		  dim sOpenFolders() as string
+		  
+		  If bMaintainUIState Then
+		    
+		    // Loop through each row in the listbox 
+		    For i1 as integer = 0 To lbItems.ListCount - 1
+		      
+		      // save the state of this group
+		      If lbItems.RowIsFolder(i1) Then
+		        
+		        If lbItems.Expanded(i1) Then
+		          sOpenFolders.Append( lbItems.Cell(i1,0) )
+		          
+		        End If
+		      End If
+		    Next
+		  End If
 		  
 		  oItems.LoadMe
 		  LoadItemsIntoListbox
+		  
+		  dim openThese() as integer
+		  if bMaintainUIState Then
+		    
+		    For i1 as integer = 0 To lbItems.ListCount - 1
+		      
+		      If lbItems.RowIsFolder(i1) THen
+		        
+		        If sOpenFolders.IndexOf(lbItems.Cell(i1,0) ) <> -1 Then
+		          openThese.Append(i1)
+		        End If
+		      End If
+		    Next
+		  end if
+		  
+		  
 		End Sub
 	#tag EndMethod
 
 	#tag Method, Flags = &h0
 		Sub SaveValue(row as integer, column as integer)
+		  dim oRowTag as lbRowTag
+		  dim otblObject as DataFile.tbl_inventory
 		  
+		  oRowTag = lbItems.RowTag(row)
+		  otblObject = oRowTag.vtblRecord
 		  
-		  oItems.aroItems(row).ChangeMySavedValue( sFieldNames(column), lbItems.Cell(row,column) )
+		  otblObject.ChangeMySavedValue( sFieldNames(column), lbItems.Cell(row,column) )
 		End Sub
 	#tag EndMethod
 
@@ -368,23 +433,38 @@ End
 	#tag Event
 		Sub CellAction(row as integer, column as integer)
 		  
-		  SaveValue(row,column)
+		  If Not lbItems.RowIsFolder(row) Then
+		    SaveValue(row,column)
+		  End If
 		End Sub
 	#tag EndEvent
 	#tag Event
 		Sub Change()
-		  dim iIndex as integer
-		  
+		  dim oRowTag as lbRowTag
 		  
 		  If lbItems.ListIndex <> -1 Then
 		    
-		    bDeleteItem.Enabled = True
-		    bIncreaseQuantity.Enabled = True
-		    
-		    // Find the index of the selected row
-		    iIndex = lbItems.RowTag(lbItems.ListIndex)
-		    
-		    contItemInfo.LoadLabels(oItems.aroItems(iIndex) )
+		    If lbItems.RowIsFolder(lbItems.ListIndex) Then
+		      ' This row is a folder
+		      
+		    Else 
+		      ' This row is not a folder
+		      
+		      // Enable controls
+		      bDeleteItem.Enabled = True
+		      bIncreaseQuantity.Enabled = True
+		      
+		      // Aquire the rowtag of said row
+		      oRowTag = lbItems.RowTag(lbItems.ListIndex)
+		      
+		      // Pull the tbl_inventory object out of the rowtag
+		      dim otblObject as DataFile.tbl_inventory
+		      otblObject = oRowTag.vtblRecord
+		      
+		      // Fill the labels
+		      contItemInfo.LoadLabels(otblObject )
+		      
+		    End If
 		    
 		  Else
 		    
@@ -409,6 +489,34 @@ End
 		  g.FillRect(0,0,g.Width,g.Height)
 		End Function
 	#tag EndEvent
+	#tag Event
+		Sub ExpandRow(Row as integer)
+		  Dim oFolderRowTag as lbRowTag
+		  
+		  // Grab the rowtag of the folder
+		  oFolderRowTag = lbItems.RowTag(row)
+		  
+		  // Loop through each child
+		  For i1 as integer = 0 To oFolderRowTag.aroChildren.Ubound
+		    
+		    Dim oCurrRowTag as lbRowTag
+		    oCurrRowTag = oFolderRowTag.aroChildren(i1)
+		    
+		    dim rowvalues() as string
+		    
+		    
+		    for i2 as integer = 0 To oCurrRowTag.vColumnValues.Ubound
+		      
+		      rowvalues.Append( str(oCurrRowTag.vColumnValues(i2)))
+		      
+		    Next
+		    
+		    lbItems.AddRow(rowvalues)
+		    lbItems.RowTag(lbItems.LastIndex) = oCurrRowTag
+		    
+		  Next
+		End Sub
+	#tag EndEvent
 #tag EndEvents
 #tag Events bAddItem
 	#tag Event
@@ -432,7 +540,17 @@ End
 		  
 		  If lbItems.ListIndex <> -1 then
 		    
-		    DeleteItem(lbItems.ListIndex,lbItems.Cell(lbItems.ListIndex,0) )
+		    If lbItems.RowIsFolder(lbItems.ListIndex) Then
+		      'This is an entire department
+		      
+		    Else
+		      'This is not an entire department
+		      
+		      dim oRowTag as lbRowTag = lbItems.RowTag(lbItems.ListIndex)
+		      
+		      DeleteItem(oRowTag,lbItems.Cell(lbItems.ListIndex,0) )
+		      
+		    End If
 		    
 		  End If
 		End Sub
@@ -456,11 +574,11 @@ End
 		    
 		    dim iListIndex as integer = lbItems.ListIndex
 		    
-		    // Get the index that the record is stored in
-		    dim iIndex as integer = lbItems.RowTag(iListIndex)
+		    // Grab the RowTag
+		    dim oRowTag as lbRowTag = lbItems.RowTag(iListIndex)
 		    
-		    // Pull the pkid from the record
-		    dim iThePKID as integer = oItems.aroItems(iIndex).ipkid
+		    // Pull the pkid from the RowTag
+		    dim iThePKID as integer = oRowTag.pkid
 		    
 		    If iThePKID <> 0 Then
 		      
@@ -472,12 +590,11 @@ End
 		      
 		      // Increase the quantity
 		      Methods.IncreaseQuantity(iThePKID,oSpecifiedAmount)
-		      
-		      // Reload the inventory
-		      oItems.LoadMe
-		      LoadItemsIntoListbox
-		      lbItems.SetFocus
-		      lbItems.ListIndex = iListIndex
+		      break
+		      // Reload the row
+		      dim oRecord as DataFile.tbl_inventory = DataFile.tbl_inventory.FindByID(iThePKID)
+		      dim iRecordIndex as integer = lbItems.FindByPKID(iThePKID)
+		      LoadRow(iRecordIndex,oRecord)
 		      
 		    Else
 		      Break

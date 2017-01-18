@@ -6,7 +6,7 @@
 CREATE PROCEDURAL LANGUAGE 'plpythonu' HANDLER plpython_call_handler; 
 
 -- Create Functions
-CREATE Or Replace FUNCTION public.create_insert_statements()
+CREATE Or Replace FUNCTION public.create_full_sync_script()
     RETURNS text
     LANGUAGE 'plpythonu'
     NOT LEAKPROOF 

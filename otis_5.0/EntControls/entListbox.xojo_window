@@ -45,7 +45,7 @@ Begin ContainerControl entListbox
       HeadingIndex    =   -1
       Height          =   226
       HelpTag         =   ""
-      Hierarchical    =   False
+      Hierarchical    =   True
       Index           =   -2147483648
       InitialParent   =   ""
       InitialValue    =   ""
@@ -79,6 +79,12 @@ End
 #tag EndWindow
 
 #tag WindowCode
+	#tag Method, Flags = &h0
+		Sub AddFolder(text as string)
+		  oListbox.AddFolder(text)
+		End Sub
+	#tag EndMethod
+
 	#tag Method, Flags = &h0
 		Sub AddRow()
 		  oListbox.AddRow
@@ -166,6 +172,34 @@ End
 		  
 		  oListbox.DeleteAllRows
 		End Sub
+	#tag EndMethod
+
+	#tag Method, Flags = &h0
+		Function Expanded(row as integer) As Boolean
+		  return oListbox.Expanded(row)
+		End Function
+	#tag EndMethod
+
+	#tag Method, Flags = &h0
+		Sub Expanded(row as integer, assigns NewbooleanValue as Boolean)
+		  oListbox.Expanded(row) = NewbooleanValue
+		End Sub
+	#tag EndMethod
+
+	#tag Method, Flags = &h0
+		Function FindByPKID(iPKID as int64) As integer
+		  
+		  For i1 as integer = 0 To oListbox.ListCount
+		    
+		    dim oRowTag as lbRowTag = oListbox.RowTag(i1)
+		    If oRowTag.pkid = iPKID Then
+		      Return i1
+		    End If
+		    
+		  Next
+		  
+		  Return -1
+		End Function
 	#tag EndMethod
 
 	#tag Method, Flags = &h0
@@ -276,6 +310,26 @@ End
 	#tag EndMethod
 
 	#tag Method, Flags = &h0
+		Sub InsertRow(row as integer, stext as string = "", indent as integer = 0)
+		  
+		  oListbox.InsertRow(row,stext,indent)
+		End Sub
+	#tag EndMethod
+
+	#tag Method, Flags = &h0
+		Function LastIndex() As integer
+		  return oListbox.LastIndex
+		End Function
+	#tag EndMethod
+
+	#tag Method, Flags = &h0
+		Function ListCount() As Integer
+		  
+		  Return oListbox.ListCount
+		End Function
+	#tag EndMethod
+
+	#tag Method, Flags = &h0
 		Function ListIndex() As integer
 		  
 		  Return oListbox.ListIndex
@@ -287,6 +341,19 @@ End
 		  
 		  oListbox.ListIndex = iIndex
 		End Sub
+	#tag EndMethod
+
+	#tag Method, Flags = &h0
+		Sub RemoveRow(index as integer)
+		  
+		End Sub
+	#tag EndMethod
+
+	#tag Method, Flags = &h0
+		Function RowIsFolder(row as integer) As Boolean
+		  
+		  Return oListbox.RowIsFolder(row)
+		End Function
 	#tag EndMethod
 
 	#tag Method, Flags = &h0
@@ -314,6 +381,10 @@ End
 
 	#tag Hook, Flags = &h0
 		Event Change()
+	#tag EndHook
+
+	#tag Hook, Flags = &h0
+		Event ExpandRow(Row as integer)
 	#tag EndHook
 
 
@@ -366,6 +437,11 @@ End
 		Sub Change()
 		  
 		  Change
+		End Sub
+	#tag EndEvent
+	#tag Event
+		Sub ExpandRow(row As Integer)
+		  ExpandRow(row)
 		End Sub
 	#tag EndEvent
 #tag EndEvents

@@ -79,7 +79,7 @@ Create Table tbl_events
         fkinventory                 integer,
         item_barcode                text,
         item_rfid_code              text
-        )
+        );
 
     -- Maintenance Logs
     Create Table tbl_maintenance_Logs
@@ -97,7 +97,7 @@ Create Table tbl_events
         work_description            text,
         work_comments               text,
         work_type                   text
-        )
+        );
 
 
     -- eipl_
