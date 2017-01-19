@@ -1,9 +1,28 @@
 #tag Class
 Protected Class cInventory
 	#tag Method, Flags = &h0
+		Sub LoadExpanded(ifkInventory as Int64)
+		  dim zzzifkInventory as integer = ifkInventory
+		  
+		  dim oExpandedList() as DataFile.tbl_inv_ex
+		  
+		  
+		  // Grab an array of the current group
+		  dim stheCondition as String
+		  stheCondition = "fkinventory" + " = " + ifkInventory.ToText + ""
+		  oExpandedList = datafile.tbl_inv_ex.List(stheCondition)
+		  
+		  
+		  // Add the list of expanded inventory items to the Dictionary
+		  aroItemsExpanded.Value(ifkInventory) = oExpandedList()
+		End Sub
+	#tag EndMethod
+
+	#tag Method, Flags = &h0
 		Sub LoadMe()
 		  
 		  jsGroupedItems = New Dictionary
+		  aroItemsExpanded = New Dictionary
 		  
 		  // Load all inventory into the items variable
 		  aroItems() = datafile.tbl_inventory.List(sCondition,sOrderByFields)
@@ -44,14 +63,17 @@ Protected Class cInventory
 		    
 		    dim aroGroups() as DataFile.tbl_inventory
 		    // Now we have all unique values
+		    // Loop through them
 		    For i1 as integer = 0 To arvValues.Ubound
 		      dim aroSingleGroup() as DataFile.tbl_inventory
 		      
 		      //should probably do sql binding
 		      dim stheCondition as string
 		      
+		      // Grab an array of the current group
 		      stheCondition = sGroupBy + " = '" + arvValues(i1) + "'"
 		      aroSingleGroup = datafile.tbl_inventory.List(stheCondition,sOrderByFields)
+		      
 		      
 		      jsGroupedItems.value( arvValues(i1) ) = aroSingleGroup
 		      
@@ -69,6 +91,10 @@ Protected Class cInventory
 
 	#tag Property, Flags = &h0
 		aroItems() As DataFile.tbl_inventory
+	#tag EndProperty
+
+	#tag Property, Flags = &h0
+		aroItemsExpanded As Dictionary
 	#tag EndProperty
 
 	#tag Property, Flags = &h0

@@ -1,5 +1,17 @@
 #tag Module
 Protected Module Methods
+	#tag Method, Flags = &h0
+		Function CreateNewContainerByName(sContainerName as String) As Variant
+		  
+		  Select Case sContainerName
+		  Case "ContainerInventoryExpanded"
+		    Return New ContainerInventoryExpanded
+		  Else
+		    // No container by this name
+		  End Select
+		End Function
+	#tag EndMethod
+
 	#tag Method, Flags = &h1
 		Protected Function GetNewPKID() As Int64
 		  Dim d1 as new date

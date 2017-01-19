@@ -189,11 +189,13 @@ End
 	#tag Method, Flags = &h0
 		Function FindByPKID(iPKID as int64) As integer
 		  
-		  For i1 as integer = 0 To oListbox.ListCount
+		  For i1 as integer = 0 To oListbox.ListCount - 1
 		    
 		    dim oRowTag as lbRowTag = oListbox.RowTag(i1)
-		    If oRowTag.pkid = iPKID Then
-		      Return i1
+		    If oRowTag <> Nil Then
+		      If oRowTag.pkid = iPKID Then
+		        Return i1
+		      End If
 		    End If
 		    
 		  Next
@@ -346,6 +348,7 @@ End
 	#tag Method, Flags = &h0
 		Sub RemoveRow(index as integer)
 		  
+		  oListbox.RemoveRow(index)
 		End Sub
 	#tag EndMethod
 
@@ -381,6 +384,10 @@ End
 
 	#tag Hook, Flags = &h0
 		Event Change()
+	#tag EndHook
+
+	#tag Hook, Flags = &h0
+		Event DoubleClick()
 	#tag EndHook
 
 	#tag Hook, Flags = &h0
@@ -442,6 +449,11 @@ End
 	#tag Event
 		Sub ExpandRow(row As Integer)
 		  ExpandRow(row)
+		End Sub
+	#tag EndEvent
+	#tag Event
+		Sub DoubleClick()
+		  DoubleClick
 		End Sub
 	#tag EndEvent
 #tag EndEvents

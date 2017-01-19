@@ -9,7 +9,7 @@ Begin ContainerControl contInventory
    Enabled         =   True
    EraseBackground =   True
    HasBackColor    =   False
-   Height          =   416
+   Height          =   420
    HelpTag         =   ""
    InitialParent   =   ""
    Left            =   0
@@ -24,7 +24,7 @@ Begin ContainerControl contInventory
    Transparent     =   True
    UseFocusRing    =   False
    Visible         =   True
-   Width           =   704
+   Width           =   700
    Begin entListbox lbItems
       AcceptFocus     =   False
       AcceptTabs      =   True
@@ -37,7 +37,7 @@ Begin ContainerControl contInventory
       GridLinesColor  =   &c00000000
       HasBackColor    =   False
       HasHeading      =   True
-      Height          =   410
+      Height          =   414
       HelpTag         =   ""
       InitialParent   =   ""
       Left            =   152
@@ -54,7 +54,7 @@ Begin ContainerControl contInventory
       Transparent     =   True
       UseFocusRing    =   False
       Visible         =   True
-      Width           =   549
+      Width           =   545
    End
    Begin PushButton bAddItem
       AutoDeactivate  =   True
@@ -251,7 +251,7 @@ End
 
 	#tag Method, Flags = &h0
 		Sub DeleteItem(oRowTag as lbrowtag, IdentifyingName as String)
-		  
+		  break
 		  
 		  
 		  If MsgBox("Are you sure you want to delete " + IdentifyingName, 4) = 6 Then
@@ -372,6 +372,8 @@ End
 		  otblObject = oRowTag.vtblRecord
 		  
 		  otblObject.ChangeMySavedValue( sFieldNames(column), lbItems.Cell(row,column) )
+		  
+		  oRowTag.pkid = otblObject.ipkid
 		End Sub
 	#tag EndMethod
 
@@ -517,6 +519,36 @@ End
 		  Next
 		End Sub
 	#tag EndEvent
+	#tag Event
+		Sub DoubleClick()
+		  dim iListIndex as integer
+		  
+		  
+		  iListIndex = lbItems.ListIndex
+		  
+		  If iListIndex <> -1 Then
+		    
+		    If Not lbItems.RowIsFolder(iListIndex) Then
+		      dim iPKID as int64
+		      dim oRowTag as lbRowTag
+		      
+		      oRowTag = lbItems.RowTag(iListIndex)
+		      If oRowTag <> Nil Then
+		        iPKID = oRowTag.pkid
+		      End If
+		      
+		      dim contExpanded as New ContainerInventoryExpanded(self,iPKID)
+		      
+		      dim wWindow as new Window2
+		      wWindow.Top = MouseY
+		      wWindow.Left = MouseX
+		      contExpanded.EmbedWithin(wWindow,0,20)
+		      
+		      
+		    End If
+		  End If
+		End Sub
+	#tag EndEvent
 #tag EndEvents
 #tag Events bAddItem
 	#tag Event
@@ -569,7 +601,7 @@ End
 #tag Events bIncreaseQuantity
 	#tag Event
 		Sub Action()
-		  
+		  break
 		  If lbItems.ListIndex <> -1 then
 		    
 		    dim iListIndex as integer = lbItems.ListIndex
@@ -577,8 +609,14 @@ End
 		    // Grab the RowTag
 		    dim oRowTag as lbRowTag = lbItems.RowTag(iListIndex)
 		    
-		    // Pull the pkid from the RowTag
-		    dim iThePKID as integer = oRowTag.pkid
+		    // Extract the record
+		    dim oRecordOriginal as DataFile.tbl_inventory
+		    oRecordOriginal = oRowTag.vtblRecord
+		    
+		    // Pull the pkid from the Record
+		    dim iThePKID as Int64 = oRecordOriginal.ipkid
+		    ' And put it into a more easily accessable place...the row tag
+		    oRowTag.pkid = iThePKID
 		    
 		    If iThePKID <> 0 Then
 		      
@@ -590,7 +628,7 @@ End
 		      
 		      // Increase the quantity
 		      Methods.IncreaseQuantity(iThePKID,oSpecifiedAmount)
-		      break
+		      
 		      // Reload the row
 		      dim oRecord as DataFile.tbl_inventory = DataFile.tbl_inventory.FindByID(iThePKID)
 		      dim iRecordIndex as integer = lbItems.FindByPKID(iThePKID)

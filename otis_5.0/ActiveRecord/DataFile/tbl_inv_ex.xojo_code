@@ -184,6 +184,10 @@ Inherits DataFile.ActiveRecordBase
 	#tag EndProperty
 
 	#tag Property, Flags = &h0
+		sitem_serial_code As String
+	#tag EndProperty
+
+	#tag Property, Flags = &h0
 		srow_username As String
 	#tag EndProperty
 
