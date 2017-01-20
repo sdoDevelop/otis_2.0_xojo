@@ -17,7 +17,12 @@ Protected Class lbRowTag
 		  // Loop through each field that was specified
 		  For each CurrentField as string in sFieldNames
 		    
-		    vColumnValues.Append( jsFieldValues.value(CurrentField) )
+		    dim s1 as string = jsFieldValues.value(CurrentField)
+		    If CurrentField.InStr("_cost") <> 0  Then
+		      dim s2 as string = ConvertCentsString_To_DollarString(s1)
+		      s1 = s2
+		    End If
+		    vColumnValues.Append(s1 )
 		    
 		  Next
 		  

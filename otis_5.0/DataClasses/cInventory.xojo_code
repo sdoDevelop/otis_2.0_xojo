@@ -19,10 +19,29 @@ Protected Class cInventory
 	#tag EndMethod
 
 	#tag Method, Flags = &h0
+		Sub LoadMaintenanceLogs(ifkInventoryExpanded as Int64)
+		  dim zzzifkInventoryExpanded as integer = ifkInventoryExpanded
+		  
+		  dim oLogList() as DataFile.tbl_maintenance_Logs
+		  
+		  
+		  // Grab an array of the current group
+		  dim stheCondition as String
+		  stheCondition = "fkinv_ex" + " = " + ifkInventoryExpanded.ToText + ""
+		  oLogList = datafile.tbl_maintenance_Logs.List(stheCondition)
+		  
+		  
+		  // Add the list of expanded inventory items to the Dictionary
+		  dictMaintenanceLogs.Value(ifkInventoryExpanded) = oLogList()
+		End Sub
+	#tag EndMethod
+
+	#tag Method, Flags = &h0
 		Sub LoadMe()
 		  
 		  jsGroupedItems = New Dictionary
 		  aroItemsExpanded = New Dictionary
+		  dictMaintenanceLogs = New Dictionary
 		  
 		  // Load all inventory into the items variable
 		  aroItems() = datafile.tbl_inventory.List(sCondition,sOrderByFields)
@@ -99,6 +118,10 @@ Protected Class cInventory
 
 	#tag Property, Flags = &h0
 		bGrouped As Boolean
+	#tag EndProperty
+
+	#tag Property, Flags = &h0
+		dictMaintenanceLogs As Dictionary
 	#tag EndProperty
 
 	#tag Property, Flags = &h0

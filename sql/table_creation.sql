@@ -64,7 +64,7 @@ Create Table tbl_events
         item_description            text,
         item_type                   text,
         item_quantity               integer,
-        item_price                  integer,
+        item_price_cost             integer,
         item_owner                  text,
         item_taxable                text
         );
@@ -78,7 +78,8 @@ Create Table tbl_events
         row_username                text,
         fkinventory                 integer,
         item_barcode                text,
-        item_rfid_code              text
+        item_rfid_code              text,
+        item_serial_code            text
         );
 
     -- Maintenance Logs

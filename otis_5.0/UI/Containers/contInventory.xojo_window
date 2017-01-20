@@ -419,7 +419,7 @@ End
 		  me.Heading = s2
 		  
 		  // Set Field Names 
-		  s1 = "item_name,item_manufacturer,item_model,item_department,item_category,item_subcategory,item_description,item_type,item_quantity,item_price,item_owner,item_taxable"
+		  s1 = "item_name,item_manufacturer,item_model,item_department,item_category,item_subcategory,item_description,item_type,item_quantity,item_price_cost,item_owner,item_taxable"
 		  s2 = Split(s1,",")
 		  sFieldNames = s2
 		  
@@ -562,7 +562,7 @@ End
 	#tag Event
 		Sub Action()
 		  
-		  RefreshInventory
+		  RefreshInventory(True)
 		End Sub
 	#tag EndEvent
 #tag EndEvents
@@ -601,7 +601,7 @@ End
 #tag Events bIncreaseQuantity
 	#tag Event
 		Sub Action()
-		  break
+		  
 		  If lbItems.ListIndex <> -1 then
 		    
 		    dim iListIndex as integer = lbItems.ListIndex

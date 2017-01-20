@@ -82,6 +82,7 @@ End
 	#tag Method, Flags = &h0
 		Sub AddFolder(text as string)
 		  oListbox.AddFolder(text)
+		  
 		End Sub
 	#tag EndMethod
 
@@ -391,6 +392,14 @@ End
 	#tag EndHook
 
 	#tag Hook, Flags = &h0
+		Event entConstructContextualMenu(base as menuitem, x as integer, y as integer) As Boolean
+	#tag EndHook
+
+	#tag Hook, Flags = &h0
+		Event entContextualMenuAction(hitItem as MenuItem) As Boolean
+	#tag EndHook
+
+	#tag Hook, Flags = &h0
 		Event ExpandRow(Row as integer)
 	#tag EndHook
 
@@ -455,6 +464,16 @@ End
 		Sub DoubleClick()
 		  DoubleClick
 		End Sub
+	#tag EndEvent
+	#tag Event
+		Function ConstructContextualMenu(base as MenuItem, x as Integer, y as Integer) As Boolean
+		  Return entConstructContextualMenu(base,x,y)
+		End Function
+	#tag EndEvent
+	#tag Event
+		Function ContextualMenuAction(hitItem as MenuItem) As Boolean
+		  Return entContextualMenuAction(hitItem)
+		End Function
 	#tag EndEvent
 #tag EndEvents
 #tag ViewBehavior

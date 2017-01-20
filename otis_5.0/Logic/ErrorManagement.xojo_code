@@ -42,11 +42,6 @@ Protected Module ErrorManagement
 
 	#tag ViewBehavior
 		#tag ViewProperty
-			Name="FilePath"
-			Group="Behavior"
-			Type="Integer"
-		#tag EndViewProperty
-		#tag ViewProperty
 			Name="Index"
 			Visible=true
 			Group="ID"

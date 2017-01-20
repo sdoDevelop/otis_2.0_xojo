@@ -241,6 +241,11 @@ Inherits DataFile.ActiveRecordBase
 			EditorType="MultiLineEditor"
 		#tag EndViewProperty
 		#tag ViewProperty
+			Name="sitem_serial_code"
+			Group="Behavior"
+			Type="String"
+		#tag EndViewProperty
+		#tag ViewProperty
 			Name="srow_username"
 			Group="Behavior"
 			Type="String"

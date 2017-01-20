@@ -62,7 +62,7 @@
         item_description            ,
         item_type                   ,
         item_quantity               ,
-        item_price                  ,
+        item_price_cost             ,
         item_owner                  ,
         item_taxable                
         From tbl_inventory
@@ -77,6 +77,7 @@
         fkinventory,  
         item_barcode,    
         item_rfid_code 
+        item_serial_code
         From tbl_inv_ex
         ;
 

@@ -172,7 +172,7 @@ Inherits DataFile.ActiveRecordBase
 	#tag EndProperty
 
 	#tag Property, Flags = &h0
-		iitem_price As Integer
+		iitem_price_cost As Integer
 	#tag EndProperty
 
 	#tag Property, Flags = &h0
@@ -226,7 +226,7 @@ Inherits DataFile.ActiveRecordBase
 
 	#tag ViewBehavior
 		#tag ViewProperty
-			Name="iitem_price"
+			Name="iitem_price_cost"
 			Group="Behavior"
 			Type="Integer"
 		#tag EndViewProperty

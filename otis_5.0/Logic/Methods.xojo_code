@@ -1,6 +1,24 @@
 #tag Module
 Protected Module Methods
 	#tag Method, Flags = &h0
+		Function ConvertCentsString_To_DollarString(sCentsString as String) As String
+		  dim s1 as string
+		  
+		  If val(sCentsString) <100 And val(sCentsString) > 9  Then
+		    s1 = "$" + "0" + "." + sCentsString
+		  ElseIf val(sCentsString) < 10 And val(sCentsString) > 0 Then
+		    s1 = "$" + "0" + ".0" + sCentsString
+		  ElseIf val(sCentsString) = 0 Then
+		    s1 = "$0.00"
+		  Else
+		    s1 = "$" + Left(sCentsString,Len(sCentsString) - 2) + "." + Right(sCentsString,2)
+		  End If
+		  
+		  Return s1
+		End Function
+	#tag EndMethod
+
+	#tag Method, Flags = &h0
 		Function CreateNewContainerByName(sContainerName as String) As Variant
 		  
 		  Select Case sContainerName
@@ -69,6 +87,12 @@ Protected Module Methods
 		    
 		  Next
 		  
+		  Methods.UpdateItemQuantity(fkInventory)
+		End Sub
+	#tag EndMethod
+
+	#tag Method, Flags = &h1
+		Protected Sub UpdateItemQuantity(fkInventory as int64)
 		  // Figure out how many inventory expanded items there are related to our inventory item
 		  dim qty as integer
 		  qty = DataFile.tbl_inv_ex.ListCount("fkInventory = " + fkInventory.ToText )

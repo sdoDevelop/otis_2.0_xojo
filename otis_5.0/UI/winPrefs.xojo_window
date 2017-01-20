@@ -30,7 +30,7 @@ Begin Window winPrefs
       AcceptFocus     =   False
       AcceptTabs      =   False
       AutoDeactivate  =   True
-      BackColor       =   &cFF00FFFF
+      BackColor       =   &c00FFFFFF
       Backdrop        =   0
       Enabled         =   True
       EraseBackground =   False

@@ -116,6 +116,168 @@ Protected Module OSM
 	#tag EndMethod
 
 	#tag Method, Flags = &h21
+		Private Function ExecuteBoundSQLScript(sSQLScript as String) As Boolean
+		  dim sStatementWithValuesArrray() as String
+		  dim sBindingPlaceholder as string = "?"
+		  dim db1 as New SQLiteDatabase
+		  dim rd1 as New ResourceDirectories
+		  dim ps1Array() as SQLitePreparedStatement
+		  
+		  
+		  // Connect to the database
+		  db1.DatabaseFile = rd1.otis_data_file.FilePath
+		  If Not db1.Connect Then
+		    dim err as new RuntimeException
+		    err.Message = "could not connect to database | " + db1.ErrorMessage
+		    raise err
+		    Return False
+		  End If
+		  
+		  // Break the Script we were sent into each individual statement
+		  ' Statements look like this: Insert Into tbl_inventory(field1,field2,field3) Values(|PLACEHOLDER|,|PLACEHOLDER|,|PLACEHOLDER|)|EOSTATEMENT|albert:Text,sonya:Text,54:Integer|EOINSERT|Insert Into tbl_inventory(field1,field2,field3) Values(|PLACEHOLDER|,|PLACEHOLDER|,|PLACEHOLDER|)|EOSTATEMENT|albert:Text,sonya:Text,54:Integer|EOINSERT|
+		  ' After breaking it into an array we will have an insert statment followed by pairs of value:valueType
+		  sStatementWithValuesArrray = sSQLScript.Split("|EOINSERT|")
+		  
+		  // Loop through all of the individual statements
+		  For each sStatementWithValues as string In sStatementWithValuesArrray()
+		    dim sStatement as string
+		    dim sValueValueTypes as string
+		    dim sValueValueTypesArray() as string
+		    dim tempArray() as string
+		    
+		    dim ps1 as SQLitePreparedStatement
+		    
+		    
+		    // Split the value:valueType pairs from the insert statement
+		    tempArray = sStatementWithValues.Split("|EOSTATEMENT|")
+		    ' and load them into proper variables
+		    sStatement = tempArray(0)
+		    sValueValueTypes = tempArray(1)
+		    
+		    // Replace the temporary placeholders with sqlite specific placeholders
+		    sStatement = ReplaceAll( sStatement, "|PLACEHOLDER|", sBindingPlaceholder )
+		    
+		    // Prepare the statement
+		    ps1 = db1.Prepare(sStatement)
+		    
+		    // Split the values:valuetypes apart from each other
+		    sValueValueTypesArray = sValueValueTypes.Split(",")
+		    
+		    // Loop through each value:valueType
+		    dim i1 as Integer = 0
+		    For each ValueValueType as string In sValueValueTypesArray
+		      dim sValue as String
+		      dim vFormattedValue as Variant
+		      dim sType as String
+		      dim tempArray2() as String
+		      
+		      // Split the ValueValueType into its value and type variables
+		      tempArray2 = ValueValueType.Split(":")
+		      sValue = tempArray2(0)
+		      sType = tempArray2(1)
+		      
+		      // Set the bind type for the current value
+		      If sValue = "None" Then
+		        ps1.BindType(i1,SQLitePreparedStatement.SQLITE_NULL)
+		        Select Case sType
+		        Case "Text"
+		          vFormattedValue = ""
+		        Case "Boolean"
+		          vFormattedValue = Nil
+		        Case "Integer"
+		          vFormattedValue = Nil
+		        End Select
+		        
+		      Else
+		        
+		        Select Case sType
+		        Case "Text"
+		          ps1.BindType(i1,SQLitePreparedStatement.SQLITE_TEXT)
+		          vFormattedValue = sValue
+		        Case "Boolean"
+		          ps1.BindType(i1,SQLitePreparedStatement.SQLITE_BOOLEAN)
+		          vFormattedValue = sValue
+		        Case "Integer"
+		          ps1.BindType(i1,SQLitePreparedStatement.SQLITE_INTEGER)
+		          vFormattedValue = Val(sValue)
+		        End Select
+		      End If
+		      
+		      If db1.Error Then
+		        break
+		      End If
+		      
+		      // Bind the vaue to the prepared statement
+		      ps1.Bind(i1,vFormattedValue)
+		      If db1.Error Then
+		        break
+		      End If
+		      // Increase Index by 1
+		      i1 = i1 + 1
+		      
+		    Next
+		    
+		    // Append the prepared statement to an array
+		    ps1Array.Append(ps1)
+		    
+		  Next
+		  
+		  dim sErrorArray() as String
+		  dim iErrorCount as integer
+		  
+		  // Loop through each prepared Statement
+		  For each psStatement as SQLitePreparedStatement In ps1Array
+		    
+		    // Execute the Statement
+		    psStatement.SQLExecute
+		    If db1.Error Then
+		      break
+		      iErrorCount = iErrorCount + 1
+		      sErrorArray.Append( db1.ErrorMessage )
+		    End If
+		    
+		  Next
+		  
+		  
+		  Return True
+		  
+		  
+		  
+		  
+		  
+		  
+		  
+		  
+		  
+		  
+		  
+		  
+		  
+		  
+		  
+		  
+		  
+		  
+		  
+		  
+		  
+		  
+		  
+		  
+		  
+		  
+		  
+		  
+		  
+		  
+		  
+		  
+		  
+		  
+		End Function
+	#tag EndMethod
+
+	#tag Method, Flags = &h21
 		Private Function ExecuteSQLScript(oScript as string, oSplitCharacter as string = ";") As Boolean
 		  Dim SQLArray() as String
 		  Dim CurrentStatement as String
@@ -282,7 +444,7 @@ Protected Module OSM
 		  sql_script = rs1.Field("create_full_sync_script").StringValue
 		  
 		  // Execute the sql script on the local database
-		  If ExecuteSQLScript(sql_script,"|") Then
+		  If ExecuteBoundSQLScript(sql_script) Then
 		    'update succsesful
 		  Else
 		    'upddate not succseful

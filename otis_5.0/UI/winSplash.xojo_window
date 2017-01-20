@@ -27,6 +27,7 @@ Begin Window winSplash
    Visible         =   True
    Width           =   505
    Begin Timer tmrSplash
+      Enabled         =   True
       Index           =   -2147483648
       InitialParent   =   ""
       LockedInPosition=   False
@@ -57,6 +58,7 @@ Begin Window winSplash
       Selectable      =   False
       TabIndex        =   3
       TabPanelIndex   =   0
+      TabStop         =   True
       Text            =   "Build:"
       TextAlign       =   0
       TextColor       =   &c00000000
@@ -91,6 +93,7 @@ Begin Window winSplash
       Selectable      =   False
       TabIndex        =   4
       TabPanelIndex   =   0
+      TabStop         =   True
       Text            =   "Your Copyright Info here"
       TextAlign       =   1
       TextColor       =   &c00000000
@@ -125,6 +128,7 @@ Begin Window winSplash
       Selectable      =   False
       TabIndex        =   5
       TabPanelIndex   =   0
+      TabStop         =   True
       Text            =   "App Description"
       TextAlign       =   0
       TextColor       =   &c00000000
@@ -159,6 +163,7 @@ Begin Window winSplash
       Selectable      =   False
       TabIndex        =   6
       TabPanelIndex   =   0
+      TabStop         =   True
       Text            =   "App Name"
       TextAlign       =   0
       TextColor       =   &c00000000
@@ -220,6 +225,7 @@ Begin Window winSplash
          Selectable      =   False
          TabIndex        =   0
          TabPanelIndex   =   0
+         TabStop         =   True
          Text            =   "Use cvLogo Canvas for your Logo.\nFor more information see:\nhttp://docs.xojo.com/index.php/Graphics.DrawPicture"
          TextAlign       =   0
          TextColor       =   &c00000000

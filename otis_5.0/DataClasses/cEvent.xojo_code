@@ -110,6 +110,11 @@ Protected Class cEvent
 			Type="String"
 		#tag EndViewProperty
 		#tag ViewProperty
+			Name="pkid"
+			Group="Behavior"
+			Type="int64"
+		#tag EndViewProperty
+		#tag ViewProperty
 			Name="Super"
 			Visible=true
 			Group="ID"

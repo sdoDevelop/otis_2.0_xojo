@@ -225,8 +225,8 @@ Inherits Application
 		  'At this point everything should be Initialized and ready to go.
 		  'Show your main window
 		  'Example:
-		  dim w as new Window1
-		  w.show
+		  App.MainWindow =  new Window1
+		  app.MainWindow.show
 		  
 		End Sub
 	#tag EndMethod
@@ -261,6 +261,10 @@ Inherits Application
 
 	#tag Property, Flags = &h0
 		db As SQLiteDatabase
+	#tag EndProperty
+
+	#tag Property, Flags = &h0
+		MainWindow As Window1
 	#tag EndProperty
 
 	#tag Property, Flags = &h0

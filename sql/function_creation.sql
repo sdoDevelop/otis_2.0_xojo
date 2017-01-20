@@ -61,40 +61,46 @@ for table_dict in table_names:
         column_values = []
         number_types = ['smallint','integer','bigint','decimal','numeric','real','double precision','serial','bigserial']
         array_types = ['ARRAY','anyarray']
+        placeholder_characters = "|PLACEHOLDER|"
+        value_placeholders = []
 
         # prepare the data depending on what its data type is
         for name, value in zip(column_names,column_values_tmp):
             if column_data_types[name] in number_types: #(column_data_types[name] == 'integer') :
-                if value:
-                    column_values.append(str(value))
-                else:
-                    column_values.append("0")
+                column_values.append(str(value) + ":Integer" )
+                #if value:
+                #    column_values.append(str(value))
+                #else:
+                #    column_values.append("0")
             elif column_data_types[name] == "boolean":
-                if value:
-                    column_values.append("'" + str(value) + "'")
-                else:
-                    column_values.append("'False'")
-            elif column_data_types[name] in array_types:
-                if value:
-                    column_values.append("'" + str(value) + "'")
-                else:
-                    column_values.append("''")
+                column_values.append(str(value) + ":Boolean")
+                #if value:
+                #    column_values.append("'" + str(value) + "'")
+                #else:
+                #    column_values.append("'False'")
+            #elif column_data_types[name] in array_types:
+                #if value:
+                #    column_values.append("'" + str(value) + "'")
+                #else:
+                #    column_values.append("''")
             else:
-                if value:
-                    column_values.append("'" + value + "'")
-                else:
-                    column_values.append("''")
-
+                column_values.append(str(value) + ":Text")
+                #if value:
+                #    column_values.append("'" + value + "'")
+                #else:
+                #    column_values.append("''")
+            # Add a placeholder
+            value_placeholders.append(placeholder_characters)
 
         # create our insert statment
-        insert_statement = "Insert Into " + table + " (" + ','.join(column_names) + ") Values(" + ','.join(column_values) + ");"
-
+        insert_statement = "Insert Into " + table + " (" + ','.join(column_names) + ") Values(" + ','.join(value_placeholders) + ");"
+        insert_statement = insert_statement + '|EOSTATEMENT|' + ','.join(column_values)
         # append insert statment to or array
         insert_st_list.append(insert_statement)
 
 
-return '|'.join(insert_st_list)
+return '|EOINSERT|'.join(insert_st_list)
 $function$;
 
-ALTER FUNCTION public.create_insert_statements()
+ALTER FUNCTION public.create_full_sync_script()
     OWNER TO postgres;

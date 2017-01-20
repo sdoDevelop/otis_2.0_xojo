@@ -26,34 +26,6 @@ Begin Window Window1
    Title           =   "Untitled"
    Visible         =   False
    Width           =   770
-   Begin contInventory contInventory1
-      AcceptFocus     =   False
-      AcceptTabs      =   True
-      AutoDeactivate  =   True
-      BackColor       =   &cFFFFFF00
-      Backdrop        =   0
-      Enabled         =   True
-      EraseBackground =   True
-      HasBackColor    =   False
-      Height          =   440
-      HelpTag         =   ""
-      InitialParent   =   ""
-      Left            =   0
-      LockBottom      =   True
-      LockedInPosition=   False
-      LockLeft        =   True
-      LockRight       =   True
-      LockTop         =   True
-      Scope           =   0
-      TabIndex        =   0
-      TabPanelIndex   =   0
-      TabStop         =   True
-      Top             =   20
-      Transparent     =   True
-      UseFocusRing    =   False
-      Visible         =   True
-      Width           =   770
-   End
    Begin PushButton bRunSync
       AutoDeactivate  =   True
       Bold            =   False
@@ -85,6 +57,66 @@ Begin Window Window1
       Visible         =   True
       Width           =   80
    End
+   Begin TabPanel tbMainWindow
+      AutoDeactivate  =   True
+      Bold            =   False
+      Enabled         =   True
+      Height          =   460
+      HelpTag         =   ""
+      Index           =   -2147483648
+      InitialParent   =   ""
+      Italic          =   False
+      Left            =   7
+      LockBottom      =   True
+      LockedInPosition=   False
+      LockLeft        =   True
+      LockRight       =   True
+      LockTop         =   True
+      Panels          =   ""
+      Scope           =   0
+      SmallTabs       =   False
+      TabDefinition   =   "Inventory"
+      TabIndex        =   2
+      TabPanelIndex   =   0
+      TabStop         =   True
+      TextFont        =   "System"
+      TextSize        =   0.0
+      TextUnit        =   0
+      Top             =   0
+      Underline       =   False
+      Value           =   0
+      Visible         =   True
+      Width           =   763
+      Begin contInventory contInventory1
+         AcceptFocus     =   False
+         AcceptTabs      =   True
+         AutoDeactivate  =   True
+         BackColor       =   &cFFFF00FF
+         Backdrop        =   0
+         Enabled         =   True
+         EraseBackground =   True
+         HasBackColor    =   False
+         Height          =   434
+         HelpTag         =   ""
+         IncreaseQuantityValue=   0
+         InitialParent   =   "tbMainWindow"
+         Left            =   7
+         LockBottom      =   True
+         LockedInPosition=   False
+         LockLeft        =   True
+         LockRight       =   True
+         LockTop         =   True
+         Scope           =   0
+         TabIndex        =   0
+         TabPanelIndex   =   1
+         TabStop         =   True
+         Top             =   26
+         Transparent     =   True
+         UseFocusRing    =   False
+         Visible         =   True
+         Width           =   763
+      End
+   End
 End
 #tag EndWindow
 
@@ -107,7 +139,7 @@ End
 	#tag Event
 		Sub Action()
 		  osm.RunSync
-		  contInventory1.RefreshInventory
+		  contInventory1.RefreshInventory(True)
 		End Sub
 	#tag EndEvent
 #tag EndEvents
