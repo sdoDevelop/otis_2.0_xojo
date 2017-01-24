@@ -42,8 +42,8 @@ Begin Window Window1
       Left            =   690
       LockBottom      =   False
       LockedInPosition=   False
-      LockLeft        =   True
-      LockRight       =   False
+      LockLeft        =   False
+      LockRight       =   True
       LockTop         =   True
       Scope           =   2
       TabIndex        =   1
@@ -75,7 +75,7 @@ Begin Window Window1
       Panels          =   ""
       Scope           =   0
       SmallTabs       =   False
-      TabDefinition   =   "Inventory"
+      TabDefinition   =   "Inventory\rTab 1"
       TabIndex        =   2
       TabPanelIndex   =   0
       TabStop         =   True
@@ -84,7 +84,7 @@ Begin Window Window1
       TextUnit        =   0
       Top             =   0
       Underline       =   False
-      Value           =   0
+      Value           =   1
       Visible         =   True
       Width           =   763
       Begin contInventory contInventory1
@@ -96,7 +96,7 @@ Begin Window Window1
          Enabled         =   True
          EraseBackground =   True
          HasBackColor    =   False
-         Height          =   434
+         Height          =   432
          HelpTag         =   ""
          IncreaseQuantityValue=   0
          InitialParent   =   "tbMainWindow"
@@ -110,12 +110,43 @@ Begin Window Window1
          TabIndex        =   0
          TabPanelIndex   =   1
          TabStop         =   True
-         Top             =   26
+         Top             =   25
          Transparent     =   True
          UseFocusRing    =   False
          Visible         =   True
          Width           =   763
       End
+   End
+   Begin PushButton pbCloseTab
+      AutoDeactivate  =   True
+      Bold            =   False
+      ButtonStyle     =   "0"
+      Cancel          =   False
+      Caption         =   "Close Tab"
+      Default         =   False
+      Enabled         =   True
+      Height          =   22
+      HelpTag         =   ""
+      Index           =   -2147483648
+      InitialParent   =   ""
+      Italic          =   False
+      Left            =   611
+      LockBottom      =   False
+      LockedInPosition=   False
+      LockLeft        =   False
+      LockRight       =   True
+      LockTop         =   True
+      Scope           =   0
+      TabIndex        =   3
+      TabPanelIndex   =   0
+      TabStop         =   True
+      TextFont        =   "System"
+      TextSize        =   0.0
+      TextUnit        =   0
+      Top             =   0
+      Underline       =   False
+      Visible         =   True
+      Width           =   80
    End
 End
 #tag EndWindow
@@ -140,6 +171,14 @@ End
 		Sub Action()
 		  osm.RunSync
 		  contInventory1.RefreshInventory(True)
+		End Sub
+	#tag EndEvent
+#tag EndEvents
+#tag Events pbCloseTab
+	#tag Event
+		Sub Action()
+		  
+		  tbMainWindow.Remove(tbMainWindow.Value)
 		End Sub
 	#tag EndEvent
 #tag EndEvents

@@ -19,6 +19,17 @@ Protected Module Methods
 	#tag EndMethod
 
 	#tag Method, Flags = &h0
+		Function ConvertDollarString_To_CentsString(DollarString as String) As String
+		  
+		  dim s1 as string
+		  s1 = ReplaceAll(DollarString,"$","")
+		  s1 = ReplaceAll(s1,".","")
+		  
+		  Return s1
+		End Function
+	#tag EndMethod
+
+	#tag Method, Flags = &h0
 		Function CreateNewContainerByName(sContainerName as String) As Variant
 		  
 		  Select Case sContainerName

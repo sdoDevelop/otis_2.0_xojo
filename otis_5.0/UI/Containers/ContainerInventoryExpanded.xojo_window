@@ -24,7 +24,7 @@ Begin ContainerControl ContainerInventoryExpanded
    Transparent     =   True
    UseFocusRing    =   False
    Visible         =   True
-   Width           =   380
+   Width           =   360
    Begin entListbox lbItems
       AcceptFocus     =   False
       AcceptTabs      =   True
@@ -40,7 +40,7 @@ Begin ContainerControl ContainerInventoryExpanded
       Height          =   181
       HelpTag         =   ""
       InitialParent   =   ""
-      Left            =   35
+      Left            =   6
       LockBottom      =   True
       LockedInPosition=   False
       LockLeft        =   True
@@ -54,38 +54,7 @@ Begin ContainerControl ContainerInventoryExpanded
       Transparent     =   True
       UseFocusRing    =   False
       Visible         =   True
-      Width           =   339
-   End
-   Begin PushButton PushButton1
-      AutoDeactivate  =   True
-      Bold            =   False
-      ButtonStyle     =   "0"
-      Cancel          =   False
-      Caption         =   "OK"
-      Default         =   True
-      Enabled         =   True
-      Height          =   22
-      HelpTag         =   ""
-      Index           =   -2147483648
-      InitialParent   =   ""
-      Italic          =   False
-      Left            =   2
-      LockBottom      =   False
-      LockedInPosition=   False
-      LockLeft        =   True
-      LockRight       =   False
-      LockTop         =   True
-      Scope           =   0
-      TabIndex        =   1
-      TabPanelIndex   =   0
-      TabStop         =   True
-      TextFont        =   "System"
-      TextSize        =   0.0
-      TextUnit        =   0
-      Top             =   5
-      Underline       =   False
-      Visible         =   True
-      Width           =   31
+      Width           =   349
    End
 End
 #tag EndWindow
@@ -332,7 +301,10 @@ End
 	#tag EndEvent
 	#tag Event
 		Function entConstructContextualMenu(base as menuitem, x as integer, y as integer) As Boolean
+		  
+		  base.Append( New MenuItem("Maintenance Logs") )
 		  base.Append( New MenuItem("Delete") )
+		  
 		  
 		  Return True
 		End Function
@@ -353,31 +325,29 @@ End
 		          
 		        End If
 		      End If
+		      
+		    Case "Maintenance Logs"
+		      
+		      
+		      If lbItems.ListIndex <> -1 Then
+		        
+		        
+		        dim oRowTag as lbRowTag = lbItems.RowTag(lbItems.ListIndex)
+		        
+		        // Create a new Maintenance Log container
+		        dim ml1 as New contMaintenenceLog(self.ParentContainer,oRowTag.pkid,fkInventory)
+		        
+		        self.Window.Close
+		        
+		        App.MainWindow.tbMainWindow.Append("Maintenance Log")
+		        
+		        ml1.EmbedWithinPanel(App.MainWindow.tbMainWindow,app.MainWindow.tbMainWindow.PanelCount - 1,0,30)
+		        
+		      End If
+		      
 		    End Select
 		  End If
 		End Function
-	#tag EndEvent
-#tag EndEvents
-#tag Events PushButton1
-	#tag Event
-		Sub Action()
-		  
-		  If lbItems.ListIndex <> -1 Then
-		    
-		    
-		    dim oRowTag as lbRowTag = lbItems.RowTag(lbItems.ListIndex)
-		    
-		    // Create a new Maintenance Log container
-		    dim ml1 as New contMaintenenceLog(self.ParentContainer,oRowTag.pkid,fkInventory)
-		    
-		    self.Window.Close
-		    
-		    App.MainWindow.tbMainWindow.Append("Maintenance Log")
-		    
-		    ml1.EmbedWithinPanel(App.MainWindow.tbMainWindow,app.MainWindow.tbMainWindow.PanelCount - 1,0,30)
-		    
-		  End If
-		End Sub
 	#tag EndEvent
 #tag EndEvents
 #tag ViewBehavior

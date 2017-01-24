@@ -1,5 +1,5 @@
 #tag Class
-Protected Class tbl_maintenance_Logs
+Protected Class tbl_kits_packages
 Inherits DataFile.ActiveRecordBase
 	#tag Method, Flags = &h0
 		Shared Function BaseSQL(bAsCount as Boolean = false) As String
@@ -12,7 +12,7 @@ Inherits DataFile.ActiveRecordBase
 		    ars.Append "count(*) as iCnt"
 		  end if
 		  
-		  ars.Append "From tbl_maintenance_Logs"
+		  ars.Append "From tbl_eipl"
 		  
 		  Return ars.JoinSQL
 		End Function
@@ -33,11 +33,11 @@ Inherits DataFile.ActiveRecordBase
 	#tag EndMethod
 
 	#tag Method, Flags = &h0
-		Shared Function FindByID(id as Integer) As DataFile.tbl_maintenance_Logs
+		Shared Function FindByID(id as Integer) As DataFile.tbl_kits_packages
 		  //Usage:
-		  //dim tbl_maintenance_Logs as DataFile.tbl_maintenance_Logs = DataFile.tbl_maintenance_Logs.FindByID( id )
+		  //dim tbl_eipl as DataFile.tbl_eipl = DataFile.tbl_eipl.FindByID( id )
 		  dim s as string
-		  s = "Select * from tbl_maintenance_Logs WHERE pkid = " + str(id)
+		  s = "Select * from tbl_eipl WHERE pkid = " + str(id)
 		  
 		  dim rs as RecordSet = DB.SQLSelect(s)
 		  
@@ -47,17 +47,17 @@ Inherits DataFile.ActiveRecordBase
 		  end
 		  if rs.RecordCount = 0 then return nil
 		  
-		  dim tbl_maintenance_Logs as new DataFile.tbl_maintenance_Logs
-		  tbl_maintenance_Logs.ReadRecord(rs)
-		  return tbl_maintenance_Logs
+		  dim tbl_kits_packages as new DataFile.tbl_kits_packages
+		  tbl_kits_packages.ReadRecord(rs)
+		  return tbl_kits_packages
 		  
 		End Function
 	#tag EndMethod
 
 	#tag Method, Flags = &h0
-		Shared Function List(stmt as PreparedSQLStatement) As DataFile.tbl_maintenance_Logs()
+		Shared Function List(stmt as PreparedSQLStatement) As DataFile.tbl_kits_packages()
 		  //Note: You should use this method if your query contains user entered data. Using this method will help prevent SQL injection attacks
-		  dim aro() as DataFile.tbl_maintenance_Logs
+		  dim aro() as DataFile.tbl_kits_packages
 		  
 		  dim rs as recordset = stmt.SQLSelect
 		  If DB.error then
@@ -67,7 +67,7 @@ Inherits DataFile.ActiveRecordBase
 		  end
 		  
 		  while rs.eof = false
-		    dim oRecord as new DataFile.tbl_maintenance_Logs
+		    dim oRecord as new DataFile.tbl_kits_packages
 		    oRecord.ReadRecord(rs)
 		    aro.Append oRecord
 		    rs.MoveNext
@@ -78,14 +78,14 @@ Inherits DataFile.ActiveRecordBase
 	#tag EndMethod
 
 	#tag Method, Flags = &h0
-		Shared Function List(sCriteria as string = "", sOrder as string = "", iOffset as Integer = -1) As DataFile.tbl_maintenance_Logs()
+		Shared Function List(sCriteria as string = "", sOrder as string = "", iOffset as Integer = -1) As DataFile.tbl_kits_packages()
 		  //Note: You should not use this method if your query contains user entered data.
 		  //Using this method with user entered data could expose you to SQL injection attacks.
-		  dim aro() as DataFile.tbl_maintenance_Logs
+		  dim aro() as DataFile.tbl_kits_packages
 		  dim ars() as string
 		  
 		  
-		  ars.append DataFile.tbl_maintenance_Logs.BaseSQL
+		  ars.append DataFile.tbl_kits_packages.BaseSQL
 		  if sCriteria.Trim <> "" then
 		    ars.append "WHERE " + sCriteria
 		  end if
@@ -109,7 +109,7 @@ Inherits DataFile.ActiveRecordBase
 		  end
 		  
 		  do until rs.EOF
-		    dim oRecord as new DataFile.tbl_maintenance_Logs
+		    dim oRecord as new DataFile.tbl_kits_packages
 		    oRecord.ReadRecord(rs)
 		    
 		    aro.Append(oRecord)
@@ -145,7 +145,7 @@ Inherits DataFile.ActiveRecordBase
 		  dim ars() as string
 		  
 		  
-		  ars.append DataFile.tbl_maintenance_Logs.BaseSQL(True)
+		  ars.append DataFile.tbl_eipl.BaseSQL(True)
 		  if sCriteria<>"" then
 		    ars.append "WHERE " + sCriteria
 		  end if
@@ -164,6 +164,14 @@ Inherits DataFile.ActiveRecordBase
 
 
 	#tag Property, Flags = &h0
+		bis_mandatory As Boolean
+	#tag EndProperty
+
+	#tag Property, Flags = &h0
+		bshow_discreetly As Boolean
+	#tag EndProperty
+
+	#tag Property, Flags = &h0
 		dtrow_created As Date
 	#tag EndProperty
 
@@ -172,53 +180,56 @@ Inherits DataFile.ActiveRecordBase
 	#tag EndProperty
 
 	#tag Property, Flags = &h0
-		ifkinv_ex As Integer
+		ifkinventory_child As Integer
 	#tag EndProperty
 
 	#tag Property, Flags = &h0
-		iwork_cost As Integer
-	#tag EndProperty
-
-	#tag Property, Flags = &h0
-		sdue_date As String
-	#tag EndProperty
-
-	#tag Property, Flags = &h0
-		sentry_date As String
-	#tag EndProperty
-
-	#tag Property, Flags = &h0
-		sexit_date As String
+		ifkinventory_parent As Integer
 	#tag EndProperty
 
 	#tag Property, Flags = &h0
 		srow_username As String
 	#tag EndProperty
 
-	#tag Property, Flags = &h0
-		swork_comments As String
-	#tag EndProperty
-
-	#tag Property, Flags = &h0
-		swork_description As String
-	#tag EndProperty
-
-	#tag Property, Flags = &h0
-		swork_done_by As String
-	#tag EndProperty
-
-	#tag Property, Flags = &h0
-		swork_summary As String
-	#tag EndProperty
-
-	#tag Property, Flags = &h0
-		swork_type As String
-	#tag EndProperty
-
 
 	#tag ViewBehavior
 		#tag ViewProperty
-			Name="ifkinv_ex"
+			Name="idiscount_amount"
+			Group="Behavior"
+			Type="Integer"
+		#tag EndViewProperty
+		#tag ViewProperty
+			Name="idiscount_percent"
+			Group="Behavior"
+			Type="Integer"
+		#tag EndViewProperty
+		#tag ViewProperty
+			Name="idiscount_total"
+			Group="Behavior"
+			Type="Integer"
+		#tag EndViewProperty
+		#tag ViewProperty
+			Name="ieipl_balance"
+			Group="Behavior"
+			Type="Integer"
+		#tag EndViewProperty
+		#tag ViewProperty
+			Name="ieipl_grand_total"
+			Group="Behavior"
+			Type="Integer"
+		#tag EndViewProperty
+		#tag ViewProperty
+			Name="ieipl_number"
+			Group="Behavior"
+			Type="Integer"
+		#tag EndViewProperty
+		#tag ViewProperty
+			Name="ieipl_subtotal"
+			Group="Behavior"
+			Type="Integer"
+		#tag EndViewProperty
+		#tag ViewProperty
+			Name="ieipl_total_paid"
 			Group="Behavior"
 			Type="Integer"
 		#tag EndViewProperty
@@ -235,7 +246,7 @@ Inherits DataFile.ActiveRecordBase
 			Type="Int64"
 		#tag EndViewProperty
 		#tag ViewProperty
-			Name="iwork_cost"
+			Name="itax_total"
 			Group="Behavior"
 			Type="Integer"
 		#tag EndViewProperty
@@ -264,13 +275,13 @@ Inherits DataFile.ActiveRecordBase
 			EditorType="MultiLineEditor"
 		#tag EndViewProperty
 		#tag ViewProperty
-			Name="sentry_date"
+			Name="seipl_type"
 			Group="Behavior"
 			Type="String"
 			EditorType="MultiLineEditor"
 		#tag EndViewProperty
 		#tag ViewProperty
-			Name="sexit_date"
+			Name="sfkevents"
 			Group="Behavior"
 			Type="String"
 			EditorType="MultiLineEditor"
@@ -282,34 +293,16 @@ Inherits DataFile.ActiveRecordBase
 			EditorType="MultiLineEditor"
 		#tag EndViewProperty
 		#tag ViewProperty
+			Name="sshipping_method"
+			Group="Behavior"
+			Type="String"
+			EditorType="MultiLineEditor"
+		#tag EndViewProperty
+		#tag ViewProperty
 			Name="Super"
 			Visible=true
 			Group="ID"
 			Type="String"
-		#tag EndViewProperty
-		#tag ViewProperty
-			Name="swork_comments"
-			Group="Behavior"
-			Type="String"
-			EditorType="MultiLineEditor"
-		#tag EndViewProperty
-		#tag ViewProperty
-			Name="swork_description"
-			Group="Behavior"
-			Type="String"
-			EditorType="MultiLineEditor"
-		#tag EndViewProperty
-		#tag ViewProperty
-			Name="swork_summary"
-			Group="Behavior"
-			Type="String"
-			EditorType="MultiLineEditor"
-		#tag EndViewProperty
-		#tag ViewProperty
-			Name="swork_type"
-			Group="Behavior"
-			Type="String"
-			EditorType="MultiLineEditor"
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="Top"

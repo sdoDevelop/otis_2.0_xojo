@@ -64,8 +64,23 @@
         item_quantity               ,
         item_price_cost             ,
         item_owner                  ,
-        item_taxable                
+        item_taxable                ,
+        item_hide                   ,
+        is_package                  
         From tbl_inventory
+        ;
+
+    -- inventory_kits
+    Select 
+        pkid                        ,
+        row_created                 ,
+        row_modified                ,
+        row_username                ,
+        fkinventory_parent          ,
+        fkinventory_child           ,
+        is_mandatory                ,
+        show_discreetly             
+        From tbl_kits_packages
         ;
 
     -- inventory_expanded
@@ -95,7 +110,8 @@
         work_summary,                
         work_description,            
         work_comments,           
-        work_type                   
+        work_type   ,
+        work_done_by                
         From tbl_maintenance_Logs
         ;
 

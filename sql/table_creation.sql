@@ -66,7 +66,7 @@ Create Table tbl_events
         item_quantity               integer,
         item_price_cost             integer,
         item_owner                  text,
-        item_taxable                text
+        item_taxable                boolean
         );
 
     -- inventory_expanded
@@ -80,6 +80,19 @@ Create Table tbl_events
         item_barcode                text,
         item_rfid_code              text,
         item_serial_code            text
+        );
+
+    -- inventory_kits
+    Create Table tbl_kits_packages
+        (
+        pkid                        integer Primary Key,
+        row_created                 timestamp,
+        row_modified                timestamp,
+        row_username                text,
+        fkinventory_parent          integer,
+        fkinventory_child           integer,
+        is_mandatory                boolean,
+        show_discreetly             boolean
         );
 
     -- Maintenance Logs
@@ -97,7 +110,8 @@ Create Table tbl_events
         work_summary                text,
         work_description            text,
         work_comments               text,
-        work_type                   text
+        work_type                   text,
+        work_done_by                text
         );
 
 

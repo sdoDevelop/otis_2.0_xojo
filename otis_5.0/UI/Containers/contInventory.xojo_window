@@ -371,7 +371,17 @@ End
 		  oRowTag = lbItems.RowTag(row)
 		  otblObject = oRowTag.vtblRecord
 		  
-		  otblObject.ChangeMySavedValue( sFieldNames(column), lbItems.Cell(row,column) )
+		  dim s1 as string = lbItems.Cell(row,column)
+		  dim v1 as Variant
+		  If InStr( sFieldNames(column),"_cost") <> 0 Then
+		    Break
+		    s1 = ConvertDollarString_To_CentsString(s1)
+		    v1 = val(s1)
+		  Else
+		    v1 = s1
+		  End If
+		  
+		  otblObject.ChangeMySavedValue( sFieldNames(column), v1 )
 		  
 		  oRowTag.pkid = otblObject.ipkid
 		End Sub
@@ -548,6 +558,71 @@ End
 		    End If
 		  End If
 		End Sub
+	#tag EndEvent
+	#tag Event
+		Function ConstructContextualMenu(base as MenuItem, x as Integer, y as Integer) As Boolean
+		  
+		  base.Append( New MenuItem("Individual Items") )
+		  base.Append( New MenuItem("Details") )
+		End Function
+	#tag EndEvent
+	#tag Event
+		Function ContextualMenuAction(hitItem as MenuItem) As Boolean
+		  
+		  
+		  dim iListIndex as integer
+		  iListIndex = lbItems.ListIndex
+		  
+		  Select Case hitItem.Text 
+		  Case "Individual Items"
+		    
+		    If iListIndex <> -1 Then
+		      
+		      If Not lbItems.RowIsFolder(iListIndex) Then
+		        dim iPKID as int64
+		        dim oRowTag as lbRowTag
+		        
+		        oRowTag = lbItems.RowTag(iListIndex)
+		        If oRowTag <> Nil Then
+		          iPKID = oRowTag.pkid
+		        End If
+		        
+		        dim contExpanded as New ContainerInventoryExpanded(self,iPKID)
+		        
+		        dim wWindow as new Window2
+		        wWindow.Top = MouseY
+		        wWindow.Left = MouseX
+		        contExpanded.EmbedWithin(wWindow,0,20)
+		        
+		        
+		      End If
+		    End If
+		    
+		  Case "Details"
+		    
+		    If iListIndex <> -1 Then
+		      
+		      If Not lbItems.RowIsFolder(iListIndex) Then
+		        dim iPKID as int64
+		        dim oRowTag as lbRowTag
+		        
+		        oRowTag = lbItems.RowTag(iListIndex)
+		        If oRowTag <> Nil Then
+		          iPKID = oRowTag.pkid
+		        End If
+		        
+		        dim contItem as New contInventoryItem(oRowTag.vtblRecord)
+		        
+		        dim tbPanel as TabPanel = app.MainWindow.tbMainWindow
+		        tbPanel.Append("Details")
+		        dim n1 as integer = tbPanel.PanelCount - 1
+		        
+		        contItem.EmbedWithinPanel(tbPanel,n1,0,20)
+		        
+		      End If
+		    End If
+		  End Select
+		End Function
 	#tag EndEvent
 #tag EndEvents
 #tag Events bAddItem

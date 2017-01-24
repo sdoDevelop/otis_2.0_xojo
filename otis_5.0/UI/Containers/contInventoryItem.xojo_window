@@ -1,5 +1,5 @@
 #tag Window
-Begin ContainerControl contMaintenenceLog
+Begin ContainerControl contInventoryItem
    AcceptFocus     =   False
    AcceptTabs      =   True
    AutoDeactivate  =   True
@@ -9,7 +9,7 @@ Begin ContainerControl contMaintenenceLog
    Enabled         =   True
    EraseBackground =   True
    HasBackColor    =   False
-   Height          =   422
+   Height          =   558
    HelpTag         =   ""
    InitialParent   =   ""
    Left            =   0
@@ -24,474 +24,7 @@ Begin ContainerControl contMaintenenceLog
    Transparent     =   True
    UseFocusRing    =   False
    Visible         =   True
-   Width           =   682
-   Begin entListbox lbLogs
-      AcceptFocus     =   False
-      AcceptTabs      =   True
-      AutoDeactivate  =   True
-      BackColor       =   &cFFFFFF00
-      Backdrop        =   0
-      CellBackColor   =   &cFFFFFF00
-      Enabled         =   True
-      EraseBackground =   True
-      GridLinesColor  =   &c00000000
-      HasBackColor    =   False
-      HasHeading      =   True
-      Height          =   392
-      HelpTag         =   ""
-      InitialParent   =   ""
-      Left            =   0
-      LockBottom      =   True
-      LockedInPosition=   False
-      LockLeft        =   True
-      LockRight       =   True
-      LockTop         =   True
-      Scope           =   0
-      TabIndex        =   1
-      TabPanelIndex   =   0
-      TabStop         =   True
-      Top             =   30
-      Transparent     =   True
-      UseFocusRing    =   False
-      Visible         =   True
-      Width           =   159
-   End
-   Begin TextField tfWorkSummary
-      AcceptTabs      =   False
-      Alignment       =   0
-      AutoDeactivate  =   True
-      AutomaticallyCheckSpelling=   False
-      BackColor       =   &cFFFFFF00
-      Bold            =   False
-      Border          =   True
-      CueText         =   ""
-      DataField       =   ""
-      DataSource      =   ""
-      Enabled         =   True
-      Format          =   ""
-      Height          =   22
-      HelpTag         =   ""
-      Index           =   -2147483648
-      Italic          =   False
-      Left            =   261
-      LimitText       =   0
-      LockBottom      =   False
-      LockedInPosition=   False
-      LockLeft        =   True
-      LockRight       =   False
-      LockTop         =   True
-      Mask            =   ""
-      Password        =   False
-      ReadOnly        =   False
-      Scope           =   0
-      TabIndex        =   2
-      TabPanelIndex   =   0
-      TabStop         =   True
-      Text            =   ""
-      TextColor       =   &c00000000
-      TextFont        =   "System"
-      TextSize        =   0.0
-      TextUnit        =   0
-      Top             =   75
-      Underline       =   False
-      UseFocusRing    =   True
-      Visible         =   True
-      Width           =   136
-   End
-   Begin Label labWorkSummary
-      AutoDeactivate  =   True
-      Bold            =   False
-      DataField       =   ""
-      DataSource      =   ""
-      Enabled         =   True
-      Height          =   20
-      HelpTag         =   ""
-      Index           =   -2147483648
-      InitialParent   =   ""
-      Italic          =   False
-      Left            =   178
-      LockBottom      =   False
-      LockedInPosition=   False
-      LockLeft        =   True
-      LockRight       =   False
-      LockTop         =   True
-      Multiline       =   False
-      Scope           =   0
-      Selectable      =   False
-      TabIndex        =   3
-      TabPanelIndex   =   0
-      Text            =   "Work Summary"
-      TextAlign       =   2
-      TextColor       =   &c00000000
-      TextFont        =   "System"
-      TextSize        =   0.0
-      TextUnit        =   0
-      Top             =   76
-      Transparent     =   True
-      Underline       =   False
-      Visible         =   True
-      Width           =   74
-   End
-   Begin PushButton pbAddLog
-      AutoDeactivate  =   True
-      Bold            =   False
-      ButtonStyle     =   "0"
-      Cancel          =   False
-      Caption         =   "+"
-      Default         =   True
-      Enabled         =   True
-      Height          =   32
-      HelpTag         =   ""
-      Index           =   -2147483648
-      InitialParent   =   ""
-      Italic          =   False
-      Left            =   0
-      LockBottom      =   False
-      LockedInPosition=   False
-      LockLeft        =   True
-      LockRight       =   False
-      LockTop         =   True
-      Scope           =   0
-      TabIndex        =   4
-      TabPanelIndex   =   0
-      TabStop         =   True
-      TextFont        =   "System"
-      TextSize        =   0.0
-      TextUnit        =   0
-      Top             =   0
-      Underline       =   False
-      Visible         =   True
-      Width           =   38
-   End
-   Begin PushButton pbRefresh
-      AutoDeactivate  =   True
-      Bold            =   False
-      ButtonStyle     =   "0"
-      Cancel          =   False
-      Caption         =   "Ref"
-      Default         =   False
-      Enabled         =   True
-      Height          =   32
-      HelpTag         =   ""
-      Index           =   -2147483648
-      InitialParent   =   ""
-      Italic          =   False
-      Left            =   37
-      LockBottom      =   False
-      LockedInPosition=   False
-      LockLeft        =   True
-      LockRight       =   False
-      LockTop         =   True
-      Scope           =   0
-      TabIndex        =   5
-      TabPanelIndex   =   0
-      TabStop         =   True
-      TextFont        =   "System"
-      TextSize        =   0.0
-      TextUnit        =   0
-      Top             =   0
-      Underline       =   False
-      Visible         =   True
-      Width           =   34
-   End
-   Begin Label labEntryDate
-      AutoDeactivate  =   True
-      Bold            =   False
-      DataField       =   ""
-      DataSource      =   ""
-      Enabled         =   True
-      Height          =   20
-      HelpTag         =   ""
-      Index           =   -2147483648
-      InitialParent   =   ""
-      Italic          =   False
-      Left            =   171
-      LockBottom      =   False
-      LockedInPosition=   False
-      LockLeft        =   True
-      LockRight       =   False
-      LockTop         =   True
-      Multiline       =   False
-      Scope           =   0
-      Selectable      =   False
-      TabIndex        =   7
-      TabPanelIndex   =   0
-      Text            =   "Entry Date"
-      TextAlign       =   2
-      TextColor       =   &c00000000
-      TextFont        =   "System"
-      TextSize        =   0.0
-      TextUnit        =   0
-      Top             =   136
-      Transparent     =   True
-      Underline       =   False
-      Visible         =   True
-      Width           =   83
-   End
-   Begin DateControl dcExitDate
-      AutoDeactivate  =   True
-      Checked         =   False
-      DateFormat      =   0
-      Day             =   0
-      DropDownIcon    =   0
-      EmptyDates      =   True
-      Enabled         =   True
-      Height          =   23
-      HelpTag         =   ""
-      Index           =   -2147483648
-      InitialParent   =   ""
-      Left            =   267
-      LinuxDropDownMode=   True
-      LinuxFontBold   =   False
-      LinuxTextFont   =   "System"
-      LinuxTextSize   =   0.0
-      LinuxTextUnit   =   0
-      LockBottom      =   False
-      LockedInPosition=   False
-      LockLeft        =   True
-      LockRight       =   False
-      LockTop         =   True
-      MacFontBold     =   False
-      MacTextFont     =   "System"
-      MacTextSize     =   0.0
-      Month           =   0
-      OSXDropDownMode =   True
-      Scope           =   0
-      TabIndex        =   8
-      TabPanelIndex   =   0
-      TabStop         =   True
-      Top             =   166
-      Visible         =   True
-      Width           =   115
-      WinFontBold     =   False
-      WinTextFont     =   "System"
-      WinTextSize     =   0.0
-      WinTextUnit     =   0
-      Year            =   0
-   End
-   Begin Label labExitDate
-      AutoDeactivate  =   True
-      Bold            =   False
-      DataField       =   ""
-      DataSource      =   ""
-      Enabled         =   True
-      Height          =   20
-      HelpTag         =   ""
-      Index           =   -2147483648
-      InitialParent   =   ""
-      Italic          =   False
-      Left            =   171
-      LockBottom      =   False
-      LockedInPosition=   False
-      LockLeft        =   True
-      LockRight       =   False
-      LockTop         =   True
-      Multiline       =   False
-      Scope           =   0
-      Selectable      =   False
-      TabIndex        =   9
-      TabPanelIndex   =   0
-      Text            =   "Exit Date"
-      TextAlign       =   2
-      TextColor       =   &c00000000
-      TextFont        =   "System"
-      TextSize        =   0.0
-      TextUnit        =   0
-      Top             =   166
-      Transparent     =   True
-      Underline       =   False
-      Visible         =   True
-      Width           =   83
-   End
-   Begin TextArea taWorkDescription
-      AcceptTabs      =   False
-      Alignment       =   0
-      AutoDeactivate  =   True
-      AutomaticallyCheckSpelling=   True
-      BackColor       =   &cFFFFFF00
-      Bold            =   False
-      Border          =   True
-      DataField       =   ""
-      DataSource      =   ""
-      Enabled         =   True
-      Format          =   ""
-      Height          =   80
-      HelpTag         =   ""
-      HideSelection   =   True
-      Index           =   -2147483648
-      Italic          =   False
-      Left            =   258
-      LimitText       =   0
-      LineHeight      =   0.0
-      LineSpacing     =   1.0
-      LockBottom      =   False
-      LockedInPosition=   False
-      LockLeft        =   True
-      LockRight       =   False
-      LockTop         =   True
-      Mask            =   ""
-      Multiline       =   True
-      ReadOnly        =   False
-      Scope           =   0
-      ScrollbarHorizontal=   False
-      ScrollbarVertical=   True
-      Styled          =   True
-      TabIndex        =   10
-      TabPanelIndex   =   0
-      TabStop         =   True
-      Text            =   ""
-      TextColor       =   &c00000000
-      TextFont        =   "System"
-      TextSize        =   0.0
-      TextUnit        =   0
-      Top             =   226
-      Underline       =   False
-      UseFocusRing    =   True
-      Visible         =   True
-      Width           =   391
-   End
-   Begin Label labWorkDescription
-      AutoDeactivate  =   True
-      Bold            =   False
-      DataField       =   ""
-      DataSource      =   ""
-      Enabled         =   True
-      Height          =   20
-      HelpTag         =   ""
-      Index           =   -2147483648
-      InitialParent   =   ""
-      Italic          =   False
-      Left            =   171
-      LockBottom      =   False
-      LockedInPosition=   False
-      LockLeft        =   True
-      LockRight       =   False
-      LockTop         =   True
-      Multiline       =   True
-      Scope           =   0
-      Selectable      =   False
-      TabIndex        =   11
-      TabPanelIndex   =   0
-      Text            =   "Work Description"
-      TextAlign       =   2
-      TextColor       =   &c00000000
-      TextFont        =   "System"
-      TextSize        =   0.0
-      TextUnit        =   0
-      Top             =   227
-      Transparent     =   True
-      Underline       =   False
-      Visible         =   True
-      Width           =   81
-   End
-   Begin ComboBox pmWorkType
-      AutoComplete    =   False
-      AutoDeactivate  =   True
-      Bold            =   False
-      DataField       =   ""
-      DataSource      =   ""
-      Enabled         =   True
-      Height          =   22
-      HelpTag         =   ""
-      Index           =   -2147483648
-      InitialParent   =   ""
-      InitialValue    =   ""
-      Italic          =   False
-      Left            =   261
-      ListIndex       =   0
-      LockBottom      =   False
-      LockedInPosition=   False
-      LockLeft        =   True
-      LockRight       =   False
-      LockTop         =   True
-      Scope           =   0
-      TabIndex        =   12
-      TabPanelIndex   =   0
-      TabStop         =   True
-      TextFont        =   "System"
-      TextSize        =   0.0
-      TextUnit        =   0
-      Top             =   103
-      Underline       =   False
-      UseFocusRing    =   True
-      Visible         =   True
-      Width           =   136
-   End
-   Begin Label labWorkType
-      AutoDeactivate  =   True
-      Bold            =   False
-      DataField       =   ""
-      DataSource      =   ""
-      Enabled         =   True
-      Height          =   20
-      HelpTag         =   ""
-      Index           =   -2147483648
-      InitialParent   =   ""
-      Italic          =   False
-      Left            =   174
-      LockBottom      =   False
-      LockedInPosition=   False
-      LockLeft        =   True
-      LockRight       =   False
-      LockTop         =   True
-      Multiline       =   False
-      Scope           =   0
-      Selectable      =   False
-      TabIndex        =   13
-      TabPanelIndex   =   0
-      Text            =   "Type"
-      TextAlign       =   2
-      TextColor       =   &c00000000
-      TextFont        =   "System"
-      TextSize        =   0.0
-      TextUnit        =   0
-      Top             =   104
-      Transparent     =   True
-      Underline       =   False
-      Visible         =   True
-      Width           =   80
-   End
-   Begin DateControl dcEntryDate
-      AutoDeactivate  =   True
-      Checked         =   False
-      DateFormat      =   0
-      Day             =   0
-      DropDownIcon    =   0
-      EmptyDates      =   True
-      Enabled         =   True
-      Height          =   23
-      HelpTag         =   ""
-      Index           =   -2147483648
-      InitialParent   =   ""
-      Left            =   267
-      LinuxDropDownMode=   True
-      LinuxFontBold   =   False
-      LinuxTextFont   =   "System"
-      LinuxTextSize   =   0.0
-      LinuxTextUnit   =   0
-      LockBottom      =   False
-      LockedInPosition=   False
-      LockLeft        =   True
-      LockRight       =   False
-      LockTop         =   True
-      MacFontBold     =   False
-      MacTextFont     =   "System"
-      MacTextSize     =   0.0
-      Month           =   0
-      OSXDropDownMode =   True
-      Scope           =   0
-      TabIndex        =   6
-      TabPanelIndex   =   0
-      TabStop         =   True
-      Top             =   136
-      Visible         =   True
-      Width           =   115
-      WinFontBold     =   False
-      WinTextFont     =   "System"
-      WinTextSize     =   0.0
-      WinTextUnit     =   0
-      Year            =   0
-   End
+   Width           =   796
    Begin Label labItemName
       AutoDeactivate  =   True
       Bold            =   False
@@ -503,7 +36,7 @@ Begin ContainerControl contMaintenenceLog
       Index           =   -2147483648
       InitialParent   =   ""
       Italic          =   False
-      Left            =   171
+      Left            =   20
       LockBottom      =   False
       LockedInPosition=   False
       LockLeft        =   True
@@ -512,7 +45,7 @@ Begin ContainerControl contMaintenenceLog
       Multiline       =   False
       Scope           =   0
       Selectable      =   False
-      TabIndex        =   14
+      TabIndex        =   1
       TabPanelIndex   =   0
       Text            =   "Item Name"
       TextAlign       =   0
@@ -520,13 +53,13 @@ Begin ContainerControl contMaintenenceLog
       TextFont        =   "System"
       TextSize        =   20.0
       TextUnit        =   0
-      Top             =   10
+      Top             =   11
       Transparent     =   True
       Underline       =   False
       Visible         =   True
       Width           =   362
    End
-   Begin Label labSerialLabel
+   Begin Label labItemNameLabel
       AutoDeactivate  =   True
       Bold            =   False
       DataField       =   ""
@@ -537,7 +70,7 @@ Begin ContainerControl contMaintenenceLog
       Index           =   -2147483648
       InitialParent   =   ""
       Italic          =   False
-      Left            =   171
+      Left            =   20
       LockBottom      =   False
       LockedInPosition=   False
       LockLeft        =   True
@@ -546,89 +79,21 @@ Begin ContainerControl contMaintenenceLog
       Multiline       =   False
       Scope           =   0
       Selectable      =   False
-      TabIndex        =   15
+      TabIndex        =   2
       TabPanelIndex   =   0
-      Text            =   "Serial #: "
-      TextAlign       =   0
-      TextColor       =   &c00000000
-      TextFont        =   "System"
-      TextSize        =   0.0
-      TextUnit        =   0
-      Top             =   38
-      Transparent     =   True
-      Underline       =   False
-      Visible         =   True
-      Width           =   45
-   End
-   Begin Label labSerial
-      AutoDeactivate  =   True
-      Bold            =   False
-      DataField       =   ""
-      DataSource      =   ""
-      Enabled         =   True
-      Height          =   20
-      HelpTag         =   ""
-      Index           =   -2147483648
-      InitialParent   =   ""
-      Italic          =   False
-      Left            =   218
-      LockBottom      =   False
-      LockedInPosition=   False
-      LockLeft        =   True
-      LockRight       =   False
-      LockTop         =   True
-      Multiline       =   False
-      Scope           =   0
-      Selectable      =   False
-      TabIndex        =   16
-      TabPanelIndex   =   0
-      Text            =   "--"
-      TextAlign       =   0
-      TextColor       =   &c00000000
-      TextFont        =   "System"
-      TextSize        =   0.0
-      TextUnit        =   0
-      Top             =   38
-      Transparent     =   True
-      Underline       =   False
-      Visible         =   True
-      Width           =   100
-   End
-   Begin Label labWorkCost
-      AutoDeactivate  =   True
-      Bold            =   False
-      DataField       =   ""
-      DataSource      =   ""
-      Enabled         =   True
-      Height          =   20
-      HelpTag         =   ""
-      Index           =   -2147483648
-      InitialParent   =   ""
-      Italic          =   False
-      Left            =   175
-      LockBottom      =   False
-      LockedInPosition=   False
-      LockLeft        =   True
-      LockRight       =   False
-      LockTop         =   True
-      Multiline       =   False
-      Scope           =   0
-      Selectable      =   False
-      TabIndex        =   17
-      TabPanelIndex   =   0
-      Text            =   "Cost"
+      Text            =   "Item Name"
       TextAlign       =   2
       TextColor       =   &c00000000
       TextFont        =   "System"
       TextSize        =   0.0
       TextUnit        =   0
-      Top             =   196
+      Top             =   54
       Transparent     =   True
       Underline       =   False
       Visible         =   True
-      Width           =   74
+      Width           =   100
    End
-   Begin TextField tfWorkCost
+   Begin TextField tfItemName
       AcceptTabs      =   False
       Alignment       =   0
       AutoDeactivate  =   True
@@ -644,9 +109,8 @@ Begin ContainerControl contMaintenenceLog
       Height          =   22
       HelpTag         =   ""
       Index           =   -2147483648
-      InitialParent   =   ""
       Italic          =   False
-      Left            =   258
+      Left            =   128
       LimitText       =   0
       LockBottom      =   False
       LockedInPosition=   False
@@ -657,7 +121,7 @@ Begin ContainerControl contMaintenenceLog
       Password        =   False
       ReadOnly        =   False
       Scope           =   0
-      TabIndex        =   18
+      TabIndex        =   3
       TabPanelIndex   =   0
       TabStop         =   True
       Text            =   ""
@@ -665,13 +129,13 @@ Begin ContainerControl contMaintenenceLog
       TextFont        =   "System"
       TextSize        =   0.0
       TextUnit        =   0
-      Top             =   195
+      Top             =   53
       Underline       =   False
       UseFocusRing    =   True
       Visible         =   True
-      Width           =   136
+      Width           =   168
    End
-   Begin Label labWorkComments
+   Begin Label labItemManufacturer
       AutoDeactivate  =   True
       Bold            =   False
       DataField       =   ""
@@ -682,7 +146,822 @@ Begin ContainerControl contMaintenenceLog
       Index           =   -2147483648
       InitialParent   =   ""
       Italic          =   False
-      Left            =   171
+      Left            =   20
+      LockBottom      =   False
+      LockedInPosition=   False
+      LockLeft        =   True
+      LockRight       =   False
+      LockTop         =   True
+      Multiline       =   False
+      Scope           =   0
+      Selectable      =   False
+      TabIndex        =   4
+      TabPanelIndex   =   0
+      Text            =   "Manufacturer"
+      TextAlign       =   2
+      TextColor       =   &c00000000
+      TextFont        =   "System"
+      TextSize        =   0.0
+      TextUnit        =   0
+      Top             =   105
+      Transparent     =   True
+      Underline       =   False
+      Visible         =   True
+      Width           =   100
+   End
+   Begin TextField tfItemManufacturer
+      AcceptTabs      =   False
+      Alignment       =   0
+      AutoDeactivate  =   True
+      AutomaticallyCheckSpelling=   False
+      BackColor       =   &cFFFFFF00
+      Bold            =   False
+      Border          =   True
+      CueText         =   ""
+      DataField       =   ""
+      DataSource      =   ""
+      Enabled         =   True
+      Format          =   ""
+      Height          =   22
+      HelpTag         =   ""
+      Index           =   -2147483648
+      Italic          =   False
+      Left            =   128
+      LimitText       =   0
+      LockBottom      =   False
+      LockedInPosition=   False
+      LockLeft        =   True
+      LockRight       =   False
+      LockTop         =   True
+      Mask            =   ""
+      Password        =   False
+      ReadOnly        =   False
+      Scope           =   0
+      TabIndex        =   5
+      TabPanelIndex   =   0
+      TabStop         =   True
+      Text            =   ""
+      TextColor       =   &c00000000
+      TextFont        =   "System"
+      TextSize        =   0.0
+      TextUnit        =   0
+      Top             =   104
+      Underline       =   False
+      UseFocusRing    =   True
+      Visible         =   True
+      Width           =   168
+   End
+   Begin Label labItemModel
+      AutoDeactivate  =   True
+      Bold            =   False
+      DataField       =   ""
+      DataSource      =   ""
+      Enabled         =   True
+      Height          =   20
+      HelpTag         =   ""
+      Index           =   -2147483648
+      InitialParent   =   ""
+      Italic          =   False
+      Left            =   20
+      LockBottom      =   False
+      LockedInPosition=   False
+      LockLeft        =   True
+      LockRight       =   False
+      LockTop         =   True
+      Multiline       =   False
+      Scope           =   0
+      Selectable      =   False
+      TabIndex        =   6
+      TabPanelIndex   =   0
+      Text            =   "Model"
+      TextAlign       =   2
+      TextColor       =   &c00000000
+      TextFont        =   "System"
+      TextSize        =   0.0
+      TextUnit        =   0
+      Top             =   131
+      Transparent     =   True
+      Underline       =   False
+      Visible         =   True
+      Width           =   100
+   End
+   Begin TextField tfItemModel
+      AcceptTabs      =   False
+      Alignment       =   0
+      AutoDeactivate  =   True
+      AutomaticallyCheckSpelling=   False
+      BackColor       =   &cFFFFFF00
+      Bold            =   False
+      Border          =   True
+      CueText         =   ""
+      DataField       =   ""
+      DataSource      =   ""
+      Enabled         =   True
+      Format          =   ""
+      Height          =   22
+      HelpTag         =   ""
+      Index           =   -2147483648
+      Italic          =   False
+      Left            =   128
+      LimitText       =   0
+      LockBottom      =   False
+      LockedInPosition=   False
+      LockLeft        =   True
+      LockRight       =   False
+      LockTop         =   True
+      Mask            =   ""
+      Password        =   False
+      ReadOnly        =   False
+      Scope           =   0
+      TabIndex        =   7
+      TabPanelIndex   =   0
+      TabStop         =   True
+      Text            =   ""
+      TextColor       =   &c00000000
+      TextFont        =   "System"
+      TextSize        =   0.0
+      TextUnit        =   0
+      Top             =   130
+      Underline       =   False
+      UseFocusRing    =   True
+      Visible         =   True
+      Width           =   168
+   End
+   Begin Label labItemDepartment
+      AutoDeactivate  =   True
+      Bold            =   False
+      DataField       =   ""
+      DataSource      =   ""
+      Enabled         =   True
+      Height          =   20
+      HelpTag         =   ""
+      Index           =   -2147483648
+      InitialParent   =   ""
+      Italic          =   False
+      Left            =   20
+      LockBottom      =   False
+      LockedInPosition=   False
+      LockLeft        =   True
+      LockRight       =   False
+      LockTop         =   True
+      Multiline       =   False
+      Scope           =   0
+      Selectable      =   False
+      TabIndex        =   8
+      TabPanelIndex   =   0
+      Text            =   "Department"
+      TextAlign       =   2
+      TextColor       =   &c00000000
+      TextFont        =   "System"
+      TextSize        =   0.0
+      TextUnit        =   0
+      Top             =   156
+      Transparent     =   True
+      Underline       =   False
+      Visible         =   True
+      Width           =   100
+   End
+   Begin TextField tfItemDepartment
+      AcceptTabs      =   False
+      Alignment       =   0
+      AutoDeactivate  =   True
+      AutomaticallyCheckSpelling=   False
+      BackColor       =   &cFFFFFF00
+      Bold            =   False
+      Border          =   True
+      CueText         =   ""
+      DataField       =   ""
+      DataSource      =   ""
+      Enabled         =   True
+      Format          =   ""
+      Height          =   22
+      HelpTag         =   ""
+      Index           =   -2147483648
+      Italic          =   False
+      Left            =   128
+      LimitText       =   0
+      LockBottom      =   False
+      LockedInPosition=   False
+      LockLeft        =   True
+      LockRight       =   False
+      LockTop         =   True
+      Mask            =   ""
+      Password        =   False
+      ReadOnly        =   False
+      Scope           =   0
+      TabIndex        =   9
+      TabPanelIndex   =   0
+      TabStop         =   True
+      Text            =   ""
+      TextColor       =   &c00000000
+      TextFont        =   "System"
+      TextSize        =   0.0
+      TextUnit        =   0
+      Top             =   155
+      Underline       =   False
+      UseFocusRing    =   True
+      Visible         =   True
+      Width           =   168
+   End
+   Begin Label labItemCategory
+      AutoDeactivate  =   True
+      Bold            =   False
+      DataField       =   ""
+      DataSource      =   ""
+      Enabled         =   True
+      Height          =   20
+      HelpTag         =   ""
+      Index           =   -2147483648
+      InitialParent   =   ""
+      Italic          =   False
+      Left            =   20
+      LockBottom      =   False
+      LockedInPosition=   False
+      LockLeft        =   True
+      LockRight       =   False
+      LockTop         =   True
+      Multiline       =   False
+      Scope           =   0
+      Selectable      =   False
+      TabIndex        =   10
+      TabPanelIndex   =   0
+      Text            =   "Category"
+      TextAlign       =   2
+      TextColor       =   &c00000000
+      TextFont        =   "System"
+      TextSize        =   0.0
+      TextUnit        =   0
+      Top             =   182
+      Transparent     =   True
+      Underline       =   False
+      Visible         =   True
+      Width           =   100
+   End
+   Begin TextField tfItemCategory
+      AcceptTabs      =   False
+      Alignment       =   0
+      AutoDeactivate  =   True
+      AutomaticallyCheckSpelling=   False
+      BackColor       =   &cFFFFFF00
+      Bold            =   False
+      Border          =   True
+      CueText         =   ""
+      DataField       =   ""
+      DataSource      =   ""
+      Enabled         =   True
+      Format          =   ""
+      Height          =   22
+      HelpTag         =   ""
+      Index           =   -2147483648
+      Italic          =   False
+      Left            =   128
+      LimitText       =   0
+      LockBottom      =   False
+      LockedInPosition=   False
+      LockLeft        =   True
+      LockRight       =   False
+      LockTop         =   True
+      Mask            =   ""
+      Password        =   False
+      ReadOnly        =   False
+      Scope           =   0
+      TabIndex        =   11
+      TabPanelIndex   =   0
+      TabStop         =   True
+      Text            =   ""
+      TextColor       =   &c00000000
+      TextFont        =   "System"
+      TextSize        =   0.0
+      TextUnit        =   0
+      Top             =   181
+      Underline       =   False
+      UseFocusRing    =   True
+      Visible         =   True
+      Width           =   168
+   End
+   Begin Label labItemSubCategory
+      AutoDeactivate  =   True
+      Bold            =   False
+      DataField       =   ""
+      DataSource      =   ""
+      Enabled         =   True
+      Height          =   20
+      HelpTag         =   ""
+      Index           =   -2147483648
+      InitialParent   =   ""
+      Italic          =   False
+      Left            =   20
+      LockBottom      =   False
+      LockedInPosition=   False
+      LockLeft        =   True
+      LockRight       =   False
+      LockTop         =   True
+      Multiline       =   False
+      Scope           =   0
+      Selectable      =   False
+      TabIndex        =   12
+      TabPanelIndex   =   0
+      Text            =   "Sub-Category"
+      TextAlign       =   2
+      TextColor       =   &c00000000
+      TextFont        =   "System"
+      TextSize        =   0.0
+      TextUnit        =   0
+      Top             =   208
+      Transparent     =   True
+      Underline       =   False
+      Visible         =   True
+      Width           =   100
+   End
+   Begin TextField tfItemSubCategory
+      AcceptTabs      =   False
+      Alignment       =   0
+      AutoDeactivate  =   True
+      AutomaticallyCheckSpelling=   False
+      BackColor       =   &cFFFFFF00
+      Bold            =   False
+      Border          =   True
+      CueText         =   ""
+      DataField       =   ""
+      DataSource      =   ""
+      Enabled         =   True
+      Format          =   ""
+      Height          =   22
+      HelpTag         =   ""
+      Index           =   -2147483648
+      Italic          =   False
+      Left            =   128
+      LimitText       =   0
+      LockBottom      =   False
+      LockedInPosition=   False
+      LockLeft        =   True
+      LockRight       =   False
+      LockTop         =   True
+      Mask            =   ""
+      Password        =   False
+      ReadOnly        =   False
+      Scope           =   0
+      TabIndex        =   13
+      TabPanelIndex   =   0
+      TabStop         =   True
+      Text            =   ""
+      TextColor       =   &c00000000
+      TextFont        =   "System"
+      TextSize        =   0.0
+      TextUnit        =   0
+      Top             =   207
+      Underline       =   False
+      UseFocusRing    =   True
+      Visible         =   True
+      Width           =   168
+   End
+   Begin Label labItemDescription
+      AutoDeactivate  =   True
+      Bold            =   False
+      DataField       =   ""
+      DataSource      =   ""
+      Enabled         =   True
+      Height          =   20
+      HelpTag         =   ""
+      Index           =   -2147483648
+      InitialParent   =   ""
+      Italic          =   False
+      Left            =   20
+      LockBottom      =   False
+      LockedInPosition=   False
+      LockLeft        =   True
+      LockRight       =   False
+      LockTop         =   True
+      Multiline       =   False
+      Scope           =   0
+      Selectable      =   False
+      TabIndex        =   14
+      TabPanelIndex   =   0
+      Text            =   "Description"
+      TextAlign       =   2
+      TextColor       =   &c00000000
+      TextFont        =   "System"
+      TextSize        =   0.0
+      TextUnit        =   0
+      Top             =   234
+      Transparent     =   True
+      Underline       =   False
+      Visible         =   True
+      Width           =   100
+   End
+   Begin TextField tfItemDescription
+      AcceptTabs      =   False
+      Alignment       =   0
+      AutoDeactivate  =   True
+      AutomaticallyCheckSpelling=   False
+      BackColor       =   &cFFFFFF00
+      Bold            =   False
+      Border          =   True
+      CueText         =   ""
+      DataField       =   ""
+      DataSource      =   ""
+      Enabled         =   True
+      Format          =   ""
+      Height          =   22
+      HelpTag         =   ""
+      Index           =   -2147483648
+      Italic          =   False
+      Left            =   128
+      LimitText       =   0
+      LockBottom      =   False
+      LockedInPosition=   False
+      LockLeft        =   True
+      LockRight       =   False
+      LockTop         =   True
+      Mask            =   ""
+      Password        =   False
+      ReadOnly        =   False
+      Scope           =   0
+      TabIndex        =   15
+      TabPanelIndex   =   0
+      TabStop         =   True
+      Text            =   ""
+      TextColor       =   &c00000000
+      TextFont        =   "System"
+      TextSize        =   0.0
+      TextUnit        =   0
+      Top             =   233
+      Underline       =   False
+      UseFocusRing    =   True
+      Visible         =   True
+      Width           =   168
+   End
+   Begin Label labItemOwner
+      AutoDeactivate  =   True
+      Bold            =   False
+      DataField       =   ""
+      DataSource      =   ""
+      Enabled         =   True
+      Height          =   20
+      HelpTag         =   ""
+      Index           =   -2147483648
+      InitialParent   =   ""
+      Italic          =   False
+      Left            =   20
+      LockBottom      =   False
+      LockedInPosition=   False
+      LockLeft        =   True
+      LockRight       =   False
+      LockTop         =   True
+      Multiline       =   False
+      Scope           =   0
+      Selectable      =   False
+      TabIndex        =   16
+      TabPanelIndex   =   0
+      Text            =   "Owner"
+      TextAlign       =   2
+      TextColor       =   &c00000000
+      TextFont        =   "System"
+      TextSize        =   0.0
+      TextUnit        =   0
+      Top             =   260
+      Transparent     =   True
+      Underline       =   False
+      Visible         =   True
+      Width           =   100
+   End
+   Begin TextField tfItemOwner
+      AcceptTabs      =   False
+      Alignment       =   0
+      AutoDeactivate  =   True
+      AutomaticallyCheckSpelling=   False
+      BackColor       =   &cFFFFFF00
+      Bold            =   False
+      Border          =   True
+      CueText         =   ""
+      DataField       =   ""
+      DataSource      =   ""
+      Enabled         =   True
+      Format          =   ""
+      Height          =   22
+      HelpTag         =   ""
+      Index           =   -2147483648
+      Italic          =   False
+      Left            =   128
+      LimitText       =   0
+      LockBottom      =   False
+      LockedInPosition=   False
+      LockLeft        =   True
+      LockRight       =   False
+      LockTop         =   True
+      Mask            =   ""
+      Password        =   False
+      ReadOnly        =   False
+      Scope           =   0
+      TabIndex        =   17
+      TabPanelIndex   =   0
+      TabStop         =   True
+      Text            =   ""
+      TextColor       =   &c00000000
+      TextFont        =   "System"
+      TextSize        =   0.0
+      TextUnit        =   0
+      Top             =   259
+      Underline       =   False
+      UseFocusRing    =   True
+      Visible         =   True
+      Width           =   168
+   End
+   Begin Label labItemQuantity
+      AutoDeactivate  =   True
+      Bold            =   False
+      DataField       =   ""
+      DataSource      =   ""
+      Enabled         =   True
+      Height          =   20
+      HelpTag         =   ""
+      Index           =   -2147483648
+      InitialParent   =   ""
+      Italic          =   False
+      Left            =   20
+      LockBottom      =   False
+      LockedInPosition=   False
+      LockLeft        =   True
+      LockRight       =   False
+      LockTop         =   True
+      Multiline       =   False
+      Scope           =   0
+      Selectable      =   False
+      TabIndex        =   18
+      TabPanelIndex   =   0
+      Text            =   "Quantity"
+      TextAlign       =   2
+      TextColor       =   &c00000000
+      TextFont        =   "System"
+      TextSize        =   0.0
+      TextUnit        =   0
+      Top             =   286
+      Transparent     =   True
+      Underline       =   False
+      Visible         =   True
+      Width           =   100
+   End
+   Begin TextField tfItemQuantity
+      AcceptTabs      =   False
+      Alignment       =   0
+      AutoDeactivate  =   True
+      AutomaticallyCheckSpelling=   False
+      BackColor       =   &cFFFFFF00
+      Bold            =   False
+      Border          =   True
+      CueText         =   ""
+      DataField       =   ""
+      DataSource      =   ""
+      Enabled         =   True
+      Format          =   ""
+      Height          =   22
+      HelpTag         =   ""
+      Index           =   -2147483648
+      Italic          =   False
+      Left            =   128
+      LimitText       =   0
+      LockBottom      =   False
+      LockedInPosition=   False
+      LockLeft        =   True
+      LockRight       =   False
+      LockTop         =   True
+      Mask            =   ""
+      Password        =   False
+      ReadOnly        =   False
+      Scope           =   0
+      TabIndex        =   19
+      TabPanelIndex   =   0
+      TabStop         =   True
+      Text            =   ""
+      TextColor       =   &c00000000
+      TextFont        =   "System"
+      TextSize        =   0.0
+      TextUnit        =   0
+      Top             =   285
+      Underline       =   False
+      UseFocusRing    =   True
+      Visible         =   True
+      Width           =   168
+   End
+   Begin Label labItemPrice
+      AutoDeactivate  =   True
+      Bold            =   False
+      DataField       =   ""
+      DataSource      =   ""
+      Enabled         =   True
+      Height          =   20
+      HelpTag         =   ""
+      Index           =   -2147483648
+      InitialParent   =   ""
+      Italic          =   False
+      Left            =   20
+      LockBottom      =   False
+      LockedInPosition=   False
+      LockLeft        =   True
+      LockRight       =   False
+      LockTop         =   True
+      Multiline       =   False
+      Scope           =   0
+      Selectable      =   False
+      TabIndex        =   20
+      TabPanelIndex   =   0
+      Text            =   "Price"
+      TextAlign       =   2
+      TextColor       =   &c00000000
+      TextFont        =   "System"
+      TextSize        =   0.0
+      TextUnit        =   0
+      Top             =   311
+      Transparent     =   True
+      Underline       =   False
+      Visible         =   True
+      Width           =   100
+   End
+   Begin TextField tfItemPrice
+      AcceptTabs      =   False
+      Alignment       =   0
+      AutoDeactivate  =   True
+      AutomaticallyCheckSpelling=   False
+      BackColor       =   &cFFFFFF00
+      Bold            =   False
+      Border          =   True
+      CueText         =   ""
+      DataField       =   ""
+      DataSource      =   ""
+      Enabled         =   True
+      Format          =   ""
+      Height          =   22
+      HelpTag         =   ""
+      Index           =   -2147483648
+      Italic          =   False
+      Left            =   128
+      LimitText       =   0
+      LockBottom      =   False
+      LockedInPosition=   False
+      LockLeft        =   True
+      LockRight       =   False
+      LockTop         =   True
+      Mask            =   ""
+      Password        =   False
+      ReadOnly        =   False
+      Scope           =   0
+      TabIndex        =   21
+      TabPanelIndex   =   0
+      TabStop         =   True
+      Text            =   ""
+      TextColor       =   &c00000000
+      TextFont        =   "System"
+      TextSize        =   0.0
+      TextUnit        =   0
+      Top             =   310
+      Underline       =   False
+      UseFocusRing    =   True
+      Visible         =   True
+      Width           =   168
+   End
+   Begin Label labItemTaxable
+      AutoDeactivate  =   True
+      Bold            =   False
+      DataField       =   ""
+      DataSource      =   ""
+      Enabled         =   True
+      Height          =   20
+      HelpTag         =   ""
+      Index           =   -2147483648
+      InitialParent   =   ""
+      Italic          =   False
+      Left            =   20
+      LockBottom      =   False
+      LockedInPosition=   False
+      LockLeft        =   True
+      LockRight       =   False
+      LockTop         =   True
+      Multiline       =   False
+      Scope           =   0
+      Selectable      =   False
+      TabIndex        =   22
+      TabPanelIndex   =   0
+      Text            =   "Taxable"
+      TextAlign       =   2
+      TextColor       =   &c00000000
+      TextFont        =   "System"
+      TextSize        =   0.0
+      TextUnit        =   0
+      Top             =   337
+      Transparent     =   True
+      Underline       =   False
+      Visible         =   True
+      Width           =   100
+   End
+   Begin CheckBox tfItemTaxable
+      AutoDeactivate  =   True
+      Bold            =   False
+      Caption         =   ""
+      DataField       =   ""
+      DataSource      =   ""
+      Enabled         =   True
+      Height          =   22
+      HelpTag         =   ""
+      Index           =   -2147483648
+      InitialParent   =   ""
+      Italic          =   False
+      Left            =   128
+      LockBottom      =   False
+      LockedInPosition=   False
+      LockLeft        =   True
+      LockRight       =   False
+      LockTop         =   True
+      Scope           =   0
+      State           =   0
+      TabIndex        =   23
+      TabPanelIndex   =   0
+      TabStop         =   True
+      TextFont        =   "System"
+      TextSize        =   0.0
+      TextUnit        =   0
+      Top             =   336
+      Underline       =   False
+      Visible         =   True
+      Width           =   111
+   End
+   Begin Label labItemType
+      AutoDeactivate  =   True
+      Bold            =   False
+      DataField       =   ""
+      DataSource      =   ""
+      Enabled         =   True
+      Height          =   20
+      HelpTag         =   ""
+      Index           =   -2147483648
+      InitialParent   =   ""
+      Italic          =   False
+      Left            =   20
+      LockBottom      =   False
+      LockedInPosition=   False
+      LockLeft        =   True
+      LockRight       =   False
+      LockTop         =   True
+      Multiline       =   False
+      Scope           =   0
+      Selectable      =   False
+      TabIndex        =   24
+      TabPanelIndex   =   0
+      Text            =   "Type"
+      TextAlign       =   2
+      TextColor       =   &c00000000
+      TextFont        =   "System"
+      TextSize        =   0.0
+      TextUnit        =   0
+      Top             =   79
+      Transparent     =   True
+      Underline       =   False
+      Visible         =   True
+      Width           =   100
+   End
+   Begin ComboBox cbItemType
+      AutoComplete    =   False
+      AutoDeactivate  =   True
+      Bold            =   False
+      DataField       =   ""
+      DataSource      =   ""
+      Enabled         =   True
+      Height          =   22
+      HelpTag         =   ""
+      Index           =   -2147483648
+      InitialValue    =   ""
+      Italic          =   False
+      Left            =   128
+      ListIndex       =   0
+      LockBottom      =   False
+      LockedInPosition=   False
+      LockLeft        =   True
+      LockRight       =   False
+      LockTop         =   True
+      Scope           =   0
+      TabIndex        =   25
+      TabPanelIndex   =   0
+      TabStop         =   True
+      TextFont        =   "System"
+      TextSize        =   0.0
+      TextUnit        =   0
+      Top             =   78
+      Underline       =   False
+      UseFocusRing    =   True
+      Visible         =   True
+      Width           =   168
+   End
+   Begin Label labInventoryExpanded
+      AutoDeactivate  =   True
+      Bold            =   False
+      DataField       =   ""
+      DataSource      =   ""
+      Enabled         =   True
+      Height          =   20
+      HelpTag         =   ""
+      Index           =   -2147483648
+      InitialParent   =   ""
+      Italic          =   False
+      Left            =   40
       LockBottom      =   False
       LockedInPosition=   False
       LockLeft        =   True
@@ -691,437 +970,224 @@ Begin ContainerControl contMaintenenceLog
       Multiline       =   True
       Scope           =   0
       Selectable      =   False
-      TabIndex        =   19
+      TabIndex        =   27
       TabPanelIndex   =   0
-      Text            =   "Comments"
+      Text            =   "Individual Items"
       TextAlign       =   2
       TextColor       =   &c00000000
       TextFont        =   "System"
       TextSize        =   0.0
       TextUnit        =   0
-      Top             =   319
+      Top             =   360
       Transparent     =   True
       Underline       =   False
       Visible         =   True
-      Width           =   81
-   End
-   Begin TextArea taWorkComments
-      AcceptTabs      =   False
-      Alignment       =   0
-      AutoDeactivate  =   True
-      AutomaticallyCheckSpelling=   True
-      BackColor       =   &cFFFFFF00
-      Bold            =   False
-      Border          =   True
-      DataField       =   ""
-      DataSource      =   ""
-      Enabled         =   True
-      Format          =   ""
-      Height          =   80
-      HelpTag         =   ""
-      HideSelection   =   True
-      Index           =   -2147483648
-      Italic          =   False
-      Left            =   258
-      LimitText       =   0
-      LineHeight      =   0.0
-      LineSpacing     =   1.0
-      LockBottom      =   False
-      LockedInPosition=   False
-      LockLeft        =   True
-      LockRight       =   False
-      LockTop         =   True
-      Mask            =   ""
-      Multiline       =   True
-      ReadOnly        =   False
-      Scope           =   0
-      ScrollbarHorizontal=   False
-      ScrollbarVertical=   True
-      Styled          =   True
-      TabIndex        =   20
-      TabPanelIndex   =   0
-      TabStop         =   True
-      Text            =   ""
-      TextColor       =   &c00000000
-      TextFont        =   "System"
-      TextSize        =   0.0
-      TextUnit        =   0
-      Top             =   318
-      Underline       =   False
-      UseFocusRing    =   True
-      Visible         =   True
-      Width           =   391
+      Width           =   80
    End
 End
 #tag EndWindow
 
 #tag WindowCode
 	#tag Method, Flags = &h0
-		Sub AddLog()
+		Sub Constructor(oInventoryItem as DataFile.tbl_inventory)
 		  
-		  // Create a new Log record
-		  dim oNewLog as New DataFile.tbl_maintenance_Logs
-		  oCurrentLog = oNewLog
-		  tfWorkSummary.SetFocus
-		  oCurrentLog.ifkinv_ex = fkInventoryExpanded
+		  LoadItem(oInventoryItem)
 		End Sub
 	#tag EndMethod
 
 	#tag Method, Flags = &h0
-		Sub Constructor(contParent as contInventory, ifkInventoryExpanded as Int64, ifkInventory as int64)
-		  
-		  // Set references to the parent container
-		  ParentContainer = contParent
-		  fkInventoryExpanded = ifkInventoryExpanded
-		  fkInventory = ifkInventory
-		  
-		  // Load the expanded inventory for the requested Item
-		  ParentContainer.oItems.LoadMaintenanceLogs(fkInventoryExpanded)
-		  
-		  // Load the header
-		  LoadHeader
-		End Sub
-	#tag EndMethod
-
-	#tag Method, Flags = &h0
-		Sub DeleteItem(oRowTag as lbrowtag, IdentifyingName as String)
-		  break
+		Sub LoadItem(oItem as DataFile.tbl_inventory)
 		  
 		  
-		  If MsgBox("Are you sure you want to delete " + IdentifyingName, 4) = 6 Then
-		    
-		    dim otblObject as DataFile.tbl_maintenance_Logs = oRowTag.vtblRecord
-		    
-		    dim iPKID as integer = oRowTag.pkid
-		    
-		    otblObject.Delete
-		    
-		    dim n1 as integer = lbLogs.FindByPKID(iPKID)
-		    If  n1 <> -1 Then
-		      lbLogs.RemoveRow(n1)
-		    End If
-		    
-		  End If
+		  // Put the passed inventory item into a stored property
+		  oCurrentInventoryItem = oItem
+		  
+		  // Populate fields from Inventory Table
+		  tfItemCategory.Text = oCurrentInventoryItem.sitem_category
+		  tfItemDepartment.Text = oCurrentInventoryItem.sitem_department
+		  tfItemDescription.Text = oCurrentInventoryItem.sitem_description
+		  tfItemManufacturer.Text = oCurrentInventoryItem.sitem_manufacturer
+		  tfItemModel.Text = oCurrentInventoryItem.sitem_model
+		  tfItemName.Text = oCurrentInventoryItem.sitem_name
+		  labItemName.Text = oCurrentInventoryItem.sitem_name
+		  tfItemOwner.Text = oCurrentInventoryItem.sitem_owner
+		  tfItemPrice.Text = ConvertCentsString_To_DollarString( str( oCurrentInventoryItem.iitem_price_cost ) )
+		  tfItemQuantity.Text = str( oCurrentInventoryItem.iitem_quantity )
+		  tfItemSubCategory.Text = oCurrentInventoryItem.sitem_subcategory
+		  tfItemTaxable.Value = oCurrentInventoryItem.bitem_taxable
+		  cbItemType.Text = oCurrentInventoryItem.sitem_type
+		  
+		  // Populate Inventory Expanded
 		  
 		End Sub
 	#tag EndMethod
 
 	#tag Method, Flags = &h0
-		Sub LoadHeader()
-		  // Load Item name 
-		  dim oRecord as DataFile.tbl_inventory = DataFile.tbl_inventory.FindByID(fkInventory)
-		  labItemName.text = oRecord.sitem_name
+		Sub SaveItem()
 		  
-		  // Load ITem serial
-		  dim oRecord2 as DataFile.tbl_inv_ex = DataFile.tbl_inv_ex.FindByID(fkInventoryExpanded)
-		  labSerial.Text = oRecord2.sitem_serial_code
-		End Sub
-	#tag EndMethod
-
-	#tag Method, Flags = &h0
-		Sub LoadItemsIntoListbox()
+		  oCurrentInventoryItem.Save
 		  
-		  // Delete all current rows in listbox
-		  lbLogs.DeleteAllRows
-		  
-		  
-		  // Grab the expanded inventory list From the Parent Container
-		  dim oLogList() as DataFile.tbl_maintenance_Logs = ParentContainer.oItems.dictMaintenanceLogs.Value(fkInventoryExpanded)
-		  
-		  For i1 as integer = 0 To oLogList.Ubound
-		    dim Log as DataFile.tbl_maintenance_Logs = oLogList(i1)
-		    dim oRowTag as New lbRowTag
-		    
-		    // Add the pkid to the rowtag
-		    oRowTag.pkid = Log.ipkid
-		    oRowTag.vtblRecord = Log
-		    
-		    lbLogs.AddRow("")
-		    
-		    // Extract the field names and values as json item
-		    dim jsFieldValues as JSONItem
-		    jsFieldValues = Log.GetMyFieldValues(True)
-		    
-		    // Extract field names and values as json item from our parent
-		    dim jsParentFieldValues as JSONItem
-		    dim oParentRowTag as lbRowTag
-		    dim oParentTableRecord as DataFile.tbl_inventory
-		    oParentRowTag = ParentContainer.lbItems.RowTag(ParentContainer.lbItems.FindByPKID(fkInventory))
-		    oParentTableRecord = oParentRowTag.vtblRecord
-		    jsParentFieldValues = oParentTableRecord.GetMyFieldValues(True)
-		    
-		    For i2 as integer = 0 To sFieldNames.Ubound
-		      
-		      Try 
-		        // Try to get the value for this field from our item variable
-		        ReDim oRowTag.vColumnValues(i2)
-		        oRowTag.vColumnValues(i2) = jsFieldValues.Value(sFieldNames(i2))
-		      Catch e as KeyNotFoundException
-		        
-		        // Try to get the value for this field from our parent item 
-		        ReDim oRowTag.vColumnValues(i2)
-		        oRowTag.vColumnValues(i2) = jsParentFieldValues.Value(sFieldNames(i2))
-		      End Try
-		      
-		    Next
-		    
-		    lbLogs.RowTag(lbLogs.LastIndex) = oRowTag
-		    dim n2 as integer = lbLogs.LastIndex
-		    LoadRow(n2,oRowTag)
-		    
-		  Next
-		  
-		  
-		End Sub
-	#tag EndMethod
-
-	#tag Method, Flags = &h0
-		Sub LoadLog(oLogRecord as DataFile.tbl_maintenance_Logs)
-		  
-		  oCurrentLog = oLogRecord
-		  
-		  
-		  tfWorkSummary.Text = oCurrentLog.swork_summary
-		  
-		  // Load Entry Date
-		  If oCurrentLog.sentry_date = "" Then
-		    dcEntryDate.DateValue = New Date
-		    dcEntryDate.Checked = False
-		  Else
-		    dim dDate as New Date
-		    dDate.SQLDate = oCurrentLog.sentry_date
-		    dcEntryDate.DateValue = dDate
-		    dcEntryDate.Checked = True
-		  End If
-		  
-		  // Load Exit Date
-		  If oCurrentLog.sexit_date = "" Then
-		    dcExitDate.DateValue = New Date
-		    dcExitDate.Checked = False
-		  Else
-		    dim dDate as New Date
-		    dDate.SQLDate = oCurrentLog.sexit_date
-		    dcExitDate.DateValue = dDate
-		    dcExitDate.Checked = True
-		  End If
-		  
-		  // Load Work Description
-		  taWorkDescription.Text = oCurrentLog.swork_description
-		  
-		  // Load Work Comments
-		  taWorkComments.Text =  oCurrentLog.swork_comments
-		  
-		  // Load Work Type
-		  pmWorkType.Text = oCurrentLog.swork_type
-		  
-		  // Load Cost
-		  tfWorkCost.Text = ConvertCentsString_To_DollarString(str(oCurrentLog.iwork_cost))
-		  
-		  
-		End Sub
-	#tag EndMethod
-
-	#tag Method, Flags = &h0
-		Sub LoadRow(row as integer, oRowTag as lbRowTag)
-		  
-		  'dim oRowTag as New lbRowTag(oRecord,sFieldNames)
-		  
-		  'lbItems.RowTag(row) = oRowTag
-		  
-		  // Populate cells
-		  For i1 as integer = 0 To sFieldNames.ubound
-		    lbLogs.Cell(row,i1) = oRowTag.vColumnValues(i1)
-		  Next
-		End Sub
-	#tag EndMethod
-
-	#tag Method, Flags = &h0
-		Sub RefreshLogList()
-		  
-		  
-		  ParentContainer.oItems.LoadMaintenanceLogs(fkInventoryExpanded)
-		  LoadItemsIntoListbox
-		End Sub
-	#tag EndMethod
-
-	#tag Method, Flags = &h0
-		Sub SaveLog()
-		  
-		  oCurrentLog.Save
-		  RefreshLogList
 		End Sub
 	#tag EndMethod
 
 
 	#tag Property, Flags = &h0
-		fkInventory As Int64
-	#tag EndProperty
-
-	#tag Property, Flags = &h0
-		fkInventoryExpanded As Int64
-	#tag EndProperty
-
-	#tag Property, Flags = &h0
-		iColumnTypes() As Integer
-	#tag EndProperty
-
-	#tag Property, Flags = &h0
-		oCurrentLog As DataFile.tbl_maintenance_Logs
-	#tag EndProperty
-
-	#tag Property, Flags = &h0
-		ParentContainer As contInventory
-	#tag EndProperty
-
-	#tag Property, Flags = &h0
-		sFieldNames() As String
-	#tag EndProperty
-
-	#tag Property, Flags = &h0
-		sHeaders() As String
+		oCurrentInventoryItem As DataFile.tbl_inventory
 	#tag EndProperty
 
 
 #tag EndWindowCode
 
-#tag Events lbLogs
-	#tag Event
-		Sub Open()
-		  dim s1, s2() as string
-		  
-		  me.ColumnCount = 1
-		  
-		  For i1 as integer = 0 To me.ColumnCount - 1
-		    me.ColumnType(i1) = 0
-		  Next
-		  
-		  // Set header names
-		  s1 = "Logs"
-		  s2 = Split(s1,",")
-		  sHeaders = s2
-		  me.Heading = s2
-		  
-		  // Set Field Names 
-		  s1 = "work_summary"
-		  s2 = Split(s1,",")
-		  sFieldNames = s2
-		  
-		  dim n1,n2() as integer
-		  n2 = Array(0)
-		  iColumnTypes = n2
-		  me.ColumnType = n2
-		  
-		  
-		  LoadItemsIntoListbox
-		End Sub
-	#tag EndEvent
-	#tag Event
-		Sub Change()
-		  
-		  If lbLogs.ListIndex <> -1 Then
-		    
-		    dim oRowTag as lbRowTag
-		    oRowTag = lbLogs.RowTag(lbLogs.ListIndex)
-		    
-		    dim oRecord as DataFile.tbl_maintenance_Logs = oRowTag.vtblRecord
-		    
-		    LoadLog(oRecord)
-		    
-		  End If
-		End Sub
-	#tag EndEvent
-#tag EndEvents
-#tag Events tfWorkSummary
-	#tag Event
-		Sub LostFocus()
-		  
-		  oCurrentLog.swork_summary = me.Text
-		  SaveLog
-		End Sub
-	#tag EndEvent
-#tag EndEvents
-#tag Events pbAddLog
-	#tag Event
-		Sub Action()
-		  AddLog
-		  
-		End Sub
-	#tag EndEvent
-#tag EndEvents
-#tag Events dcExitDate
-	#tag Event
-		Sub LostFocus()
-		  
-		  oCurrentLog.sexit_date = me.DateValue.SQLDate
-		  SaveLog
-		  
-		End Sub
-	#tag EndEvent
-#tag EndEvents
-#tag Events taWorkDescription
-	#tag Event
-		Sub LostFocus()
-		  
-		  oCurrentLog.swork_description = me.Text
-		  SaveLog
-		End Sub
-	#tag EndEvent
-#tag EndEvents
-#tag Events pmWorkType
-	#tag Event
-		Sub Open()
-		  
-		  dim s1 as string
-		  s1 = "Check-Up,Repair,Retire"
-		  
-		  dim s2() as string
-		  s2 = Split(s1,",")
-		  
-		  For i1 as integer = 0 To s2.Ubound
-		    
-		    me.AddRow(s2(i1))
-		    
-		  Next
-		End Sub
-	#tag EndEvent
-	#tag Event
-		Sub LostFocus()
-		  
-		  oCurrentLog.swork_type = me.Text
-		  SaveLog
-		  
-		End Sub
-	#tag EndEvent
-#tag EndEvents
-#tag Events dcEntryDate
-	#tag Event
-		Sub LostFocus()
-		  
-		  oCurrentLog.sentry_date = me.DateValue.SQLDate
-		  SaveLog
-		  
-		End Sub
-	#tag EndEvent
-#tag EndEvents
-#tag Events tfWorkCost
+#tag Events tfItemName
 	#tag Event
 		Sub LostFocus()
 		  
 		  dim s1 as string
 		  
-		  s1 = ConvertDollarString_To_CentsString(me.Text)
+		  s1 = me.Text
 		  
-		  oCurrentLog.iwork_cost = val(s1)
-		  SaveLog
+		  oCurrentInventoryItem.sitem_name = s1
+		  SaveItem
 		End Sub
 	#tag EndEvent
 #tag EndEvents
-#tag Events taWorkComments
+#tag Events tfItemManufacturer
 	#tag Event
 		Sub LostFocus()
 		  
-		  oCurrentLog.swork_comments = me.Text
-		  SaveLog
+		  dim s1 as string
+		  
+		  s1 = me.Text
+		  
+		  oCurrentInventoryItem.sitem_manufacturer = s1
+		  SaveItem
+		End Sub
+	#tag EndEvent
+#tag EndEvents
+#tag Events tfItemModel
+	#tag Event
+		Sub LostFocus()
+		  
+		  dim s1 as string
+		  
+		  s1 = me.Text
+		  
+		  oCurrentInventoryItem.sitem_model = s1
+		  SaveItem
+		End Sub
+	#tag EndEvent
+#tag EndEvents
+#tag Events tfItemDepartment
+	#tag Event
+		Sub LostFocus()
+		  
+		  dim s1 as string
+		  
+		  s1 = me.Text
+		  
+		  oCurrentInventoryItem.sitem_department = s1
+		  SaveItem
+		End Sub
+	#tag EndEvent
+#tag EndEvents
+#tag Events tfItemCategory
+	#tag Event
+		Sub LostFocus()
+		  
+		  dim s1 as string
+		  
+		  s1 = me.Text
+		  
+		  oCurrentInventoryItem.sitem_category = s1
+		  SaveItem
+		End Sub
+	#tag EndEvent
+#tag EndEvents
+#tag Events tfItemSubCategory
+	#tag Event
+		Sub LostFocus()
+		  
+		  dim s1 as string
+		  
+		  s1 = me.Text
+		  
+		  oCurrentInventoryItem.sitem_subcategory = s1
+		  SaveItem
+		End Sub
+	#tag EndEvent
+#tag EndEvents
+#tag Events tfItemDescription
+	#tag Event
+		Sub LostFocus()
+		  
+		  dim s1 as string
+		  
+		  s1 = me.Text
+		  
+		  oCurrentInventoryItem.sitem_description = s1
+		  SaveItem
+		End Sub
+	#tag EndEvent
+#tag EndEvents
+#tag Events tfItemOwner
+	#tag Event
+		Sub LostFocus()
+		  
+		  dim s1 as string
+		  
+		  s1 = me.Text
+		  
+		  oCurrentInventoryItem.sitem_owner = s1
+		  SaveItem
+		End Sub
+	#tag EndEvent
+#tag EndEvents
+#tag Events tfItemQuantity
+	#tag Event
+		Sub LostFocus()
+		  
+		  dim s1 as string
+		  
+		  s1 = me.Text
+		  
+		  oCurrentInventoryItem.iitem_quantity = val(s1)
+		  SaveItem
+		End Sub
+	#tag EndEvent
+#tag EndEvents
+#tag Events tfItemPrice
+	#tag Event
+		Sub LostFocus()
+		  
+		  dim s1 as string
+		  
+		  s1 = ConvertDollarString_To_CentsString( me.Text )
+		  
+		  oCurrentInventoryItem.iitem_price_cost = val(s1)
+		  SaveItem
+		End Sub
+	#tag EndEvent
+#tag EndEvents
+#tag Events tfItemTaxable
+	#tag Event
+		Sub LostFocus()
+		  
+		  
+		  oCurrentInventoryItem.bitem_taxable = me.Value
+		  SaveItem
+		End Sub
+	#tag EndEvent
+#tag EndEvents
+#tag Events cbItemType
+	#tag Event
+		Sub LostFocus()
+		  
+		  dim s1 as string
+		  
+		  s1 = me.Text
+		  
+		  oCurrentInventoryItem.sitem_type = s1
+		  SaveItem
 		End Sub
 	#tag EndEvent
 #tag EndEvents
@@ -1178,16 +1244,6 @@ End
 		InitialValue="True"
 		Type="Boolean"
 		EditorType="Boolean"
-	#tag EndViewProperty
-	#tag ViewProperty
-		Name="fkInventory"
-		Group="Behavior"
-		Type="Int64"
-	#tag EndViewProperty
-	#tag ViewProperty
-		Name="fkInventoryExpanded"
-		Group="Behavior"
-		Type="Int64"
 	#tag EndViewProperty
 	#tag ViewProperty
 		Name="HasBackColor"

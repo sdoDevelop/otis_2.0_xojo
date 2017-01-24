@@ -164,6 +164,10 @@ Inherits DataFile.ActiveRecordBase
 
 
 	#tag Property, Flags = &h0
+		bitem_taxable As Boolean
+	#tag EndProperty
+
+	#tag Property, Flags = &h0
 		dtrow_created As Date
 	#tag EndProperty
 
@@ -212,10 +216,6 @@ Inherits DataFile.ActiveRecordBase
 	#tag EndProperty
 
 	#tag Property, Flags = &h0
-		sitem_taxable As String
-	#tag EndProperty
-
-	#tag Property, Flags = &h0
 		sitem_type As String
 	#tag EndProperty
 
@@ -225,6 +225,12 @@ Inherits DataFile.ActiveRecordBase
 
 
 	#tag ViewBehavior
+		#tag ViewProperty
+			Name="bitem_taxable"
+			Group="Behavior"
+			Type="String"
+			EditorType="MultiLineEditor"
+		#tag EndViewProperty
 		#tag ViewProperty
 			Name="iitem_price_cost"
 			Group="Behavior"
@@ -309,12 +315,6 @@ Inherits DataFile.ActiveRecordBase
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="sitem_subcategory"
-			Group="Behavior"
-			Type="String"
-			EditorType="MultiLineEditor"
-		#tag EndViewProperty
-		#tag ViewProperty
-			Name="sitem_taxable"
 			Group="Behavior"
 			Type="String"
 			EditorType="MultiLineEditor"
