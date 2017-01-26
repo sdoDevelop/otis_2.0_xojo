@@ -155,6 +155,9 @@ Protected Module Login
 		    UserInfo.SaveLoginInfo(saveUsername,savePassword,saveAutoLogin,savePKID)
 		  End If
 		  
+		  // Store Username in a variable
+		  app.sUserName = oUsername
+		  
 		  
 		  Return True
 		  

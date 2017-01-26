@@ -164,14 +164,6 @@ Inherits DataFile.ActiveRecordBase
 
 
 	#tag Property, Flags = &h0
-		dtrow_created As Date
-	#tag EndProperty
-
-	#tag Property, Flags = &h0
-		dtrow_modified As Date
-	#tag EndProperty
-
-	#tag Property, Flags = &h0
 		saccount_manager As String
 	#tag EndProperty
 
@@ -205,10 +197,6 @@ Inherits DataFile.ActiveRecordBase
 
 	#tag Property, Flags = &h0
 		sloadout_time As String
-	#tag EndProperty
-
-	#tag Property, Flags = &h0
-		srow_username As String
 	#tag EndProperty
 
 	#tag Property, Flags = &h0

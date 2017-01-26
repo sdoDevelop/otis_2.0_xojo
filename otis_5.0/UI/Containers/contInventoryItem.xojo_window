@@ -14,9 +14,9 @@ Begin ContainerControl contInventoryItem
    InitialParent   =   ""
    Left            =   0
    LockBottom      =   False
-   LockLeft        =   False
+   LockLeft        =   True
    LockRight       =   False
-   LockTop         =   False
+   LockTop         =   True
    TabIndex        =   0
    TabPanelIndex   =   0
    TabStop         =   True
@@ -24,7 +24,7 @@ Begin ContainerControl contInventoryItem
    Transparent     =   True
    UseFocusRing    =   False
    Visible         =   True
-   Width           =   796
+   Width           =   702
    Begin Label labItemName
       AutoDeactivate  =   True
       Bold            =   False
@@ -57,7 +57,7 @@ Begin ContainerControl contInventoryItem
       Transparent     =   True
       Underline       =   False
       Visible         =   True
-      Width           =   362
+      Width           =   407
    End
    Begin Label labItemNameLabel
       AutoDeactivate  =   True
@@ -133,7 +133,7 @@ Begin ContainerControl contInventoryItem
       Underline       =   False
       UseFocusRing    =   True
       Visible         =   True
-      Width           =   168
+      Width           =   213
    End
    Begin Label labItemManufacturer
       AutoDeactivate  =   True
@@ -209,7 +209,7 @@ Begin ContainerControl contInventoryItem
       Underline       =   False
       UseFocusRing    =   True
       Visible         =   True
-      Width           =   168
+      Width           =   213
    End
    Begin Label labItemModel
       AutoDeactivate  =   True
@@ -285,7 +285,7 @@ Begin ContainerControl contInventoryItem
       Underline       =   False
       UseFocusRing    =   True
       Visible         =   True
-      Width           =   168
+      Width           =   213
    End
    Begin Label labItemDepartment
       AutoDeactivate  =   True
@@ -361,7 +361,7 @@ Begin ContainerControl contInventoryItem
       Underline       =   False
       UseFocusRing    =   True
       Visible         =   True
-      Width           =   168
+      Width           =   213
    End
    Begin Label labItemCategory
       AutoDeactivate  =   True
@@ -437,7 +437,7 @@ Begin ContainerControl contInventoryItem
       Underline       =   False
       UseFocusRing    =   True
       Visible         =   True
-      Width           =   168
+      Width           =   213
    End
    Begin Label labItemSubCategory
       AutoDeactivate  =   True
@@ -513,7 +513,7 @@ Begin ContainerControl contInventoryItem
       Underline       =   False
       UseFocusRing    =   True
       Visible         =   True
-      Width           =   168
+      Width           =   213
    End
    Begin Label labItemDescription
       AutoDeactivate  =   True
@@ -589,7 +589,7 @@ Begin ContainerControl contInventoryItem
       Underline       =   False
       UseFocusRing    =   True
       Visible         =   True
-      Width           =   168
+      Width           =   213
    End
    Begin Label labItemOwner
       AutoDeactivate  =   True
@@ -665,7 +665,7 @@ Begin ContainerControl contInventoryItem
       Underline       =   False
       UseFocusRing    =   True
       Visible         =   True
-      Width           =   168
+      Width           =   213
    End
    Begin Label labItemQuantity
       AutoDeactivate  =   True
@@ -741,7 +741,7 @@ Begin ContainerControl contInventoryItem
       Underline       =   False
       UseFocusRing    =   True
       Visible         =   True
-      Width           =   168
+      Width           =   213
    End
    Begin Label labItemPrice
       AutoDeactivate  =   True
@@ -817,7 +817,7 @@ Begin ContainerControl contInventoryItem
       Underline       =   False
       UseFocusRing    =   True
       Visible         =   True
-      Width           =   168
+      Width           =   213
    End
    Begin Label labItemTaxable
       AutoDeactivate  =   True
@@ -881,6 +881,7 @@ Begin ContainerControl contInventoryItem
       TextUnit        =   0
       Top             =   336
       Underline       =   False
+      Value           =   False
       Visible         =   True
       Width           =   111
    End
@@ -948,7 +949,7 @@ Begin ContainerControl contInventoryItem
       Underline       =   False
       UseFocusRing    =   True
       Visible         =   True
-      Width           =   168
+      Width           =   128
    End
    Begin Label labInventoryExpanded
       AutoDeactivate  =   True
@@ -978,29 +979,119 @@ Begin ContainerControl contInventoryItem
       TextFont        =   "System"
       TextSize        =   0.0
       TextUnit        =   0
-      Top             =   360
+      Top             =   364
       Transparent     =   True
       Underline       =   False
       Visible         =   True
       Width           =   80
+   End
+   Begin ContainerInventoryExpanded contInventoryExpanded
+      AcceptFocus     =   True
+      AcceptTabs      =   True
+      AutoDeactivate  =   True
+      BackColor       =   &c40004000
+      Backdrop        =   0
+      Enabled         =   True
+      EraseBackground =   True
+      fkInventory     =   ""
+      HasBackColor    =   False
+      Height          =   190
+      HelpTag         =   ""
+      InitialParent   =   ""
+      Left            =   122
+      LockBottom      =   False
+      LockedInPosition=   False
+      LockLeft        =   True
+      LockRight       =   True
+      LockTop         =   True
+      Scope           =   0
+      TabIndex        =   28
+      TabPanelIndex   =   0
+      TabStop         =   True
+      Top             =   360
+      Transparent     =   True
+      UseFocusRing    =   False
+      Visible         =   True
+      Width           =   570
+   End
+   Begin contKitsPackages contKits
+      AcceptFocus     =   False
+      AcceptTabs      =   True
+      AutoDeactivate  =   True
+      BackColor       =   &cFFFFFF00
+      Backdrop        =   0
+      Enabled         =   True
+      EraseBackground =   True
+      HasBackColor    =   False
+      Height          =   154
+      HelpTag         =   ""
+      InitialParent   =   ""
+      Left            =   350
+      LockBottom      =   False
+      LockedInPosition=   False
+      LockLeft        =   True
+      LockRight       =   True
+      LockTop         =   True
+      Scope           =   0
+      TabIndex        =   29
+      TabPanelIndex   =   0
+      TabStop         =   True
+      Top             =   182
+      Transparent     =   True
+      UseFocusRing    =   False
+      Visible         =   True
+      Width           =   340
+   End
+   Begin CheckBox chbShowDiscreetly
+      AutoDeactivate  =   True
+      Bold            =   False
+      Caption         =   "Discreet"
+      DataField       =   ""
+      DataSource      =   ""
+      Enabled         =   True
+      Height          =   20
+      HelpTag         =   ""
+      Index           =   -2147483648
+      InitialParent   =   ""
+      Italic          =   False
+      Left            =   271
+      LockBottom      =   False
+      LockedInPosition=   False
+      LockLeft        =   True
+      LockRight       =   False
+      LockTop         =   True
+      Scope           =   0
+      State           =   0
+      TabIndex        =   30
+      TabPanelIndex   =   0
+      TabStop         =   True
+      TextFont        =   "System"
+      TextSize        =   0.0
+      TextUnit        =   0
+      Top             =   78
+      Underline       =   False
+      Value           =   False
+      Visible         =   True
+      Width           =   70
    End
 End
 #tag EndWindow
 
 #tag WindowCode
 	#tag Method, Flags = &h0
-		Sub Constructor(oInventoryItem as DataFile.tbl_inventory)
+		Sub Constructor(iInventoryPKID as Int64)
 		  
-		  LoadItem(oInventoryItem)
+		  LoadItem(iInventoryPKID)
 		End Sub
 	#tag EndMethod
 
 	#tag Method, Flags = &h0
-		Sub LoadItem(oItem as DataFile.tbl_inventory)
+		Sub LoadItem(ipkid as int64)
 		  
 		  
-		  // Put the passed inventory item into a stored property
-		  oCurrentInventoryItem = oItem
+		  // load inventory item record into oCurrentInventoryItem with the pkid passed
+		  oCurrentInventoryItem = DataFile.tbl_inventory.FindByID(ipkid)
+		  
 		  
 		  // Populate fields from Inventory Table
 		  tfItemCategory.Text = oCurrentInventoryItem.sitem_category
@@ -1016,9 +1107,16 @@ End
 		  tfItemSubCategory.Text = oCurrentInventoryItem.sitem_subcategory
 		  tfItemTaxable.Value = oCurrentInventoryItem.bitem_taxable
 		  cbItemType.Text = oCurrentInventoryItem.sitem_type
+		  chbShowDiscreetly.Value = oCurrentInventoryItem.bshow_items_discreetly
 		  
 		  // Populate Inventory Expanded
+		  oInventoryExpanded = DataFile.tbl_inv_ex.List( "fkinventory = " + ipkid.ToText )
 		  
+		  contInventoryExpanded.fkInventory = ipkid
+		  contInventoryExpanded.LoadItemsIntoListbox
+		  
+		  
+		  contKits.LoadMe(ipkid)
 		End Sub
 	#tag EndMethod
 
@@ -1033,6 +1131,10 @@ End
 
 	#tag Property, Flags = &h0
 		oCurrentInventoryItem As DataFile.tbl_inventory
+	#tag EndProperty
+
+	#tag Property, Flags = &h0
+		oInventoryExpanded() As DataFile.tbl_inv_ex
 	#tag EndProperty
 
 
@@ -1187,6 +1289,26 @@ End
 		  s1 = me.Text
 		  
 		  oCurrentInventoryItem.sitem_type = s1
+		  SaveItem
+		End Sub
+	#tag EndEvent
+	#tag Event
+		Sub Open()
+		  
+		  dim s1, s2() as string
+		  s1 = "Item,Labor,Item Package,Labor Package"
+		  s2 = s1.Split(",")
+		  
+		  me.AddRows(s2)
+		End Sub
+	#tag EndEvent
+#tag EndEvents
+#tag Events chbShowDiscreetly
+	#tag Event
+		Sub LostFocus()
+		  
+		  
+		  oCurrentInventoryItem.bshow_items_discreetly = me.Value
 		  SaveItem
 		End Sub
 	#tag EndEvent

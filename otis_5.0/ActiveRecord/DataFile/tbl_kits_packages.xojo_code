@@ -12,7 +12,7 @@ Inherits DataFile.ActiveRecordBase
 		    ars.Append "count(*) as iCnt"
 		  end if
 		  
-		  ars.Append "From tbl_eipl"
+		  ars.Append "From tbl_kits_packages"
 		  
 		  Return ars.JoinSQL
 		End Function
@@ -172,14 +172,6 @@ Inherits DataFile.ActiveRecordBase
 	#tag EndProperty
 
 	#tag Property, Flags = &h0
-		dtrow_created As Date
-	#tag EndProperty
-
-	#tag Property, Flags = &h0
-		dtrow_modified As Date
-	#tag EndProperty
-
-	#tag Property, Flags = &h0
 		ifkinventory_child As Integer
 	#tag EndProperty
 
@@ -187,49 +179,25 @@ Inherits DataFile.ActiveRecordBase
 		ifkinventory_parent As Integer
 	#tag EndProperty
 
-	#tag Property, Flags = &h0
-		srow_username As String
-	#tag EndProperty
-
 
 	#tag ViewBehavior
 		#tag ViewProperty
-			Name="idiscount_amount"
+			Name="bis_mandatory"
+			Group="Behavior"
+			Type="Boolean"
+		#tag EndViewProperty
+		#tag ViewProperty
+			Name="bshow_discreetly"
+			Group="Behavior"
+			Type="Boolean"
+		#tag EndViewProperty
+		#tag ViewProperty
+			Name="ifkinventory_child"
 			Group="Behavior"
 			Type="Integer"
 		#tag EndViewProperty
 		#tag ViewProperty
-			Name="idiscount_percent"
-			Group="Behavior"
-			Type="Integer"
-		#tag EndViewProperty
-		#tag ViewProperty
-			Name="idiscount_total"
-			Group="Behavior"
-			Type="Integer"
-		#tag EndViewProperty
-		#tag ViewProperty
-			Name="ieipl_balance"
-			Group="Behavior"
-			Type="Integer"
-		#tag EndViewProperty
-		#tag ViewProperty
-			Name="ieipl_grand_total"
-			Group="Behavior"
-			Type="Integer"
-		#tag EndViewProperty
-		#tag ViewProperty
-			Name="ieipl_number"
-			Group="Behavior"
-			Type="Integer"
-		#tag EndViewProperty
-		#tag ViewProperty
-			Name="ieipl_subtotal"
-			Group="Behavior"
-			Type="Integer"
-		#tag EndViewProperty
-		#tag ViewProperty
-			Name="ieipl_total_paid"
+			Name="ifkinventory_parent"
 			Group="Behavior"
 			Type="Integer"
 		#tag EndViewProperty
@@ -244,11 +212,6 @@ Inherits DataFile.ActiveRecordBase
 			Name="ipkid"
 			Group="Behavior"
 			Type="Int64"
-		#tag EndViewProperty
-		#tag ViewProperty
-			Name="itax_total"
-			Group="Behavior"
-			Type="Integer"
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="LastInsertID"
@@ -269,31 +232,7 @@ Inherits DataFile.ActiveRecordBase
 			Type="String"
 		#tag EndViewProperty
 		#tag ViewProperty
-			Name="sdue_date"
-			Group="Behavior"
-			Type="String"
-			EditorType="MultiLineEditor"
-		#tag EndViewProperty
-		#tag ViewProperty
-			Name="seipl_type"
-			Group="Behavior"
-			Type="String"
-			EditorType="MultiLineEditor"
-		#tag EndViewProperty
-		#tag ViewProperty
-			Name="sfkevents"
-			Group="Behavior"
-			Type="String"
-			EditorType="MultiLineEditor"
-		#tag EndViewProperty
-		#tag ViewProperty
 			Name="srow_username"
-			Group="Behavior"
-			Type="String"
-			EditorType="MultiLineEditor"
-		#tag EndViewProperty
-		#tag ViewProperty
-			Name="sshipping_method"
 			Group="Behavior"
 			Type="String"
 			EditorType="MultiLineEditor"

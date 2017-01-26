@@ -61,12 +61,11 @@
         item_subcategory            ,
         item_description            ,
         item_type                   ,
+        show_items_discreetly       ,
         item_quantity               ,
         item_price_cost             ,
         item_owner                  ,
-        item_taxable                ,
-        item_hide                   ,
-        is_package                  
+        item_taxable                
         From tbl_inventory
         ;
 

@@ -61,15 +61,15 @@ End
 
 #tag WindowCode
 	#tag Method, Flags = &h0
-		Sub Constructor(contParent as contInventory, ifkInventory as Int64)
+		Sub Constructor(ifkInventory as Int64)
 		  
 		  // Set references to the parent container
-		  ParentContainer = contParent
+		  'ParentContainer = contParent
 		  fkInventory = ifkInventory
 		  
-		  // Load the expanded inventory for the requested Item
-		  ParentContainer.oItems.LoadExpanded(fkInventory)
-		  
+		  '// Load the expanded inventory for the requested Item
+		  'ParentContainer.oItems.LoadExpanded(fkInventory)
+		  'oInventoryItemExpanded = DataFile.tbl_inv_ex.List("
 		  
 		End Sub
 	#tag EndMethod
@@ -110,12 +110,14 @@ End
 		  // Delete all current rows in listbox
 		  lbItems.DeleteAllRows
 		  
+		  // Load inventory Item
+		  oInventoryItem = DataFile.tbl_inventory.FindByID(fkInventory) 
 		  
-		  // Grab the expanded inventory list From the Parent Container
-		  dim oExpandedList() as DataFile.tbl_inv_ex = ParentContainer.oItems.aroItemsExpanded.Value(fkInventory)
+		  // Grab the expanded inventory list 
+		  oInventoryItemExpanded = DataFile.tbl_inv_ex.List("fkinventory = " + fkinventory.ToText) ' ParentContainer.oItems.aroItemsExpanded.Value(fkInventory)
 		  
-		  For i1 as integer = 0 To oExpandedList.Ubound
-		    dim item as DataFile.tbl_inv_ex = oExpandedList(i1)
+		  For i1 as integer = 0 To oInventoryItemExpanded.Ubound
+		    dim item as DataFile.tbl_inv_ex = oInventoryItemExpanded(i1)
 		    dim oRowTag as New lbRowTag
 		    
 		    // Add the pkid to the rowtag
@@ -128,12 +130,12 @@ End
 		    dim jsFieldValues as JSONItem
 		    jsFieldValues = item.GetMyFieldValues(True)
 		    
-		    // Extract field names and values as json item from our parent
+		    // Extract field names and values as json item 
 		    dim jsParentFieldValues as JSONItem
-		    dim oParentRowTag as lbRowTag
-		    dim oParentTableRecord as DataFile.tbl_inventory
-		    oParentRowTag = ParentContainer.lbItems.RowTag(ParentContainer.lbItems.FindByPKID(fkInventory))
-		    oParentTableRecord = oParentRowTag.vtblRecord
+		    'dim oParentRowTag as lbRowTag
+		    dim oParentTableRecord as DataFile.tbl_inventory 
+		    'oParentRowTag = ParentContainer.lbItems.RowTag(ParentContainer.lbItems.FindByPKID(fkInventory))
+		    oParentTableRecord = DataFile.tbl_inventory.FindByID(fkInventory)
 		    jsParentFieldValues = oParentTableRecord.GetMyFieldValues(True)
 		    
 		    For i2 as integer = 0 To sFieldNames.Ubound
@@ -203,6 +205,14 @@ End
 
 	#tag Property, Flags = &h0
 		iColumnTypes() As Integer
+	#tag EndProperty
+
+	#tag Property, Flags = &h0
+		oInventoryItem As DataFile.tbl_inventory
+	#tag EndProperty
+
+	#tag Property, Flags = &h0
+		oInventoryItemExpanded() As DataFile.tbl_inv_ex
 	#tag EndProperty
 
 	#tag Property, Flags = &h0

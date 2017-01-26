@@ -27,8 +27,21 @@ Inherits BKS_ActiveRecord.Base
 		  Dim StatementType as string
 		  dim n1 as integer
 		  
+		  // DEFAULT VALUES
+		  
+		  // Add a pkid
 		  n1 = Methods.GetNewPKID
 		  me.ipkid = n1
+		  
+		  // create and modified dates
+		  dim d1 as new date
+		  me.srow_created = d1.SQLDateTime
+		  me.srow_modified = d1.SQLDateTime
+		  
+		  // username
+		  me.srow_username = app.sUserName
+		  
+		  
 		  
 		  If me.IsModified Then
 		    
@@ -89,6 +102,15 @@ Inherits BKS_ActiveRecord.Base
 		  Dim StatementType as string
 		  dim n1 as integer
 		  
+		  
+		  // MODIFIED VALUES
+		  // row username
+		  me.srow_username = app.sUserName
+		  
+		  // modified date
+		  dim d1 as new date
+		  me.srow_modified = d1.SQLDateTime
+		  
 		  If me.IsModified Then
 		    
 		    // Get the values of all changed fields
@@ -128,6 +150,18 @@ Inherits BKS_ActiveRecord.Base
 
 	#tag Property, Flags = &h0
 		oChangeDescription As JSONItem
+	#tag EndProperty
+
+	#tag Property, Flags = &h0
+		srow_created As String
+	#tag EndProperty
+
+	#tag Property, Flags = &h0
+		srow_modified As String
+	#tag EndProperty
+
+	#tag Property, Flags = &h0
+		srow_username As String
 	#tag EndProperty
 
 

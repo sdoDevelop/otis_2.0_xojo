@@ -1,8 +1,8 @@
 Create Table tbl_events
         (
         pkid                integer Primary Key,
-        row_created         timestamp,
-        row_modified        timestamp,
+        row_created         text,
+        row_modified        text,
         row_username        text,
         event_name          text,
         start_time          text,
@@ -21,8 +21,8 @@ Create Table tbl_events
     Create Table tbl_lineitems 
         (
         pkid                        integer Primary Key,
-        row_created                 timestamp,
-        row_modified                timestamp,
+        row_created                 text,
+        row_modified                text,
         row_username                text,
         fkeipl                      text,
         fkinventory                 text,
@@ -52,8 +52,8 @@ Create Table tbl_events
     CREATE TABLE tbl_inventory 
         (
         pkid                        integer Primary Key,
-        row_created                 timestamp,
-        row_modified                timestamp,
+        row_created                 text,
+        row_modified                text,
         row_username                text,
         item_name                   text,
         item_manufacturer           text,
@@ -63,6 +63,7 @@ Create Table tbl_events
         item_subcategory            text,
         item_description            text,
         item_type                   text,
+        show_items_discreetly       boolean,
         item_quantity               integer,
         item_price_cost             integer,
         item_owner                  text,
@@ -73,8 +74,8 @@ Create Table tbl_events
     Create Table tbl_inv_ex
         (
         pkid                        integer Primary Key,
-        row_created                 timestamp,
-        row_modified                timestamp,
+        row_created                 text,
+        row_modified                text,
         row_username                text,
         fkinventory                 integer,
         item_barcode                text,
@@ -86,8 +87,8 @@ Create Table tbl_events
     Create Table tbl_kits_packages
         (
         pkid                        integer Primary Key,
-        row_created                 timestamp,
-        row_modified                timestamp,
+        row_created                 text,
+        row_modified                text,
         row_username                text,
         fkinventory_parent          integer,
         fkinventory_child           integer,
@@ -99,8 +100,8 @@ Create Table tbl_events
     Create Table tbl_maintenance_Logs
         (
         pkid                        integer Primary Key,
-        row_created                 timestamp,
-        row_modified                timestamp,
+        row_created                 text,
+        row_modified                text,
         row_username                text,
         fkinv_ex                    integer,
         entry_date                  text,
@@ -119,8 +120,8 @@ Create Table tbl_events
     Create Table tbl_eipl 
         (
         pkid                        integer Primary Key,
-        row_created                 timestamp,
-        row_modified                timestamp,
+        row_created                 text,
+        row_modified                text,
         row_username                text,
         fkevents                    text,
         eipl_number                 integer,
@@ -142,8 +143,8 @@ Create Table tbl_events
     Create Table tbl_payments 
         (
         pkid                        integer Primary Key,
-        row_created                 timestamp,
-        row_modified                timestamp,
+        row_created                 text,
+        row_modified                text,
         row_username                text,
         fkeipl                      text,
         payment_date                date,
@@ -157,8 +158,8 @@ Create Table tbl_events
     CREATE TABLE tbl_contact_venue_data 
         (
         pkid                        integer Primary Key,
-        row_created                 timestamp,
-        row_modified                timestamp,
+        row_created                 text,
+        row_modified                text,
         row_username                text,
         fkcontacts                  text,
         fkvenues                    text,
@@ -171,8 +172,8 @@ Create Table tbl_events
     CREATE TABLE tbl_contacts
         (
         pkid                        integer Primary Key,
-        row_created                 timestamp,
-        row_modified                timestamp,
+        row_created                 text,
+        row_modified                text,
         row_username                text,
         fkconven                    text,
         name_first                  text,
@@ -194,8 +195,8 @@ Create Table tbl_events
     CREATE TABLE tbl_venues
         (
         pkid                        integer Primary Key,
-        row_created                 timestamp,
-        row_modified                timestamp,
+        row_created                 text,
+        row_modified                text,
         row_username                text,
         fkconven                    text,
         venue_name                  text,
@@ -216,8 +217,8 @@ Create Table tbl_events
     CREATE TABLE tbl_departments
         (
         pkid                        integer Primary Key,
-        row_created                 timestamp,
-        row_modified                timestamp,
+        row_created                 text,
+        row_modified                text,
         row_username                text,
         fkeipl                      text,
         department                  text,

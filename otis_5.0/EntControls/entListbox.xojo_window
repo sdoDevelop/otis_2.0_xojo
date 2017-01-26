@@ -128,6 +128,19 @@ End
 	#tag EndMethod
 
 	#tag Method, Flags = &h0
+		Function CellState(row as integer, column as integer) As CheckBox.CheckedStates
+		  Return oListbox.CellState(row,column)
+		End Function
+	#tag EndMethod
+
+	#tag Method, Flags = &h0
+		Sub CellState(row as integer, column as integer, assigns oState as CheckBox.CheckedStates)
+		  
+		  oListbox.CellState(row,column) = oState
+		End Sub
+	#tag EndMethod
+
+	#tag Method, Flags = &h0
 		Function ColumnCount() As Integer
 		  dim n1 as integer
 		  

@@ -164,14 +164,6 @@ Inherits DataFile.ActiveRecordBase
 
 
 	#tag Property, Flags = &h0
-		dtrow_created As Date
-	#tag EndProperty
-
-	#tag Property, Flags = &h0
-		dtrow_modified As Date
-	#tag EndProperty
-
-	#tag Property, Flags = &h0
 		ifkinv_ex As Integer
 	#tag EndProperty
 
@@ -189,10 +181,6 @@ Inherits DataFile.ActiveRecordBase
 
 	#tag Property, Flags = &h0
 		sexit_date As String
-	#tag EndProperty
-
-	#tag Property, Flags = &h0
-		srow_username As String
 	#tag EndProperty
 
 	#tag Property, Flags = &h0
@@ -298,6 +286,11 @@ Inherits DataFile.ActiveRecordBase
 			Group="Behavior"
 			Type="String"
 			EditorType="MultiLineEditor"
+		#tag EndViewProperty
+		#tag ViewProperty
+			Name="swork_done_by"
+			Group="Behavior"
+			Type="String"
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="swork_summary"

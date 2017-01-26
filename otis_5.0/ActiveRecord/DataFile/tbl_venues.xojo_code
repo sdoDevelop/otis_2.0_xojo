@@ -164,14 +164,6 @@ Inherits DataFile.ActiveRecordBase
 
 
 	#tag Property, Flags = &h0
-		dtrow_created As Date
-	#tag EndProperty
-
-	#tag Property, Flags = &h0
-		dtrow_modified As Date
-	#tag EndProperty
-
-	#tag Property, Flags = &h0
 		saddress_city As String
 	#tag EndProperty
 
@@ -201,10 +193,6 @@ Inherits DataFile.ActiveRecordBase
 
 	#tag Property, Flags = &h0
 		sphone_number As String
-	#tag EndProperty
-
-	#tag Property, Flags = &h0
-		srow_username As String
 	#tag EndProperty
 
 	#tag Property, Flags = &h0

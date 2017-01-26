@@ -164,14 +164,6 @@ Inherits DataFile.ActiveRecordBase
 
 
 	#tag Property, Flags = &h0
-		dtrow_created As Date
-	#tag EndProperty
-
-	#tag Property, Flags = &h0
-		dtrow_modified As Date
-	#tag EndProperty
-
-	#tag Property, Flags = &h0
 		ifkinventory As Integer
 	#tag EndProperty
 
@@ -185,10 +177,6 @@ Inherits DataFile.ActiveRecordBase
 
 	#tag Property, Flags = &h0
 		sitem_serial_code As String
-	#tag EndProperty
-
-	#tag Property, Flags = &h0
-		srow_username As String
 	#tag EndProperty
 
 
@@ -244,6 +232,7 @@ Inherits DataFile.ActiveRecordBase
 			Name="sitem_serial_code"
 			Group="Behavior"
 			Type="String"
+			EditorType="MultiLineEditor"
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="srow_username"

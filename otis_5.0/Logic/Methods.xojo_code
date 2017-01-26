@@ -30,6 +30,16 @@ Protected Module Methods
 	#tag EndMethod
 
 	#tag Method, Flags = &h0
+		Function CopyDictionary(d as Dictionary) As Dictionary
+		  dim r as new Dictionary
+		  for each key as Variant in d.keys
+		    r.Value(key) = d.Value(key)
+		  next
+		  Return r
+		End Function
+	#tag EndMethod
+
+	#tag Method, Flags = &h0
 		Function CreateNewContainerByName(sContainerName as String) As Variant
 		  
 		  Select Case sContainerName

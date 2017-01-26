@@ -162,17 +162,116 @@ Inherits DataFile.ActiveRecordBase
 		End Function
 	#tag EndMethod
 
+	#tag Method, Flags = &h0
+		Shared Function ListGrouped(sCriteria as string = "", sOrder as string, iOffset as integer = -1) As Dictionary
+		  // Returns a dictionary with keys as group names and values as an array of DataFile.tbl_inventory
+		  
+		  dim dictReturn as New Dictionary
+		  
+		  // Load the entire inventory into a varialbe
+		  dim oItems() as DataFile.tbl_inventory
+		  oItems() = DataFile.tbl_inventory.List(sCriteria, sOrder, iOffset)
+		  
+		  dim sOrderByFields() as String
+		  dim sGroupField as String
+		  
+		  //Find the field that we are grouping by
+		  '          It is the first field of the order by clause
+		  sOrderByFields() = sOrder.split(",")
+		  sGroupField = sOrderByFields(0)
+		  
+		  dim sCurrentGroupName as String
+		  dim oCurrentGroup() as DataFile.tbl_inventory
+		  
+		  // Loop through the inventory
+		  For each oItem as DataFile.tbl_inventory In oItems
+		    dim jsFieldValues as JSONItem
+		    
+		    // Get the field value pairs as a json item of this item
+		    jsFieldValues = oItem.GetMyFieldValues(True)
+		    
+		    // Check to see if the Current group name is the same as the one in this item
+		    If jsFieldValues.Value(sGroupField) <> sCurrentGroupName then
+		      ' The current group and the current item differ
+		      
+		      // Check if there is anything in the current group
+		      If oCurrentGroup.Ubound <> -1 Then
+		        ' The current group is not empty
+		        
+		        // Store the current group in the return dict
+		        '          We have to make a copy of the Array otherwise we get right fucked
+		        dim StupidDamnArrays() as DataFile.tbl_inventory
+		        For Each oElement as DataFile.tbl_inventory In oCurrentGroup
+		          StupidDamnArrays.Append(oElement)
+		        Next
+		        dictReturn.Value(sCurrentGroupName) = StupidDamnArrays
+		        
+		        // Clear the current group 
+		        ReDim oCurrentGroup(-1)
+		        
+		        // update the current group name
+		        sCurrentGroupName = jsFieldValues.Value(sGroupField)
+		        
+		      Else
+		        sCurrentGroupName = jsFieldValues.Value(sGroupField)
+		      End If
+		      
+		    End If
+		    
+		    // Add the current item to the current group array
+		    oCurrentGroup.Append(oItem)
+		    
+		  Next
+		  
+		  If oCurrentGroup.Ubound <> -1 Then
+		    dim StupidDamnArrays() as DataFile.tbl_inventory
+		    For Each oElement as DataFile.tbl_inventory In oCurrentGroup
+		      StupidDamnArrays.Append(oElement)
+		    Next
+		    dictReturn.Value(sCurrentGroupName) = oCurrentGroup
+		  End If
+		  
+		  Return dictReturn
+		  
+		  
+		  
+		  
+		  
+		  
+		  
+		  
+		  
+		  
+		  
+		  
+		  
+		  
+		  
+		  
+		  
+		  
+		  
+		  
+		  
+		  
+		  
+		  
+		  
+		  
+		  
+		  
+		  
+		  
+		End Function
+	#tag EndMethod
+
 
 	#tag Property, Flags = &h0
 		bitem_taxable As Boolean
 	#tag EndProperty
 
 	#tag Property, Flags = &h0
-		dtrow_created As Date
-	#tag EndProperty
-
-	#tag Property, Flags = &h0
-		dtrow_modified As Date
+		bshow_items_discreetly As Boolean
 	#tag EndProperty
 
 	#tag Property, Flags = &h0
@@ -219,16 +318,12 @@ Inherits DataFile.ActiveRecordBase
 		sitem_type As String
 	#tag EndProperty
 
-	#tag Property, Flags = &h0
-		srow_username As String
-	#tag EndProperty
-
 
 	#tag ViewBehavior
 		#tag ViewProperty
 			Name="bitem_taxable"
 			Group="Behavior"
-			Type="String"
+			Type="Boolean"
 			EditorType="MultiLineEditor"
 		#tag EndViewProperty
 		#tag ViewProperty

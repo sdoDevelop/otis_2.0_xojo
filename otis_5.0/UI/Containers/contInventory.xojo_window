@@ -374,7 +374,6 @@ End
 		  dim s1 as string = lbItems.Cell(row,column)
 		  dim v1 as Variant
 		  If InStr( sFieldNames(column),"_cost") <> 0 Then
-		    Break
 		    s1 = ConvertDollarString_To_CentsString(s1)
 		    v1 = val(s1)
 		  Else
@@ -547,7 +546,7 @@ End
 		        iPKID = oRowTag.pkid
 		      End If
 		      
-		      dim contExpanded as New ContainerInventoryExpanded(self,iPKID)
+		      dim contExpanded as New ContainerInventoryExpanded(iPKID)
 		      
 		      dim wWindow as new Window2
 		      wWindow.Top = MouseY
@@ -587,7 +586,7 @@ End
 		          iPKID = oRowTag.pkid
 		        End If
 		        
-		        dim contExpanded as New ContainerInventoryExpanded(self,iPKID)
+		        dim contExpanded as New ContainerInventoryExpanded(iPKID)
 		        
 		        dim wWindow as new Window2
 		        wWindow.Top = MouseY
@@ -611,7 +610,7 @@ End
 		          iPKID = oRowTag.pkid
 		        End If
 		        
-		        dim contItem as New contInventoryItem(oRowTag.vtblRecord)
+		        dim contItem as New contInventoryItem(iPKID)
 		        
 		        dim tbPanel as TabPanel = app.MainWindow.tbMainWindow
 		        tbPanel.Append("Details")
