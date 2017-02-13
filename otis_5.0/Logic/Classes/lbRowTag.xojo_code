@@ -34,9 +34,24 @@ Protected Class lbRowTag
 		End Sub
 	#tag EndMethod
 
+	#tag Method, Flags = &h0
+		Function IsItem() As Boolean
+		  
+		  If vtblRecord <> Nil Then
+		    Return True
+		  Else
+		    Return False
+		  End If
+		End Function
+	#tag EndMethod
+
 
 	#tag Property, Flags = &h0
 		aroChildren() As lbRowTag
+	#tag EndProperty
+
+	#tag Property, Flags = &h0
+		iFolderLevel As Integer
 	#tag EndProperty
 
 	#tag Property, Flags = &h0
@@ -61,6 +76,11 @@ Protected Class lbRowTag
 
 
 	#tag ViewBehavior
+		#tag ViewProperty
+			Name="iFolderLevel"
+			Group="Behavior"
+			Type="Integer"
+		#tag EndViewProperty
 		#tag ViewProperty
 			Name="Index"
 			Visible=true

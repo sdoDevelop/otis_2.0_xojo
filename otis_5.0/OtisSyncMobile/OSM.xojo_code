@@ -122,6 +122,7 @@ Protected Module OSM
 		  dim db1 as New SQLiteDatabase
 		  dim rd1 as New ResourceDirectories
 		  dim ps1Array() as SQLitePreparedStatement
+		  dim hopeformoreerrorlist() as string
 		  
 		  
 		  // Connect to the database
@@ -161,7 +162,7 @@ Protected Module OSM
 		    ps1 = db1.Prepare(sStatement)
 		    
 		    // Split the values:valuetypes apart from each other
-		    sValueValueTypesArray = sValueValueTypes.Split(",")
+		    sValueValueTypesArray = sValueValueTypes.Split("(,)")
 		    
 		    // Loop through each value:valueType
 		    dim i1 as Integer = 0
@@ -172,13 +173,14 @@ Protected Module OSM
 		      dim tempArray2() as String
 		      
 		      // Split the ValueValueType into its value and type variables
-		      tempArray2 = ValueValueType.Split(":")
+		      tempArray2 = ValueValueType.Split("(:)")
 		      sValue = tempArray2(0)
 		      sType = tempArray2(1)
 		      
 		      // Set the bind type for the current value
 		      If sValue = "None" Then
 		        ps1.BindType(i1,SQLitePreparedStatement.SQLITE_NULL)
+		        
 		        Select Case sType
 		        Case "Text"
 		          vFormattedValue = ""
@@ -203,6 +205,9 @@ Protected Module OSM
 		        End Select
 		      End If
 		      
+		      if db1.ErrorMessage <> "" And db1.ErrorMessage <> "not an error" Then
+		        break
+		      end if
 		      If db1.Error Then
 		        break
 		      End If
@@ -224,6 +229,7 @@ Protected Module OSM
 		  
 		  dim sErrorArray() as String
 		  dim iErrorCount as integer
+		  dim iIndex as integer
 		  
 		  // Loop through each prepared Statement
 		  For each psStatement as SQLitePreparedStatement In ps1Array
@@ -235,7 +241,7 @@ Protected Module OSM
 		      iErrorCount = iErrorCount + 1
 		      sErrorArray.Append( db1.ErrorMessage )
 		    End If
-		    
+		    iIndex = iIndex + 1
 		  Next
 		  
 		  

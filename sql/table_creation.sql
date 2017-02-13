@@ -63,11 +63,29 @@ Create Table tbl_events
         item_subcategory            text,
         item_description            text,
         item_type                   text,
+        show_items                  boolean,
         show_items_discreetly       boolean,
         item_quantity               integer,
         item_price_cost             integer,
         item_owner                  text,
-        item_taxable                boolean
+        item_taxable                boolean,
+        item_weight                 text,
+        item_height                 text,
+        item_depth                  text,
+        item_width                  text
+        );
+
+    -- firmware
+    Create Table tbl_firmware
+        (
+        pkid                        integer Primary Key,
+        row_created                 text,
+        row_modified                text,
+        row_username                text,
+        fk_inv_ex                   integer,
+        update_date                 text,
+        firmware_version            text,
+        update_comments             text
         );
 
     -- inventory_expanded
@@ -80,7 +98,9 @@ Create Table tbl_events
         fkinventory                 integer,
         item_barcode                text,
         item_rfid_code              text,
-        item_serial_code            text
+        item_serial_code            text,
+        fkitem_case                 integer,
+        ex_item_name                text
         );
 
     -- inventory_kits
@@ -92,6 +112,7 @@ Create Table tbl_events
         row_username                text,
         fkinventory_parent          integer,
         fkinventory_child           integer,
+        kit_item_quantity           integer,
         is_mandatory                boolean,
         show_discreetly             boolean
         );

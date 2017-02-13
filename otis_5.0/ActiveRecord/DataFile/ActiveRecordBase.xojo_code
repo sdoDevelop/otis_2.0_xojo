@@ -9,6 +9,8 @@ Inherits BKS_ActiveRecord.Base
 		    // Store the Change Description in the local sync database
 		    osm.StoreSync(oChangeDescription)
 		  End If
+		  
+		  
 		End Sub
 	#tag EndEvent
 
@@ -144,12 +146,17 @@ Inherits BKS_ActiveRecord.Base
 	#tag EndEvent
 
 
+	#tag Hook, Flags = &h0
+		Event PostDelete()
+	#tag EndHook
+
+
 	#tag Property, Flags = &h0
 		ipkid As Int64
 	#tag EndProperty
 
 	#tag Property, Flags = &h0
-		oChangeDescription As JSONItem
+		oChangeDescription As JSONItem = Nil
 	#tag EndProperty
 
 	#tag Property, Flags = &h0
@@ -195,6 +202,24 @@ Inherits BKS_ActiveRecord.Base
 			Visible=true
 			Group="ID"
 			Type="String"
+		#tag EndViewProperty
+		#tag ViewProperty
+			Name="srow_created"
+			Group="Behavior"
+			Type="String"
+			EditorType="MultiLineEditor"
+		#tag EndViewProperty
+		#tag ViewProperty
+			Name="srow_modified"
+			Group="Behavior"
+			Type="String"
+			EditorType="MultiLineEditor"
+		#tag EndViewProperty
+		#tag ViewProperty
+			Name="srow_username"
+			Group="Behavior"
+			Type="String"
+			EditorType="MultiLineEditor"
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="Super"

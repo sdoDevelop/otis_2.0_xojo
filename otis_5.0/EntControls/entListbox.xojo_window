@@ -128,6 +128,38 @@ End
 	#tag EndMethod
 
 	#tag Method, Flags = &h0
+		Function CellPos(LB as entListBox, Row as Integer, Column as Integer) As Integer()
+		  Dim Result(1), X, Y as Integer
+		  If Row < LB.ScrollPosition then 
+		    Result(0) = -1
+		    Result(1) = -1
+		    return Result
+		  else
+		    Y = lb.Top
+		    For X = 0 to LB.trueWindow.width
+		      system.DebugLog str(LB.ColumnFromXY(X + lb.Left,Y + lb.Top))
+		      if LB.ColumnFromXY(X,Y) = Column then 
+		        Result(0) = X
+		        exit
+		      end if
+		    next
+		    For Y = 0 to LB.TrueWindow.Height
+		      if LB.RowFromXY(X,Y) = Row then 
+		        Result(1) = Y
+		        exit
+		      end if
+		    next
+		  end if
+		  
+		  dim n2, n3 as integer
+		  
+		  Result(0) = Result(0) + app.MainWindow.tbMainWindow.Left + lb.left + lb.Window.Left
+		  Result(1) = Result(1) + lb.top + lb.oListbox.TrueWindow.Top + lb.Window.Top + lb.RowHeight
+		  Return Result
+		End Function
+	#tag EndMethod
+
+	#tag Method, Flags = &h0
 		Function CellState(row as integer, column as integer) As CheckBox.CheckedStates
 		  Return oListbox.CellState(row,column)
 		End Function
@@ -137,6 +169,20 @@ End
 		Sub CellState(row as integer, column as integer, assigns oState as CheckBox.CheckedStates)
 		  
 		  oListbox.CellState(row,column) = oState
+		End Sub
+	#tag EndMethod
+
+	#tag Method, Flags = &h0
+		Function CellTag(row as integer, column as integer) As Variant
+		  
+		  Return oListbox.CellTag(row,column)
+		End Function
+	#tag EndMethod
+
+	#tag Method, Flags = &h0
+		Sub CellTag(row as integer, column as integer, assigns vNewValue as Variant)
+		  
+		  oListbox.CellTag(row,column) = vNewValue
 		End Sub
 	#tag EndMethod
 
@@ -154,6 +200,12 @@ End
 		  
 		  oListbox.ColumnCount = iCount
 		End Sub
+	#tag EndMethod
+
+	#tag Method, Flags = &h0
+		Function ColumnFromXY(x as integer, y as integer) As integer
+		  Return oListbox.ColumnFromXY(x,y)
+		End Function
 	#tag EndMethod
 
 	#tag Method, Flags = &h0
@@ -261,6 +313,9 @@ End
 		        if list.ColumnType(i) >= list.TypeEditable then
 		          list.EditCell(row, i)
 		          Return true
+		        elseif me.CustomTypes(i) = 1 Then  'Popup menu
+		          'PopupMenuColActivated(row,i)
+		          'Return true
 		        end if
 		      next
 		      
@@ -271,6 +326,9 @@ End
 		          if list.ColumnType(i) >= list.TypeEditable then
 		            list.EditCell(row, i)
 		            Return true
+		          elseif me.CustomTypes(i) = 1 Then  'Popup menu
+		            'PopupMenuColActivated(row,i)
+		            'Return true
 		          end if
 		        next
 		      end if
@@ -282,6 +340,9 @@ End
 		        if list.ColumnType(i) >= list.TypeEditable then
 		          list.EditCell(row, i)
 		          Return true
+		        elseif me.CustomTypes(i) = 1 Then  'Popup menu
+		          'PopupMenuColActivated(row,i)
+		          'Return true
 		        end if
 		      next
 		      
@@ -292,6 +353,9 @@ End
 		          if list.ColumnType(i) >= list.TypeEditable then
 		            list.EditCell(row, i)
 		            Return true
+		          elseif me.CustomTypes(i) = 1 Then  'Popup menu
+		            'PopupMenuColActivated(row,i)
+		            'Return true
 		          end if
 		        next
 		      end if
@@ -367,6 +431,19 @@ End
 	#tag EndMethod
 
 	#tag Method, Flags = &h0
+		Function RowFromXY(x as integer, y as integer) As integer
+		  Return oListbox.RowFromXY(x,y)
+		End Function
+	#tag EndMethod
+
+	#tag Method, Flags = &h0
+		Function RowHeight() As integer
+		  
+		  Return oListbox.RowHeight
+		End Function
+	#tag EndMethod
+
+	#tag Method, Flags = &h0
 		Function RowIsFolder(row as integer) As Boolean
 		  
 		  Return oListbox.RowIsFolder(row)
@@ -387,6 +464,37 @@ End
 		End Sub
 	#tag EndMethod
 
+	#tag Method, Flags = &h0
+		Function ScrollPosition() As integer
+		  return oListbox.ScrollPosition
+		End Function
+	#tag EndMethod
+
+	#tag Method, Flags = &h0
+		Function Selected(v as integer) As Boolean
+		  Return oListbox.Selected(v)
+		End Function
+	#tag EndMethod
+
+	#tag Method, Flags = &h0
+		Sub Selected(v as integer, assigns newvalue as Boolean)
+		  oListbox.Selected(v) = newvalue
+		End Sub
+	#tag EndMethod
+
+	#tag Method, Flags = &h0
+		Function width() As integer
+		  Return oListbox.Width
+		End Function
+	#tag EndMethod
+
+	#tag Method, Flags = &h0
+		Sub width(assigns newwidth as integer)
+		  
+		  oListbox.Width = newwidth
+		End Sub
+	#tag EndMethod
+
 
 	#tag Hook, Flags = &h0
 		Event CellAction(row as integer, column as integer)
@@ -394,6 +502,10 @@ End
 
 	#tag Hook, Flags = &h0
 		Event CellBackgroundPaint(g as Graphics,row as integer, column as integer) As Boolean
+	#tag EndHook
+
+	#tag Hook, Flags = &h0
+		Event CellTextPaint(g as Graphics, row as integer, column as integer, x as integer, y as integer) As Boolean
 	#tag EndHook
 
 	#tag Hook, Flags = &h0
@@ -413,12 +525,32 @@ End
 	#tag EndHook
 
 	#tag Hook, Flags = &h0
+		Event entMouseDown(x as integer, y as integer) As Boolean
+	#tag EndHook
+
+	#tag Hook, Flags = &h0
+		Event entMouseUp(x as integer, y as integer)
+	#tag EndHook
+
+	#tag Hook, Flags = &h0
 		Event ExpandRow(Row as integer)
+	#tag EndHook
+
+	#tag Hook, Flags = &h0
+		Event PopupMenuColActivated(row as integer, column as integer)
 	#tag EndHook
 
 
 	#tag Property, Flags = &h0
 		CellBackColor As Color
+	#tag EndProperty
+
+	#tag Property, Flags = &h0
+		#tag Note
+			0 - no type
+			1 - popup
+		#tag EndNote
+		CustomTypes() As Integer
 	#tag EndProperty
 
 	#tag Property, Flags = &h0
@@ -443,9 +575,15 @@ End
 	#tag Event
 		Function CellBackgroundPaint(g As Graphics, row As Integer, column As Integer) As Boolean
 		  
-		  g.ForeColor = CellBackColor
+		  // Draw background
+		  If row Mod 2 = 0 Then
+		    g.ForeColor = rgb(215, 227, 232)
+		  Else
+		    g.ForeColor = rgb(201, 219, 226)
+		  End If
 		  g.FillRect(0,0,me.Width,me.Height)
-		  g.ForeColor = GridLinesColor
+		  
+		  g.ForeColor = rgb(158, 172, 178)
 		  g.DrawRect(0,0,me.Width,me.Height)
 		End Function
 	#tag EndEvent
@@ -487,6 +625,22 @@ End
 		Function ContextualMenuAction(hitItem as MenuItem) As Boolean
 		  Return entContextualMenuAction(hitItem)
 		End Function
+	#tag EndEvent
+	#tag Event
+		Function CellTextPaint(g As Graphics, row As Integer, column As Integer, x as Integer, y as Integer) As Boolean
+		  
+		  return CellTextPaint(g,row,column,x,y)
+		End Function
+	#tag EndEvent
+	#tag Event
+		Function MouseDown(x As Integer, y As Integer) As Boolean
+		  Return entMouseDown(x,y)
+		End Function
+	#tag EndEvent
+	#tag Event
+		Sub MouseUp(x As Integer, y As Integer)
+		  entMouseUp(x,y)
+		End Sub
 	#tag EndEvent
 #tag EndEvents
 #tag ViewBehavior

@@ -1,6 +1,22 @@
 #tag Class
 Protected Class tbl_inventory
 Inherits DataFile.ActiveRecordBase
+	#tag Event
+		Sub PostDelete()
+		  
+		  
+		  // Get a list of all inventory expanded Items that are related to this one
+		  dim oexItems() as DataFile.tbl_inv_ex
+		  oexItems() = DataFile.tbl_inv_ex.List("fkinventory = " + me.ipkid.ToText)
+		  
+		  // Delete each one
+		  For each oexItem as DataFile.tbl_inv_ex In oexItems
+		    oexItem.Delete
+		  Next 
+		End Sub
+	#tag EndEvent
+
+
 	#tag Method, Flags = &h0
 		Shared Function BaseSQL(bAsCount as Boolean = false) As String
 		  dim ars() as string
@@ -271,6 +287,10 @@ Inherits DataFile.ActiveRecordBase
 	#tag EndProperty
 
 	#tag Property, Flags = &h0
+		bshow_items As Boolean
+	#tag EndProperty
+
+	#tag Property, Flags = &h0
 		bshow_items_discreetly As Boolean
 	#tag EndProperty
 
@@ -291,7 +311,15 @@ Inherits DataFile.ActiveRecordBase
 	#tag EndProperty
 
 	#tag Property, Flags = &h0
+		sitem_depth As String
+	#tag EndProperty
+
+	#tag Property, Flags = &h0
 		sitem_description As String
+	#tag EndProperty
+
+	#tag Property, Flags = &h0
+		sitem_height As String
 	#tag EndProperty
 
 	#tag Property, Flags = &h0
@@ -318,6 +346,14 @@ Inherits DataFile.ActiveRecordBase
 		sitem_type As String
 	#tag EndProperty
 
+	#tag Property, Flags = &h0
+		sitem_weight As String
+	#tag EndProperty
+
+	#tag Property, Flags = &h0
+		sitem_width As String
+	#tag EndProperty
+
 
 	#tag ViewBehavior
 		#tag ViewProperty
@@ -325,6 +361,16 @@ Inherits DataFile.ActiveRecordBase
 			Group="Behavior"
 			Type="Boolean"
 			EditorType="MultiLineEditor"
+		#tag EndViewProperty
+		#tag ViewProperty
+			Name="bshow_items"
+			Group="Behavior"
+			Type="Boolean"
+		#tag EndViewProperty
+		#tag ViewProperty
+			Name="bshow_items_discreetly"
+			Group="Behavior"
+			Type="Boolean"
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="iitem_price_cost"
@@ -379,10 +425,20 @@ Inherits DataFile.ActiveRecordBase
 			EditorType="MultiLineEditor"
 		#tag EndViewProperty
 		#tag ViewProperty
+			Name="sitem_depth"
+			Group="Behavior"
+			Type="String"
+		#tag EndViewProperty
+		#tag ViewProperty
 			Name="sitem_description"
 			Group="Behavior"
 			Type="String"
 			EditorType="MultiLineEditor"
+		#tag EndViewProperty
+		#tag ViewProperty
+			Name="sitem_height"
+			Group="Behavior"
+			Type="String"
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="sitem_manufacturer"
@@ -416,6 +472,28 @@ Inherits DataFile.ActiveRecordBase
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="sitem_type"
+			Group="Behavior"
+			Type="String"
+			EditorType="MultiLineEditor"
+		#tag EndViewProperty
+		#tag ViewProperty
+			Name="sitem_weight"
+			Group="Behavior"
+			Type="String"
+		#tag EndViewProperty
+		#tag ViewProperty
+			Name="sitem_width"
+			Group="Behavior"
+			Type="String"
+		#tag EndViewProperty
+		#tag ViewProperty
+			Name="srow_created"
+			Group="Behavior"
+			Type="String"
+			EditorType="MultiLineEditor"
+		#tag EndViewProperty
+		#tag ViewProperty
+			Name="srow_modified"
 			Group="Behavior"
 			Type="String"
 			EditorType="MultiLineEditor"

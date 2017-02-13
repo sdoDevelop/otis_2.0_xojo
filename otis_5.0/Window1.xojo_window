@@ -57,34 +57,26 @@ Begin Window Window1
       Visible         =   True
       Width           =   80
    End
-   Begin TabPanel tbMainWindow
+   Begin PagePanel tbMainWindow
       AutoDeactivate  =   True
-      Bold            =   False
       Enabled         =   True
-      Height          =   460
+      Height          =   438
       HelpTag         =   ""
       Index           =   -2147483648
       InitialParent   =   ""
-      Italic          =   False
       Left            =   7
       LockBottom      =   True
       LockedInPosition=   False
       LockLeft        =   True
       LockRight       =   True
       LockTop         =   True
+      PanelCount      =   1
       Panels          =   ""
       Scope           =   0
-      SmallTabs       =   False
-      TabDefinition   =   "Inventory\rTab 1"
       TabIndex        =   2
       TabPanelIndex   =   0
-      TabStop         =   True
-      TextFont        =   "System"
-      TextSize        =   0.0
-      TextUnit        =   0
-      Top             =   0
-      Underline       =   False
-      Value           =   1
+      Top             =   27
+      Value           =   0
       Visible         =   True
       Width           =   763
       Begin contInventory contInventory1
@@ -96,7 +88,7 @@ Begin Window Window1
          Enabled         =   True
          EraseBackground =   True
          HasBackColor    =   False
-         Height          =   432
+         Height          =   435
          HelpTag         =   ""
          IncreaseQuantityValue=   0
          InitialParent   =   "tbMainWindow"
@@ -110,7 +102,7 @@ Begin Window Window1
          TabIndex        =   0
          TabPanelIndex   =   1
          TabStop         =   True
-         Top             =   25
+         Top             =   27
          Transparent     =   True
          UseFocusRing    =   False
          Visible         =   True
@@ -148,6 +140,37 @@ Begin Window Window1
       Visible         =   True
       Width           =   80
    End
+   Begin TabPanel tbTabs
+      AutoDeactivate  =   True
+      Bold            =   False
+      Enabled         =   True
+      Height          =   24
+      HelpTag         =   ""
+      Index           =   -2147483648
+      InitialParent   =   ""
+      Italic          =   False
+      Left            =   7
+      LockBottom      =   False
+      LockedInPosition=   False
+      LockLeft        =   True
+      LockRight       =   False
+      LockTop         =   True
+      Panels          =   ""
+      Scope           =   0
+      SmallTabs       =   False
+      TabDefinition   =   "Tab 0"
+      TabIndex        =   4
+      TabPanelIndex   =   0
+      TabStop         =   True
+      TextFont        =   "System"
+      TextSize        =   0.0
+      TextUnit        =   0
+      Top             =   2
+      Underline       =   False
+      Value           =   0
+      Visible         =   True
+      Width           =   605
+   End
 End
 #tag EndWindow
 
@@ -157,6 +180,32 @@ End
 		  
 		End Sub
 	#tag EndEvent
+
+
+	#tag Method, Flags = &h0
+		Sub AddTab(sName as string, GoToTab as Boolean = True)
+		  tbMainWindow.Append
+		  tbTabs.Append(sName)
+		  
+		  if GoToTab Then
+		    tbMainWindow.Value = tbMainWindow.PanelCount - 1
+		    tbTabs.Value = tbTabs.PanelCount - 1
+		  end if
+		End Sub
+	#tag EndMethod
+
+	#tag Method, Flags = &h0
+		Sub RemoveTab(index as integer)
+		  tbTabs.Remove(index)
+		  tbMainWindow.Remove(index)
+		  
+		  dim n1 as integer
+		  n1 = tbTabs.PanelCount - 1
+		  
+		  tbTabs.Value = n1
+		  tbMainWindow.Value = n1
+		End Sub
+	#tag EndMethod
 
 
 	#tag Property, Flags = &h21
@@ -174,11 +223,20 @@ End
 		End Sub
 	#tag EndEvent
 #tag EndEvents
+#tag Events tbMainWindow
+#tag EndEvents
 #tag Events pbCloseTab
 	#tag Event
 		Sub Action()
 		  
-		  tbMainWindow.Remove(tbMainWindow.Value)
+		  RemoveTab(tbMainWindow.Value)
+		End Sub
+	#tag EndEvent
+#tag EndEvents
+#tag Events tbTabs
+	#tag Event
+		Sub Change()
+		  tbMainWindow.Value = tbTabs.Value
 		End Sub
 	#tag EndEvent
 #tag EndEvents

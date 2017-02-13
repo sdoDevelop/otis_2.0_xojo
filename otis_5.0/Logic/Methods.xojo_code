@@ -98,12 +98,15 @@ Protected Module Methods
 	#tag Method, Flags = &h1
 		Protected Sub IncreaseQuantity(fkInventory as integer,iAmount as integer)
 		  
+		  dim oParentItem as DataFile.tbl_inventory
+		  oParentItem = DataFile.tbl_inventory.FindByID(fkInventory)
 		  
 		  For i1 as integer = 1 To iAmount
 		    
 		    // First we create a new inventory expanded item 
 		    dim oItem as New DataFile.tbl_inv_ex
 		    oItem.ifkinventory = fkInventory
+		    oItem.sex_item_name = oParentItem.sitem_name
 		    oItem.Save
 		    
 		  Next

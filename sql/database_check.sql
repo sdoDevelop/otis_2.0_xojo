@@ -61,12 +61,30 @@
         item_subcategory            ,
         item_description            ,
         item_type                   ,
+        show_items                  ,
         show_items_discreetly       ,
         item_quantity               ,
         item_price_cost             ,
         item_owner                  ,
-        item_taxable                
+        item_taxable                ,
+        item_weight                 ,
+        item_height                 ,
+        item_depth                  ,
+        item_width                                     
         From tbl_inventory
+        ;
+
+    -- firmware
+    Select
+        pkid                        ,
+        row_created                 ,
+        row_modified                ,
+        row_username                ,
+        fk_inv_ex                   ,
+        update_date                 ,
+        firmware_version            ,
+        update_comments             
+        From  tbl_firmware
         ;
 
     -- inventory_kits
@@ -77,6 +95,7 @@
         row_username                ,
         fkinventory_parent          ,
         fkinventory_child           ,
+        kit_item_quantity           ,
         is_mandatory                ,
         show_discreetly             
         From tbl_kits_packages
@@ -84,14 +103,16 @@
 
     -- inventory_expanded
     Select 
-        pkid,         
-        row_created,
-        row_modified,
-        row_username,
-        fkinventory,  
-        item_barcode,    
-        item_rfid_code 
-        item_serial_code
+        pkid                        ,         
+        row_created                 ,
+        row_modified                ,
+        row_username                ,
+        fkinventory                 ,  
+        item_barcode                ,    
+        item_rfid_code              ,
+        item_serial_code            ,
+        fkitem_case                 ,
+        ex_item_name     
         From tbl_inv_ex
         ;
 

@@ -1,8 +1,8 @@
 #tag MultiImage
 Image appLogo
 	#tag ImageRepresentation
-		SaveInfo = APHRcwECAQAAAABeQzpcVXNlcnNcc2VhblxXb3J0aFNhdmluZ1xyZXBvc1xvdGlzXzIuMFxvdGlzXzUuMFxpbWFnZV9maWxlc1wyMjBweC1UaGVfVW5iZWxpZXZlYWJsZV9PdGlzLnBuZwMAAAAAAQAEAAAAAAEAAAAAAAAA
-		FullPath = C:\Users\sean\WorthSaving\repos\otis_2.0\otis_5.0\image_files\220px-The_Unbelieveable_Otis.png
+		SaveInfo = APHRcwECAQAAAABeQzpcVXNlcnNcU2VhblxXb3J0aFNhdmluZ1xyZXBvc1xvdGlzXzIuMFxvdGlzXzUuMFxpbWFnZV9maWxlc1wyMjBweC1UaGVfVW5iZWxpZXZlYWJsZV9PdGlzLnBuZwMAAAAAAQAEAAAAAAEAAAAAAAAA
+		FullPath = C:\Users\Sean\WorthSaving\repos\otis_2.0\otis_5.0\image_files\220px-The_Unbelieveable_Otis.png
 		PartialPath = image_files\220px-The_Unbelieveable_Otis.png
 		#tag ImageSpecification
 			Comment = 

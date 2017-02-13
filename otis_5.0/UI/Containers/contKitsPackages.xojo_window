@@ -321,6 +321,8 @@ End
 		    Case CheckBox.CheckedStates.Unchecked
 		      oRecord.ChangeMySavedValue(sFieldName,False)
 		    End Select
+		  Case 3  'Normal text editalbe
+		    oRecord.ChangeMySavedValue(sFieldName,lbKitItems.Cell(row,column))
 		  End Select
 		End Sub
 	#tag EndMethod
@@ -356,7 +358,7 @@ End
 		  
 		  lbKitItems.ColumnCount = 2
 		  
-		  s1 = "item_name,item_description"
+		  s1 = "item_name,kit_item_quantity"
 		  s2 = s1.Split(",")
 		  sFieldNames = s2
 		  
@@ -365,7 +367,7 @@ End
 		  sHeaders = s2
 		  lbKitItems.Heading = sHeaders()
 		  
-		  lbKitItems.ColumnType = Array(0,0)
+		  lbKitItems.ColumnType = Array(0,3)
 		  
 		  
 		  LoadMe(iParentInventoryPKID)
@@ -390,9 +392,12 @@ End
 	#tag Event
 		Sub CellAction(row as integer, column as integer)
 		  
-		  If lbKitItems.ColumnType(column) = 2 Then
+		  Select Case lbKitItems.ColumnType(column) 
+		  Case 2
 		    SaveValue(row,column)
-		  End If
+		  Case 3
+		    SaveValue(row,column)
+		  End Select
 		End Sub
 	#tag EndEvent
 #tag EndEvents
@@ -408,14 +413,16 @@ End
 		  dim iSelectedPKID as Int64
 		  iSelectedPKID = winPicker.iSelectedItemPKID
 		  
-		  // Create a New Kit item
-		  dim oNewKitItem as New DataFile.tbl_kits_packages
-		  oNewKitItem.ifkinventory_parent = iParentInventoryPKID
-		  oNewKitItem.ifkinventory_child = iSelectedPKID
-		  oNewKitItem.Save
-		  
-		  // Reload the kits listbox
-		  LoadMe(iParentInventoryPKID)
+		  If iSelectedPKID <> 0 Then
+		    // Create a New Kit item
+		    dim oNewKitItem as New DataFile.tbl_kits_packages
+		    oNewKitItem.ifkinventory_parent = iParentInventoryPKID
+		    oNewKitItem.ifkinventory_child = iSelectedPKID
+		    oNewKitItem.Save
+		    
+		    // Reload the kits listbox
+		    LoadMe(iParentInventoryPKID)
+		  End If
 		End Sub
 	#tag EndEvent
 #tag EndEvents

@@ -168,6 +168,14 @@ Inherits DataFile.ActiveRecordBase
 	#tag EndProperty
 
 	#tag Property, Flags = &h0
+		ifkitem_case As Int64
+	#tag EndProperty
+
+	#tag Property, Flags = &h0
+		sex_item_name As String
+	#tag EndProperty
+
+	#tag Property, Flags = &h0
 		sitem_barcode As String
 	#tag EndProperty
 
@@ -230,6 +238,18 @@ Inherits DataFile.ActiveRecordBase
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="sitem_serial_code"
+			Group="Behavior"
+			Type="String"
+			EditorType="MultiLineEditor"
+		#tag EndViewProperty
+		#tag ViewProperty
+			Name="srow_created"
+			Group="Behavior"
+			Type="String"
+			EditorType="MultiLineEditor"
+		#tag EndViewProperty
+		#tag ViewProperty
+			Name="srow_modified"
 			Group="Behavior"
 			Type="String"
 			EditorType="MultiLineEditor"

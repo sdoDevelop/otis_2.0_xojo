@@ -145,7 +145,7 @@ Inherits DataFile.ActiveRecordBase
 		  dim ars() as string
 		  
 		  
-		  ars.append DataFile.tbl_eipl.BaseSQL(True)
+		  ars.append DataFile.tbl_kits_packages.BaseSQL(True)
 		  if sCriteria<>"" then
 		    ars.append "WHERE " + sCriteria
 		  end if
@@ -179,6 +179,10 @@ Inherits DataFile.ActiveRecordBase
 		ifkinventory_parent As Integer
 	#tag EndProperty
 
+	#tag Property, Flags = &h0
+		ikit_item_quantity As Integer
+	#tag EndProperty
+
 
 	#tag ViewBehavior
 		#tag ViewProperty
@@ -198,6 +202,11 @@ Inherits DataFile.ActiveRecordBase
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="ifkinventory_parent"
+			Group="Behavior"
+			Type="Integer"
+		#tag EndViewProperty
+		#tag ViewProperty
+			Name="ikit_item_quantity"
 			Group="Behavior"
 			Type="Integer"
 		#tag EndViewProperty
@@ -230,6 +239,18 @@ Inherits DataFile.ActiveRecordBase
 			Visible=true
 			Group="ID"
 			Type="String"
+		#tag EndViewProperty
+		#tag ViewProperty
+			Name="srow_created"
+			Group="Behavior"
+			Type="String"
+			EditorType="MultiLineEditor"
+		#tag EndViewProperty
+		#tag ViewProperty
+			Name="srow_modified"
+			Group="Behavior"
+			Type="String"
+			EditorType="MultiLineEditor"
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="srow_username"

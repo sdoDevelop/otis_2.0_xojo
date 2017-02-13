@@ -67,13 +67,13 @@ for table_dict in table_names:
         # prepare the data depending on what its data type is
         for name, value in zip(column_names,column_values_tmp):
             if column_data_types[name] in number_types: #(column_data_types[name] == 'integer') :
-                column_values.append(str(value) + ":Integer" )
+                column_values.append(str(value) + "(:)Integer" )
                 #if value:
                 #    column_values.append(str(value))
                 #else:
                 #    column_values.append("0")
             elif column_data_types[name] == "boolean":
-                column_values.append(str(value) + ":Boolean")
+                column_values.append(str(value) + "(:)Boolean")
                 #if value:
                 #    column_values.append("'" + str(value) + "'")
                 #else:
@@ -84,7 +84,7 @@ for table_dict in table_names:
                 #else:
                 #    column_values.append("''")
             else:
-                column_values.append(str(value) + ":Text")
+                column_values.append(str(value) + "(:)Text")
                 #if value:
                 #    column_values.append("'" + value + "'")
                 #else:
@@ -94,7 +94,7 @@ for table_dict in table_names:
 
         # create our insert statment
         insert_statement = "Insert Into " + table + " (" + ','.join(column_names) + ") Values(" + ','.join(value_placeholders) + ");"
-        insert_statement = insert_statement + '|EOSTATEMENT|' + ','.join(column_values)
+        insert_statement = insert_statement + '|EOSTATEMENT|' + '(,)'.join(column_values)
         # append insert statment to or array
         insert_st_list.append(insert_statement)
 

@@ -40,6 +40,7 @@ Begin Window winInventoryPicker
       HasHeading      =   True
       Height          =   393
       HelpTag         =   ""
+      Index           =   -2147483648
       InitialParent   =   ""
       Left            =   1
       LockBottom      =   False
@@ -348,6 +349,11 @@ End
 		Group="ID"
 		Type="String"
 		EditorType="String"
+	#tag EndViewProperty
+	#tag ViewProperty
+		Name="iSelectedItemPKID"
+		Group="Behavior"
+		Type="Int64"
 	#tag EndViewProperty
 	#tag ViewProperty
 		Name="LiveResize"
