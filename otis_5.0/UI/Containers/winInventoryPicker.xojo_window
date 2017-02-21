@@ -40,7 +40,6 @@ Begin Window winInventoryPicker
       HasHeading      =   True
       Height          =   393
       HelpTag         =   ""
-      Index           =   -2147483648
       InitialParent   =   ""
       Left            =   1
       LockBottom      =   False

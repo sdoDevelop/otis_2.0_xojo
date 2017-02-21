@@ -292,129 +292,141 @@ End
 		  oInventoryItem.Save
 		  lbItems.InsertRow(0)
 		  
-		  dim oRowTag as lbRowTag
-		  oRowTag = BuildRowTag(oInventoryItem)
-		  oRowTag.bIsGrandParent = True
-		  
-		  LoadRow(0,oRowTag)
+		  LoadRow(0,oInventoryItem)
 		  
 		End Sub
 	#tag EndMethod
 
 	#tag Method, Flags = &h0
-		Function BuildRowTag(oInventoryItem as datafile.tbl_inventory, iFolderDepth as integer = 0, bIsGrandParent as Boolean = False, oLinkRecord as DataFile.tbl_inventory_link = Nil) As lbRowTag
-		  dim oRowTag as new lbRowTag
-		  break
+		Function BuildRowTag(oRecord as Variant = Nil) As Variant
+		  dim oRowTag as New lbRowTag
+		  dim sFieldNames() as String
+		  dim oKitRecord as DataFile.tbl_kits_packages
+		  dim oItemRecord as DataFile.tbl_inventory
+		  dim oChildInventoryRecord as DataFile.tbl_inventory
+		  dim jsParentFieldValues, jsChildFieldValues as JSONItem
 		  
-		  // Populate the main information
-		  oRowTag.pkid = oInventoryItem.ipkid
-		  oRowTag.vtblRecord = oInventoryItem
-		  oRowTag.iFolderLevel = iFolderDepth
-		  oRowTag.bIsGrandParent = bIsGrandParent
-		  oRowTag.vLinkTable = oLinkRecord
 		  
-		  // Check if this record has any children
-		  dim oChildrenLinks() as DataFile.tbl_inventory_link
-		  dim sCondition,sOrder as string
-		  
-		  sCondition = "fkinventory_parent = " + oRowTag.pkid.ToText
-		  oChildrenLinks = DataFile.tbl_inventory_link.List(sCondition,sOrder)
-		  
-		  If oChildrenLinks.Ubound = -1 Then
-		    ' No children found
+		  // Determine if this is a folder not attatched to a record
+		  If oRecord = Nil Then
+		    ' No record attached
 		    
-		  Else
-		    
-		    // Identify this rowtag as a folder
 		    oRowTag.isFolder = True
 		    
-		    // Loop through each  Child
-		    For Each oChildLink as DataFile.tbl_inventory_link In oChildrenLinks
+		  Else
+		    ' A record is attached
+		    
+		    // Add the record to the rowtag
+		    oRowTag.vtblRecord = oRecord
+		    
+		    // check what kind of record is attached
+		    If oRecord IsA DataFile.tbl_inventory Then
 		      
-		      // Get the Child inventory Item
-		      dim oChildItem as DataFile.tbl_inventory
-		      oChildItem = datafile.tbl_inventory.FindByID(oChildLink.ifkinventory_child)
+		      // Put the record into a variable
+		      oItemRecord = oRecord
 		      
-		      // build the child rowtag
-		      dim oChildRowTag as lbRowTag
-		      oChildRowTag = BuildRowTag(oChildItem,iFolderDepth + 1,False,oChildLink)
+		      // Add the pkid to the rowtag
+		      oRowTag.pkid = oItemRecord.ipkid
 		      
+		      // Grab the correct field names
+		      sFieldNames = sItemRow_FieldNames
 		      
-		      // Append this child rowtag to the list
-		      oRowTag.aroChildren.Append(oChildRowTag)
+		      // Get the field value pairs as json from the reocrd
+		      jsParentFieldValues = oItemRecord.GetMyFieldValues(True)
+		      
+		    ElseIf oRecord IsA DataFile.tbl_kits_packages Then
+		      
+		      // Put the record into a variable
+		      oKitRecord = oRecord
+		      
+		      // Add the pkid to the rowtag
+		      oRowTag.pkid = oKitRecord.ipkid
+		      
+		      // Grab the correct field names
+		      sFieldNames = sKitItemRow_FieldNames
+		      
+		      // Grab the child inventory item related to this kit item
+		      oChildInventoryRecord = DataFile.tbl_inventory.FindByID(oKitRecord.ifkinventory_child)
+		      
+		      // Get the field value pairs as json from the reocrds
+		      jsParentFieldValues = oKitRecord.GetMyFieldValues(True)
+		      jsChildFieldValues = oChildInventoryRecord.GetMyFieldValues(True)
+		      
+		    End If
+		    
+		    // Loop through each field name 
+		    For i1 as integer = 0 To sFieldNames.Ubound
+		      
+		      // Put the current field name into a varialbe
+		      dim sCurrentFieldName as String = sFieldNames(i1)
+		      If sCurrentFieldName = "|SKIP|" Then
+		        Continue
+		      End If
+		      
+		      // Pull the keys out of each field value pairs
+		      dim jsTheRecordFieldValues as JSONItem
+		      dim sParentKeys(), sChildKeys() as String
+		      sParentKeys = jsParentFieldValues.Names
+		      If jsChildFieldValues <> Nil Then
+		        sChildKeys = jsChildFieldValues.Names
+		      End If
+		      
+		      // Check which Record has the field we need
+		      If sParentKeys.IndexOf(sCurrentFieldName) <> -1 Then
+		        ' Parent record has the field
+		        jsTheRecordFieldValues = jsParentFieldValues
+		      ElseIf sChildKeys.Ubound <> -1 Then
+		        If sChildKeys.IndexOf(sCurrentFieldName) <> -1 Then
+		          ' Child Record has the field
+		          jsTheRecordFieldValues = jsChildFieldValues
+		        End If
+		      Else
+		        ' Neither has our field 
+		        dim err as new RuntimeException
+		        err.Message = "No record has the field: " + sCurrentFieldName
+		        raise err
+		      End If
+		      
+		      // Format the value
+		      dim s1 as string
+		      s1 = jsTheRecordFieldValues.Value(sCurrentFieldName)
+		      If sCurrentFieldName.InStr("_cost") <> 0 Then
+		        s1 = ConvertCentsString_To_DollarString(s1)
+		      ElseIf sCurrentFieldName = "|SKIP|" Then
+		        s1 = ""
+		      End If
+		      
+		      // Append to the column values
+		      oRowTag.vColumnValues.Append(s1)
 		      
 		    Next
 		    
 		  End If
 		  
-		  // Get the field names and values out of the record
-		  dim jsFieldValues as JSONItem
-		  dim jsLinkFieldValues as JSONItem
-		  jsFieldValues = oInventoryItem.GetMyFieldValues(True)
-		  dim sKeys() as string
-		  dim sLinkKeys() as string
-		  sKeys() = jsFieldValues.Names
-		  If oLinkRecord <> Nil Then
-		    jsLinkFieldValues = oLinkRecord.GetMyFieldValues(True)
-		    sLinkKeys = jsLinkFieldValues.Names
-		  End If
-		  
-		  // Get the proper field names
-		  dim sFieldNames() as String
-		  If bIsGrandParent Then
-		    sFieldNames = sGrandParentFieldNames
-		  Else
-		    sFieldNames = sNonGrandParentFieldNames
-		  End If
-		  
-		  For Each sFieldName as string In sFieldNames
-		    
-		    If sKeys.IndexOf(sFieldName) <> -1 Then
-		      
-		      // Format the value
-		      dim s1 as string
-		      s1 = jsFieldValues.Value(sFieldName)
-		      's1 = jsTheRecordFieldValues.Value(sCurrentFieldName)
-		      If sFieldName.InStr("_cost") <> 0 Then
-		        s1 = ConvertCentsString_To_DollarString(s1)
-		      ElseIf sFieldName = "|SKIP|" Then
-		        s1 = ""
-		      End If
-		      
-		      oRowTag.vColumnValues.Append(s1)
-		      
-		    Else
-		      ' The field is not in this table 
-		      ' We check if it has a table name attached
-		      
-		      If InStr(sFieldName,"tbl_inventory_link.") > 0 Then
-		        sFieldName = Mid(sFieldName,20)
-		        
-		        If sLinkKeys.IndexOf(sFieldName) <> -1 Then
-		          // Format the value
-		          dim s1 as string
-		          s1 = jsLinkFieldValues.Value(sFieldName)
-		          's1 = jsTheRecordFieldValues.Value(sCurrentFieldName)
-		          If sFieldName.InStr("_cost") <> 0 Then
-		            s1 = ConvertCentsString_To_DollarString(s1)
-		          ElseIf sFieldName = "|SKIP|" Then
-		            s1 = ""
-		          End If
-		          
-		          oRowTag.vColumnValues.Append(s1)
-		        End If
-		      End If
-		    End If
-		    
-		    
-		    
-		    
-		    
-		    
-		  Next
 		  
 		  Return oRowTag
-		  break
+		  
+		  
+		  
+		  
+		  
+		  
+		  
+		  
+		  
+		  
+		  
+		  
+		  
+		  
+		  
+		  
+		  
+		  
+		  
+		  
+		  
+		  
 		  
 		  
 		  
@@ -430,6 +442,24 @@ End
 	#tag EndMethod
 
 	#tag Method, Flags = &h0
+		Sub Constructor()
+		  oItems = new cInventory
+		  oItems.bGrouped = True
+		  oItems.sGroupBy = "item_department"
+		  oItems.LoadMe
+		  
+		  
+		  
+		End Sub
+	#tag EndMethod
+
+	#tag Method, Flags = &h0
+		Sub DeleteDepartment()
+		  
+		End Sub
+	#tag EndMethod
+
+	#tag Method, Flags = &h0
 		Sub DeleteItem(iIndex as integer)
 		  
 		  If lbItems.ListIndex <> -1 then
@@ -437,11 +467,11 @@ End
 		    // Grab the rowtag
 		    dim oRowTag as lbRowTag = lbItems.RowTag(lbItems.ListIndex)
 		    
-		    If oRowTag.vtblRecord = Nil Then
-		      'This row is not a record in the database
+		    If oRowTag.iFolderLevel = 0 Then
+		      'This is an entire department
 		      
 		    Else
-		      'This row is a record in the database
+		      'This is not an entire department
 		      
 		      dim iPKID as integer
 		      
@@ -478,80 +508,129 @@ End
 	#tag EndMethod
 
 	#tag Method, Flags = &h0
-		Sub LoadItems()
+		Sub LoadItemsIntoListbox()
 		  dim oItemDict as Dictionary
+		  dim oFullItemList() as DataFile.tbl_inventory
 		  
 		  
-		  // Delete all the rows in the listbox
+		  // Delete all rows in listbox
 		  lbItems.DeleteAllRows
 		  
-		  
-		  // Set up variables needed to load the inventory
-		  dim sCondition, sOrder, FilterMenuValue as string
-		  sOrder = "item_department,item_name"
-		  
-		  // Set the condition based on the filter option given to user through popup window
-		  FilterMenuValue = pmPackageFilter.Text
-		  If FilterMenuValue <> "" Then
-		    sCondition = "item_type = '" + pmPackageFilter.Text + "'"
+		  // Load the Grouped inventory 
+		  'oItemDict = DataFile.tbl_inventory.ListGrouped("","item_department,item_name")
+		  dim s1 as string
+		  dim s2 as string =  pmPackageFilter.Text
+		  Select Case s2
+		  Case "All"
+		    oItemDict = DataFile.tbl_inventory.ListGrouped("","item_department,item_name")
+		  Case "Item"
+		    s1 = "item_type = 'Item'"
+		    oItemDict = DataFile.tbl_inventory.ListGrouped(s1,"item_department,item_name")
+		  Case "Labor"
+		    s1 = "item_type = 'Labor'"
+		    oItemDict = DataFile.tbl_inventory.ListGrouped(s1,"item_department,item_name")
+		  Case "Item Package"
+		    s1 = "item_type = 'Item Package'"
+		    oItemDict = DataFile.tbl_inventory.ListGrouped(s1,"item_department,item_name")
+		  Case "Labor Package"
+		    s1 = "item_type = 'Labor Package'"
+		    oItemDict = DataFile.tbl_inventory.ListGrouped(s1,"item_department,item_name")
 		  Else
-		    sCondition = ""
-		  End If
+		    oItemDict = DataFile.tbl_inventory.ListGrouped("","item_department,item_name")
+		  End Select
 		  
-		  // Load the inventory as groups
-		  oItemDict = DataFile.tbl_inventory.ListGrouped(sCondition,sOrder)
+		  // Load the full inventory
+		  oFullItemList() = DataFile.tbl_inventory.List()
 		  
-		  ' Check to make sure something actually loaded
-		  If oItemDict.Keys.Ubound = -1 Then
-		    ' The dictionary of inventory items has not been populated
-		    ErrManage("Inventory","Could not load inventory, Dictionary has no keys")
-		    Return
-		  End If
-		  
+		  // Get all the group names from the group Dictionary
 		  dim sGroupNames() as String
-		  For each v1 as Variant In oItemDict.Keys
-		    sGroupNames.Append(str(v1))
+		  For Each key as Variant In oItemDict.Keys
+		    sGroupNames.Append(str(key))
 		  Next
 		  
-		  // Now we loop through our Groups
-		  For Each sGroupName as string In sGroupNames
+		  // Loop through groups
+		  For Each sGroup as String In sGroupNames
 		    
-		    // Set up the rowtag
-		    dim oGroupRowTag as New lbRowTag
-		    oGroupRowTag.isFolder = True
-		    oGroupRowTag.vColumnValues.Append(sGroupName)
+		    // Set up a folder rowtag
+		    dim oRowTag as lbRowTag
+		    oRowTag = BuildRowTag
+		    oRowTag.iFolderLevel = 0
 		    
-		    dim oGroupItems() as DataFile.tbl_inventory
-		    oGroupItems() = oItemDict.Value(sGroupName)
+		    // Add the label for the folder
+		    dim FolderValuesIndex as integer = oRowTag.sFolderValues.Ubound + 1
+		    ReDim oRowTag.sFolderValues(FolderValuesIndex)
+		    oRowTag.sFolderValues(FolderValuesIndex) = sGroup
 		    
-		    // Loop through each item in the group
-		    For Each oParentItem as DataFile.tbl_inventory In oGroupItems
+		    // Load the current group into a variable
+		    dim oGroup() as DataFile.tbl_inventory
+		    oGroup = oItemDict.Value(sGroup)
+		    
+		    // Loop through all records in group to make rowtags for each
+		    For Each oRecord as DataFile.tbl_inventory In oGroup
 		      
-		      dim oRowTag as lbRowTag
-		      oRowTag = BuildRowTag(oParentItem,1,True)
+		      dim oRecordRowTag as lbRowTag
+		      oRecordRowTag = BuildRowTag(oRecord)
+		      oRecordRowTag.iFolderLevel = 1
 		      
-		      // Add the child rowtag to the group rowtag
-		      oGroupRowTag.vColumnValues.Append(oRowTag)
+		      // Check if there are any kit items
+		      dim n1 as integer
+		      dim sCondition as string = "fkinventory_parent = " + oRecordRowTag.pkid.ToText
+		      n1 = DataFile.tbl_kits_packages.ListCount(sCondition)
+		      If n1 > 0 Then
+		        ' There are kit items for this inventory item
+		        
+		        // Set the current item to a folder
+		        oRecordRowTag.isFolder = True
+		        
+		        // Grab all of the kit items for this record
+		        dim oKitRecords() as DataFile.tbl_kits_packages
+		        oKitRecords() = DataFile.tbl_kits_packages.List(sCondition)
+		        
+		        // Loop through each oKitRecord
+		        For each oKitRecord as DataFile.tbl_kits_packages In oKitRecords
+		          
+		          // Grab the pkid of the child kit item
+		          dim kititempkid as int64
+		          kititempkid = oKitRecord.ifkinventory_child
+		          
+		          // Get the kit item record
+		          dim KitItemRecord as DataFile.tbl_inventory
+		          KitItemRecord = DataFile.tbl_inventory.FindByID(kititempkid)
+		          
+		          // Create the rowtag
+		          dim oKitRowTag as lbRowTag
+		          oKitRowTag = BuildRowTag(oKitRecord)
+		          oKitRowTag.iFolderLevel = 2
+		          
+		          // Append kit rowtag to children array of parent inventory item
+		          oRecordRowTag.aroChildren.Append(oKitRowTag)
+		          
+		        Next
+		        
+		      End If
 		      
-		      // Add a new row
-		      lbItems.AddRow("")
-		      lbItems.RowisFolder(lbItems.LastIndex) = True
-		      lbItems.RowTag(lbItems.LastIndex)= oRowTag
-		      LoadRow(lbItems.LastIndex,oRowTag)
+		      // Append the Inventory item to the child array of the parent group
+		      oRowTag.aroChildren.Append(oRecordRowTag)
 		      
 		    Next
 		    
+		    lbItems.AddFolder(oRowTag.sFolderValues(0))
+		    lbItems.RowTag(lbItems.LastIndex) = oRowTag
+		    
 		  Next
+		  
 		End Sub
 	#tag EndMethod
 
 	#tag Method, Flags = &h0
-		Sub LoadRow(row as integer, oRowTag as lbRowTag)
+		Sub LoadRow(row as integer, oRecord as DataFile.tbl_inventory)
 		  
-		  // Populate cells
-		  For i1 as integer = row To lbItems.ColumnCount - 1
-		    lbItems.Cell(row,i1) = oRowTag.vColumnValues(i1)
-		  Next
+		  dim oRowTag as lbRowTag
+		  oRowTag = BuildRowTag(oRecord)
+		  
+		  lbItems.RowTag(row) = oRowTag
+		  
+		  PopulateCells(row,oRowTag)
 		End Sub
 	#tag EndMethod
 
@@ -607,10 +686,19 @@ End
 		        oInventoryRecord.sitem_type = selectedMenu.Text
 		        oInventoryRecord.save
 		        
-		        dim ort1 as lbRowTag = BuildRowTag(oInventoryRecord)
-		        LoadRow(row,ort1)
+		        LoadRow(row,oInventoryRecord)
 		        
+		      ElseIf oRowTag.vtblRecord IsA DataFile.tbl_kits_packages Then
+		        dim oRecord as DataFile.tbl_kits_packages = oRowTag.vtblRecord
 		        
+		        // Get the real inventory item
+		        oInventoryRecord = DataFile.tbl_inventory.FindByID(oRecord.ifkinventory_child)
+		        
+		        // Change the value for type
+		        oInventoryRecord.sitem_type = selectedMenu.Text
+		        oInventoryRecord.save
+		        
+		        PopulateCells(row,BuildRowTag(oRecord))
 		        
 		      End If
 		      
@@ -623,13 +711,20 @@ End
 	#tag EndMethod
 
 	#tag Method, Flags = &h0
+		Sub PopulateCells(row as integer, oRowTag as lbRowTag)
+		  
+		  // Populate cells
+		  For i1 as integer = row To lbItems.ColumnCount - 1
+		    lbItems.Cell(row,i1) = oRowTag.vColumnValues(i1)
+		  Next
+		End Sub
+	#tag EndMethod
+
+	#tag Method, Flags = &h0
 		Sub RefreshInventory(bMaintainUIState as Boolean = False)
 		  dim sOpenFolders() as string
-		  dim iScrollPosition as integer
 		  
 		  If bMaintainUIState Then
-		    
-		    iScrollPosition = lbItems.ScrollPosition
 		    
 		    // Loop through each row in the listbox 
 		    For i1 as integer = 0 To lbItems.ListCount - 1
@@ -646,12 +741,10 @@ End
 		  End If
 		  
 		  'oItems.LoadMe
-		  LoadItems
+		  LoadItemsIntoListbox
 		  
 		  dim openThese() as integer
 		  if bMaintainUIState And lbItems.ListCount <> 0 Then
-		    
-		    lbItems.ScrollPosition = iScrollPosition
 		    
 		    'For i1 as integer = 0 To lbItems.ListCount - 1
 		    dim iIndex as integer
@@ -686,7 +779,7 @@ End
 		  dim v1 as Variant
 		  
 		  
-		  If oRowTag.bIsGrandParent Then
+		  If oRowTag.vtblRecord IsA DataFile.tbl_inventory Then
 		    dim otblObject as DataFile.tbl_inventory
 		    otblObject = oRowTag.vtblRecord
 		    
@@ -695,7 +788,7 @@ End
 		    sParentKeys() = jsFieldValues.Names
 		    
 		    // Formatting
-		    sCurrentFieldName = sGrandParentFieldNames(column)
+		    sCurrentFieldName = sItemRow_FieldNames(column)
 		    If sCurrentFieldName.InStr("_cost") <> 0 Then
 		      s1 = ConvertDollarString_To_CentsString(s1)
 		      v1 = s1
@@ -708,7 +801,7 @@ End
 		    
 		    oRowTag.pkid = otblObject.ipkid
 		    
-		  Else
+		  ElseIf oRowTag.vtblRecord IsA DataFile.tbl_kits_packages Then
 		    dim otblObject as DataFile.tbl_kits_packages
 		    otblObject = oRowTag.vtblRecord
 		    
@@ -723,7 +816,7 @@ End
 		    sChildKeys() = jsFieldValues.Names
 		    
 		    // Formatting
-		    sCurrentFieldName = sNonGrandParentFieldNames(column)
+		    sCurrentFieldName = sItemRow_FieldNames(column)
 		    If sCurrentFieldName.InStr("_cost") <> 0 Then
 		      s1 = ConvertDollarString_To_CentsString(s1)
 		      v1 = s1
@@ -853,7 +946,7 @@ End
 	#tag EndProperty
 
 	#tag Property, Flags = &h0
-		sGrandParentFieldNames() As String
+		oItems As cInventory
 	#tag EndProperty
 
 	#tag Property, Flags = &h0
@@ -861,7 +954,11 @@ End
 	#tag EndProperty
 
 	#tag Property, Flags = &h0
-		sNonGrandParentFieldNames() As String
+		sItemRow_FieldNames() As String
+	#tag EndProperty
+
+	#tag Property, Flags = &h0
+		sKitItemRow_FieldNames() As String
 	#tag EndProperty
 
 
@@ -887,10 +984,10 @@ End
 		  // Set Field Names 
 		  s1 = "item_name,item_manufacturer,item_model,item_department,item_category,item_subcategory,item_description,item_type,item_quantity,item_price_cost,item_owner"
 		  s2 = Split(s1,",")
-		  sGrandParentFieldNames = s2
-		  s1 = "item_name,item_manufacturer,item_model,item_department,item_category,item_subcategory,item_description,item_type,tbl_inventory_link.quantity,|SKIP|,item_owner"
+		  sItemRow_FieldNames = s2
+		  s1 = "item_name,item_manufacturer,item_model,item_department,item_category,item_subcategory,item_description,item_type,kit_item_quantity,|SKIP|,item_owner"
 		  s2 = Split(s1,",")
-		  sNonGrandParentFieldNames = s2
+		  sKitItemRow_FieldNames = s2
 		  
 		  dim n1,n2() as integer
 		  n2 = Array(3,3,3,3,3,3,3,1,1,3,3)
@@ -909,7 +1006,7 @@ End
 		  Next
 		  
 		  
-		  LoadItems
+		  LoadItemsIntoListbox
 		End Sub
 	#tag EndEvent
 	#tag Event
@@ -1207,6 +1304,44 @@ End
 	#tag Event
 		Sub Action()
 		  
+		  If lbItems.ListIndex <> -1 then
+		    
+		    dim iListIndex as integer = lbItems.ListIndex
+		    
+		    // Grab the RowTag
+		    dim oRowTag as lbRowTag = lbItems.RowTag(iListIndex)
+		    
+		    // Extract the record
+		    dim oRecordOriginal as DataFile.tbl_inventory
+		    oRecordOriginal = oRowTag.vtblRecord
+		    
+		    // Pull the pkid from the Record
+		    dim iThePKID as Int64 = oRecordOriginal.ipkid
+		    ' And put it into a more easily accessable place...the row tag
+		    oRowTag.pkid = iThePKID
+		    
+		    If iThePKID <> 0 Then
+		      
+		      dim oSpecifiedAmount as integer
+		      
+		      If oSpecifiedAmount = 0 Then
+		        oSpecifiedAmount = 1
+		      End If
+		      
+		      // Increase the quantity
+		      Methods.IncreaseQuantity(iThePKID,oSpecifiedAmount)
+		      
+		      // Reload the row
+		      dim oRecord as DataFile.tbl_inventory = DataFile.tbl_inventory.FindByID(iThePKID)
+		      dim iRecordIndex as integer = lbItems.FindByPKID(iThePKID)
+		      LoadRow(iRecordIndex,oRecord)
+		      
+		    Else
+		      Break
+		    End If
+		    
+		    
+		  End If
 		End Sub
 	#tag EndEvent
 #tag EndEvents

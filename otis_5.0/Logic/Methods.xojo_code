@@ -104,10 +104,10 @@ Protected Module Methods
 		  For i1 as integer = 1 To iAmount
 		    
 		    // First we create a new inventory expanded item 
-		    dim oItem as New DataFile.tbl_inv_ex
-		    oItem.ifkinventory = fkInventory
-		    oItem.sex_item_name = oParentItem.sitem_name
-		    oItem.Save
+		    'dim oItem as New DataFile.tbl_inventory_link
+		    'oItem.ifkinventory = fkInventory
+		    'oItem.sex_item_name = oParentItem.sitem_name
+		    'oItem.Save
 		    
 		  Next
 		  
@@ -119,7 +119,7 @@ Protected Module Methods
 		Protected Sub UpdateItemQuantity(fkInventory as int64)
 		  // Figure out how many inventory expanded items there are related to our inventory item
 		  dim qty as integer
-		  qty = DataFile.tbl_inv_ex.ListCount("fkInventory = " + fkInventory.ToText )
+		  qty = DataFile.tbl_inventory_link.ListCount("fkInventory = " + fkInventory.ToText )
 		  
 		  // Change the quantity of said inventory item
 		  dim oItem as DataFile.tbl_inventory

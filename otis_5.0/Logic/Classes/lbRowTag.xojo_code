@@ -51,6 +51,10 @@ Protected Class lbRowTag
 	#tag EndProperty
 
 	#tag Property, Flags = &h0
+		bIsGrandParent As Boolean
+	#tag EndProperty
+
+	#tag Property, Flags = &h0
 		iFolderLevel As Integer
 	#tag EndProperty
 
@@ -68,6 +72,10 @@ Protected Class lbRowTag
 
 	#tag Property, Flags = &h0
 		vColumnValues() As Variant
+	#tag EndProperty
+
+	#tag Property, Flags = &h0
+		vLinkTable As Variant
 	#tag EndProperty
 
 	#tag Property, Flags = &h0

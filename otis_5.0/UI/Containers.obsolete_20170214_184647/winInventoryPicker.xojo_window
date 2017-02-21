@@ -1,37 +1,69 @@
 #tag Window
-Begin Window Window1
+Begin Window winInventoryPicker
    BackColor       =   &cFFFFFF00
    Backdrop        =   0
    CloseButton     =   True
    Compatibility   =   ""
    Composite       =   False
-   Frame           =   0
+   Frame           =   2
    FullScreen      =   False
    FullScreenButton=   False
    HasBackColor    =   False
-   Height          =   460
+   Height          =   412
    ImplicitInstance=   False
    LiveResize      =   True
    MacProcID       =   0
    MaxHeight       =   32000
    MaximizeButton  =   True
    MaxWidth        =   32000
-   MenuBar         =   1143859199
+   MenuBar         =   0
    MenuBarVisible  =   True
    MinHeight       =   64
    MinimizeButton  =   True
    MinWidth        =   64
    Placement       =   0
    Resizeable      =   True
-   Title           =   "Untitled"
-   Visible         =   False
-   Width           =   770
-   Begin PushButton bRunSync
+   Title           =   ""
+   Visible         =   True
+   Width           =   274
+   Begin entListbox lbItems
+      AcceptFocus     =   False
+      AcceptTabs      =   True
+      AutoDeactivate  =   True
+      BackColor       =   &cFFFFFF00
+      Backdrop        =   0
+      CellBackColor   =   &cFFFFFF00
+      Enabled         =   True
+      EraseBackground =   True
+      GridLinesColor  =   &c00000000
+      HasBackColor    =   False
+      HasHeading      =   True
+      Height          =   393
+      HelpTag         =   ""
+      Index           =   -2147483648
+      InitialParent   =   ""
+      Left            =   1
+      LockBottom      =   False
+      LockedInPosition=   False
+      LockLeft        =   True
+      LockRight       =   False
+      LockTop         =   True
+      Scope           =   0
+      TabIndex        =   0
+      TabPanelIndex   =   0
+      TabStop         =   True
+      Top             =   20
+      Transparent     =   True
+      UseFocusRing    =   False
+      Visible         =   True
+      Width           =   273
+   End
+   Begin PushButton pbCloseWindow
       AutoDeactivate  =   True
       Bold            =   False
       ButtonStyle     =   "0"
-      Cancel          =   False
-      Caption         =   "RunSync"
+      Cancel          =   True
+      Caption         =   "Cancel"
       Default         =   False
       Enabled         =   True
       Height          =   22
@@ -39,13 +71,13 @@ Begin Window Window1
       Index           =   -2147483648
       InitialParent   =   ""
       Italic          =   False
-      Left            =   690
+      Left            =   216
       LockBottom      =   False
       LockedInPosition=   False
-      LockLeft        =   False
-      LockRight       =   True
+      LockLeft        =   True
+      LockRight       =   False
       LockTop         =   True
-      Scope           =   2
+      Scope           =   0
       TabIndex        =   1
       TabPanelIndex   =   0
       TabStop         =   True
@@ -55,188 +87,172 @@ Begin Window Window1
       Top             =   0
       Underline       =   False
       Visible         =   True
-      Width           =   80
-   End
-   Begin PagePanel tbMainWindow
-      AutoDeactivate  =   True
-      Enabled         =   True
-      Height          =   438
-      HelpTag         =   ""
-      Index           =   -2147483648
-      InitialParent   =   ""
-      Left            =   7
-      LockBottom      =   True
-      LockedInPosition=   False
-      LockLeft        =   True
-      LockRight       =   True
-      LockTop         =   True
-      PanelCount      =   1
-      Panels          =   ""
-      Scope           =   0
-      TabIndex        =   2
-      TabPanelIndex   =   0
-      TabStop         =   True
-      Top             =   27
-      Value           =   0
-      Visible         =   True
-      Width           =   763
-      Begin contInventory contInventory1
-         AcceptFocus     =   False
-         AcceptTabs      =   True
-         AutoDeactivate  =   True
-         BackColor       =   &cFFFF00FF
-         Backdrop        =   0
-         Enabled         =   True
-         EraseBackground =   True
-         HasBackColor    =   False
-         Height          =   435
-         HelpTag         =   ""
-         IncreaseQuantityValue=   0
-         Index           =   -2147483648
-         InitialParent   =   "tbMainWindow"
-         Left            =   7
-         LockBottom      =   True
-         LockedInPosition=   False
-         LockLeft        =   True
-         LockRight       =   True
-         LockTop         =   True
-         Scope           =   0
-         TabIndex        =   0
-         TabPanelIndex   =   1
-         TabStop         =   True
-         Top             =   27
-         Transparent     =   True
-         UseFocusRing    =   False
-         Visible         =   True
-         Width           =   763
-      End
-   End
-   Begin PushButton pbCloseTab
-      AutoDeactivate  =   True
-      Bold            =   False
-      ButtonStyle     =   "0"
-      Cancel          =   False
-      Caption         =   "Close Tab"
-      Default         =   False
-      Enabled         =   True
-      Height          =   22
-      HelpTag         =   ""
-      Index           =   -2147483648
-      InitialParent   =   ""
-      Italic          =   False
-      Left            =   611
-      LockBottom      =   False
-      LockedInPosition=   False
-      LockLeft        =   False
-      LockRight       =   True
-      LockTop         =   True
-      Scope           =   0
-      TabIndex        =   3
-      TabPanelIndex   =   0
-      TabStop         =   True
-      TextFont        =   "System"
-      TextSize        =   0.0
-      TextUnit        =   0
-      Top             =   0
-      Underline       =   False
-      Visible         =   True
-      Width           =   80
-   End
-   Begin TabPanel tbTabs
-      AutoDeactivate  =   True
-      Bold            =   False
-      Enabled         =   True
-      Height          =   24
-      HelpTag         =   ""
-      Index           =   -2147483648
-      InitialParent   =   ""
-      Italic          =   False
-      Left            =   7
-      LockBottom      =   False
-      LockedInPosition=   False
-      LockLeft        =   True
-      LockRight       =   False
-      LockTop         =   True
-      Panels          =   ""
-      Scope           =   0
-      SmallTabs       =   False
-      TabDefinition   =   "Tab 0"
-      TabIndex        =   4
-      TabPanelIndex   =   0
-      TabStop         =   True
-      TextFont        =   "System"
-      TextSize        =   0.0
-      TextUnit        =   0
-      Top             =   2
-      Underline       =   False
-      Value           =   0
-      Visible         =   True
-      Width           =   605
+      Width           =   58
    End
 End
 #tag EndWindow
 
 #tag WindowCode
-	#tag Event
-		Sub Open()
-		  
-		End Sub
-	#tag EndEvent
-
-
 	#tag Method, Flags = &h0
-		Sub AddTab(sName as string, GoToTab as Boolean = True)
-		  tbMainWindow.Append
-		  tbTabs.Append(sName)
+		Sub Constructor()
 		  
-		  if GoToTab Then
-		    tbMainWindow.Value = tbMainWindow.PanelCount - 1
-		    tbTabs.Value = tbTabs.PanelCount - 1
-		  end if
+		  dim s1,s2() as string
+		  
+		  s1 = "item_name"
+		  s2 = s1.Split(",")
+		  sFieldNames = s2
+		  
+		  s1 = "Name"
+		  s2 = s1.Split(",")
+		  sHeaders = s2
+		  
+		  LoadListbox
 		End Sub
 	#tag EndMethod
 
 	#tag Method, Flags = &h0
-		Sub RemoveTab(index as integer)
-		  tbTabs.Remove(index)
-		  tbMainWindow.Remove(index)
+		Sub LoadListbox()
+		  dim dictGroups as Dictionary
 		  
-		  dim n1 as integer
-		  n1 = tbTabs.PanelCount - 1
+		  // Get the inventory in groups
+		  dictGroups = DataFile.tbl_inventory.ListGrouped("","item_department")
 		  
-		  tbTabs.Value = n1
-		  tbMainWindow.Value = n1
+		  // Delete all current rows in listbox
+		  lbItems.DeleteAllRows
+		  
+		  // Get all the group names from the group Dictionary
+		  dim sGroupNames() as String
+		  For Each key as Variant In dictGroups.Keys
+		    sGroupNames.Append(str(key))
+		  Next
+		  
+		  // Loop through groups
+		  For Each sGroup as String In sGroupNames
+		    
+		    // Set up a folder rowtag
+		    dim oRowTag as New lbRowTag
+		    oRowTag.isFolder = True
+		    
+		    // Add the label for the folder
+		    dim FolderValuesIndex as integer = oRowTag.sFolderValues.Ubound + 1
+		    ReDim oRowTag.sFolderValues(FolderValuesIndex)
+		    oRowTag.sFolderValues(FolderValuesIndex) = sGroup
+		    
+		    // Load the current group into a variable
+		    dim oGroup() as DataFile.tbl_inventory
+		    oGroup = dictGroups.Value(sGroup)
+		    
+		    // Loop through all records in group to make rowtags for each
+		    For Each oRecord as DataFile.tbl_inventory In oGroup
+		      
+		      dim oRecordRowTag as New lbRowTag(oRecord,sFieldNames)
+		      oRowTag.aroChildren.Append(oRecordRowTag)
+		      
+		    Next
+		    
+		    lbItems.AddFolder(oRowTag.sFolderValues(0))
+		    lbItems.RowTag(lbItems.LastIndex) = oRowTag
+		    
+		  Next
+		  
+		  
+		  
+		  
+		  
+		  
+		  
+		  
+		  
+		  
+		  
+		  
+		  
+		  
+		  
+		  
+		  
+		  
+		  
+		  
+		  
+		  
+		  
+		  
+		  
+		End Sub
+	#tag EndMethod
+
+	#tag Method, Flags = &h0
+		Sub LoadRow()
+		  
 		End Sub
 	#tag EndMethod
 
 
-	#tag Property, Flags = &h21
-		Private theid As Integer
+	#tag Property, Flags = &h0
+		iSelectedItemPKID As Int64
+	#tag EndProperty
+
+	#tag Property, Flags = &h0
+		sFieldNames() As String
+	#tag EndProperty
+
+	#tag Property, Flags = &h0
+		sHeaders() As String
 	#tag EndProperty
 
 
 #tag EndWindowCode
 
-#tag Events bRunSync
+#tag Events lbItems
 	#tag Event
-		Sub Action()
-		  osm.RunSync
-		  contInventory1.RefreshInventory(True)
-		End Sub
-	#tag EndEvent
-#tag EndEvents
-#tag Events pbCloseTab
-	#tag Event
-		Sub Action()
+		Sub ExpandRow(Row as integer)
+		  Dim oFolderRowTag as lbRowTag
 		  
-		  RemoveTab(tbMainWindow.Value)
+		  // Grab the rowtag of the folder
+		  oFolderRowTag = lbItems.RowTag(row)
+		  
+		  // Loop through each child
+		  For i1 as integer = 0 To oFolderRowTag.aroChildren.Ubound
+		    
+		    Dim oCurrRowTag as lbRowTag
+		    oCurrRowTag = oFolderRowTag.aroChildren(i1)
+		    
+		    dim rowvalues() as string
+		    
+		    
+		    for i2 as integer = 0 To oCurrRowTag.vColumnValues.Ubound
+		      
+		      rowvalues.Append( str(oCurrRowTag.vColumnValues(i2)))
+		      
+		    Next
+		    
+		    lbItems.AddRow(rowvalues)
+		    lbItems.RowTag(lbItems.LastIndex) = oCurrRowTag
+		    
+		  Next
+		End Sub
+	#tag EndEvent
+	#tag Event
+		Sub DoubleClick()
+		  
+		  If me.ListIndex <> -1 Then
+		    If Not me.RowIsFolder(me.ListIndex) Then
+		      dim oRowTag as lbRowTag
+		      oRowTag = me.RowTag(me.ListIndex)
+		      
+		      iSelectedItemPKID = oRowTag.pkid
+		      
+		      me.Window.Close
+		    End If
+		  End If
 		End Sub
 	#tag EndEvent
 #tag EndEvents
-#tag Events tbTabs
+#tag Events pbCloseWindow
 	#tag Event
-		Sub Change()
-		  tbMainWindow.Value = tbTabs.Value
+		Sub Action()
+		  me.Window.Close
 		End Sub
 	#tag EndEvent
 #tag EndEvents
@@ -333,6 +349,11 @@ End
 		Group="ID"
 		Type="String"
 		EditorType="String"
+	#tag EndViewProperty
+	#tag ViewProperty
+		Name="iSelectedItemPKID"
+		Group="Behavior"
+		Type="Int64"
 	#tag EndViewProperty
 	#tag ViewProperty
 		Name="LiveResize"

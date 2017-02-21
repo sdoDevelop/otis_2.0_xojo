@@ -1517,7 +1517,7 @@ End
 		  chbShowDiscreetly.Value = oCurrentInventoryItem.bshow_items_discreetly
 		  
 		  // Populate Inventory Expanded
-		  oInventoryExpanded = DataFile.tbl_inventory_link.List( "fkinventory = " + ipkid.ToText )
+		  oInventoryExpanded = DataFile.tbl_inv_ex.List( "fkinventory = " + ipkid.ToText )
 		  
 		  contInventoryExpanded.fkInventory = ipkid
 		  contInventoryExpanded.LoadItemsIntoListbox
@@ -1541,7 +1541,7 @@ End
 	#tag EndProperty
 
 	#tag Property, Flags = &h0
-		oInventoryExpanded() As DataFile.tbl_inventory_link
+		oInventoryExpanded() As DataFile.tbl_inv_ex
 	#tag EndProperty
 
 

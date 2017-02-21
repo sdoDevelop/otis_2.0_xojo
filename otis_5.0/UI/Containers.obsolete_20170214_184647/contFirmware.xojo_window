@@ -1,5 +1,5 @@
 #tag Window
-Begin ContainerControl contMaintenenceLog
+Begin ContainerControl contFirmware
    AcceptFocus     =   False
    AcceptTabs      =   True
    AutoDeactivate  =   True
@@ -9,7 +9,7 @@ Begin ContainerControl contMaintenenceLog
    Enabled         =   True
    EraseBackground =   True
    HasBackColor    =   False
-   Height          =   422
+   Height          =   250
    HelpTag         =   ""
    InitialParent   =   ""
    Left            =   0
@@ -24,7 +24,7 @@ Begin ContainerControl contMaintenenceLog
    Transparent     =   True
    UseFocusRing    =   False
    Visible         =   True
-   Width           =   682
+   Width           =   552
    Begin entListbox lbLogs
       AcceptFocus     =   False
       AcceptTabs      =   True
@@ -37,14 +37,15 @@ Begin ContainerControl contMaintenenceLog
       GridLinesColor  =   &c00000000
       HasBackColor    =   False
       HasHeading      =   True
-      Height          =   392
+      Height          =   220
       HelpTag         =   ""
+      Index           =   -2147483648
       InitialParent   =   ""
       Left            =   0
       LockBottom      =   True
       LockedInPosition=   False
       LockLeft        =   True
-      LockRight       =   True
+      LockRight       =   False
       LockTop         =   True
       Scope           =   0
       TabIndex        =   1
@@ -54,83 +55,7 @@ Begin ContainerControl contMaintenenceLog
       Transparent     =   True
       UseFocusRing    =   False
       Visible         =   True
-      Width           =   159
-   End
-   Begin TextField tfWorkSummary
-      AcceptTabs      =   False
-      Alignment       =   0
-      AutoDeactivate  =   True
-      AutomaticallyCheckSpelling=   False
-      BackColor       =   &cFFFFFF00
-      Bold            =   False
-      Border          =   True
-      CueText         =   ""
-      DataField       =   ""
-      DataSource      =   ""
-      Enabled         =   False
-      Format          =   ""
-      Height          =   22
-      HelpTag         =   ""
-      Index           =   -2147483648
-      Italic          =   False
-      Left            =   261
-      LimitText       =   0
-      LockBottom      =   False
-      LockedInPosition=   False
-      LockLeft        =   True
-      LockRight       =   False
-      LockTop         =   True
-      Mask            =   ""
-      Password        =   False
-      ReadOnly        =   False
-      Scope           =   0
-      TabIndex        =   2
-      TabPanelIndex   =   0
-      TabStop         =   True
-      Text            =   ""
-      TextColor       =   &c00000000
-      TextFont        =   "System"
-      TextSize        =   0.0
-      TextUnit        =   0
-      Top             =   75
-      Underline       =   False
-      UseFocusRing    =   True
-      Visible         =   True
-      Width           =   136
-   End
-   Begin Label labWorkSummary
-      AutoDeactivate  =   True
-      Bold            =   False
-      DataField       =   ""
-      DataSource      =   ""
-      Enabled         =   True
-      Height          =   20
-      HelpTag         =   ""
-      Index           =   -2147483648
-      InitialParent   =   ""
-      Italic          =   False
-      Left            =   178
-      LockBottom      =   False
-      LockedInPosition=   False
-      LockLeft        =   True
-      LockRight       =   False
-      LockTop         =   True
-      Multiline       =   False
-      Scope           =   0
-      Selectable      =   False
-      TabIndex        =   3
-      TabPanelIndex   =   0
-      Text            =   "Work Summary"
-      TextAlign       =   2
-      TextColor       =   &c00000000
-      TextFont        =   "System"
-      TextSize        =   0.0
-      TextUnit        =   0
-      Top             =   76
-      Transparent     =   True
-      Underline       =   False
-      Visible         =   True
-      Width           =   74
+      Width           =   217
    End
    Begin PushButton pbAddLog
       AutoDeactivate  =   True
@@ -194,7 +119,7 @@ Begin ContainerControl contMaintenenceLog
       Visible         =   True
       Width           =   34
    End
-   Begin Label labEntryDate
+   Begin Label labUpdateDate
       AutoDeactivate  =   True
       Bold            =   False
       DataField       =   ""
@@ -205,7 +130,7 @@ Begin ContainerControl contMaintenenceLog
       Index           =   -2147483648
       InitialParent   =   ""
       Italic          =   False
-      Left            =   171
+      Left            =   229
       LockBottom      =   False
       LockedInPosition=   False
       LockLeft        =   True
@@ -216,19 +141,20 @@ Begin ContainerControl contMaintenenceLog
       Selectable      =   False
       TabIndex        =   7
       TabPanelIndex   =   0
-      Text            =   "Entry Date"
+      TabStop         =   True
+      Text            =   "Update Date"
       TextAlign       =   2
       TextColor       =   &c00000000
       TextFont        =   "System"
       TextSize        =   0.0
       TextUnit        =   0
-      Top             =   136
+      Top             =   58
       Transparent     =   True
       Underline       =   False
       Visible         =   True
       Width           =   83
    End
-   Begin DateControl dcExitDate
+   Begin DateControl dcUpdateDate
       AutoDeactivate  =   True
       Checked         =   False
       DateFormat      =   0
@@ -240,228 +166,7 @@ Begin ContainerControl contMaintenenceLog
       HelpTag         =   ""
       Index           =   -2147483648
       InitialParent   =   ""
-      Left            =   267
-      LinuxDropDownMode=   True
-      LinuxFontBold   =   False
-      LinuxTextFont   =   "System"
-      LinuxTextSize   =   0.0
-      LinuxTextUnit   =   0
-      LockBottom      =   False
-      LockedInPosition=   False
-      LockLeft        =   True
-      LockRight       =   False
-      LockTop         =   True
-      MacFontBold     =   False
-      MacTextFont     =   "System"
-      MacTextSize     =   0.0
-      Month           =   0
-      OSXDropDownMode =   True
-      Scope           =   0
-      TabIndex        =   8
-      TabPanelIndex   =   0
-      TabStop         =   True
-      Top             =   166
-      Visible         =   True
-      Width           =   115
-      WinFontBold     =   False
-      WinTextFont     =   "System"
-      WinTextSize     =   0.0
-      WinTextUnit     =   0
-      Year            =   0
-   End
-   Begin Label labExitDate
-      AutoDeactivate  =   True
-      Bold            =   False
-      DataField       =   ""
-      DataSource      =   ""
-      Enabled         =   True
-      Height          =   20
-      HelpTag         =   ""
-      Index           =   -2147483648
-      InitialParent   =   ""
-      Italic          =   False
-      Left            =   171
-      LockBottom      =   False
-      LockedInPosition=   False
-      LockLeft        =   True
-      LockRight       =   False
-      LockTop         =   True
-      Multiline       =   False
-      Scope           =   0
-      Selectable      =   False
-      TabIndex        =   9
-      TabPanelIndex   =   0
-      Text            =   "Exit Date"
-      TextAlign       =   2
-      TextColor       =   &c00000000
-      TextFont        =   "System"
-      TextSize        =   0.0
-      TextUnit        =   0
-      Top             =   166
-      Transparent     =   True
-      Underline       =   False
-      Visible         =   True
-      Width           =   83
-   End
-   Begin TextArea taWorkDescription
-      AcceptTabs      =   False
-      Alignment       =   0
-      AutoDeactivate  =   True
-      AutomaticallyCheckSpelling=   True
-      BackColor       =   &cFFFFFF00
-      Bold            =   False
-      Border          =   True
-      DataField       =   ""
-      DataSource      =   ""
-      Enabled         =   False
-      Format          =   ""
-      Height          =   80
-      HelpTag         =   ""
-      HideSelection   =   True
-      Index           =   -2147483648
-      Italic          =   False
-      Left            =   258
-      LimitText       =   0
-      LineHeight      =   0.0
-      LineSpacing     =   1.0
-      LockBottom      =   False
-      LockedInPosition=   False
-      LockLeft        =   True
-      LockRight       =   False
-      LockTop         =   True
-      Mask            =   ""
-      Multiline       =   True
-      ReadOnly        =   False
-      Scope           =   0
-      ScrollbarHorizontal=   False
-      ScrollbarVertical=   True
-      Styled          =   True
-      TabIndex        =   10
-      TabPanelIndex   =   0
-      TabStop         =   True
-      Text            =   ""
-      TextColor       =   &c00000000
-      TextFont        =   "System"
-      TextSize        =   0.0
-      TextUnit        =   0
-      Top             =   226
-      Underline       =   False
-      UseFocusRing    =   True
-      Visible         =   True
-      Width           =   391
-   End
-   Begin Label labWorkDescription
-      AutoDeactivate  =   True
-      Bold            =   False
-      DataField       =   ""
-      DataSource      =   ""
-      Enabled         =   True
-      Height          =   20
-      HelpTag         =   ""
-      Index           =   -2147483648
-      InitialParent   =   ""
-      Italic          =   False
-      Left            =   171
-      LockBottom      =   False
-      LockedInPosition=   False
-      LockLeft        =   True
-      LockRight       =   False
-      LockTop         =   True
-      Multiline       =   True
-      Scope           =   0
-      Selectable      =   False
-      TabIndex        =   11
-      TabPanelIndex   =   0
-      Text            =   "Work Description"
-      TextAlign       =   2
-      TextColor       =   &c00000000
-      TextFont        =   "System"
-      TextSize        =   0.0
-      TextUnit        =   0
-      Top             =   227
-      Transparent     =   True
-      Underline       =   False
-      Visible         =   True
-      Width           =   81
-   End
-   Begin PopupMenu pmWorkType
-      AutoDeactivate  =   True
-      Bold            =   False
-      DataField       =   ""
-      DataSource      =   ""
-      Enabled         =   False
-      Height          =   22
-      HelpTag         =   ""
-      Index           =   -2147483648
-      InitialParent   =   ""
-      InitialValue    =   ""
-      Italic          =   False
-      Left            =   261
-      ListIndex       =   0
-      LockBottom      =   False
-      LockedInPosition=   False
-      LockLeft        =   True
-      LockRight       =   False
-      LockTop         =   True
-      Scope           =   0
-      TabIndex        =   12
-      TabPanelIndex   =   0
-      TabStop         =   True
-      TextFont        =   "System"
-      TextSize        =   0.0
-      TextUnit        =   0
-      Top             =   103
-      Underline       =   False
-      Visible         =   True
-      Width           =   136
-   End
-   Begin Label labWorkType
-      AutoDeactivate  =   True
-      Bold            =   False
-      DataField       =   ""
-      DataSource      =   ""
-      Enabled         =   True
-      Height          =   20
-      HelpTag         =   ""
-      Index           =   -2147483648
-      InitialParent   =   ""
-      Italic          =   False
-      Left            =   174
-      LockBottom      =   False
-      LockedInPosition=   False
-      LockLeft        =   True
-      LockRight       =   False
-      LockTop         =   True
-      Multiline       =   False
-      Scope           =   0
-      Selectable      =   False
-      TabIndex        =   13
-      TabPanelIndex   =   0
-      Text            =   "Type"
-      TextAlign       =   2
-      TextColor       =   &c00000000
-      TextFont        =   "System"
-      TextSize        =   0.0
-      TextUnit        =   0
-      Top             =   104
-      Transparent     =   True
-      Underline       =   False
-      Visible         =   True
-      Width           =   80
-   End
-   Begin DateControl dcEntryDate
-      AutoDeactivate  =   True
-      Checked         =   False
-      DateFormat      =   0
-      Day             =   0
-      DropDownIcon    =   0
-      EmptyDates      =   True
-      Enabled         =   False
-      Height          =   23
-      HelpTag         =   ""
-      Index           =   -2147483648
-      InitialParent   =   ""
-      Left            =   267
+      Left            =   325
       LinuxDropDownMode=   True
       LinuxFontBold   =   False
       LinuxTextFont   =   "System"
@@ -481,7 +186,7 @@ Begin ContainerControl contMaintenenceLog
       TabIndex        =   6
       TabPanelIndex   =   0
       TabStop         =   True
-      Top             =   136
+      Top             =   58
       Visible         =   True
       Width           =   115
       WinFontBold     =   False
@@ -501,7 +206,7 @@ Begin ContainerControl contMaintenenceLog
       Index           =   -2147483648
       InitialParent   =   ""
       Italic          =   False
-      Left            =   171
+      Left            =   229
       LockBottom      =   False
       LockedInPosition=   False
       LockLeft        =   True
@@ -512,13 +217,14 @@ Begin ContainerControl contMaintenenceLog
       Selectable      =   False
       TabIndex        =   14
       TabPanelIndex   =   0
+      TabStop         =   True
       Text            =   "Item Name"
       TextAlign       =   0
       TextColor       =   &c00000000
       TextFont        =   "System"
       TextSize        =   20.0
       TextUnit        =   0
-      Top             =   10
+      Top             =   -2
       Transparent     =   True
       Underline       =   False
       Visible         =   True
@@ -535,7 +241,7 @@ Begin ContainerControl contMaintenenceLog
       Index           =   -2147483648
       InitialParent   =   ""
       Italic          =   False
-      Left            =   171
+      Left            =   229
       LockBottom      =   False
       LockedInPosition=   False
       LockLeft        =   True
@@ -546,13 +252,14 @@ Begin ContainerControl contMaintenenceLog
       Selectable      =   False
       TabIndex        =   15
       TabPanelIndex   =   0
+      TabStop         =   True
       Text            =   "Serial #: "
       TextAlign       =   0
       TextColor       =   &c00000000
       TextFont        =   "System"
       TextSize        =   0.0
       TextUnit        =   0
-      Top             =   38
+      Top             =   26
       Transparent     =   True
       Underline       =   False
       Visible         =   True
@@ -569,7 +276,7 @@ Begin ContainerControl contMaintenenceLog
       Index           =   -2147483648
       InitialParent   =   ""
       Italic          =   False
-      Left            =   218
+      Left            =   276
       LockBottom      =   False
       LockedInPosition=   False
       LockLeft        =   True
@@ -580,19 +287,20 @@ Begin ContainerControl contMaintenenceLog
       Selectable      =   False
       TabIndex        =   16
       TabPanelIndex   =   0
+      TabStop         =   True
       Text            =   "--"
       TextAlign       =   0
       TextColor       =   &c00000000
       TextFont        =   "System"
       TextSize        =   0.0
       TextUnit        =   0
-      Top             =   38
+      Top             =   26
       Transparent     =   True
       Underline       =   False
       Visible         =   True
       Width           =   100
    End
-   Begin Label labWorkCost
+   Begin Label labFirmwareVersion
       AutoDeactivate  =   True
       Bold            =   False
       DataField       =   ""
@@ -603,7 +311,7 @@ Begin ContainerControl contMaintenenceLog
       Index           =   -2147483648
       InitialParent   =   ""
       Italic          =   False
-      Left            =   175
+      Left            =   229
       LockBottom      =   False
       LockedInPosition=   False
       LockLeft        =   True
@@ -614,19 +322,20 @@ Begin ContainerControl contMaintenenceLog
       Selectable      =   False
       TabIndex        =   17
       TabPanelIndex   =   0
-      Text            =   "Cost"
+      TabStop         =   True
+      Text            =   "Version"
       TextAlign       =   2
       TextColor       =   &c00000000
       TextFont        =   "System"
       TextSize        =   0.0
       TextUnit        =   0
-      Top             =   196
+      Top             =   91
       Transparent     =   True
       Underline       =   False
       Visible         =   True
-      Width           =   74
+      Width           =   83
    End
-   Begin TextField tfWorkCost
+   Begin TextField tfFirmwareVersion
       AcceptTabs      =   False
       Alignment       =   0
       AutoDeactivate  =   True
@@ -644,7 +353,7 @@ Begin ContainerControl contMaintenenceLog
       Index           =   -2147483648
       InitialParent   =   ""
       Italic          =   False
-      Left            =   258
+      Left            =   324
       LimitText       =   0
       LockBottom      =   False
       LockedInPosition=   False
@@ -663,13 +372,13 @@ Begin ContainerControl contMaintenenceLog
       TextFont        =   "System"
       TextSize        =   0.0
       TextUnit        =   0
-      Top             =   195
+      Top             =   90
       Underline       =   False
       UseFocusRing    =   True
       Visible         =   True
-      Width           =   136
+      Width           =   116
    End
-   Begin Label labWorkComments
+   Begin Label labFirmwareComments
       AutoDeactivate  =   True
       Bold            =   False
       DataField       =   ""
@@ -680,7 +389,7 @@ Begin ContainerControl contMaintenenceLog
       Index           =   -2147483648
       InitialParent   =   ""
       Italic          =   False
-      Left            =   171
+      Left            =   229
       LockBottom      =   False
       LockedInPosition=   False
       LockLeft        =   True
@@ -691,19 +400,20 @@ Begin ContainerControl contMaintenenceLog
       Selectable      =   False
       TabIndex        =   19
       TabPanelIndex   =   0
+      TabStop         =   True
       Text            =   "Comments"
       TextAlign       =   2
       TextColor       =   &c00000000
       TextFont        =   "System"
       TextSize        =   0.0
       TextUnit        =   0
-      Top             =   319
+      Top             =   124
       Transparent     =   True
       Underline       =   False
       Visible         =   True
-      Width           =   81
+      Width           =   84
    End
-   Begin TextArea taWorkComments
+   Begin TextArea taFirmwareComments
       AcceptTabs      =   False
       Alignment       =   0
       AutoDeactivate  =   True
@@ -720,14 +430,14 @@ Begin ContainerControl contMaintenenceLog
       HideSelection   =   True
       Index           =   -2147483648
       Italic          =   False
-      Left            =   258
+      Left            =   324
       LimitText       =   0
       LineHeight      =   0.0
       LineSpacing     =   1.0
       LockBottom      =   False
       LockedInPosition=   False
       LockLeft        =   True
-      LockRight       =   False
+      LockRight       =   True
       LockTop         =   True
       Mask            =   ""
       Multiline       =   True
@@ -744,11 +454,11 @@ Begin ContainerControl contMaintenenceLog
       TextFont        =   "System"
       TextSize        =   0.0
       TextUnit        =   0
-      Top             =   318
+      Top             =   123
       Underline       =   False
       UseFocusRing    =   True
       Visible         =   True
-      Width           =   391
+      Width           =   215
    End
 End
 #tag EndWindow
@@ -756,21 +466,21 @@ End
 #tag WindowCode
 	#tag Method, Flags = &h0
 		Sub AddLog()
-		  
+		  break
 		  // Create a new Log record
-		  tfWorkSummary.SetFocus
-		  dim oNewLog as New DataFile.tbl_maintenance_Logs
+		  tfFirmwareVersion.SetFocus
+		  dim oNewLog as New DataFile.tbl_firmware
 		  oCurrentLog = oNewLog
 		  ClearFields
 		  
-		  oCurrentLog.ifkinv_ex = ifkInvExpanded
+		  oCurrentLog.ifk_inv_ex = ifkInvExpanded
 		  EnableDisableLogFields(True)
-		  tfWorkSummary.Text = "New Log..."
+		  tfFirmwareVersion.Text = "0.0.0"
 		End Sub
 	#tag EndMethod
 
 	#tag Method, Flags = &h0
-		Function BuildRowTag(oLog as DataFile.tbl_maintenance_Logs) As lbRowTag
+		Function BuildRowTag(oLog as DataFile.tbl_firmware) As lbRowTag
 		  dim oRowTag as New lbRowTag
 		  
 		  
@@ -791,13 +501,9 @@ End
 		Sub ClearFields()
 		  
 		  
-		  tfWorkSummary.Text = ""
-		  pmWorkType.ListIndex = -1
-		  dcEntryDate.DateValue = Nil
-		  dcExitDate.DateValue = NIl
-		  tfWorkCost.Text = ""
-		  taWorkDescription.Text = ""
-		  taWorkComments.Text = ""
+		  dcUpdateDate.DateValue = Nil
+		  tfFirmwareVersion.Text = ""
+		  taFirmwareComments.Text = ""
 		End Sub
 	#tag EndMethod
 
@@ -810,12 +516,12 @@ End
 
 	#tag Method, Flags = &h0
 		Sub DeleteItem(iPKID as int64)
-		  break
+		  
 		  
 		  
 		  If MsgBox("Are you sure you want to delete " + lbLogs.Cell(lbLogs.ListIndex,0), 4) = 6 Then
 		    
-		    dim otblObject as DataFile.tbl_maintenance_Logs = DataFile.tbl_maintenance_Logs.FindByID(iPKID)
+		    dim otblObject as DataFile.tbl_firmware = DataFile.tbl_firmware.FindByID(iPKID)
 		    
 		    otblObject.Delete
 		    
@@ -833,39 +539,27 @@ End
 		Sub EnableDisableLogFields(EnabledState as Boolean)
 		  
 		  
-		  tfWorkSummary.Enabled = EnabledState
-		  pmWorkType.Enabled = EnabledState
-		  dcEntryDate.Enabled = EnabledState
-		  dcExitDate.Enabled = EnabledState
-		  tfWorkCost.Enabled = EnabledState
-		  taWorkDescription.Enabled = EnabledState
-		  taWorkComments.Enabled = EnabledState
+		  dcUpdateDate.Enabled = EnabledState
+		  tfFirmwareVersion.Enabled = EnabledState
+		  taFirmwareComments.Enabled = EnabledState
 		End Sub
 	#tag EndMethod
 
 	#tag Method, Flags = &h0
 		Sub LoadLog(iPKID as int64)
-		  dim oLog as DataFile.tbl_maintenance_Logs
+		  dim oLog as DataFile.tbl_firmware
 		  
-		  oLog = DataFile.tbl_maintenance_Logs.FindByID(iPKID)
+		  oLog = DataFile.tbl_firmware.FindByID(iPKID)
 		  oCurrentLog = oLog
 		  
-		  tfWorkSummary.Text = oLog.swork_summary
-		  pmWorkType.ListIndex = -1
-		  For i1 as integer = 0 To pmWorkType.ListCount - 1
-		    If oLog.swork_type = pmWorkType.List(i1) Then
-		      pmWorkType.ListIndex = i1
-		    End If
-		  Next 
-		  If oLog.sentry_date <> "" Then
-		    dcEntryDate.DateValue.SQLDate = oLog.sentry_date
+		  
+		  If oLog.supdate_date <> "" Then
+		    dcUpdateDate.DateValue.SQLDate = oLog.supdate_date
 		  End If
-		  If oLog.sexit_date <> "" Then
-		    dcExitDate.DateValue.SQLDate = oLog.sexit_date
-		  End If
-		  tfWorkCost.Text = ConvertCentsString_To_DollarString(oLog.iwork_cost.ToText)
-		  taWorkDescription.Text = oLog.swork_description
-		  taWorkComments.Text = oLog.swork_comments
+		  
+		  tfFirmwareVersion.Text = oLog.sfirmware_version
+		  taFirmwareComments.Text = oLog.supdate_comments
+		  
 		End Sub
 	#tag EndMethod
 
@@ -883,6 +577,48 @@ End
 	#tag Method, Flags = &h0
 		Sub LoadUniversalInfo(iInventoryPKID as int64, iInventoryExpandedPKID as int64)
 		  
+		  
+		  // Put the passed pkids into forever variables
+		  ifkInventory = iInventoryPKID
+		  ifkInvExpanded = iInventoryExpandedPKID
+		  
+		  
+		  
+		  // Load the respective tables
+		  oInventoryRecord = DataFile.tbl_inventory.FindByID(ifkInventory)
+		  oInvExpandedRecord = DataFile.tbl_inv_ex.FindByID(ifkInvExpanded)
+		  oLogList = DataFile.tbl_firmware.List("fk_inv_ex = " + ifkInvExpanded.ToText )
+		  
+		  // Load Item name and serial number
+		  labItemName.Text = oInventoryRecord.sitem_name
+		  labSerial.Text = oInvExpandedRecord.sitem_serial_code
+		  
+		  // Load the Log Listbox
+		  lbLogs.DeleteAllRows
+		  For each oLog as DataFile.tbl_firmware In oLogList
+		    
+		    lbLogs.AddRow("")
+		    
+		    // Set up the rowtag
+		    dim oRowTag as lbRowTag = BuildRowTag(oLog)
+		    
+		    // Extract the field names and values as json item
+		    dim jsFieldValues as JSONItem
+		    jsFieldValues = oLog.GetMyFieldValues(True)
+		    
+		    For i2 as integer = 0 To sFieldNames.Ubound
+		      
+		      // Try to get the value for this field from our item variable
+		      ReDim oRowTag.vColumnValues(i2)
+		      oRowTag.vColumnValues(i2) = jsFieldValues.Value(sFieldNames(i2))
+		      
+		    Next
+		    
+		    lbLogs.RowTag(lbLogs.LastIndex) = oRowTag
+		    dim n2 as integer = lbLogs.LastIndex
+		    LoadRow(n2,oRowTag)
+		    
+		  Next
 		End Sub
 	#tag EndMethod
 
@@ -936,7 +672,7 @@ End
 	#tag EndProperty
 
 	#tag Property, Flags = &h0
-		oCurrentLog As DataFile.tbl_maintenance_Logs
+		oCurrentLog As DataFile.tbl_firmware
 	#tag EndProperty
 
 	#tag Property, Flags = &h0
@@ -944,7 +680,11 @@ End
 	#tag EndProperty
 
 	#tag Property, Flags = &h0
-		oLogList() As DataFile.tbl_maintenance_Logs
+		oInvExpandedRecord As DataFile.tbl_inv_ex
+	#tag EndProperty
+
+	#tag Property, Flags = &h0
+		oLogList() As DataFile.tbl_firmware
 	#tag EndProperty
 
 	#tag Property, Flags = &h0
@@ -963,20 +703,20 @@ End
 		Sub Open()
 		  dim s1, s2() as string
 		  
-		  me.ColumnCount = 1
+		  me.ColumnCount = 2
 		  
 		  For i1 as integer = 0 To me.ColumnCount - 1
 		    me.ColumnType(i1) = 0
 		  Next
 		  
 		  // Set header names
-		  s1 = "Logs"
+		  s1 = "Date,Version"
 		  s2 = Split(s1,",")
 		  sHeaders = s2
 		  me.Heading = s2
 		  
 		  // Set Field Names 
-		  s1 = "work_summary"
+		  s1 = "update_date,firmware_version"
 		  s2 = Split(s1,",")
 		  sFieldNames = s2
 		  
@@ -1007,16 +747,6 @@ End
 		End Sub
 	#tag EndEvent
 #tag EndEvents
-#tag Events tfWorkSummary
-	#tag Event
-		Sub LostFocus()
-		  
-		  oCurrentLog.swork_summary = me.Text
-		  SaveLog
-		  RefreshLogList
-		End Sub
-	#tag EndEvent
-#tag EndEvents
 #tag Events pbAddLog
 	#tag Event
 		Sub Action()
@@ -1032,82 +762,30 @@ End
 		End Sub
 	#tag EndEvent
 #tag EndEvents
-#tag Events dcExitDate
+#tag Events dcUpdateDate
 	#tag Event
 		Sub LostFocus()
 		  
-		  oCurrentLog.sexit_date = me.DateValue.SQLDate
+		  oCurrentLog.supdate_date = me.DateValue.SQLDate
 		  SaveLog
 		  
 		End Sub
 	#tag EndEvent
 #tag EndEvents
-#tag Events taWorkDescription
+#tag Events tfFirmwareVersion
 	#tag Event
 		Sub LostFocus()
 		  
-		  oCurrentLog.swork_description = me.Text
+		  oCurrentLog.sfirmware_version = me.Text
 		  SaveLog
 		End Sub
 	#tag EndEvent
 #tag EndEvents
-#tag Events pmWorkType
-	#tag Event
-		Sub Open()
-		  
-		  dim s1 as string
-		  s1 = "Check-Up,Repair,Retire"
-		  
-		  dim s2() as string
-		  s2 = Split(s1,",")
-		  
-		  For i1 as integer = 0 To s2.Ubound
-		    
-		    me.AddRow(s2(i1))
-		    
-		  Next
-		End Sub
-	#tag EndEvent
+#tag Events taFirmwareComments
 	#tag Event
 		Sub LostFocus()
 		  
-		  oCurrentLog.swork_type = me.Text
-		  SaveLog
-		  
-		End Sub
-	#tag EndEvent
-#tag EndEvents
-#tag Events dcEntryDate
-	#tag Event
-		Sub LostFocus()
-		  
-		  oCurrentLog.sentry_date = me.DateValue.SQLDate
-		  SaveLog
-		  
-		End Sub
-	#tag EndEvent
-#tag EndEvents
-#tag Events tfWorkCost
-	#tag Event
-		Sub LostFocus()
-		  
-		  dim s1 as string
-		  
-		  s1 = ConvertDollarString_To_CentsString(me.Text)
-		  
-		  oCurrentLog.iwork_cost = val(s1)
-		  SaveLog
-		  
-		  // Update the display
-		  me.Text = ConvertCentsString_To_DollarString(oCurrentLog.iwork_cost.ToText)
-		End Sub
-	#tag EndEvent
-#tag EndEvents
-#tag Events taWorkComments
-	#tag Event
-		Sub LostFocus()
-		  
-		  oCurrentLog.swork_comments = me.Text
+		  oCurrentLog.supdate_comments = me.Text
 		  SaveLog
 		End Sub
 	#tag EndEvent

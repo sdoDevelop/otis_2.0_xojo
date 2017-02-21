@@ -166,7 +166,6 @@ Begin Window window_login
       Selectable      =   False
       TabIndex        =   8
       TabPanelIndex   =   0
-      TabStop         =   True
       Text            =   "Authentication Failed"
       TextAlign       =   0
       TextColor       =   &c0A00E30A
@@ -201,7 +200,6 @@ Begin Window window_login
       Selectable      =   False
       TabIndex        =   9
       TabPanelIndex   =   0
-      TabStop         =   True
       Text            =   "Password"
       TextAlign       =   0
       TextColor       =   &c00000000
@@ -236,7 +234,6 @@ Begin Window window_login
       Selectable      =   False
       TabIndex        =   10
       TabPanelIndex   =   0
-      TabStop         =   True
       Text            =   "Username"
       TextAlign       =   0
       TextColor       =   &c00000000

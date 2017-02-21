@@ -80,7 +80,20 @@ End
 		  
 		  If MsgBox("Are you sure you want to delete " + IdentifyingName, 4) = 6 Then
 		    
+		    dim otblObject as DataFile.tbl_inv_ex = oRowTag.vtblRecord
 		    
+		    dim iPKID as integer = oRowTag.pkid
+		    
+		    otblObject.Delete
+		    
+		    dim n1 as integer = lbItems.FindByPKID(iPKID)
+		    If  n1 <> -1 Then
+		      lbItems.RemoveRow(n1)
+		    End If
+		    
+		    // Update inventory item quantity
+		    Methods.UpdateItemQuantity(fkInventory)
+		    RaiseEvent AfterDelete
 		    
 		  End If
 		  
@@ -89,6 +102,100 @@ End
 
 	#tag Method, Flags = &h0
 		Sub LoadItemsIntoListbox()
+		  
+		  // Delete all current rows in listbox
+		  lbItems.DeleteAllRows
+		  
+		  // Load inventory Item
+		  oInventoryItem = DataFile.tbl_inventory.FindByID(fkInventory) 
+		  
+		  // Grab the expanded inventory list 
+		  oInventoryItemExpanded = DataFile.tbl_inv_ex.List("fkinventory = " + fkinventory.ToText) ' ParentContainer.oItems.aroItemsExpanded.Value(fkInventory)
+		  
+		  For i1 as integer = 0 To oInventoryItemExpanded.Ubound
+		    dim item as DataFile.tbl_inv_ex = oInventoryItemExpanded(i1)
+		    dim oRowTag as New lbRowTag
+		    
+		    // Add the pkid to the rowtag
+		    oRowTag.pkid = item.ipkid
+		    oRowTag.vtblRecord = item
+		    
+		    lbItems.AddRow("")
+		    
+		    // Extract the field names and values as json item
+		    dim jsFieldValues as JSONItem
+		    jsFieldValues = item.GetMyFieldValues(True)
+		    
+		    // Extract field names and values as json item for Item Cases
+		    dim iCasefk as int64
+		    dim oCaseTableRecord as DataFile.tbl_inv_ex
+		    dim jsCaseFieldValue as New JSONItem
+		    
+		    // Grab the case id
+		    iCasefk = item.ifkitem_case
+		    
+		    // Check if there is a case id, meaning that a case is paired with this item
+		    If iCasefk <> 0 Then
+		      
+		      dim jstempCaseFieldValue as New JSONItem
+		      
+		      // Grab the Case Record from the expanded invenory
+		      oCaseTableRecord = DataFile.tbl_inv_ex.FindByID(iCasefk)
+		      
+		      // Pull the fields
+		      jstempCaseFieldValue = oCaseTableRecord.GetMyFieldValues(True)
+		      
+		      // Put "case-" in front of each field name so we can differetiate this from the main item name
+		      For each sFieldName as string In jstempCaseFieldValue.Names
+		        jsCaseFieldValue.Value("case-" + sFieldName) = jstempCaseFieldValue.Value(sFieldName)
+		      Next
+		    End If
+		    
+		    
+		    // Extract field names and values as json item 
+		    dim jsParentFieldValues as JSONItem
+		    'dim oParentRowTag as lbRowTag
+		    dim oParentTableRecord as DataFile.tbl_inventory 
+		    'oParentRowTag = ParentContainer.lbItems.RowTag(ParentContainer.lbItems.FindByPKID(fkInventory))
+		    oParentTableRecord = DataFile.tbl_inventory.FindByID(fkInventory)
+		    jsParentFieldValues = oParentTableRecord.GetMyFieldValues(True)
+		    
+		    For i2 as integer = 0 To sFieldNames.Ubound
+		      
+		      dim sKeys() as String
+		      dim sParentKeys() as String
+		      dim sCaseKeys() as String
+		      sKeys = jsFieldValues.Names
+		      sParentKeys = jsParentFieldValues.Names
+		      If jsCaseFieldValue <> Nil Then
+		        sCaseKeys = jsCaseFieldValue.Names
+		      Else
+		        sCaseKeys.Append("")
+		      End If
+		      
+		      If sKeys.IndexOf(sFieldNames(i2)) <> -1 Then
+		        'Try 
+		        // Try to get the value for this field from our item variable
+		        ReDim oRowTag.vColumnValues(i2)
+		        oRowTag.vColumnValues(i2) = jsFieldValues.Value(sFieldNames(i2))
+		      ElseIf sParentKeys.IndexOf(sFieldNames(i2)) <> -1 Then
+		        // Try to get the value for this field from our parent item 
+		        ReDim oRowTag.vColumnValues(i2)
+		        oRowTag.vColumnValues(i2) = jsParentFieldValues.Value(sFieldNames(i2))
+		      Elseif sCaseKeys.IndexOf(sFieldNames(i2)) <> -1 Then
+		        // Try to get the value  from the case
+		        ReDim oRowTag.vColumnValues(i2)
+		        oRowTag.vColumnValues(i2) = jsCaseFieldValue.Value(sFieldNames(i2))
+		      End If
+		      
+		    Next
+		    
+		    lbItems.RowTag(lbItems.LastIndex) = oRowTag
+		    dim n2 as integer = lbItems.LastIndex
+		    LoadRow(n2,oRowTag)
+		    
+		  Next
+		  
 		  
 		End Sub
 	#tag EndMethod
@@ -109,7 +216,15 @@ End
 
 	#tag Method, Flags = &h0
 		Sub SaveValue(row as integer, column as integer)
+		  dim oRowTag as lbRowTag
+		  dim otblObject as DataFile.tbl_inv_ex
 		  
+		  oRowTag = lbItems.RowTag(row)
+		  otblObject = oRowTag.vtblRecord
+		  
+		  otblObject.ChangeMySavedValue( sFieldNames(column), lbItems.Cell(row,column) )
+		  
+		  oRowTag.pkid = otblObject.ipkid
 		End Sub
 	#tag EndMethod
 
@@ -129,6 +244,10 @@ End
 
 	#tag Property, Flags = &h0
 		oInventoryItem As DataFile.tbl_inventory
+	#tag EndProperty
+
+	#tag Property, Flags = &h0
+		oInventoryItemExpanded() As DataFile.tbl_inv_ex
 	#tag EndProperty
 
 	#tag Property, Flags = &h0

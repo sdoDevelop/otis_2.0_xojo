@@ -9,7 +9,7 @@ Begin ContainerControl entListbox
    Enabled         =   True
    EraseBackground =   True
    HasBackColor    =   False
-   Height          =   226
+   Height          =   398
    HelpTag         =   ""
    InitialParent   =   ""
    Left            =   0
@@ -24,13 +24,13 @@ Begin ContainerControl entListbox
    Transparent     =   True
    UseFocusRing    =   False
    Visible         =   True
-   Width           =   300
+   Width           =   686
    Begin Listbox oListbox
       AutoDeactivate  =   True
       AutoHideScrollbars=   True
       Bold            =   False
       Border          =   True
-      ColumnCount     =   2
+      ColumnCount     =   1
       ColumnsResizable=   False
       ColumnWidths    =   ""
       DataField       =   ""
@@ -43,18 +43,18 @@ Begin ContainerControl entListbox
       GridLinesVertical=   0
       HasHeading      =   False
       HeadingIndex    =   -1
-      Height          =   226
+      Height          =   398
       HelpTag         =   ""
-      Hierarchical    =   True
+      Hierarchical    =   False
       Index           =   -2147483648
       InitialParent   =   ""
       InitialValue    =   ""
       Italic          =   False
       Left            =   0
-      LockBottom      =   True
+      LockBottom      =   False
       LockedInPosition=   False
       LockLeft        =   True
-      LockRight       =   True
+      LockRight       =   False
       LockTop         =   True
       RequiresSelection=   False
       Scope           =   2
@@ -71,7 +71,7 @@ Begin ContainerControl entListbox
       Underline       =   False
       UseFocusRing    =   True
       Visible         =   True
-      Width           =   300
+      Width           =   686
       _ScrollOffset   =   0
       _ScrollWidth    =   -1
    End
@@ -451,6 +451,12 @@ End
 	#tag EndMethod
 
 	#tag Method, Flags = &h0
+		Sub RowisFolder(row as integer, assigns NewValue as Boolean)
+		  
+		End Sub
+	#tag EndMethod
+
+	#tag Method, Flags = &h0
 		Function RowTag(row as integer) As Variant
 		  
 		  Return oListbox.RowTag(row)
@@ -468,6 +474,13 @@ End
 		Function ScrollPosition() As integer
 		  return oListbox.ScrollPosition
 		End Function
+	#tag EndMethod
+
+	#tag Method, Flags = &h0
+		Sub ScrollPosition(assigns integerValue as integer)
+		  
+		  oListbox.ScrollPosition = integerValue
+		End Sub
 	#tag EndMethod
 
 	#tag Method, Flags = &h0
@@ -564,85 +577,6 @@ End
 
 #tag EndWindowCode
 
-#tag Events oListbox
-	#tag Event
-		Sub Open()
-		  
-		  oListbox.HasHeading = HasHeading
-		  
-		End Sub
-	#tag EndEvent
-	#tag Event
-		Function CellBackgroundPaint(g As Graphics, row As Integer, column As Integer) As Boolean
-		  
-		  // Draw background
-		  If row Mod 2 = 0 Then
-		    g.ForeColor = rgb(215, 227, 232)
-		  Else
-		    g.ForeColor = rgb(201, 219, 226)
-		  End If
-		  g.FillRect(0,0,me.Width,me.Height)
-		  
-		  g.ForeColor = rgb(158, 172, 178)
-		  g.DrawRect(0,0,me.Width,me.Height)
-		End Function
-	#tag EndEvent
-	#tag Event
-		Sub CellAction(row As Integer, column As Integer)
-		  CellAction(row,column)
-		End Sub
-	#tag EndEvent
-	#tag Event
-		Function CellKeyDown(row as Integer, column as Integer, key as String) As Boolean
-		  
-		  If HandleTabInList(oListbox,row,column,key) Then
-		    Return True
-		  End If
-		End Function
-	#tag EndEvent
-	#tag Event
-		Sub Change()
-		  
-		  Change
-		End Sub
-	#tag EndEvent
-	#tag Event
-		Sub ExpandRow(row As Integer)
-		  ExpandRow(row)
-		End Sub
-	#tag EndEvent
-	#tag Event
-		Sub DoubleClick()
-		  DoubleClick
-		End Sub
-	#tag EndEvent
-	#tag Event
-		Function ConstructContextualMenu(base as MenuItem, x as Integer, y as Integer) As Boolean
-		  Return entConstructContextualMenu(base,x,y)
-		End Function
-	#tag EndEvent
-	#tag Event
-		Function ContextualMenuAction(hitItem as MenuItem) As Boolean
-		  Return entContextualMenuAction(hitItem)
-		End Function
-	#tag EndEvent
-	#tag Event
-		Function CellTextPaint(g As Graphics, row As Integer, column As Integer, x as Integer, y as Integer) As Boolean
-		  
-		  return CellTextPaint(g,row,column,x,y)
-		End Function
-	#tag EndEvent
-	#tag Event
-		Function MouseDown(x As Integer, y As Integer) As Boolean
-		  Return entMouseDown(x,y)
-		End Function
-	#tag EndEvent
-	#tag Event
-		Sub MouseUp(x As Integer, y As Integer)
-		  entMouseUp(x,y)
-		End Sub
-	#tag EndEvent
-#tag EndEvents
 #tag ViewBehavior
 	#tag ViewProperty
 		Name="AcceptFocus"

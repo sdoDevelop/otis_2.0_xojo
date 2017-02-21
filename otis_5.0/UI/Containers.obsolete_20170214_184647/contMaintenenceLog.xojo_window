@@ -39,6 +39,7 @@ Begin ContainerControl contMaintenenceLog
       HasHeading      =   True
       Height          =   392
       HelpTag         =   ""
+      Index           =   -2147483648
       InitialParent   =   ""
       Left            =   0
       LockBottom      =   True
@@ -120,6 +121,7 @@ Begin ContainerControl contMaintenenceLog
       Selectable      =   False
       TabIndex        =   3
       TabPanelIndex   =   0
+      TabStop         =   True
       Text            =   "Work Summary"
       TextAlign       =   2
       TextColor       =   &c00000000
@@ -216,6 +218,7 @@ Begin ContainerControl contMaintenenceLog
       Selectable      =   False
       TabIndex        =   7
       TabPanelIndex   =   0
+      TabStop         =   True
       Text            =   "Entry Date"
       TextAlign       =   2
       TextColor       =   &c00000000
@@ -291,6 +294,7 @@ Begin ContainerControl contMaintenenceLog
       Selectable      =   False
       TabIndex        =   9
       TabPanelIndex   =   0
+      TabStop         =   True
       Text            =   "Exit Date"
       TextAlign       =   2
       TextColor       =   &c00000000
@@ -372,6 +376,7 @@ Begin ContainerControl contMaintenenceLog
       Selectable      =   False
       TabIndex        =   11
       TabPanelIndex   =   0
+      TabStop         =   True
       Text            =   "Work Description"
       TextAlign       =   2
       TextColor       =   &c00000000
@@ -437,6 +442,7 @@ Begin ContainerControl contMaintenenceLog
       Selectable      =   False
       TabIndex        =   13
       TabPanelIndex   =   0
+      TabStop         =   True
       Text            =   "Type"
       TextAlign       =   2
       TextColor       =   &c00000000
@@ -512,6 +518,7 @@ Begin ContainerControl contMaintenenceLog
       Selectable      =   False
       TabIndex        =   14
       TabPanelIndex   =   0
+      TabStop         =   True
       Text            =   "Item Name"
       TextAlign       =   0
       TextColor       =   &c00000000
@@ -546,6 +553,7 @@ Begin ContainerControl contMaintenenceLog
       Selectable      =   False
       TabIndex        =   15
       TabPanelIndex   =   0
+      TabStop         =   True
       Text            =   "Serial #: "
       TextAlign       =   0
       TextColor       =   &c00000000
@@ -580,6 +588,7 @@ Begin ContainerControl contMaintenenceLog
       Selectable      =   False
       TabIndex        =   16
       TabPanelIndex   =   0
+      TabStop         =   True
       Text            =   "--"
       TextAlign       =   0
       TextColor       =   &c00000000
@@ -614,6 +623,7 @@ Begin ContainerControl contMaintenenceLog
       Selectable      =   False
       TabIndex        =   17
       TabPanelIndex   =   0
+      TabStop         =   True
       Text            =   "Cost"
       TextAlign       =   2
       TextColor       =   &c00000000
@@ -691,6 +701,7 @@ Begin ContainerControl contMaintenenceLog
       Selectable      =   False
       TabIndex        =   19
       TabPanelIndex   =   0
+      TabStop         =   True
       Text            =   "Comments"
       TextAlign       =   2
       TextColor       =   &c00000000
@@ -883,6 +894,48 @@ End
 	#tag Method, Flags = &h0
 		Sub LoadUniversalInfo(iInventoryPKID as int64, iInventoryExpandedPKID as int64)
 		  
+		  
+		  // Put the passed pkids into forever variables
+		  ifkInventory = iInventoryPKID
+		  ifkInvExpanded = iInventoryExpandedPKID
+		  
+		  
+		  
+		  // Load the respective tables
+		  oInventoryRecord = DataFile.tbl_inventory.FindByID(ifkInventory)
+		  oInvExpandedRecord = DataFile.tbl_inv_ex.FindByID(ifkInvExpanded)
+		  oLogList = DataFile.tbl_maintenance_Logs.List("fkinv_ex = " + ifkInvExpanded.ToText )
+		  
+		  // Load Item name and serial number
+		  labItemName.Text = oInventoryRecord.sitem_name
+		  labSerial.Text = oInvExpandedRecord.sitem_serial_code
+		  
+		  // Load the Log Listbox
+		  lbLogs.DeleteAllRows
+		  For each oLog as DataFile.tbl_maintenance_Logs In oLogList
+		    
+		    lbLogs.AddRow("")
+		    
+		    // Set up the rowtag
+		    dim oRowTag as lbRowTag = BuildRowTag(oLog)
+		    
+		    // Extract the field names and values as json item
+		    dim jsFieldValues as JSONItem
+		    jsFieldValues = oLog.GetMyFieldValues(True)
+		    
+		    For i2 as integer = 0 To sFieldNames.Ubound
+		      
+		      // Try to get the value for this field from our item variable
+		      ReDim oRowTag.vColumnValues(i2)
+		      oRowTag.vColumnValues(i2) = jsFieldValues.Value(sFieldNames(i2))
+		      
+		    Next
+		    
+		    lbLogs.RowTag(lbLogs.LastIndex) = oRowTag
+		    dim n2 as integer = lbLogs.LastIndex
+		    LoadRow(n2,oRowTag)
+		    
+		  Next
 		End Sub
 	#tag EndMethod
 
@@ -941,6 +994,10 @@ End
 
 	#tag Property, Flags = &h0
 		oInventoryRecord As DataFile.tbl_inventory
+	#tag EndProperty
+
+	#tag Property, Flags = &h0
+		oInvExpandedRecord As DataFile.tbl_inv_ex
 	#tag EndProperty
 
 	#tag Property, Flags = &h0

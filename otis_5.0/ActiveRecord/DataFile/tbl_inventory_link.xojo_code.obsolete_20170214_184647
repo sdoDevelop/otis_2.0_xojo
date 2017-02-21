@@ -1,6 +1,22 @@
 #tag Class
-Protected Class tbl_inventory
+Protected Class tbl_inventory_link
 Inherits DataFile.ActiveRecordBase
+	#tag Event
+		Sub PostDelete()
+		  
+		  
+		  // Get a list of all inventory expanded Items that are related to this one
+		  dim oexItems() as DataFile.tbl_inv_ex
+		  oexItems() = DataFile.tbl_inv_ex.List("fkinventory = " + me.ipkid.ToText)
+		  
+		  // Delete each one
+		  For each oexItem as DataFile.tbl_inv_ex In oexItems
+		    oexItem.Delete
+		  Next 
+		End Sub
+	#tag EndEvent
+
+
 	#tag Method, Flags = &h0
 		Shared Function BaseSQL(bAsCount as Boolean = false) As String
 		  dim ars() as string
@@ -267,91 +283,11 @@ Inherits DataFile.ActiveRecordBase
 
 
 	#tag Property, Flags = &h0
-		bitem_taxable As Boolean
+		fkinventory_child As Int64
 	#tag EndProperty
 
 	#tag Property, Flags = &h0
-		bphysical_item As Boolean
-	#tag EndProperty
-
-	#tag Property, Flags = &h0
-		bshow_items As Boolean
-	#tag EndProperty
-
-	#tag Property, Flags = &h0
-		bshow_items_discreetly As Boolean
-	#tag EndProperty
-
-	#tag Property, Flags = &h0
-		iitem_price_cost As Integer
-	#tag EndProperty
-
-	#tag Property, Flags = &h0
-		iitem_quantity As Integer
-	#tag EndProperty
-
-	#tag Property, Flags = &h0
-		sitem_barcode As String
-	#tag EndProperty
-
-	#tag Property, Flags = &h0
-		sitem_category As String
-	#tag EndProperty
-
-	#tag Property, Flags = &h0
-		sitem_department As String
-	#tag EndProperty
-
-	#tag Property, Flags = &h0
-		sitem_depth As String
-	#tag EndProperty
-
-	#tag Property, Flags = &h0
-		sitem_description As String
-	#tag EndProperty
-
-	#tag Property, Flags = &h0
-		sitem_height As String
-	#tag EndProperty
-
-	#tag Property, Flags = &h0
-		sitem_manufacturer As String
-	#tag EndProperty
-
-	#tag Property, Flags = &h0
-		sitem_model As String
-	#tag EndProperty
-
-	#tag Property, Flags = &h0
-		sitem_name As String
-	#tag EndProperty
-
-	#tag Property, Flags = &h0
-		sitem_owner As String
-	#tag EndProperty
-
-	#tag Property, Flags = &h0
-		sitem_rfid_code As String
-	#tag EndProperty
-
-	#tag Property, Flags = &h0
-		sitem_serial_code As String
-	#tag EndProperty
-
-	#tag Property, Flags = &h0
-		sitem_subcategory As String
-	#tag EndProperty
-
-	#tag Property, Flags = &h0
-		sitem_type As String
-	#tag EndProperty
-
-	#tag Property, Flags = &h0
-		sitem_weight As String
-	#tag EndProperty
-
-	#tag Property, Flags = &h0
-		sitem_width As String
+		fkinventory_parent As Int64
 	#tag EndProperty
 
 
@@ -421,6 +357,7 @@ Inherits DataFile.ActiveRecordBase
 			Name="sitem_barcode"
 			Group="Behavior"
 			Type="String"
+			EditorType="MultiLineEditor"
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="sitem_category"
@@ -480,11 +417,13 @@ Inherits DataFile.ActiveRecordBase
 			Name="sitem_rfid_code"
 			Group="Behavior"
 			Type="String"
+			EditorType="MultiLineEditor"
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="sitem_serial_code"
 			Group="Behavior"
 			Type="String"
+			EditorType="MultiLineEditor"
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="sitem_subcategory"

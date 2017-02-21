@@ -70,7 +70,11 @@
         item_weight                 ,
         item_height                 ,
         item_depth                  ,
-        item_width                                     
+        item_width                  ,
+        item_barcode                ,    
+        item_rfid_code              ,
+        item_serial_code            ,
+        physical_item                                
         From tbl_inventory
         ;
 
@@ -101,19 +105,15 @@
         From tbl_kits_packages
         ;
 
-    -- inventory_expanded
+    -- inventory_link
     Select 
         pkid                        ,         
         row_created                 ,
         row_modified                ,
         row_username                ,
-        fkinventory                 ,  
-        item_barcode                ,    
-        item_rfid_code              ,
-        item_serial_code            ,
-        fkitem_case                 ,
-        ex_item_name     
-        From tbl_inv_ex
+        fkinventory_parent          ,
+        fkinventory_child             
+        From tbl_inventory_link
         ;
 
     -- Maintenance Logs

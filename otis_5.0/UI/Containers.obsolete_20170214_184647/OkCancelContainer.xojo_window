@@ -1,5 +1,5 @@
 #tag Window
-Begin ContainerControl contEventList_Large
+Begin ContainerControl OkCancelContainer
    AcceptFocus     =   False
    AcceptTabs      =   True
    AutoDeactivate  =   True
@@ -9,7 +9,7 @@ Begin ContainerControl contEventList_Large
    Enabled         =   True
    EraseBackground =   True
    HasBackColor    =   False
-   Height          =   440
+   Height          =   30
    HelpTag         =   ""
    InitialParent   =   ""
    Left            =   0
@@ -24,90 +24,156 @@ Begin ContainerControl contEventList_Large
    Transparent     =   True
    UseFocusRing    =   False
    Visible         =   True
-   Width           =   700
-   Begin entListbox lbEvents
-      AcceptFocus     =   False
-      AcceptTabs      =   True
+   Width           =   176
+   Begin PushButton ButtonLeft
       AutoDeactivate  =   True
-      BackColor       =   &cFFFFFF00
-      Backdrop        =   0
-      CellBackColor   =   &cFFFFFF00
+      Bold            =   False
+      ButtonStyle     =   "0"
+      Cancel          =   False
+      Caption         =   "OK"
+      Default         =   True
       Enabled         =   True
-      EraseBackground =   True
-      GridLinesColor  =   &c00000000
-      HasBackColor    =   False
-      HasHeading      =   True
-      Height          =   417
+      Height          =   22
       HelpTag         =   ""
       Index           =   -2147483648
       InitialParent   =   ""
-      Left            =   0
-      LockBottom      =   False
+      Italic          =   False
+      Left            =   4
+      LockBottom      =   True
       LockedInPosition=   False
       LockLeft        =   True
-      LockRight       =   False
+      LockRight       =   True
       LockTop         =   True
       Scope           =   0
       TabIndex        =   0
       TabPanelIndex   =   0
       TabStop         =   True
-      Top             =   22
-      Transparent     =   True
-      UseFocusRing    =   False
+      TextFont        =   "System"
+      TextSize        =   0.0
+      TextUnit        =   0
+      Top             =   4
+      Underline       =   False
       Visible         =   True
-      Width           =   700
+      Width           =   80
    End
-   Begin SearchControl scSearchEvents
+   Begin PushButton ButtonRight
       AutoDeactivate  =   True
+      Bold            =   False
+      ButtonStyle     =   "0"
+      Cancel          =   True
+      Caption         =   "Cancel"
+      Default         =   False
       Enabled         =   True
-      HasCancelButton =   True
-      HasMenu         =   False
       Height          =   22
       HelpTag         =   ""
       Index           =   -2147483648
       InitialParent   =   ""
-      Left            =   517
-      LockBottom      =   False
+      Italic          =   False
+      Left            =   90
+      LockBottom      =   True
       LockedInPosition=   False
       LockLeft        =   True
-      LockRight       =   False
+      LockRight       =   True
       LockTop         =   True
-      MacBorderStyle  =   0
-      PlaceHolderText =   ""
       Scope           =   0
-      SendSearchStringImmediately=   False
-      SendWholeSearchString=   False
       TabIndex        =   1
       TabPanelIndex   =   0
       TabStop         =   True
-      Text            =   ""
-      Top             =   0
+      TextFont        =   "System"
+      TextSize        =   0.0
+      TextUnit        =   0
+      Top             =   4
+      Underline       =   False
       Visible         =   True
-      Width           =   183
+      Width           =   80
    End
 End
 #tag EndWindow
 
 #tag WindowCode
-	#tag Method, Flags = &h0
-		Sub LoadListbox()
+	#tag Event
+		Sub Open()
 		  
+		  RaiseEvent Open
+		  
+		  #If TargetMacOS Then
+		    ButtonLeft.Caption = CancelButtonText
+		    ButtonLeft.Default = False
+		    ButtonLeft.Cancel = True
+		    ButtonRight.Caption = OkButtonText
+		    ButtonRight.Default = True
+		    ButtonRight.Cancel = False
+		  #Else 
+		    ButtonLeft.Caption = OkButtonText
+		    ButtonLeft.Default = True
+		    ButtonLeft.Cancel = False
+		    ButtonRight.Caption = CancelButtonText
+		    ButtonRight.Default = False
+		    ButtonRight.Cancel = True
+		  #Endif
 		End Sub
-	#tag EndMethod
+	#tag EndEvent
 
-	#tag Method, Flags = &h0
-		Sub SearchEvents()
-		  
-		End Sub
-	#tag EndMethod
+
+	#tag Hook, Flags = &h0
+		Event Action()
+	#tag EndHook
+
+	#tag Hook, Flags = &h0
+		Event CancelAction()
+	#tag EndHook
+
+	#tag Hook, Flags = &h0
+		Event Open()
+	#tag EndHook
+
+
+	#tag Property, Flags = &h0
+		CancelButtonText As String
+	#tag EndProperty
+
+	#tag Property, Flags = &h0
+		OkButtonText As String
+	#tag EndProperty
 
 
 #tag EndWindowCode
 
-#tag Events scSearchEvents
+#tag Events ButtonLeft
 	#tag Event
-		Sub Search()
-		  SearchEvents
+		Sub Open()
+		  #If TargetLinux Then
+		    Me.Height = Me.Height + 10
+		  #endif
+		End Sub
+	#tag EndEvent
+	#tag Event
+		Sub Action()
+		  
+		  #If TargetMacOS Then
+		    CancelAction
+		  #Else
+		    Action
+		  #endif
+		End Sub
+	#tag EndEvent
+#tag EndEvents
+#tag Events ButtonRight
+	#tag Event
+		Sub Open()
+		  #If TargetLinux Then
+		    Me.Height = Me.Height + 10
+		  #endif
+		End Sub
+	#tag EndEvent
+	#tag Event
+		Sub Action()
+		  
+		  #If TargetMacOS Then
+		    Action
+		  #Else
+		    CancelAction
+		  #endif
 		End Sub
 	#tag EndEvent
 #tag EndEvents
@@ -148,6 +214,14 @@ End
 		Group="Background"
 		Type="Picture"
 		EditorType="Picture"
+	#tag EndViewProperty
+	#tag ViewProperty
+		Name="CancelButtonText"
+		Visible=true
+		Group="Behavior"
+		InitialValue="Cancel"
+		Type="String"
+		EditorType="MultiLineEditor"
 	#tag EndViewProperty
 	#tag ViewProperty
 		Name="Enabled"
@@ -226,6 +300,14 @@ End
 		Group="ID"
 		Type="String"
 		EditorType="String"
+	#tag EndViewProperty
+	#tag ViewProperty
+		Name="OkButtonText"
+		Visible=true
+		Group="Behavior"
+		InitialValue="Ok"
+		Type="String"
+		EditorType="MultiLineEditor"
 	#tag EndViewProperty
 	#tag ViewProperty
 		Name="Super"

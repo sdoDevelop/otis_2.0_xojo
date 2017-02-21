@@ -72,7 +72,22 @@ Create Table tbl_events
         item_weight                 text,
         item_height                 text,
         item_depth                  text,
-        item_width                  text
+        item_width                  text,
+        item_barcode                text,
+        item_rfid_code              text,
+        item_serial_code            text,
+        physical_item               boolean
+        );
+
+    -- inventory link
+    Create Table tbl_inventory_link
+        (
+        pkid                        integer Primary Key,
+        row_created                 text,
+        row_modified                text,
+        row_username                text,
+        fkinventory_parent          integer,
+        fkinventory_child           integer
         );
 
     -- firmware
@@ -82,25 +97,10 @@ Create Table tbl_events
         row_created                 text,
         row_modified                text,
         row_username                text,
-        fk_inv_ex                   integer,
+        fk_inventory                integer,
         update_date                 text,
         firmware_version            text,
         update_comments             text
-        );
-
-    -- inventory_expanded
-    Create Table tbl_inv_ex
-        (
-        pkid                        integer Primary Key,
-        row_created                 text,
-        row_modified                text,
-        row_username                text,
-        fkinventory                 integer,
-        item_barcode                text,
-        item_rfid_code              text,
-        item_serial_code            text,
-        fkitem_case                 integer,
-        ex_item_name                text
         );
 
     -- inventory_kits
