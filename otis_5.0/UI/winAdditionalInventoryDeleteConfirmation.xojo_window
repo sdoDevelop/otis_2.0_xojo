@@ -1,171 +1,213 @@
 #tag Window
-Begin Window winPrefs
+Begin Window winAdditionalInventoryDeleteConfirmation
    BackColor       =   &cFFFFFF00
    Backdrop        =   0
-   CloseButton     =   False
+   CloseButton     =   True
    Compatibility   =   ""
    Composite       =   False
-   Frame           =   1
+   Frame           =   0
    FullScreen      =   False
    FullScreenButton=   False
    HasBackColor    =   False
-   Height          =   400
-   ImplicitInstance=   False
+   Height          =   236
+   ImplicitInstance=   True
    LiveResize      =   True
    MacProcID       =   0
    MaxHeight       =   32000
-   MaximizeButton  =   False
+   MaximizeButton  =   True
    MaxWidth        =   32000
    MenuBar         =   0
    MenuBarVisible  =   True
    MinHeight       =   64
-   MinimizeButton  =   False
+   MinimizeButton  =   True
    MinWidth        =   64
    Placement       =   0
-   Resizeable      =   False
-   Title           =   "#app.kPreferences"
+   Resizeable      =   True
+   Title           =   "Delete Confirmation"
    Visible         =   True
-   Width           =   600
-   Begin ccOKCancel ccOKCancel1
-      AcceptFocus     =   False
-      AcceptTabs      =   False
+   Width           =   362
+   Begin ContainerInventoryExpanded contItems
+      AcceptFocus     =   True
+      AcceptTabs      =   True
       AutoDeactivate  =   True
-      BackColor       =   &cFFFFFF00
+      BackColor       =   &c40004000
       Backdrop        =   0
       Enabled         =   True
-      EraseBackground =   False
+      EraseBackground =   True
       HasBackColor    =   False
-      Height          =   27
+      Height          =   210
       HelpTag         =   ""
+      ifkinventory_parent=   ""
       Index           =   -2147483648
       InitialParent   =   ""
-      Left            =   408
-      LockBottom      =   True
+      Left            =   0
+      LockBottom      =   False
       LockedInPosition=   False
-      LockLeft        =   False
-      LockRight       =   True
-      LockTop         =   False
+      LockLeft        =   True
+      LockRight       =   False
+      LockTop         =   True
       Scope           =   0
       TabIndex        =   0
       TabPanelIndex   =   0
       TabStop         =   True
-      Top             =   353
+      Top             =   0
       Transparent     =   True
       UseFocusRing    =   False
       Visible         =   True
-      Width           =   172
+      Width           =   360
    End
-   Begin Label Label1
+   Begin OkCancelContainer contOKCancel
+      AcceptFocus     =   False
+      AcceptTabs      =   True
       AutoDeactivate  =   True
-      Bold            =   True
-      DataField       =   ""
-      DataSource      =   ""
-      Enabled         =   False
-      Height          =   90
+      BackColor       =   &cFFFFFF00
+      Backdrop        =   0
+      CancelButtonText=   "Cancel"
+      Enabled         =   True
+      EraseBackground =   True
+      HasBackColor    =   False
+      Height          =   30
       HelpTag         =   ""
       Index           =   -2147483648
       InitialParent   =   ""
-      Italic          =   False
-      Left            =   20
+      Left            =   184
       LockBottom      =   False
       LockedInPosition=   False
       LockLeft        =   True
-      LockRight       =   True
+      LockRight       =   False
       LockTop         =   True
-      Multiline       =   True
-      Scope           =   2
-      Selectable      =   False
+      OkButtonText    =   "Ok"
+      Scope           =   0
       TabIndex        =   1
       TabPanelIndex   =   0
       TabStop         =   True
-      Text            =   "Note: chkSUCheckAtStartup is an example of Getting/Setting preferences. \nCurrently in this project the preference does nothing....\nAgain, this is only an example."
-      TextAlign       =   0
-      TextColor       =   &c00000000
-      TextFont        =   "System"
-      TextSize        =   18.0
-      TextUnit        =   0
-      Top             =   20
+      Top             =   207
       Transparent     =   True
-      Underline       =   False
-      Visible         =   False
-      Width           =   560
-   End
-   Begin CheckBox chkSUCheckAtStartup
-      AutoDeactivate  =   True
-      Bold            =   False
-      Caption         =   "Check for updates on launch"
-      DataField       =   ""
-      DataSource      =   ""
-      Enabled         =   False
-      Height          =   18
-      HelpTag         =   ""
-      Index           =   -2147483648
-      InitialParent   =   ""
-      Italic          =   False
-      Left            =   20
-      LockBottom      =   False
-      LockedInPosition=   False
-      LockLeft        =   False
-      LockRight       =   False
-      LockTop         =   False
-      Scope           =   0
-      State           =   0
-      TabIndex        =   2
-      TabPanelIndex   =   0
-      TabStop         =   True
-      TextFont        =   "System"
-      TextSize        =   0.0
-      TextUnit        =   0
-      Top             =   122
-      Underline       =   False
-      Value           =   False
-      Visible         =   False
-      Width           =   223
+      UseFocusRing    =   False
+      Visible         =   True
+      Width           =   176
    End
 End
 #tag EndWindow
 
 #tag WindowCode
-	#tag Method, Flags = &h0
-		Sub Display()
-		  'Note: chkSUCheckAtStartup is an example of Getting/Setting preferences. 
-		  'Currently in this project the preference does nothing....
-		  'Again, this is only an example.
-		  chkSUCheckAtStartup.value = Preferences.BooleanValue(kCheckUpdatesAtStartup, true)
-		  
-		End Sub
-	#tag EndMethod
-
-	#tag Method, Flags = &h0
-		Sub Save()
-		  'Note: chkSUCheckAtStartup is an example of Getting/Setting preferences. 
-		  'Currently in this project the preference does nothing....
-		  'Again, this is only an example.
-		  Preferences.BooleanValue(kCheckUpdatesAtStartup) = chkSUCheckAtStartup.value
-		  Preferences.save
-		End Sub
-	#tag EndMethod
+	#tag Property, Flags = &h0
+		ReturnedIDs() As Integer
+	#tag EndProperty
 
 
 #tag EndWindowCode
 
-#tag Events ccOKCancel1
+#tag Events contItems
 	#tag Event
-		Sub CancelClicked()
-		  self.Close
-		End Sub
-	#tag EndEvent
-	#tag Event
-		Sub OKClicked()
-		  Save
-		  Self.close
+		Sub SetColumnInformation(lbItems as entListbox, ByRef dictCellTypes as Dictionary, ByRef dictFieldNames as Dictionary)
+		  dim s1,s2() as string
+		  
+		  dim sRowType as string
+		  
+		  // Set Column Count
+		  dim iColCount as integer = 4
+		  lbItems.ColumnCount = iColCount
+		  
+		  // Initialize dictionaries
+		  dictFieldNames = New Dictionary
+		  dictCellTypes = New Dictionary
+		  
+		  // Set header names
+		  s1 = "Name,Department,Category,SubCat"
+		  s2() = Split(s1,",")
+		  lbItems.Heading = s2()
+		  
+		  
+		  // **********
+		  // Set up the cell types and field names for each type of row
+		  
+		  // Group Folders
+		  sRowType = "GroupFolder"
+		  'field names
+		  dictFieldNames.Value(sRowType) = Array("")
+		  
+		  'cell types
+		  dim iCellTypes() as integer
+		  ReDim iCellTypes(iColCount - 1) 
+		  dictCellTypes.Value(sRowType) = iCellTypes
+		  
+		  
+		  // GrandParent
+		  sRowType = "GrandParent"
+		  'field names
+		  s1 = "item_name,item_department,item_category,item_subcategory"
+		  s2() = Split(s1,",")
+		  dictFieldNames.Value(sRowType) = s2
+		  
+		  'cell types
+		  dim iCellTypes2() as integer
+		  ReDim iCellTypes2(iColCount - 1) 
+		  dictCellTypes.Value(sRowType) = iCellTypes2
+		  
+		  
+		  // Linking Type Folder
+		  sRowType = "LinkingTypeFolder"
+		  'field names
+		  dictFieldNames.Value(sRowType) = Array("")
+		  
+		  'cell types
+		  dim iCellTypes3() as integer
+		  ReDim iCellTypes3(iColCount - 1) 
+		  dictCellTypes.Value(sRowType) = iCellTypes3
+		  
+		  
+		  // LinkedItem - Version
+		  sRowType = "LinkedItem - version"
+		  'field names
+		  s1 = "item_name,item_department,item_category,item_subcategory"
+		  s2() = Split(s1,",")
+		  dictFieldNames.Value(sRowType) = s2
+		  
+		  'cell types
+		  dim iCellTypes4() as integer = Array(0,0,0,0)
+		  dictCellTypes.Value(sRowType) = iCellTypes4
+		  
+		  
+		  // LinkedItem - Contained
+		  sRowType = "LinkedItem - contained"
+		  'field names
+		  s1 = "item_name,item_department,item_category,item_subcategory"
+		  s2() = Split(s1,",")
+		  dictFieldNames.Value(sRowType) = s2
+		  
+		  'cell types
+		  dim iCellTypes5() as integer = Array(0,0,0,0)
+		  dictCellTypes.Value(sRowType) = iCellTypes5
+		  
+		  
+		  
 		End Sub
 	#tag EndEvent
 #tag EndEvents
-#tag Events chkSUCheckAtStartup
+#tag Events contOKCancel
 	#tag Event
 		Sub Action()
-		  Preferences.BooleanValue(kCheckUpdatesAtStartup) = me.value
+		  
+		  dim oSelectedRowTags() as lbRowTag
+		  oSelectedRowTags = contItems.lbItems.GetSelectedRows
+		  
+		  dim iSelectedIDs() as int64
+		  For each oRowTag as lbRowTag In oSelectedRowTags()
+		    
+		    If oRowTag.pkid <> 0 Then
+		      iSelectedIDs.Append(oRowTag.pkid)
+		    End If
+		    
+		  Next
+		  
+		  me.Window.Close
+		End Sub
+	#tag EndEvent
+	#tag Event
+		Sub CancelAction()
+		  
+		  me.Window.Close
 		End Sub
 	#tag EndEvent
 #tag EndEvents

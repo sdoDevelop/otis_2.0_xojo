@@ -164,7 +164,7 @@ Inherits DataFile.ActiveRecordBase
 
 
 	#tag Property, Flags = &h0
-		ifkinv_ex As Integer
+		ifkinventory As Integer
 	#tag EndProperty
 
 	#tag Property, Flags = &h0
@@ -206,7 +206,7 @@ Inherits DataFile.ActiveRecordBase
 
 	#tag ViewBehavior
 		#tag ViewProperty
-			Name="ifkinv_ex"
+			Name="ifkinventory"
 			Group="Behavior"
 			Type="Integer"
 		#tag EndViewProperty

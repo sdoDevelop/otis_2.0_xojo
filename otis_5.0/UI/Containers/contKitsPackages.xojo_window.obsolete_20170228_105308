@@ -39,6 +39,7 @@ Begin ContainerControl contKitsPackages
       HasHeading      =   True
       Height          =   283
       HelpTag         =   ""
+      Index           =   -2147483648
       InitialParent   =   ""
       Left            =   57
       LockBottom      =   True
@@ -374,7 +375,7 @@ End
 		End Sub
 	#tag EndEvent
 	#tag Event
-		Function ConstructContextualMenu(base as MenuItem, x as Integer, y as Integer) As Boolean
+		Function entConstructContextualMenu(base as menuitem, x as integer, y as integer) As Boolean
 		  
 		  base.Append( New MenuItem("Delete") )
 		End Function
@@ -411,7 +412,7 @@ End
 		  
 		  // Grab the selected pkid from the window
 		  dim iSelectedPKID as Int64
-		  iSelectedPKID = winPicker.iSelectedItemPKID
+		  'iSelectedPKID = winPicker.iSelectedItemPKID
 		  
 		  If iSelectedPKID <> 0 Then
 		    // Create a New Kit item

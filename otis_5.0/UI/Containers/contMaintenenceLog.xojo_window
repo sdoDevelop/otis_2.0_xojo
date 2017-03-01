@@ -763,7 +763,7 @@ End
 		  oCurrentLog = oNewLog
 		  ClearFields
 		  
-		  oCurrentLog.ifkinv_ex = ifkInvExpanded
+		  oCurrentLog.ifkinventory = ifkInventory
 		  EnableDisableLogFields(True)
 		  tfWorkSummary.Text = "New Log..."
 		End Sub
@@ -804,7 +804,7 @@ End
 	#tag Method, Flags = &h0
 		Sub Constructor(iInventoryPKID as int64, iInventoryExpandedPKID as int64)
 		  
-		  LoadUniversalInfo(iInventoryPKID,iInventoryExpandedPKID)
+		  LoadUniversalInfo(iInventoryPKID)
 		End Sub
 	#tag EndMethod
 
@@ -858,10 +858,20 @@ End
 		    End If
 		  Next 
 		  If oLog.sentry_date <> "" Then
-		    dcEntryDate.DateValue.SQLDate = oLog.sentry_date
+		    dim d1 as New date
+		    d1.SQLDate = oLog.sentry_date
+		    dcEntryDate.DateValue = d1
+		  Else
+		    dim d1 as date
+		    dcEntryDate.DateValue = d1
 		  End If
 		  If oLog.sexit_date <> "" Then
-		    dcExitDate.DateValue.SQLDate = oLog.sexit_date
+		    dim d1 as New date
+		    d1.SQLDate = oLog.sexit_date
+		    dcExitDate.DateValue = d1
+		  Else
+		    dim d1 as date
+		    dcExitDate.DateValue = d1
 		  End If
 		  tfWorkCost.Text = ConvertCentsString_To_DollarString(oLog.iwork_cost.ToText)
 		  taWorkDescription.Text = oLog.swork_description
@@ -873,6 +883,8 @@ End
 		Sub LoadRow(row as integer, oRowTag as lbRowTag)
 		  
 		  
+		  lbLogs.RowTag(row) = oRowTag
+		  
 		  // Populate cells
 		  For i1 as integer = 0 To sFieldNames.ubound
 		    lbLogs.Cell(row,i1) = oRowTag.vColumnValues(i1)
@@ -881,7 +893,38 @@ End
 	#tag EndMethod
 
 	#tag Method, Flags = &h0
-		Sub LoadUniversalInfo(iInventoryPKID as int64, iInventoryExpandedPKID as int64)
+		Sub LoadUniversalInfo(iInventoryPKID as int64)
+		  
+		  
+		  
+		  ifkInventory = iInventoryPKID
+		  
+		  // populate the log list
+		  oLogList() = DataFile.tbl_maintenance_Logs.List("fkinventory = " + iInventoryPKID.ToText )
+		  
+		  lbLogs.DeleteAllRows
+		  
+		  // Loop through the list 
+		  For Each oLog as DataFile.tbl_maintenance_Logs In oLogList()
+		    
+		    // Add a row for the log
+		    lbLogs.AddRow("")
+		    
+		    // Build the rowtag
+		    dim oRowTag as lbRowTag
+		    oRowTag = BuildRowTag(oLog)
+		    
+		    // Load the row
+		    LoadRow(lbLogs.LastIndex,oRowTag)
+		    
+		  Next
+		  
+		  // Load the Inventory Item 
+		  oInventoryRecord = DataFile.tbl_inventory.FindByID(iInventoryPKID)
+		  
+		  // Load rows realted to the inventory item 
+		  labItemName.Text = oInventoryRecord.sitem_name
+		  labSerial.Text = oInventoryRecord.sitem_serial_code
 		  
 		End Sub
 	#tag EndMethod
@@ -896,7 +939,7 @@ End
 		    iSelectedPKID = oRowTag.pkid
 		  End If
 		  
-		  LoadUniversalInfo(ifkInventory,ifkInvExpanded)
+		  LoadUniversalInfo(ifkInventory)
 		  
 		  If iSelectedPKID <> 0 Then
 		    
@@ -929,10 +972,6 @@ End
 
 	#tag Property, Flags = &h0
 		ifkInventory As Int64
-	#tag EndProperty
-
-	#tag Property, Flags = &h0
-		ifkInvExpanded As Int64
 	#tag EndProperty
 
 	#tag Property, Flags = &h0
@@ -986,7 +1025,7 @@ End
 		  me.ColumnType = n2
 		  
 		  
-		  LoadUniversalInfo(ifkInventory,ifkInvExpanded)
+		  
 		End Sub
 	#tag EndEvent
 	#tag Event
@@ -1193,11 +1232,6 @@ End
 	#tag EndViewProperty
 	#tag ViewProperty
 		Name="ifkInventory"
-		Group="Behavior"
-		Type="Int64"
-	#tag EndViewProperty
-	#tag ViewProperty
-		Name="ifkInvExpanded"
 		Group="Behavior"
 		Type="Int64"
 	#tag EndViewProperty

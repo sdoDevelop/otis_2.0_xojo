@@ -73,11 +73,11 @@ for table_dict in table_names:
                 #else:
                 #    column_values.append("0")
             elif column_data_types[name] == "boolean":
-                column_values.append(str(value) + "(:)Boolean")
-                #if value:
-                #    column_values.append("'" + str(value) + "'")
-                #else:
-                #    column_values.append("'False'")
+                #column_values.append(str(value) + "(:)Boolean")
+                if value:
+                    column_values.append(str(1) + "(:)Boolean")
+                else:
+                    column_values.append(str(0) + "(:)Boolean")
             #elif column_data_types[name] in array_types:
                 #if value:
                 #    column_values.append("'" + str(value) + "'")

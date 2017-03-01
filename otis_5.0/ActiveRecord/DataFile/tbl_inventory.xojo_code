@@ -1,6 +1,30 @@
 #tag Class
 Protected Class tbl_inventory
 Inherits DataFile.ActiveRecordBase
+	#tag Event
+		Sub PostDelete()
+		  
+		  // Grab all the link children of this record from the database
+		  dim oLinkChildren() as DataFile.tbl_inventory_link
+		  oLinkChildren() = DataFile.tbl_inventory_link.List 
+		  
+		  
+		  
+		  For Each oLinkChild as DataFile.tbl_inventory_link In oLinkChildren
+		    
+		    // Grab the inventory item
+		    dim oItem as DataFile.tbl_inventory
+		    oItem = DataFile.tbl_inventory.FindByID(oLinkChild.ifkinventory_child)
+		    
+		    
+		    
+		    oLinkChild.Delete
+		    
+		  Next
+		End Sub
+	#tag EndEvent
+
+
 	#tag Method, Flags = &h0
 		Shared Function BaseSQL(bAsCount as Boolean = false) As String
 		  dim ars() as string
@@ -267,6 +291,10 @@ Inherits DataFile.ActiveRecordBase
 
 
 	#tag Property, Flags = &h0
+		bhide As Boolean
+	#tag EndProperty
+
+	#tag Property, Flags = &h0
 		bitem_taxable As Boolean
 	#tag EndProperty
 
@@ -283,11 +311,19 @@ Inherits DataFile.ActiveRecordBase
 	#tag EndProperty
 
 	#tag Property, Flags = &h0
-		iitem_price_cost As Integer
+		iitem_purchase_price_cost As Integer
 	#tag EndProperty
 
 	#tag Property, Flags = &h0
 		iitem_quantity As Integer
+	#tag EndProperty
+
+	#tag Property, Flags = &h0
+		iitem_rental_price_cost As Integer
+	#tag EndProperty
+
+	#tag Property, Flags = &h0
+		iitem_sale_price_cost As Integer
 	#tag EndProperty
 
 	#tag Property, Flags = &h0
@@ -339,11 +375,11 @@ Inherits DataFile.ActiveRecordBase
 	#tag EndProperty
 
 	#tag Property, Flags = &h0
-		sitem_subcategory As String
+		sitem_status As String
 	#tag EndProperty
 
 	#tag Property, Flags = &h0
-		sitem_type As String
+		sitem_subcategory As String
 	#tag EndProperty
 
 	#tag Property, Flags = &h0
@@ -356,6 +392,11 @@ Inherits DataFile.ActiveRecordBase
 
 
 	#tag ViewBehavior
+		#tag ViewProperty
+			Name="bhide"
+			Group="Behavior"
+			Type="Boolean"
+		#tag EndViewProperty
 		#tag ViewProperty
 			Name="bitem_taxable"
 			Group="Behavior"
@@ -378,12 +419,12 @@ Inherits DataFile.ActiveRecordBase
 			Type="Boolean"
 		#tag EndViewProperty
 		#tag ViewProperty
-			Name="iitem_price_cost"
+			Name="iitem_quantity"
 			Group="Behavior"
 			Type="Integer"
 		#tag EndViewProperty
 		#tag ViewProperty
-			Name="iitem_quantity"
+			Name="iitem_rental_price_cost"
 			Group="Behavior"
 			Type="Integer"
 		#tag EndViewProperty
@@ -421,6 +462,7 @@ Inherits DataFile.ActiveRecordBase
 			Name="sitem_barcode"
 			Group="Behavior"
 			Type="String"
+			EditorType="MultiLineEditor"
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="sitem_category"
@@ -480,20 +522,22 @@ Inherits DataFile.ActiveRecordBase
 			Name="sitem_rfid_code"
 			Group="Behavior"
 			Type="String"
+			EditorType="MultiLineEditor"
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="sitem_serial_code"
 			Group="Behavior"
 			Type="String"
+			EditorType="MultiLineEditor"
 		#tag EndViewProperty
 		#tag ViewProperty
-			Name="sitem_subcategory"
+			Name="sitem_status"
 			Group="Behavior"
 			Type="String"
 			EditorType="MultiLineEditor"
 		#tag EndViewProperty
 		#tag ViewProperty
-			Name="sitem_type"
+			Name="sitem_subcategory"
 			Group="Behavior"
 			Type="String"
 			EditorType="MultiLineEditor"

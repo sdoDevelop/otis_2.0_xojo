@@ -1,5 +1,5 @@
 #tag Window
-Begin ContainerControl contEventList_Large
+Begin ContainerControl SearchContainer
    AcceptFocus     =   False
    AcceptTabs      =   True
    AutoDeactivate  =   True
@@ -9,7 +9,7 @@ Begin ContainerControl contEventList_Large
    Enabled         =   True
    EraseBackground =   True
    HasBackColor    =   False
-   Height          =   440
+   Height          =   31
    HelpTag         =   ""
    InitialParent   =   ""
    Left            =   0
@@ -24,90 +24,102 @@ Begin ContainerControl contEventList_Large
    Transparent     =   True
    UseFocusRing    =   False
    Visible         =   True
-   Width           =   700
-   Begin entListbox lbEvents
-      AcceptFocus     =   False
-      AcceptTabs      =   True
+   Width           =   223
+   Begin PushButton SearchButton
       AutoDeactivate  =   True
-      BackColor       =   &cFFFFFF00
-      Backdrop        =   0
-      CellBackColor   =   &cFFFFFF00
+      Bold            =   False
+      ButtonStyle     =   "0"
+      Cancel          =   True
+      Caption         =   "Search"
+      Default         =   False
       Enabled         =   True
-      EraseBackground =   True
-      GridLinesColor  =   &c00000000
-      HasBackColor    =   False
-      HasHeading      =   True
-      Height          =   417
+      Height          =   22
       HelpTag         =   ""
       Index           =   -2147483648
       InitialParent   =   ""
-      Left            =   0
+      Italic          =   False
+      Left            =   162
       LockBottom      =   False
       LockedInPosition=   False
-      LockLeft        =   True
-      LockRight       =   False
+      LockLeft        =   False
+      LockRight       =   True
       LockTop         =   True
       Scope           =   0
       TabIndex        =   0
       TabPanelIndex   =   0
       TabStop         =   True
-      Top             =   22
-      Transparent     =   True
-      UseFocusRing    =   False
+      TextFont        =   "System"
+      TextSize        =   0.0
+      TextUnit        =   0
+      Top             =   4
+      Underline       =   False
       Visible         =   True
-      Width           =   700
+      Width           =   56
    End
-   Begin SearchControl scSearchEvents
+   Begin TextField SearchField
+      AcceptTabs      =   False
+      Alignment       =   0
       AutoDeactivate  =   True
+      AutomaticallyCheckSpelling=   False
+      BackColor       =   &cFF00FFFF
+      Bold            =   False
+      Border          =   True
+      CueText         =   ""
+      DataField       =   ""
+      DataSource      =   ""
       Enabled         =   True
-      HasCancelButton =   True
-      HasMenu         =   False
+      Format          =   ""
       Height          =   22
       HelpTag         =   ""
       Index           =   -2147483648
-      InitialParent   =   ""
-      Left            =   517
+      Italic          =   False
+      Left            =   4
+      LimitText       =   0
       LockBottom      =   False
       LockedInPosition=   False
       LockLeft        =   True
-      LockRight       =   False
+      LockRight       =   True
       LockTop         =   True
-      MacBorderStyle  =   0
-      PlaceHolderText =   ""
+      Mask            =   ""
+      Password        =   False
+      ReadOnly        =   False
       Scope           =   0
-      SendSearchStringImmediately=   False
-      SendWholeSearchString=   False
       TabIndex        =   1
       TabPanelIndex   =   0
       TabStop         =   True
       Text            =   ""
-      Top             =   0
+      TextColor       =   &c00000000
+      TextFont        =   "System"
+      TextSize        =   0.0
+      TextUnit        =   0
+      Top             =   4
+      Underline       =   False
+      UseFocusRing    =   True
       Visible         =   True
-      Width           =   183
+      Width           =   152
    End
 End
 #tag EndWindow
 
 #tag WindowCode
-	#tag Method, Flags = &h0
-		Sub LoadListbox()
-		  
-		End Sub
-	#tag EndMethod
+	#tag Hook, Flags = &h0
+		Event SearchAction(SearchText as String)
+	#tag EndHook
 
-	#tag Method, Flags = &h0
-		Sub SearchEvents()
-		  
-		End Sub
-	#tag EndMethod
+
+	#tag Property, Flags = &h0
+		SearchButtonText As String
+	#tag EndProperty
 
 
 #tag EndWindowCode
 
-#tag Events scSearchEvents
+#tag Events SearchButton
 	#tag Event
-		Sub Search()
-		  SearchEvents
+		Sub Action()
+		  
+		  
+		  SearchAction(SearchField.Text)
 		End Sub
 	#tag EndEvent
 #tag EndEvents
@@ -226,6 +238,14 @@ End
 		Group="ID"
 		Type="String"
 		EditorType="String"
+	#tag EndViewProperty
+	#tag ViewProperty
+		Name="SearchButtonText"
+		Visible=true
+		Group="Behavior"
+		InitialValue="Search"
+		Type="String"
+		EditorType="MultiLineEditor"
 	#tag EndViewProperty
 	#tag ViewProperty
 		Name="Super"

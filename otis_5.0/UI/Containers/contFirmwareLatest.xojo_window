@@ -1,5 +1,5 @@
 #tag Window
-Begin ContainerControl SearchContainer
+Begin ContainerControl contFirmwareLatest
    AcceptFocus     =   False
    AcceptTabs      =   True
    AutoDeactivate  =   True
@@ -9,7 +9,7 @@ Begin ContainerControl SearchContainer
    Enabled         =   True
    EraseBackground =   True
    HasBackColor    =   False
-   Height          =   31
+   Height          =   52
    HelpTag         =   ""
    InitialParent   =   ""
    Left            =   0
@@ -24,44 +24,122 @@ Begin ContainerControl SearchContainer
    Transparent     =   True
    UseFocusRing    =   False
    Visible         =   True
-   Width           =   223
-   Begin PushButton SearchButton
+   Width           =   198
+   Begin DateControl dcUpdateDate
       AutoDeactivate  =   True
-      Bold            =   False
-      ButtonStyle     =   "0"
-      Cancel          =   True
-      Caption         =   "Search"
-      Default         =   False
+      Checked         =   False
+      DateFormat      =   0
+      Day             =   0
+      DropDownIcon    =   0
+      EmptyDates      =   True
       Enabled         =   True
-      Height          =   22
+      Height          =   23
       HelpTag         =   ""
       Index           =   -2147483648
       InitialParent   =   ""
-      Italic          =   False
-      Left            =   162
+      Left            =   83
+      LinuxDropDownMode=   True
+      LinuxFontBold   =   False
+      LinuxTextFont   =   "System"
+      LinuxTextSize   =   0.0
+      LinuxTextUnit   =   0
       LockBottom      =   False
       LockedInPosition=   False
       LockLeft        =   False
       LockRight       =   True
       LockTop         =   True
+      MacFontBold     =   False
+      MacTextFont     =   "System"
+      MacTextSize     =   0.0
+      Month           =   0
+      OSXDropDownMode =   True
       Scope           =   0
       TabIndex        =   0
       TabPanelIndex   =   0
       TabStop         =   True
+      Top             =   0
+      Visible         =   True
+      Width           =   115
+      WinFontBold     =   False
+      WinTextFont     =   "System"
+      WinTextSize     =   0.0
+      WinTextUnit     =   0
+      Year            =   0
+   End
+   Begin Label labUpdateDate
+      AutoDeactivate  =   True
+      Bold            =   False
+      DataField       =   ""
+      DataSource      =   ""
+      Enabled         =   True
+      Height          =   20
+      HelpTag         =   ""
+      Index           =   -2147483648
+      InitialParent   =   ""
+      Italic          =   False
+      Left            =   -14
+      LockBottom      =   False
+      LockedInPosition=   False
+      LockLeft        =   False
+      LockRight       =   True
+      LockTop         =   True
+      Multiline       =   False
+      Scope           =   0
+      Selectable      =   False
+      TabIndex        =   1
+      TabPanelIndex   =   0
+      Text            =   "Updated On"
+      TextAlign       =   2
+      TextColor       =   &c00000000
       TextFont        =   "System"
       TextSize        =   0.0
       TextUnit        =   0
-      Top             =   4
+      Top             =   0
+      Transparent     =   True
       Underline       =   False
       Visible         =   True
-      Width           =   56
+      Width           =   85
    End
-   Begin TextField SearchField
+   Begin Label labVersion
+      AutoDeactivate  =   True
+      Bold            =   False
+      DataField       =   ""
+      DataSource      =   ""
+      Enabled         =   True
+      Height          =   20
+      HelpTag         =   ""
+      Index           =   -2147483648
+      InitialParent   =   ""
+      Italic          =   False
+      Left            =   -14
+      LockBottom      =   False
+      LockedInPosition=   False
+      LockLeft        =   False
+      LockRight       =   True
+      LockTop         =   True
+      Multiline       =   False
+      Scope           =   0
+      Selectable      =   False
+      TabIndex        =   2
+      TabPanelIndex   =   0
+      Text            =   "Version"
+      TextAlign       =   2
+      TextColor       =   &c00000000
+      TextFont        =   "System"
+      TextSize        =   0.0
+      TextUnit        =   0
+      Top             =   26
+      Transparent     =   True
+      Underline       =   False
+      Visible         =   True
+      Width           =   85
+   End
+   Begin TextField tfVersion
       AcceptTabs      =   False
       Alignment       =   0
       AutoDeactivate  =   True
       AutomaticallyCheckSpelling=   False
-      BackColor       =   &cFFFF00FF
+      BackColor       =   &cFFFFFF00
       Bold            =   False
       Border          =   True
       CueText         =   ""
@@ -73,18 +151,18 @@ Begin ContainerControl SearchContainer
       HelpTag         =   ""
       Index           =   -2147483648
       Italic          =   False
-      Left            =   4
+      Left            =   83
       LimitText       =   0
       LockBottom      =   False
       LockedInPosition=   False
-      LockLeft        =   True
+      LockLeft        =   False
       LockRight       =   True
       LockTop         =   True
       Mask            =   ""
       Password        =   False
       ReadOnly        =   False
       Scope           =   0
-      TabIndex        =   1
+      TabIndex        =   3
       TabPanelIndex   =   0
       TabStop         =   True
       Text            =   ""
@@ -92,37 +170,121 @@ Begin ContainerControl SearchContainer
       TextFont        =   "System"
       TextSize        =   0.0
       TextUnit        =   0
-      Top             =   4
+      Top             =   25
       Underline       =   False
       UseFocusRing    =   True
       Visible         =   True
-      Width           =   152
+      Width           =   115
    End
 End
 #tag EndWindow
 
 #tag WindowCode
-	#tag Hook, Flags = &h0
-		Event SearchAction(SearchText as String)
-	#tag EndHook
+	#tag Event
+		Function ConstructContextualMenu(base as MenuItem, x as Integer, y as Integer) As Boolean
+		  
+		  base.Append( New MenuItem("Open Firmware Page") )
+		  base.Append( New MenuItem( MenuItem.TextSeparator ) ) 
+		  base.Append( New MenuItem("Add Firmware Update") )
+		  
+		  
+		  Return True
+		End Function
+	#tag EndEvent
+
+	#tag Event
+		Function ContextualMenuAction(hitItem as MenuItem) As Boolean
+		  
+		  
+		  Select Case hitItem.Text
+		  Case "Open Firmware Page"
+		    
+		    dim contFirmware1 as New contFirmware
+		    
+		    app.MainWindow.AddTab("Firmware")
+		    contFirmware1.EmbedWithinPanel(app.MainWindow.tbMainWindow, app.MainWindow.tbMainWindow.PanelCount - 1)
+		    
+		    contFirmware1.LoadUniversalInfo( ifkInventory )
+		    
+		  Case "Add Firmware Update"
+		    
+		    dim contFirmware1 as New contFirmware
+		    
+		    app.MainWindow.AddTab("Firmware")
+		    contFirmware1.EmbedWithinPanel(app.MainWindow.tbMainWindow, app.MainWindow.tbMainWindow.PanelCount - 1)
+		    
+		    contFirmware1.LoadUniversalInfo( ifkInventory )
+		    contFirmware1.AddLog
+		    
+		  End Select
+		  
+		End Function
+	#tag EndEvent
+
+
+	#tag Method, Flags = &h0
+		Sub EnableDisableLogFields(EnabledState as Boolean)
+		  
+		  
+		  dcUpdateDate.Enabled = EnabledState
+		  labUpdateDate.Enabled = EnabledState
+		  labVersion.Enabled = EnabledState
+		  tfVersion.Enabled = EnabledState
+		End Sub
+	#tag EndMethod
+
+	#tag Method, Flags = &h0
+		Sub LoadMe(iInventoryPKID as Int64)
+		  
+		  'ifkInventory = iInventoryPKID
+		  if iInventoryPKID = 0 Then ifkInventory = -1 Else ifkInventory = iInventoryPKID
+		  
+		  // Check for any firmware update records
+		  dim oFirmwareRecords() as DataFile.tbl_firmware
+		  dim sCondition,sOrder as string
+		  sCondition = "fk_inventory = " + ifkInventory.ToText
+		  sOrder = "date(update_date)"
+		  oFirmwareRecords() = DataFile.tbl_firmware.List(sCondition,sOrder)
+		  
+		  If oFirmwareRecords.Ubound = -1 Then
+		    
+		    EnableDisableLogFields(False)
+		    
+		  Else
+		    ' there are logs
+		    
+		    oFirmwareRecord = oFirmwareRecords(oFirmwareRecords.Ubound)
+		    
+		    EnableDisableLogFields(True)
+		    
+		    
+		    tfVersion.Text = oFirmwareRecord.sfirmware_version
+		    
+		    If oFirmwareRecord.supdate_date = "" Then
+		      dim d1 as date
+		      dcUpdateDate.DateValue = d1
+		    Else
+		      dim d1 as New date
+		      d1.SQLDate = oFirmwareRecord.supdate_date
+		      dcUpdateDate.DateValue = d1
+		    End If
+		    
+		  End If
+		End Sub
+	#tag EndMethod
 
 
 	#tag Property, Flags = &h0
-		SearchButtonText As String
+		ifkInventory As Int64
+	#tag EndProperty
+
+	#tag Property, Flags = &h0
+		oFirmwareRecord As DataFile.tbl_firmware
 	#tag EndProperty
 
 
 #tag EndWindowCode
 
-#tag Events SearchButton
-	#tag Event
-		Sub Action()
-		  
-		  
-		  SearchAction(SearchField.Text)
-		End Sub
-	#tag EndEvent
-#tag EndEvents
 #tag ViewBehavior
 	#tag ViewProperty
 		Name="AcceptFocus"
@@ -198,6 +360,11 @@ End
 		Type="String"
 	#tag EndViewProperty
 	#tag ViewProperty
+		Name="ifkInventory"
+		Group="Behavior"
+		Type="Int64"
+	#tag EndViewProperty
+	#tag ViewProperty
 		Name="InitialParent"
 		Group="Position"
 		Type="String"
@@ -238,14 +405,6 @@ End
 		Group="ID"
 		Type="String"
 		EditorType="String"
-	#tag EndViewProperty
-	#tag ViewProperty
-		Name="SearchButtonText"
-		Visible=true
-		Group="Behavior"
-		InitialValue="Search"
-		Type="String"
-		EditorType="MultiLineEditor"
 	#tag EndViewProperty
 	#tag ViewProperty
 		Name="Super"

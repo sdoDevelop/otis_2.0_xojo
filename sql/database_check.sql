@@ -60,11 +60,13 @@
         item_category               ,
         item_subcategory            ,
         item_description            ,
-        item_type                   ,
+        item_status                 ,
         show_items                  ,
         show_items_discreetly       ,
         item_quantity               ,
-        item_price_cost             ,
+        item_purchase_price_cost    ,
+        item_rental_price_cost      ,
+        item_sale_price_cost        ,
         item_owner                  ,
         item_taxable                ,
         item_weight                 ,
@@ -74,7 +76,8 @@
         item_barcode                ,    
         item_rfid_code              ,
         item_serial_code            ,
-        physical_item                                
+        physical_item               ,
+        hide                             
         From tbl_inventory
         ;
 
@@ -84,7 +87,7 @@
         row_created                 ,
         row_modified                ,
         row_username                ,
-        fk_inv_ex                   ,
+        fk_inventory                ,
         update_date                 ,
         firmware_version            ,
         update_comments             
@@ -112,7 +115,9 @@
         row_modified                ,
         row_username                ,
         fkinventory_parent          ,
-        fkinventory_child             
+        fkinventory_child           ,
+        link_type                   ,
+        quantity                    
         From tbl_inventory_link
         ;
 
@@ -122,7 +127,7 @@
         row_created,                 
         row_modified,                
         row_username,               
-        fkinv_ex,                
+        fkinventory,                
         entry_date,                  
         exit_date,                 
         due_date,                  

@@ -39,6 +39,7 @@ Begin ContainerControl contFirmware
       HasHeading      =   True
       Height          =   220
       HelpTag         =   ""
+      Index           =   -2147483648
       InitialParent   =   ""
       Left            =   0
       LockBottom      =   True
@@ -140,6 +141,7 @@ Begin ContainerControl contFirmware
       Selectable      =   False
       TabIndex        =   7
       TabPanelIndex   =   0
+      TabStop         =   True
       Text            =   "Update Date"
       TextAlign       =   2
       TextColor       =   &c00000000
@@ -215,6 +217,7 @@ Begin ContainerControl contFirmware
       Selectable      =   False
       TabIndex        =   14
       TabPanelIndex   =   0
+      TabStop         =   True
       Text            =   "Item Name"
       TextAlign       =   0
       TextColor       =   &c00000000
@@ -249,6 +252,7 @@ Begin ContainerControl contFirmware
       Selectable      =   False
       TabIndex        =   15
       TabPanelIndex   =   0
+      TabStop         =   True
       Text            =   "Serial #: "
       TextAlign       =   0
       TextColor       =   &c00000000
@@ -283,6 +287,7 @@ Begin ContainerControl contFirmware
       Selectable      =   False
       TabIndex        =   16
       TabPanelIndex   =   0
+      TabStop         =   True
       Text            =   "--"
       TextAlign       =   0
       TextColor       =   &c00000000
@@ -317,6 +322,7 @@ Begin ContainerControl contFirmware
       Selectable      =   False
       TabIndex        =   17
       TabPanelIndex   =   0
+      TabStop         =   True
       Text            =   "Version"
       TextAlign       =   2
       TextColor       =   &c00000000
@@ -394,6 +400,7 @@ Begin ContainerControl contFirmware
       Selectable      =   False
       TabIndex        =   19
       TabPanelIndex   =   0
+      TabStop         =   True
       Text            =   "Comments"
       TextAlign       =   2
       TextColor       =   &c00000000
@@ -459,14 +466,14 @@ End
 #tag WindowCode
 	#tag Method, Flags = &h0
 		Sub AddLog()
-		  break
+		  
 		  // Create a new Log record
 		  tfFirmwareVersion.SetFocus
 		  dim oNewLog as New DataFile.tbl_firmware
 		  oCurrentLog = oNewLog
 		  ClearFields
 		  
-		  oCurrentLog.ifk_inv_ex = ifkInvExpanded
+		  oCurrentLog.ifk_inventory = ifkInventory
 		  EnableDisableLogFields(True)
 		  tfFirmwareVersion.Text = "0.0.0"
 		End Sub
@@ -497,13 +504,6 @@ End
 		  dcUpdateDate.DateValue = Nil
 		  tfFirmwareVersion.Text = ""
 		  taFirmwareComments.Text = ""
-		End Sub
-	#tag EndMethod
-
-	#tag Method, Flags = &h0
-		Sub Constructor(iInventoryPKID as int64, iInventoryExpandedPKID as int64)
-		  
-		  LoadUniversalInfo(iInventoryPKID,iInventoryExpandedPKID)
 		End Sub
 	#tag EndMethod
 
@@ -547,7 +547,12 @@ End
 		  
 		  
 		  If oLog.supdate_date <> "" Then
-		    dcUpdateDate.DateValue.SQLDate = oLog.supdate_date
+		    dim d1 as New date 
+		    d1.SQLDate = oLog.supdate_date
+		    dcUpdateDate.DateValue = d1
+		  Else
+		    dim d1 as date
+		    dcUpdateDate.DateValue = d1
 		  End If
 		  
 		  tfFirmwareVersion.Text = oLog.sfirmware_version
@@ -559,6 +564,7 @@ End
 	#tag Method, Flags = &h0
 		Sub LoadRow(row as integer, oRowTag as lbRowTag)
 		  
+		  lbLogs.RowTag(row) = oRowTag
 		  
 		  // Populate cells
 		  For i1 as integer = 0 To sFieldNames.ubound
@@ -568,7 +574,39 @@ End
 	#tag EndMethod
 
 	#tag Method, Flags = &h0
-		Sub LoadUniversalInfo(iInventoryPKID as int64, iInventoryExpandedPKID as int64)
+		Sub LoadUniversalInfo(iInventoryPKID as int64)
+		  
+		  
+		  
+		  'ifkInventory = iInventoryPKID
+		  if iInventoryPKID = 0 Then ifkInventory = -1 Else ifkInventory = iInventoryPKID
+		  
+		  // populate the log list
+		  oLogList() = DataFile.tbl_firmware.List("fk_inventory = " + iInventoryPKID.ToText )
+		  
+		  lbLogs.DeleteAllRows
+		  
+		  // Loop through the list 
+		  For Each oLog as DataFile.tbl_firmware In oLogList()
+		    
+		    // Add a row for the log
+		    lbLogs.AddRow("")
+		    
+		    // Build the rowtag
+		    dim oRowTag as lbRowTag
+		    oRowTag = BuildRowTag(oLog)
+		    
+		    // Load the row
+		    LoadRow(lbLogs.LastIndex,oRowTag)
+		    
+		  Next
+		  
+		  // Load the Inventory Item 
+		  oInventoryRecord = DataFile.tbl_inventory.FindByID(iInventoryPKID)
+		  
+		  // Load rows realted to the inventory item 
+		  labItemName.Text = oInventoryRecord.sitem_name
+		  labSerial.Text = oInventoryRecord.sitem_serial_code
 		  
 		End Sub
 	#tag EndMethod
@@ -583,7 +621,7 @@ End
 		    iSelectedPKID = oRowTag.pkid
 		  End If
 		  
-		  LoadUniversalInfo(ifkInventory,ifkInvExpanded)
+		  LoadUniversalInfo(ifkInventory)
 		  
 		  If iSelectedPKID <> 0 Then
 		    
@@ -616,10 +654,6 @@ End
 
 	#tag Property, Flags = &h0
 		ifkInventory As Int64
-	#tag EndProperty
-
-	#tag Property, Flags = &h0
-		ifkInvExpanded As Int64
 	#tag EndProperty
 
 	#tag Property, Flags = &h0
@@ -673,7 +707,7 @@ End
 		  me.ColumnType = n2
 		  
 		  
-		  LoadUniversalInfo(ifkInventory,ifkInvExpanded)
+		  
 		End Sub
 	#tag EndEvent
 	#tag Event
@@ -692,6 +726,51 @@ End
 		    EnableDisableLogFields(False)
 		  End If
 		End Sub
+	#tag EndEvent
+	#tag Event
+		Function ConstructContextualMenu(base as MenuItem, x as Integer, y as Integer) As Boolean
+		  
+		  
+		  base.Append( New MenuItem( "Delete" ) )
+		End Function
+	#tag EndEvent
+	#tag Event
+		Function ContextualMenuAction(hitItem as MenuItem) As Boolean
+		  
+		  Select Case hitItem.Text
+		  Case "Delete"
+		    
+		    If lbLogs.ListIndex <> -1 Then
+		      
+		      // Get the rowtag
+		      dim oRowTag as lbRowTag
+		      oRowTag = lbLogs.RowTag(lbLogs.ListIndex)
+		      
+		      // Extract the table record
+		      dim oRecord as DataFile.tbl_firmware
+		      oRecord = oRowTag.vtblRecord
+		      
+		      dim n1 as integer 
+		      n1 = MsgBox("Are you sure you want to delete the log from: " + oRecord.supdate_date,4 )
+		      
+		      Select Case n1
+		      Case 6
+		        'yes
+		        oRecord.Delete
+		        lbLogs.RemoveRow(lbLogs.ListIndex)
+		      Case 7
+		        'no
+		        Return True
+		      End Select
+		      
+		      
+		    End If
+		    
+		  End Select
+		  
+		  
+		  Return True
+		End Function
 	#tag EndEvent
 #tag EndEvents
 #tag Events pbAddLog
@@ -713,9 +792,16 @@ End
 	#tag Event
 		Sub LostFocus()
 		  
-		  oCurrentLog.supdate_date = me.DateValue.SQLDate
+		  If me.Checked Then
+		    oCurrentLog.supdate_date = me.DateValue.SQLDate
+		  Else
+		    oCurrentLog.supdate_date = ""
+		  End If
+		  
 		  SaveLog
 		  
+		  
+		  RefreshLogList
 		End Sub
 	#tag EndEvent
 #tag EndEvents
@@ -725,6 +811,8 @@ End
 		  
 		  oCurrentLog.sfirmware_version = me.Text
 		  SaveLog
+		  
+		  RefreshLogList
 		End Sub
 	#tag EndEvent
 #tag EndEvents
@@ -818,11 +906,6 @@ End
 	#tag EndViewProperty
 	#tag ViewProperty
 		Name="ifkInventory"
-		Group="Behavior"
-		Type="Int64"
-	#tag EndViewProperty
-	#tag ViewProperty
-		Name="ifkInvExpanded"
 		Group="Behavior"
 		Type="Int64"
 	#tag EndViewProperty

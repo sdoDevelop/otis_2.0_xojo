@@ -96,22 +96,8 @@ Protected Module Methods
 	#tag EndMethod
 
 	#tag Method, Flags = &h1
-		Protected Sub IncreaseQuantity(fkInventory as integer,iAmount as integer)
+		Protected Sub IncreaseQuantity_with_NewItem(fkInventory as integer,iAmount as integer)
 		  
-		  dim oParentItem as DataFile.tbl_inventory
-		  oParentItem = DataFile.tbl_inventory.FindByID(fkInventory)
-		  
-		  For i1 as integer = 1 To iAmount
-		    
-		    // First we create a new inventory expanded item 
-		    'dim oItem as New DataFile.tbl_inventory_link
-		    'oItem.ifkinventory = fkInventory
-		    'oItem.sex_item_name = oParentItem.sitem_name
-		    'oItem.Save
-		    
-		  Next
-		  
-		  Methods.UpdateItemQuantity(fkInventory)
 		End Sub
 	#tag EndMethod
 
@@ -119,7 +105,7 @@ Protected Module Methods
 		Protected Sub UpdateItemQuantity(fkInventory as int64)
 		  // Figure out how many inventory expanded items there are related to our inventory item
 		  dim qty as integer
-		  qty = DataFile.tbl_inventory_link.ListCount("fkInventory = " + fkInventory.ToText )
+		  qty = DataFile.tbl_inventory_link.ListCount("fkInventory_parent = " + fkInventory.ToText + " And link_type = 'version'" )
 		  
 		  // Change the quantity of said inventory item
 		  dim oItem as DataFile.tbl_inventory

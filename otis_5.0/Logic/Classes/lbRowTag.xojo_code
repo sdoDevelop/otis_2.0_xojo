@@ -51,7 +51,7 @@ Protected Class lbRowTag
 	#tag EndProperty
 
 	#tag Property, Flags = &h0
-		bIsGrandParent As Boolean
+		iCellTypes() As Integer
 	#tag EndProperty
 
 	#tag Property, Flags = &h0
@@ -67,7 +67,21 @@ Protected Class lbRowTag
 	#tag EndProperty
 
 	#tag Property, Flags = &h0
-		sFolderValues() As String
+		sFieldNames() As String
+	#tag EndProperty
+
+	#tag Property, Flags = &h0
+		#tag Note
+			GroupFolder
+			GrandParent
+			LinkingTypeFolder
+			LinkedItem
+		#tag EndNote
+		sRowType As String
+	#tag EndProperty
+
+	#tag Property, Flags = &h0
+		sSubRowType As String
 	#tag EndProperty
 
 	#tag Property, Flags = &h0
@@ -118,6 +132,11 @@ Protected Class lbRowTag
 			Name="pkid"
 			Group="Behavior"
 			Type="Int64"
+		#tag EndViewProperty
+		#tag ViewProperty
+			Name="sRowType"
+			Group="Behavior"
+			Type="Boolean"
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="Super"

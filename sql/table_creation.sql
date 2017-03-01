@@ -62,11 +62,13 @@ Create Table tbl_events
         item_category               text,
         item_subcategory            text,
         item_description            text,
-        item_type                   text,
+        item_status                 text,
         show_items                  boolean,
         show_items_discreetly       boolean,
         item_quantity               integer,
-        item_price_cost             integer,
+        item_purchase_price_cost    integer,
+        item_rental_price_cost      integer,
+        item_sale_price_cost        integer,
         item_owner                  text,
         item_taxable                boolean,
         item_weight                 text,
@@ -76,7 +78,8 @@ Create Table tbl_events
         item_barcode                text,
         item_rfid_code              text,
         item_serial_code            text,
-        physical_item               boolean
+        physical_item               boolean,
+        hide                        boolean
         );
 
     -- inventory link
@@ -87,7 +90,9 @@ Create Table tbl_events
         row_modified                text,
         row_username                text,
         fkinventory_parent          integer,
-        fkinventory_child           integer
+        fkinventory_child           integer,
+        link_type                   text,
+        quantity                    integer
         );
 
     -- firmware
@@ -124,7 +129,7 @@ Create Table tbl_events
         row_created                 text,
         row_modified                text,
         row_username                text,
-        fkinv_ex                    integer,
+        fkinventory                   integer,
         entry_date                  text,
         exit_date                   text,
         due_date                    text,

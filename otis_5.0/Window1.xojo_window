@@ -75,7 +75,6 @@ Begin Window Window1
       Scope           =   0
       TabIndex        =   2
       TabPanelIndex   =   0
-      TabStop         =   True
       Top             =   27
       Value           =   0
       Visible         =   True
@@ -84,16 +83,15 @@ Begin Window Window1
          AcceptFocus     =   False
          AcceptTabs      =   True
          AutoDeactivate  =   True
-         BackColor       =   &cFFFF00FF
+         BackColor       =   &cFF00FFFF
          Backdrop        =   0
          Enabled         =   True
          EraseBackground =   True
          HasBackColor    =   False
          Height          =   435
          HelpTag         =   ""
-         IncreaseQuantityValue=   0
-         Index           =   -2147483648
          InitialParent   =   "tbMainWindow"
+         LastSearchValue =   ""
          Left            =   7
          LockBottom      =   True
          LockedInPosition=   False
@@ -221,7 +219,7 @@ End
 	#tag Event
 		Sub Action()
 		  osm.RunSync
-		  contInventory1.RefreshInventory(True)
+		  'contInventory1.RefreshInventory(True)
 		End Sub
 	#tag EndEvent
 #tag EndEvents

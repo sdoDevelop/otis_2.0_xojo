@@ -2,6 +2,19 @@
 Protected Class tbl_inventory_link
 Inherits DataFile.ActiveRecordBase
 	#tag Event
+		Sub BeforeSave()
+		  
+		  
+		  
+		  If me.ifkinventory_parent = me.ifkinventory_child Then
+		    
+		    me.ifkinventory_child = 0
+		    
+		  End If
+		End Sub
+	#tag EndEvent
+
+	#tag Event
 		Sub PostDelete()
 		  
 		  
@@ -290,6 +303,14 @@ Inherits DataFile.ActiveRecordBase
 		ifkinventory_parent As Int64
 	#tag EndProperty
 
+	#tag Property, Flags = &h0
+		iquantity As Integer
+	#tag EndProperty
+
+	#tag Property, Flags = &h0
+		slink_type As String
+	#tag EndProperty
+
 
 	#tag ViewBehavior
 		#tag ViewProperty
@@ -315,6 +336,11 @@ Inherits DataFile.ActiveRecordBase
 			Type="Int64"
 		#tag EndViewProperty
 		#tag ViewProperty
+			Name="iquantity"
+			Group="Behavior"
+			Type="Integer"
+		#tag EndViewProperty
+		#tag ViewProperty
 			Name="LastInsertID"
 			Group="Behavior"
 			Type="Int64"
@@ -331,6 +357,12 @@ Inherits DataFile.ActiveRecordBase
 			Visible=true
 			Group="ID"
 			Type="String"
+		#tag EndViewProperty
+		#tag ViewProperty
+			Name="slink_type"
+			Group="Behavior"
+			Type="String"
+			EditorType="MultiLineEditor"
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="srow_created"

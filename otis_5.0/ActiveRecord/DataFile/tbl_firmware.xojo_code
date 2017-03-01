@@ -164,7 +164,7 @@ Inherits DataFile.ActiveRecordBase
 
 
 	#tag Property, Flags = &h0
-		ifk_inv_ex As Int64
+		ifk_inventory As Int64
 	#tag EndProperty
 
 	#tag Property, Flags = &h0
@@ -182,44 +182,9 @@ Inherits DataFile.ActiveRecordBase
 
 	#tag ViewBehavior
 		#tag ViewProperty
-			Name="idiscount_amount"
+			Name="ifk_inv_ex"
 			Group="Behavior"
-			Type="Integer"
-		#tag EndViewProperty
-		#tag ViewProperty
-			Name="idiscount_percent"
-			Group="Behavior"
-			Type="Integer"
-		#tag EndViewProperty
-		#tag ViewProperty
-			Name="idiscount_total"
-			Group="Behavior"
-			Type="Integer"
-		#tag EndViewProperty
-		#tag ViewProperty
-			Name="ieipl_balance"
-			Group="Behavior"
-			Type="Integer"
-		#tag EndViewProperty
-		#tag ViewProperty
-			Name="ieipl_grand_total"
-			Group="Behavior"
-			Type="Integer"
-		#tag EndViewProperty
-		#tag ViewProperty
-			Name="ieipl_number"
-			Group="Behavior"
-			Type="Integer"
-		#tag EndViewProperty
-		#tag ViewProperty
-			Name="ieipl_subtotal"
-			Group="Behavior"
-			Type="Integer"
-		#tag EndViewProperty
-		#tag ViewProperty
-			Name="ieipl_total_paid"
-			Group="Behavior"
-			Type="Integer"
+			Type="Int64"
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="Index"
@@ -232,11 +197,6 @@ Inherits DataFile.ActiveRecordBase
 			Name="ipkid"
 			Group="Behavior"
 			Type="Int64"
-		#tag EndViewProperty
-		#tag ViewProperty
-			Name="itax_total"
-			Group="Behavior"
-			Type="Integer"
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="LastInsertID"
@@ -257,19 +217,7 @@ Inherits DataFile.ActiveRecordBase
 			Type="String"
 		#tag EndViewProperty
 		#tag ViewProperty
-			Name="sdue_date"
-			Group="Behavior"
-			Type="String"
-			EditorType="MultiLineEditor"
-		#tag EndViewProperty
-		#tag ViewProperty
-			Name="seipl_type"
-			Group="Behavior"
-			Type="String"
-			EditorType="MultiLineEditor"
-		#tag EndViewProperty
-		#tag ViewProperty
-			Name="sfkevents"
+			Name="sfirmware_version"
 			Group="Behavior"
 			Type="String"
 			EditorType="MultiLineEditor"
@@ -293,7 +241,13 @@ Inherits DataFile.ActiveRecordBase
 			EditorType="MultiLineEditor"
 		#tag EndViewProperty
 		#tag ViewProperty
-			Name="sshipping_method"
+			Name="supdate_comments"
+			Group="Behavior"
+			Type="String"
+			EditorType="MultiLineEditor"
+		#tag EndViewProperty
+		#tag ViewProperty
+			Name="supdate_date"
 			Group="Behavior"
 			Type="String"
 			EditorType="MultiLineEditor"

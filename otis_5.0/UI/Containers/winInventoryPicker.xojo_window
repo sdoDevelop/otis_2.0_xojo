@@ -9,7 +9,7 @@ Begin Window winInventoryPicker
    FullScreen      =   False
    FullScreenButton=   False
    HasBackColor    =   False
-   Height          =   412
+   Height          =   448
    ImplicitInstance=   False
    LiveResize      =   True
    MacProcID       =   0
@@ -25,234 +25,260 @@ Begin Window winInventoryPicker
    Resizeable      =   True
    Title           =   ""
    Visible         =   True
-   Width           =   274
-   Begin entListbox lbItems
+   Width           =   433
+   Begin OkCancelContainer contOkCancel
       AcceptFocus     =   False
+      AcceptTabs      =   True
+      AutoDeactivate  =   True
+      BackColor       =   &cFFFF00FF
+      Backdrop        =   0
+      CancelButtonText=   "Cancel"
+      Enabled         =   True
+      EraseBackground =   True
+      HasBackColor    =   False
+      Height          =   30
+      HelpTag         =   ""
+      InitialParent   =   ""
+      Left            =   253
+      LockBottom      =   True
+      LockedInPosition=   False
+      LockLeft        =   False
+      LockRight       =   True
+      LockTop         =   False
+      OkButtonText    =   "Ok"
+      Scope           =   0
+      TabIndex        =   4
+      TabPanelIndex   =   0
+      TabStop         =   True
+      Top             =   418
+      Transparent     =   True
+      UseFocusRing    =   False
+      Visible         =   True
+      Width           =   176
+   End
+   Begin contInventory contItems
+      AcceptFocus     =   True
       AcceptTabs      =   True
       AutoDeactivate  =   True
       BackColor       =   &cFFFFFF00
       Backdrop        =   0
-      CellBackColor   =   &cFFFFFF00
+      bTopLevelOnly   =   False
       Enabled         =   True
       EraseBackground =   True
-      GridLinesColor  =   &c00000000
       HasBackColor    =   False
-      HasHeading      =   True
-      Height          =   393
+      Height          =   418
       HelpTag         =   ""
       InitialParent   =   ""
-      Left            =   1
-      LockBottom      =   False
+      LastSearchValue =   ""
+      Left            =   0
+      LockBottom      =   True
       LockedInPosition=   False
       LockLeft        =   True
-      LockRight       =   False
+      LockRight       =   True
       LockTop         =   True
       Scope           =   0
-      TabIndex        =   0
+      TabIndex        =   5
       TabPanelIndex   =   0
       TabStop         =   True
-      Top             =   20
+      Top             =   0
       Transparent     =   True
       UseFocusRing    =   False
       Visible         =   True
-      Width           =   273
-   End
-   Begin PushButton pbCloseWindow
-      AutoDeactivate  =   True
-      Bold            =   False
-      ButtonStyle     =   "0"
-      Cancel          =   True
-      Caption         =   "Cancel"
-      Default         =   False
-      Enabled         =   True
-      Height          =   22
-      HelpTag         =   ""
-      Index           =   -2147483648
-      InitialParent   =   ""
-      Italic          =   False
-      Left            =   216
-      LockBottom      =   False
-      LockedInPosition=   False
-      LockLeft        =   True
-      LockRight       =   False
-      LockTop         =   True
-      Scope           =   0
-      TabIndex        =   1
-      TabPanelIndex   =   0
-      TabStop         =   True
-      TextFont        =   "System"
-      TextSize        =   0.0
-      TextUnit        =   0
-      Top             =   0
-      Underline       =   False
-      Visible         =   True
-      Width           =   58
+      Width           =   433
    End
 End
 #tag EndWindow
 
 #tag WindowCode
+	#tag Event
+		Sub Open()
+		  
+		End Sub
+	#tag EndEvent
+
+
 	#tag Method, Flags = &h0
-		Sub Constructor()
+		Sub LoadItems(sConditionpar as string = "", sGroupBy as string = "item_department")
 		  
-		  dim s1,s2() as string
-		  
-		  s1 = "item_name"
-		  s2 = s1.Split(",")
-		  sFieldNames = s2
-		  
-		  s1 = "Name"
-		  s2 = s1.Split(",")
-		  sHeaders = s2
-		  
-		  LoadListbox
+		  contItems.CreateZeroLevelRowTags(sConditionpar,"item_department")
 		End Sub
 	#tag EndMethod
 
 	#tag Method, Flags = &h0
-		Sub LoadListbox()
-		  dim dictGroups as Dictionary
-		  
-		  // Get the inventory in groups
-		  dictGroups = DataFile.tbl_inventory.ListGrouped("","item_department")
-		  
-		  // Delete all current rows in listbox
-		  lbItems.DeleteAllRows
-		  
-		  // Get all the group names from the group Dictionary
-		  dim sGroupNames() as String
-		  For Each key as Variant In dictGroups.Keys
-		    sGroupNames.Append(str(key))
-		  Next
-		  
-		  // Loop through groups
-		  For Each sGroup as String In sGroupNames
-		    
-		    // Set up a folder rowtag
-		    dim oRowTag as New lbRowTag
-		    oRowTag.isFolder = True
-		    
-		    // Add the label for the folder
-		    dim FolderValuesIndex as integer = oRowTag.sFolderValues.Ubound + 1
-		    ReDim oRowTag.sFolderValues(FolderValuesIndex)
-		    oRowTag.sFolderValues(FolderValuesIndex) = sGroup
-		    
-		    // Load the current group into a variable
-		    dim oGroup() as DataFile.tbl_inventory
-		    oGroup = dictGroups.Value(sGroup)
-		    
-		    // Loop through all records in group to make rowtags for each
-		    For Each oRecord as DataFile.tbl_inventory In oGroup
-		      
-		      dim oRecordRowTag as New lbRowTag(oRecord,sFieldNames)
-		      oRowTag.aroChildren.Append(oRecordRowTag)
-		      
-		    Next
-		    
-		    lbItems.AddFolder(oRowTag.sFolderValues(0))
-		    lbItems.RowTag(lbItems.LastIndex) = oRowTag
-		    
-		  Next
+		Function MyShowModal(iExcludePKID as int64) As Int64()
 		  
 		  
+		  // Load the items into the listbox
+		  me.LoadItems("pkid <> " + iExcludePKID.ToText)
 		  
+		  // Show the window
+		  me.ShowModal
 		  
-		  
-		  
-		  
-		  
-		  
-		  
-		  
-		  
-		  
-		  
-		  
-		  
-		  
-		  
-		  
-		  
-		  
-		  
-		  
-		  
-		  
-		End Sub
-	#tag EndMethod
-
-	#tag Method, Flags = &h0
-		Sub LoadRow()
-		  
-		End Sub
+		  // Get the selected pkids from the window
+		  Return iSelectedItemPKIDs
+		End Function
 	#tag EndMethod
 
 
 	#tag Property, Flags = &h0
-		iSelectedItemPKID As Int64
+		iSelectedItemPKIDs() As Int64
 	#tag EndProperty
 
 	#tag Property, Flags = &h0
 		sFieldNames() As String
 	#tag EndProperty
 
-	#tag Property, Flags = &h0
-		sHeaders() As String
-	#tag EndProperty
-
 
 #tag EndWindowCode
 
-#tag Events lbItems
+#tag Events contOkCancel
 	#tag Event
-		Sub ExpandRow(Row as integer)
-		  Dim oFolderRowTag as lbRowTag
+		Sub CancelAction()
 		  
-		  // Grab the rowtag of the folder
-		  oFolderRowTag = lbItems.RowTag(row)
+		  Redim iSelectedItemPKIDs(-1)
+		  me.Window.Close
+		End Sub
+	#tag EndEvent
+	#tag Event
+		Sub Action()
+		  dim lbItems as entListbox
 		  
-		  // Loop through each child
-		  For i1 as integer = 0 To oFolderRowTag.aroChildren.Ubound
+		  // Clear the selected pkids
+		  Redim iSelectedItemPKIDs(-1)
+		  lbItems = contItems.lbItems
+		  
+		  If lbItems.ListIndex <> -1 Then
 		    
-		    Dim oCurrRowTag as lbRowTag
-		    oCurrRowTag = oFolderRowTag.aroChildren(i1)
+		    dim SelectedRowtags() as lbRowTag
+		    SelectedRowtags = lbItems.GetSelectedRows
 		    
-		    dim rowvalues() as string
-		    
-		    
-		    for i2 as integer = 0 To oCurrRowTag.vColumnValues.Ubound
+		    For Each oRowTag as lbRowTag In SelectedRowtags()
 		      
-		      rowvalues.Append( str(oCurrRowTag.vColumnValues(i2)))
+		      If oRowTag.pkid <> 0 Then
+		        iSelectedItemPKIDs.Append(oRowTag.pkid)
+		      End If
 		      
 		    Next
 		    
-		    lbItems.AddRow(rowvalues)
-		    lbItems.RowTag(lbItems.LastIndex) = oCurrRowTag
-		    
-		  Next
-		End Sub
-	#tag EndEvent
-	#tag Event
-		Sub DoubleClick()
-		  
-		  If me.ListIndex <> -1 Then
-		    If Not me.RowIsFolder(me.ListIndex) Then
-		      dim oRowTag as lbRowTag
-		      oRowTag = me.RowTag(me.ListIndex)
-		      
-		      iSelectedItemPKID = oRowTag.pkid
-		      
-		      me.Window.Close
-		    End If
 		  End If
+		  
+		  me.Window.Close
 		End Sub
 	#tag EndEvent
 #tag EndEvents
-#tag Events pbCloseWindow
+#tag Events contItems
 	#tag Event
-		Sub Action()
-		  me.Window.Close
+		Sub SetColumnInformation(lbItems as entListbox, ByRef dictCellTypes as Dictionary, ByRef dictFieldNames as Dictionary)
+		  
+		  dim s1,s2() as string
+		  
+		  dim sRowType as string
+		  
+		  // Set Column Count
+		  dim iColCount as integer = 4
+		  lbItems.ColumnCount = iColCount
+		  
+		  // Initialize dictionaries
+		  dictFieldNames = New Dictionary
+		  dictCellTypes = New Dictionary
+		  
+		  // Set header names
+		  s1 = "Name,Category,SubCat,Qty"
+		  s2() = Split(s1,",")
+		  lbItems.Heading = s2()
+		  
+		  
+		  // **********
+		  // Set up the cell types and field names for each type of row
+		  
+		  // Group Folders
+		  sRowType = "GroupFolder"
+		  'field names
+		  dictFieldNames.Value(sRowType) = Array("")
+		  
+		  'cell types
+		  dim iCellTypes() as integer
+		  ReDim iCellTypes(iColCount - 1) 
+		  dictCellTypes.Value(sRowType) = iCellTypes
+		  
+		  
+		  // GrandParent
+		  sRowType = "GrandParent"
+		  'field names
+		  s1 = "item_name,item_category,item_subcategory,item_quantity"
+		  s2() = Split(s1,",")
+		  dictFieldNames.Value(sRowType) = s2
+		  
+		  'cell types
+		  dim iCellTypes2() as integer
+		  ReDim iCellTypes2(iColCount - 1) 
+		  dictCellTypes.Value(sRowType) = iCellTypes2
+		  
+		  
+		  // Linking Type Folder
+		  sRowType = "LinkingTypeFolder"
+		  'field names
+		  dictFieldNames.Value(sRowType) = Array("")
+		  
+		  'cell types
+		  dim iCellTypes3() as integer
+		  ReDim iCellTypes3(iColCount - 1) 
+		  dictCellTypes.Value(sRowType) = iCellTypes3
+		  
+		  
+		  // LinkedItem - Version
+		  sRowType = "LinkedItem - version"
+		  'field names
+		  s1 = "item_name,item_category,item_subcategory,item_quantity"
+		  s2() = Split(s1,",")
+		  dictFieldNames.Value(sRowType) = s2
+		  
+		  'cell types
+		  dim iCellTypes4() as integer = Array(0,0,0,0)
+		  dictCellTypes.Value(sRowType) = iCellTypes4
+		  
+		  
+		  // LinkedItem - Contained
+		  sRowType = "LinkedItem - contained"
+		  'field names
+		  s1 = "item_name,item_category,item_subcategory,tbl_inventory_link.-.quantity"
+		  s2() = Split(s1,",")
+		  dictFieldNames.Value(sRowType) = s2
+		  
+		  'cell types
+		  dim iCellTypes5() as integer = Array(0,0,0,0)
+		  dictCellTypes.Value(sRowType) = iCellTypes5
+		  
+		  // LinkedItem - kit
+		  sRowType = "LinkedItem - kit"
+		  'field names
+		  s1 = "item_name,item_category,item_subcategory,tbl_inventory_link.-.quantity"
+		  s2() = Split(s1,",")
+		  dictFieldNames.Value(sRowType) = s2
+		  
+		  'cell types
+		  dim iCellTypes6() as integer = Array(0,0,0,0)
+		  dictCellTypes.Value(sRowType) = iCellTypes6
+		  
+		  // LinkedItem - package
+		  sRowType = "LinkedItem - package"
+		  'field names
+		  s1 = "item_name,item_category,item_subcategory,tbl_inventory_link.-.quantity"
+		  s2() = Split(s1,",")
+		  dictFieldNames.Value(sRowType) = s2
+		  
+		  'cell types
+		  dim iCellTypes7() as integer = Array(0,0,0,0)
+		  dictCellTypes.Value(sRowType) = iCellTypes7
 		End Sub
+	#tag EndEvent
+	#tag Event
+		Function entDoubleClick() As Boolean
+		  
+		  
+		  // stops the inventory listbox from opening the inventory item in a new tab
+		  Return True
+		End Function
 	#tag EndEvent
 #tag EndEvents
 #tag ViewBehavior
@@ -348,11 +374,6 @@ End
 		Group="ID"
 		Type="String"
 		EditorType="String"
-	#tag EndViewProperty
-	#tag ViewProperty
-		Name="iSelectedItemPKID"
-		Group="Behavior"
-		Type="Int64"
 	#tag EndViewProperty
 	#tag ViewProperty
 		Name="LiveResize"

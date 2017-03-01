@@ -31,7 +31,7 @@ Begin ContainerControl entListbox
       Bold            =   False
       Border          =   True
       ColumnCount     =   1
-      ColumnsResizable=   False
+      ColumnsResizable=   True
       ColumnWidths    =   ""
       DataField       =   ""
       DataSource      =   ""
@@ -41,26 +41,26 @@ Begin ContainerControl entListbox
       EnableDragReorder=   False
       GridLinesHorizontal=   0
       GridLinesVertical=   0
-      HasHeading      =   False
+      HasHeading      =   True
       HeadingIndex    =   -1
       Height          =   398
       HelpTag         =   ""
-      Hierarchical    =   False
+      Hierarchical    =   True
       Index           =   -2147483648
       InitialParent   =   ""
       InitialValue    =   ""
       Italic          =   False
       Left            =   0
-      LockBottom      =   False
+      LockBottom      =   True
       LockedInPosition=   False
       LockLeft        =   True
-      LockRight       =   False
+      LockRight       =   True
       LockTop         =   True
       RequiresSelection=   False
       Scope           =   2
       ScrollbarHorizontal=   False
       ScrollBarVertical=   True
-      SelectionType   =   0
+      SelectionType   =   1
       TabIndex        =   0
       TabPanelIndex   =   0
       TabStop         =   True
@@ -187,6 +187,21 @@ End
 	#tag EndMethod
 
 	#tag Method, Flags = &h0
+		Function CellType(row as integer, col as integer) As integer
+		  
+		  return oListbox.CellType(row,col)
+		End Function
+	#tag EndMethod
+
+	#tag Method, Flags = &h0
+		Sub CellType(row as integer, col as integer, assigns newIntegerValue as integer)
+		  
+		  oListbox.CellType(row,col) = newIntegerValue
+		  
+		End Sub
+	#tag EndMethod
+
+	#tag Method, Flags = &h0
 		Function ColumnCount() As Integer
 		  dim n1 as integer
 		  
@@ -267,6 +282,71 @@ End
 		  Next
 		  
 		  Return -1
+		End Function
+	#tag EndMethod
+
+	#tag Method, Flags = &h0
+		Function GetOpenedFolders() As lbRowTag()
+		  dim OpenFolderRowTags() as lbRowTag
+		  
+		  
+		  For i1 as integer = 0 To oListbox.ListCount - 1
+		    
+		    If oListbox.RowIsFolder(i1) Then
+		      
+		      If oListbox.Expanded(i1) Then
+		        
+		        dim oRowTag as lbRowTag
+		        oRowTag = oListbox.RowTag(i1)
+		        OpenFolderRowTags.Append(oRowTag)
+		        
+		      End If
+		      
+		    End If
+		    
+		  Next
+		  
+		  Return OpenFolderRowTags()
+		End Function
+	#tag EndMethod
+
+	#tag Method, Flags = &h0
+		Function GetSelectedRows() As lbRowTag()
+		  dim oSelectedRows() as lbRowTag
+		  
+		  dim i1 as integer
+		  While i1 < oListbox.ListCount
+		    
+		    // Check if row is selected
+		    If oListbox.Selected(i1) Then
+		      
+		      dim oRowTag as lbRowTag
+		      oRowTag = oListbox.RowTag(i1)
+		      
+		      If oListbox.ListIndex = i1 Then
+		        oSelectedRows.Insert(0,oRowTag)
+		      Else
+		        oSelectedRows.Append(oRowTag)
+		      End If
+		      
+		    End If
+		    
+		    i1 = i1 + 1 
+		    
+		  Wend
+		  
+		  Return oSelectedRows
+		End Function
+	#tag EndMethod
+
+	#tag Method, Flags = &h0
+		Function GetUIState() As lbUIState
+		  dim oUIState as New lbUIState
+		  
+		  oUIState.oOpenFolders = GetOpenedFolders
+		  oUIState.oSelectedRows = GetSelectedRows
+		  
+		  Return oUIState
 		End Function
 	#tag EndMethod
 
@@ -431,6 +511,115 @@ End
 	#tag EndMethod
 
 	#tag Method, Flags = &h0
+		Sub reopenFolders(reopenThese() as lbRowTag)
+		  dim i1 as integer
+		  
+		  While i1 <> oListbox.ListCount 
+		    
+		    If oListbox.RowIsFolder(i1) Then
+		      
+		      // Check if the folder array has naything
+		      If reopenThese.Ubound = -1 Then
+		        ' Nil array
+		        If oListbox.Expanded(i1) Then
+		          oListbox.Expanded(i1) = False
+		        End If
+		        
+		      Else
+		        
+		        // Grab the rowtag
+		        dim oRowTag as lbRowTag
+		        oRowTag = oListbox.RowTag(i1)
+		        
+		        // Loop through all rowtags we want opened
+		        For Each oWantOpen as lbRowTag In reopenThese
+		          
+		          If oRowTag.vColumnValues(0) = oWantOpen.vColumnValues(0) And oRowTag.iFolderLevel = oWantOpen.iFolderLevel Then
+		            oListbox.Expanded(i1) = True
+		            Continue
+		          ElseIf oRowTag.pkid <> 0 And oRowTag.pkid = oWantOpen.pkid And oRowTag.iFolderLevel = oWantOpen.iFolderLevel Then
+		            oListbox.Expanded(i1) = True
+		            Continue
+		          End If
+		          
+		        Next
+		        
+		      End If
+		      
+		    End If
+		    
+		    i1 = i1 + 1
+		    
+		  Wend
+		End Sub
+	#tag EndMethod
+
+	#tag Method, Flags = &h0
+		Sub ResetSelectedRows(oSelectedRows() as lbRowTag)
+		  
+		  dim i1 as integer
+		  While i1 < oListbox.ListCount
+		    
+		    // Grab the rowtag
+		    dim oRowTag as lbRowTag
+		    oRowTag = oListbox.RowTag(i1)
+		    
+		    // Loop through all rowtags we want selected
+		    dim i2 as integer
+		    For Each oWantSelected as lbRowTag In oSelectedRows
+		      
+		      dim bSelected as Boolean
+		      If oRowTag.vColumnValues(0) = oWantSelected.vColumnValues(0) And oRowTag.iFolderLevel = oWantSelected.iFolderLevel Then
+		        bSelected = True
+		      ElseIf oRowTag.pkid <> 0 And oRowTag.pkid = oWantSelected.pkid And oRowTag.iFolderLevel = oWantSelected.iFolderLevel Then
+		        bSelected = True
+		      End If
+		      
+		      If bSelected Then
+		        If i2 = 0 Then
+		          oListbox.ListIndex = (i1)
+		        End If
+		        oListbox.Selected(i1) = bSelected
+		      End If
+		      
+		      i2 = i2 + 1
+		      
+		    Next
+		    
+		    i1 = i1 + 1
+		    
+		  Wend
+		End Sub
+	#tag EndMethod
+
+	#tag Method, Flags = &h0
+		Sub ResetUIState(oUIState as lbUIState)
+		  
+		  
+		  If oUIState <> Nil then
+		    
+		    If oUIState.oOpenFolders <> Nil Then
+		      If oUIState.oOpenFolders.Ubound <> -1 Then
+		        ReopenFolders(oUIState.oOpenFolders)
+		      Else
+		        
+		      End If
+		    End If
+		    
+		    
+		    'If oUIState.oSelectedRows <> Nil Then
+		    If oUIState.oSelectedRows.Ubound <> -1 Then
+		      ResetSelectedRows(oUIState.oSelectedRows)
+		    Else
+		      
+		    End If
+		    
+		  End If
+		  'End If
+		End Sub
+	#tag EndMethod
+
+	#tag Method, Flags = &h0
 		Function RowFromXY(x as integer, y as integer) As integer
 		  Return oListbox.RowFromXY(x,y)
 		End Function
@@ -453,6 +642,7 @@ End
 	#tag Method, Flags = &h0
 		Sub RowisFolder(row as integer, assigns NewValue as Boolean)
 		  
+		  oListbox.RowIsFolder(row) = NewValue
 		End Sub
 	#tag EndMethod
 
@@ -518,6 +708,10 @@ End
 	#tag EndHook
 
 	#tag Hook, Flags = &h0
+		Event CellLostFocus(row as integer, col as integer)
+	#tag EndHook
+
+	#tag Hook, Flags = &h0
 		Event CellTextPaint(g as Graphics, row as integer, column as integer, x as integer, y as integer) As Boolean
 	#tag EndHook
 
@@ -577,6 +771,66 @@ End
 
 #tag EndWindowCode
 
+#tag Events oListbox
+	#tag Event
+		Sub ExpandRow(row As Integer)
+		  ExpandRow(row)
+		End Sub
+	#tag EndEvent
+	#tag Event
+		Sub CellAction(row As Integer, column As Integer)
+		  CellAction(row,column)
+		End Sub
+	#tag EndEvent
+	#tag Event
+		Function CellBackgroundPaint(g As Graphics, row As Integer, column As Integer) As Boolean
+		  Return CellBackgroundPaint(g,row,column)
+		End Function
+	#tag EndEvent
+	#tag Event
+		Function CellTextPaint(g As Graphics, row As Integer, column As Integer, x as Integer, y as Integer) As Boolean
+		  Return CellTextPaint(g,row,column,x,y)
+		End Function
+	#tag EndEvent
+	#tag Event
+		Sub Change()
+		  Change
+		End Sub
+	#tag EndEvent
+	#tag Event
+		Sub DoubleClick()
+		  DoubleClick
+		End Sub
+	#tag EndEvent
+	#tag Event
+		Function ConstructContextualMenu(base as MenuItem, x as Integer, y as Integer) As Boolean
+		  Return entConstructContextualMenu(base,x,y)
+		End Function
+	#tag EndEvent
+	#tag Event
+		Function ContextualMenuAction(hitItem as MenuItem) As Boolean
+		  Return entContextualMenuAction(hitItem)
+		End Function
+	#tag EndEvent
+	#tag Event
+		Function MouseDown(x As Integer, y As Integer) As Boolean
+		  
+		  if IsContextualClick then return true
+		  
+		  Return entMouseDown(x,y)
+		End Function
+	#tag EndEvent
+	#tag Event
+		Sub MouseUp(x As Integer, y As Integer)
+		  entMouseUp(x,y)
+		End Sub
+	#tag EndEvent
+	#tag Event
+		Sub CellLostFocus(row as Integer, column as Integer)
+		  CellLostFocus(row,column)
+		End Sub
+	#tag EndEvent
+#tag EndEvents
 #tag ViewBehavior
 	#tag ViewProperty
 		Name="AcceptFocus"
