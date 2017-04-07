@@ -236,7 +236,7 @@ Inherits DataFile.ActiveRecordBase
 		  
 		  dim dictGrouped as New Dictionary
 		  
-		  If sGroupFields.Ubound > 0 Then
+		  If sGroupFields.Ubound >= 0 Then
 		    
 		    // Grab the current group fieldname
 		    dim sGroup as String

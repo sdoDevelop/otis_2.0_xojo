@@ -143,6 +143,7 @@ Protected Class lbRowTag
 			Name="sSubRowType"
 			Group="Behavior"
 			Type="String"
+			EditorType="MultiLineEditor"
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="Super"

@@ -182,6 +182,234 @@ End
 
 #tag WindowCode
 	#tag Method, Flags = &h0
+		Sub BuildRowTag(ByRef aRowTag as lbRowTag)
+		  
+		  
+		  aRowTag.iCellTypes = dictCellTypes.Value(aRowTag.sRowType)
+		  aRowTag.sFieldNames = dictFieldNames.Value(aRowTag.sRowType)
+		  
+		  If aRowTag.sRowType = "Folder" Then
+		    
+		    aRowTag.isFolder = True
+		    
+		  ElseIf aRowTag.sRowType = "GrandParent" or aRowTag.sRowType = "Child" Then
+		    
+		    dim oEvent as DataFile.tbl_events
+		    oEvent = aRowTag.vtblRecord
+		    
+		    dim jsFieldValues as JSONItem
+		    jsFieldValues = oEvent.GetMyFieldValues(True)
+		    
+		    // extract the keys
+		    dim sKeys() as string
+		    sKeys = jsFieldValues.Names
+		    
+		    // Determine Column Values
+		    For Each sFieldName as string In aRowTag.sFieldNames()
+		      dim sField as string = sFieldName
+		      
+		      // Check if the field name exists as a key in the json item to avoid KeyNotFoundException
+		      dim n1 as integer
+		      n1 = sKeys.IndexOf(sField)
+		      If n1 <> -1 Then
+		        'the key exists
+		        
+		        dim sRawValue as String
+		        sRawValue = jsFieldValues.Value(sField)
+		        
+		        // Format the value
+		        dim sFormattedValue as String
+		        If sField.InStr("_cost") <> 0 Then
+		          sFormattedValue = ConvertCentsString_To_DollarString(sRawValue)
+		        Else 
+		          sFormattedValue = sRawValue
+		        End If
+		        
+		        // Append the formatted value to the rowtag
+		        aRowTag.vColumnValues.Append(sFormattedValue)
+		        
+		      End If
+		      
+		    Next
+		    
+		    
+		  End If
+		  
+		  If aRowTag.sRowType = "GrandParent" Then
+		    
+		    // check for children 
+		    
+		    
+		    
+		    
+		    
+		    
+		    
+		    
+		  End If
+		End Sub
+	#tag EndMethod
+
+	#tag Method, Flags = &h0
+		Function BuildRowTags(dictEvents as Dictionary) As lbRowTag()
+		  dim dictEventsKeys() as Variant
+		  dim oRowTags() as lbRowTag
+		  
+		  
+		  dictEventsKeys() = dictEvents.Keys
+		  
+		  If dictEvents.Count > 0 Then
+		    If dictEventsKeys(0) = "All" Then
+		      ' The events are grouped as one group, no folders needed
+		      
+		      // Loop through each Event and create rowtag for it
+		      dim events() as DataFile.tbl_events
+		      events() = dictEvents.Value(dictEventsKeys(0))
+		      For Each oEvent as DataFile.tbl_events In events()
+		        
+		        dim aRowTag as New lbRowTag
+		        aRowTag.isFolder = False
+		        aRowTag.iFolderLevel = 0
+		        aRowTag.sRowType = "GrandParent"
+		        aRowTag.vtblRecord = oEvent
+		        
+		        BuildRowTag(aRowTag)
+		        
+		        oRowTags.Append(aRowTag)
+		        
+		      Next
+		      
+		    Else
+		      ' The events are grouped
+		      
+		      For Each GroupKey as Variant In dictEventsKeys
+		        
+		        dim FolderRowTag1 as New lbRowTag
+		        FolderRowTag1.isFolder = True
+		        FolderRowTag1.iFolderLevel = 0
+		        FolderRowTag1.sRowType = "Folder"
+		        FolderRowTag1.vColumnValues.Append(str(GroupKey))
+		        BuildRowTag(FolderRowTag1)
+		        
+		        If not dictEvents.Value(GroupKey) IsA Dictionary Then
+		          ' No more subdivisions we are on events now
+		          
+		          dim GroupEvents() as DataFile.tbl_events
+		          GroupEvents = dictEvents.Value(GroupKey)
+		          
+		          // Loop through each event
+		          For Each oEvent as DataFile.tbl_events In GroupEvents
+		            
+		            dim EventRowTag as New lbRowTag
+		            EventRowTag.sRowType = "GrandParent"
+		            EventRowTag.iFolderLevel = 1
+		            EventRowTag.vtblRecord = oEvent
+		            BuildRowTag(EventRowTag)
+		            
+		            FolderRowTag1.aroChildren.Append(EventRowTag)
+		            
+		          Next
+		          
+		        Else
+		          ' this one is subdivided further
+		          
+		          dim dictFolder1Contents as Dictionary
+		          dim dictFolder1Keys() as Variant
+		          dictFolder1Contents = dictEvents.Value(GroupKey)
+		          dictFolder1Keys = dictFolder1Contents.Keys
+		          
+		          For Each GroupKey2 as Variant in dictFolder1Keys()
+		            
+		            dim FolderRowTag2 as New lbRowTag
+		            FolderRowTag2.isFolder = True
+		            FolderRowTag2.iFolderLevel = 1
+		            FolderRowTag2.sRowType = "Folder"
+		            FolderRowTag2.vColumnValues.Append(str(GroupKey2))
+		            BuildRowTag(FolderRowTag2)
+		            
+		            If not dictEvents.Value(GroupKey2) IsA Dictionary Then
+		              ' No more subdivisions we are on events now
+		              
+		              dim GroupEvents2() as DataFile.tbl_events
+		              GroupEvents2 = dictFolder1Contents.Value(GroupKey2)
+		              
+		              For Each oEvent as DataFile.tbl_events in GroupEvents2
+		                
+		                dim EventRowTag as New lbRowTag
+		                EventRowTag.sRowType = "GrandParent"
+		                EventRowTag.iFolderLevel = 2
+		                EventRowTag.vtblRecord = oEvent
+		                BuildRowTag(EventRowTag)
+		                
+		                FolderRowTag2.aroChildren.Append(EventRowTag)
+		                
+		              Next
+		              
+		            Else 'this on is subdivided further
+		              
+		              dim dictFolder2Contenets as Dictionary
+		              dim dictFolder2Keys() as Variant
+		              dictFolder2Contenets = dictFolder1Contents.Value(GroupKey2)
+		              dictFolder2Keys() = dictFolder2Contenets.Keys
+		              
+		              For Each GroupKey3 as Variant in dictFolder2Keys()
+		                
+		                dim FolderRowTag3 as New lbRowTag
+		                FolderRowTag3.isFolder = True
+		                FolderRowTag3.iFolderLevel = 2
+		                FolderRowTag3.sRowType = "Folder"
+		                FolderRowTag3.vColumnValues.Append(str(GroupKey3))
+		                BuildRowTag(FolderRowTag3)
+		                
+		                If not dictEvents.Value(GroupKey3) IsA Dictionary Then
+		                  ' No more subdivisions we are on events now
+		                  
+		                  dim GroupEvents3() as DataFile.tbl_events
+		                  GroupEvents3 = dictFolder2Contenets.Value(GroupKey3)
+		                  
+		                  For  Each oEvent as DataFile.tbl_events in GroupEvents3
+		                    
+		                    dim EventRowTag as new lbRowTag
+		                    EventRowTag.sRowType = "GrandParent"
+		                    EventRowTag.iFolderLevel = 2
+		                    EventRowTag.vtblRecord = oEvent
+		                    BuildRowTag(EventRowTag)
+		                    
+		                    FolderRowTag3.aroChildren.Append(EventRowTag)
+		                    
+		                  Next
+		                  
+		                Else
+		                  ' we dont suppor tthis many folders
+		                  MsgBox("UH-OH")
+		                End If
+		                
+		                FolderRowTag2.aroChildren.Append(FolderRowTag3)
+		                
+		              Next
+		            End If
+		            
+		            FolderRowTag1.aroChildren.Append(FolderRowTag2)
+		            
+		          Next
+		          
+		        End If
+		        
+		        oRowTags.Append(FolderRowTag1)
+		        
+		      Next
+		      
+		    End If
+		    
+		  End If
+		  
+		  Return oRowTags
+		  
+		  
+		End Function
+	#tag EndMethod
+
+	#tag Method, Flags = &h0
 		Sub Constructor(bWithButtons as Boolean = True)
 		  
 		  
@@ -198,18 +426,114 @@ End
 	#tag EndMethod
 
 	#tag Method, Flags = &h0
+		Sub HandleExpandRow(row as integer)
+		  dim lbItems as entListbox = lbEvents
+		  
+		  // Extract the rowtag out of the parent
+		  dim oParentRowTag as lbRowTag
+		  oParentRowTag = lbItems.RowTag(row)
+		  
+		  // Grab all the children
+		  dim aroChildrenRowTag() as lbRowTag
+		  aroChildrenRowTag() = oParentRowTag.aroChildren
+		  
+		  For Each oChild as lbRowTag In aroChildrenRowTag
+		    
+		    // Add a row
+		    lbItems.AddRow("")
+		    
+		    // Load the rowtag into the row
+		    lbItems.RowTag(lbItems.LastIndex) = oChild
+		    
+		    // Load the row
+		    LoadRow(lbItems.LastIndex,oChild)
+		    
+		  Next
+		  
+		  
+		End Sub
+	#tag EndMethod
+
+	#tag Method, Flags = &h0
 		Sub LoadEvents(sConditionpar as String = "")
-		  break
+		  
 		  
 		  // Delete all the rows in the listbox
 		  lbEvents.DeleteAllRows
 		  
 		  // Get the Events from the Database grouped in whichever way the master desires
 		  dim orray as Dictionary
-		  orray = DataFile.tbl_events.listGrouped("")
+		  dim vKeys() as Variant
+		  orray = DataFile.tbl_events.listGrouped("", "event_name", "event_name")
+		  vKeys = orray.Keys
+		  
+		  dim oRowTags() as lbRowTag = BuildRowTags(orray)
+		  
+		  For Each oRowTag as lbRowTag in oRowTags()
+		    
+		    // add a new lb row
+		    lbEvents.AddRow("")
+		    
+		    dim i1 as integer = lbEvents.LastIndex
+		    
+		    LoadRow(i1, oRowTag)
+		    
+		  Next
 		End Sub
 	#tag EndMethod
 
+	#tag Method, Flags = &h0
+		Sub LoadRow(RowIndex as integer, oRowTag as lbRowTag)
+		  dim lbItems as entListbox = lbEvents
+		  
+		  
+		  
+		  dim i1 as integer 
+		  For Each vValue as Variant In oRowTag.vColumnValues
+		    
+		    lbItems.CellType(RowIndex,i1) = oRowTag.iCellTypes(i1)
+		    
+		    Select Case lbItems.CellType(RowIndex,i1)
+		    Case 0 'default
+		      lbItems.Cell(RowIndex,i1) = vValue
+		    Case 1 'text
+		      lbItems.Cell(RowIndex,i1) = vValue
+		    Case 2 'CheckBox
+		      If vValue = True then
+		        lbItems.CellState(RowIndex,i1) = CheckBox.CheckedStates.Checked
+		      Else
+		        lbItems.CellState(RowIndex,i1) = CheckBox.CheckedStates.Unchecked
+		      End If
+		    Case 3 'edit text
+		      lbItems.Cell(RowIndex,i1) = vValue
+		    Else
+		      lbItems.Cell(RowIndex,i1) = vValue
+		    End Select
+		    
+		    i1 = i1 + 1
+		  Next
+		  
+		  lbItems.RowTag(RowIndex) = oRowTag
+		  
+		  // Make it a folder if neccessary
+		  If oRowTag.isFolder Then
+		    lbItems.RowisFolder(RowIndex) = True
+		  End If
+		End Sub
+	#tag EndMethod
+
+
+	#tag Property, Flags = &h0
+		dictCellTypes As Dictionary
+	#tag EndProperty
+
+	#tag Property, Flags = &h0
+		dictFieldNames As Dictionary
+	#tag EndProperty
+
+	#tag Property, Flags = &h0
+		sHeaders() As string
+	#tag EndProperty
 
 	#tag Property, Flags = &h0
 		sSortBy As Integer
@@ -218,11 +542,90 @@ End
 
 #tag EndWindowCode
 
+#tag Events lbEvents
+	#tag Event
+		Sub Open()
+		  
+		  
+		  
+		  If dictFieldNames = Nil And dictCellTypes = Nil Then
+		    
+		    dim s1,s2() as string
+		    
+		    dim sRowType as string
+		    
+		    // Set Column Count
+		    dim iColCount as integer = 4
+		    lbEvents.ColumnCount = iColCount
+		    
+		    // Initialize dictionaries
+		    dictFieldNames = New Dictionary
+		    dictCellTypes = New Dictionary
+		    
+		    // Set header names
+		    s1 = "Name,Start Date,End Date,Account Manager"
+		    s2() = Split(s1,",")
+		    sHeaders = s2
+		    lbEvents.Heading = s2()
+		    
+		    
+		    // **********
+		    // Set up the cell types and field names for each type of row
+		    
+		    // Group Folders
+		    sRowType = "Folder"
+		    'field names
+		    dictFieldNames.Value(sRowType) = Array("")
+		    
+		    'cell types
+		    dim iCellTypes() as integer
+		    ReDim iCellTypes(iColCount - 1) 
+		    dictCellTypes.Value(sRowType) = iCellTypes
+		    
+		    
+		    // GrandParent
+		    sRowType = "GrandParent"
+		    'field names
+		    s1 = "event_name,start_date,end_date,account_manager"
+		    s2() = Split(s1,",")
+		    dictFieldNames.Value(sRowType) = s2
+		    
+		    'cell types
+		    dim iCellTypes2() as integer
+		    ReDim iCellTypes2(iColCount - 1) 
+		    dictCellTypes.Value(sRowType) = iCellTypes2
+		    
+		    
+		    // Linking Type Folder
+		    sRowType = "Child"
+		    'field names
+		    dictFieldNames.Value(sRowType) = Array("event_name,start_date,end_date,account_manager")
+		    
+		    'cell types
+		    dim iCellTypes3() as integer
+		    ReDim iCellTypes3(iColCount - 1) 
+		    dictCellTypes.Value(sRowType) = iCellTypes3
+		    
+		  End If
+		  
+		  
+		  
+		  
+		End Sub
+	#tag EndEvent
+	#tag Event
+		Sub ExpandRow(Row as integer)
+		  
+		  HandleExpandRow(Row)
+		End Sub
+	#tag EndEvent
+#tag EndEvents
 #tag Events pbRefresh
 	#tag Event
 		Sub Action()
 		  
 		  LoadEvents
+		  break
 		End Sub
 	#tag EndEvent
 #tag EndEvents
