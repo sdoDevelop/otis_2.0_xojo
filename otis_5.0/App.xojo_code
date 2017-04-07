@@ -225,7 +225,7 @@ Inherits Application
 		  'At this point everything should be Initialized and ready to go.
 		  'Show your main window
 		  'Example:
-		  App.MainWindow =  new Window1
+		  App.MainWindow =  new winMain_1TabPanel
 		  app.MainWindow.show
 		  
 		End Sub
@@ -264,7 +264,7 @@ Inherits Application
 	#tag EndProperty
 
 	#tag Property, Flags = &h0
-		MainWindow As Window1
+		MainWindow As winMain_1TabPanel
 	#tag EndProperty
 
 	#tag Property, Flags = &h0

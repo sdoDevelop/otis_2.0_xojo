@@ -43,8 +43,8 @@ Protected Module Methods
 		Function CreateNewContainerByName(sContainerName as String) As Variant
 		  
 		  Select Case sContainerName
-		  Case "ContainerInventoryExpanded"
-		    Return New ContainerInventoryExpanded
+		  Case "contInventoryExpanded"
+		    Return New contInventoryExpanded
 		  Else
 		    // No container by this name
 		  End Select

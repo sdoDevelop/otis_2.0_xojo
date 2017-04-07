@@ -1,0 +1,40 @@
+#tag MultiImage
+Image appLogo
+	#tag ImageRepresentation
+		SaveInfo = APHRcwECAQAAAABeQzpcVXNlcnNcU2VhblxXb3J0aFNhdmluZ1xyZXBvc1xvdGlzXzIuMFxvdGlzXzUuMFxpbWFnZV9maWxlc1wyMjBweC1UaGVfVW5iZWxpZXZlYWJsZV9PdGlzLnBuZwMAAAAAAQAEAAAAAAEAAAAAAAAA
+		FullPath = C:\Users\Sean\WorthSaving\repos\otis_2.0\otis_5.0\image_files\220px-The_Unbelieveable_Otis.png
+		PartialPath = image_files\220px-The_Unbelieveable_Otis.png
+		#tag ImageSpecification
+			Comment = 
+			Device = 31
+			HSize = 220.00
+			Orientation = Any
+			Platform = 15
+			PPI = 72
+			VSize = 389.00
+		#tag EndImageSpecification
+	#tag EndImageRepresentation
+	#tag ImageRepresentation
+		#tag ImageSpecification
+			Comment = 
+			Device = 31
+			HSize = 220.00
+			Orientation = Any
+			Platform = 15
+			PPI = 144
+			VSize = 389.00
+		#tag EndImageSpecification
+	#tag EndImageRepresentation
+	#tag ImageRepresentation
+		#tag ImageSpecification
+			Comment = 
+			Device = 31
+			HSize = 220.00
+			Orientation = Any
+			Platform = 15
+			PPI = 216
+			VSize = 389.00
+		#tag EndImageSpecification
+	#tag EndImageRepresentation
+End Image
+#tag EndMultiImage

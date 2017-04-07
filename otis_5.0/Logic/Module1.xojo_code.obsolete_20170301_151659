@@ -1,5 +1,5 @@
 #tag Module
-Protected Module ErrorManagement
+Protected Module Module1
 	#tag Method, Flags = &h0
 		Sub ErrManage(sFacility as string, sMessage as string)
 		  

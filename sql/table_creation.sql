@@ -108,20 +108,6 @@ Create Table tbl_events
         update_comments             text
         );
 
-    -- inventory_kits
-    Create Table tbl_kits_packages
-        (
-        pkid                        integer Primary Key,
-        row_created                 text,
-        row_modified                text,
-        row_username                text,
-        fkinventory_parent          integer,
-        fkinventory_child           integer,
-        kit_item_quantity           integer,
-        is_mandatory                boolean,
-        show_discreetly             boolean
-        );
-
     -- Maintenance Logs
     Create Table tbl_maintenance_Logs
         (

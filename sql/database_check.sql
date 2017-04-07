@@ -94,20 +94,6 @@
         From  tbl_firmware
         ;
 
-    -- inventory_kits
-    Select 
-        pkid                        ,
-        row_created                 ,
-        row_modified                ,
-        row_username                ,
-        fkinventory_parent          ,
-        fkinventory_child           ,
-        kit_item_quantity           ,
-        is_mandatory                ,
-        show_discreetly             
-        From tbl_kits_packages
-        ;
-
     -- inventory_link
     Select 
         pkid                        ,         
@@ -251,4 +237,3 @@
         discount_amount             
         From tbl_departments
         ;
-

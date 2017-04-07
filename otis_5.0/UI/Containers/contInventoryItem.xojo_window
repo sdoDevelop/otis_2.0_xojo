@@ -817,7 +817,7 @@ Begin ContainerControl contInventoryItem
       Visible         =   True
       Width           =   80
    End
-   Begin ContainerInventoryExpanded contInventoryExpanded
+   Begin contInventoryExpanded contInventoryExpanded
       AcceptFocus     =   True
       AcceptTabs      =   True
       AutoDeactivate  =   True
