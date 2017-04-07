@@ -75,6 +75,7 @@ Begin Window winMain_1TabPanel
       Scope           =   0
       TabIndex        =   2
       TabPanelIndex   =   0
+      TabStop         =   True
       Top             =   27
       Value           =   0
       Visible         =   True
@@ -90,6 +91,7 @@ Begin Window winMain_1TabPanel
          HasBackColor    =   False
          Height          =   429
          HelpTag         =   ""
+         Index           =   -2147483648
          InitialParent   =   "tbMainWindow"
          Left            =   7
          LockBottom      =   False

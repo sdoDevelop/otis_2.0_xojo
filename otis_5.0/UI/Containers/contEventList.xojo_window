@@ -523,6 +523,11 @@ End
 	#tag EndMethod
 
 
+	#tag Hook, Flags = &h0
+		Event entDoubleClick() As Boolean
+	#tag EndHook
+
+
 	#tag Property, Flags = &h0
 		dictCellTypes As Dictionary
 	#tag EndProperty
@@ -619,13 +624,64 @@ End
 		  HandleExpandRow(Row)
 		End Sub
 	#tag EndEvent
+	#tag Event
+		Function CellBackgroundPaint(g as Graphics,row as integer, column as integer) As Boolean
+		  
+		  If row Mod 2 = 0 Then
+		    g.ForeColor = UiColors.ListboxRowEven
+		  Else
+		    g.ForeColor = UiColors.ListboxRowOdd
+		  End If
+		  
+		  g.FillRect(0,0,g.Width,g.Height)
+		End Function
+	#tag EndEvent
+	#tag Event
+		Sub DoubleClick()
+		  dim lbItems as entListbox = lbEvents
+		  
+		  
+		  If entDoubleClick Then
+		    
+		    // the event was handled and we do not want to do anything else
+		    
+		  Else
+		    
+		    
+		    dim oRowTag as lbRowTag
+		    
+		    If lbItems.ListIndex <> -1 Then
+		      
+		      oRowTag = lbItems.RowTag(lbItems.ListIndex)
+		      
+		      If oRowTag.vtblRecord <> Nil Then
+		        
+		        // Get the Event name
+		        
+		        If oRowTag.pkid <> 0 Then
+		          
+		          // load up an event container
+		          
+		        End If
+		        
+		      End If
+		      
+		    End If
+		    
+		    
+		  End If
+		End Sub
+	#tag EndEvent
 #tag EndEvents
 #tag Events pbRefresh
 	#tag Event
 		Sub Action()
+		  dim oUIState as lbUIState
 		  
+		  oUIState = lbEvents.GetUIState
 		  LoadEvents
-		  break
+		  lbEvents.ResetUIState(oUIState)
+		  
 		End Sub
 	#tag EndEvent
 #tag EndEvents
