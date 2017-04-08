@@ -14,7 +14,19 @@ Create Table tbl_events
         loadin_date         text,
         loadout_date        text,
         event_details       text,
-        account_manager     text
+        account_manager     text,
+        event_tags          text,
+        hide                boolean
+        );
+
+Create Table tbl_events_link
+        (
+        pkid                integer Primary Key,
+        row_created         text,
+        row_modified        text,
+        row_username        text,
+        fkevents_parent     integer,
+        fkevents_child      integer
         );
 
     -- lineitems_

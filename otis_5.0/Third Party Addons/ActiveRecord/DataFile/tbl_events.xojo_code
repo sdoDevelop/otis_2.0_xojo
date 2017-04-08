@@ -299,6 +299,10 @@ Inherits DataFile.ActiveRecordBase
 
 
 	#tag Property, Flags = &h0
+		bhide As Boolean
+	#tag EndProperty
+
+	#tag Property, Flags = &h0
 		saccount_manager As String
 	#tag EndProperty
 
@@ -316,6 +320,10 @@ Inherits DataFile.ActiveRecordBase
 
 	#tag Property, Flags = &h0
 		sevent_name As String
+	#tag EndProperty
+
+	#tag Property, Flags = &h0
+		sevent_tags As String
 	#tag EndProperty
 
 	#tag Property, Flags = &h0

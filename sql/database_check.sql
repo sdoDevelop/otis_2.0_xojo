@@ -13,8 +13,18 @@
         loadin_date         ,
         loadout_date        ,
         event_details       ,
-        account_manager     
+        account_manager     ,
+        hide
         From tbl_events;
+
+    Select
+        pkid                ,
+        row_created         ,
+        row_modified        ,
+        row_username        ,
+        fkevents_parent     ,
+        fkevents_child      
+        From tbl_events_link;
 
     -- lineitems_
     Select

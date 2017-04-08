@@ -264,6 +264,10 @@ Inherits Application
 	#tag EndProperty
 
 	#tag Property, Flags = &h0
+		GMTOffset As Integer
+	#tag EndProperty
+
+	#tag Property, Flags = &h0
 		MainWindow As winMain_1TabPanel
 	#tag EndProperty
 

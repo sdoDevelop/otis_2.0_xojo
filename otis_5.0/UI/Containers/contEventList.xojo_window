@@ -181,6 +181,23 @@ End
 #tag EndWindow
 
 #tag WindowCode
+	#tag Event
+		Sub Open()
+		  
+		  
+		  If bWithButtons Then
+		    
+		  Else
+		    
+		    pbAddEvent.Enabled = False
+		    pbAddEvent.Visible = False
+		    
+		    
+		  End If
+		End Sub
+	#tag EndEvent
+
+
 	#tag Method, Flags = &h0
 		Sub BuildRowTag(ByRef aRowTag as lbRowTag)
 		  
@@ -196,6 +213,8 @@ End
 		    
 		    dim oEvent as DataFile.tbl_events
 		    oEvent = aRowTag.vtblRecord
+		    
+		    aRowTag.pkid = oEvent.ipkid
 		    
 		    dim jsFieldValues as JSONItem
 		    jsFieldValues = oEvent.GetMyFieldValues(True)
@@ -233,20 +252,59 @@ End
 		    Next
 		    
 		    
+		    
+		    If aRowTag.sRowType = "GrandParent" Then
+		      
+		      // check for children 
+		      dim n1 as integer
+		      if oEvent.ipkid <> 0 Then
+		        n1 = DataFile.tbl_events_link.ListCount("fkevents_parent = " + oEvent.ipkid.ToText )
+		        
+		        If n1 > 0 Then
+		          ' this event has children
+		          
+		          // Get all of the link records related to this event
+		          dim oChildLinkEvents() as DataFile.tbl_events_link
+		          oChildLinkEvents() = DataFile.tbl_events_link.List("fkevents_parent = " + oEvent.ipkid.ToText)
+		          
+		          For Each oChild as DataFile.tbl_events_link In oChildLinkEvents()
+		            
+		            dim ChildRowTag as New lbRowTag
+		            
+		            If oChild.ifkevents_child <> 0 Then
+		              // Get the child event record
+		              dim oChildEvent as DataFile.tbl_events
+		              oChildEvent = DataFile.tbl_events.FindByID(oChild.ifkevents_child)
+		              
+		              dim oChildRowTag as New lbRowTag
+		              ChildRowTag.isFolder = False
+		              ChildRowTag.iFolderLevel = aRowTag.iFolderLevel + 1
+		              ChildRowTag.vLinkTable = oChild
+		              ChildRowTag.vtblRecord = oChildEvent
+		              ChildRowTag.iCellTypes = dictCellTypes.Value("Child")
+		              ChildRowTag.sFieldNames = dictFieldNames.Value("Child")
+		              ChildRowTag.pkid = oChildEvent.ipkid
+		              
+		            End If
+		            
+		            aRowTag.aroChildren.Append(ChildRowTag)
+		            
+		          Next
+		          
+		          
+		        End If
+		        
+		      End If
+		      
+		      
+		      
+		      
+		      
+		      
+		      
+		    End If
 		  End If
 		  
-		  If aRowTag.sRowType = "GrandParent" Then
-		    
-		    // check for children 
-		    
-		    
-		    
-		    
-		    
-		    
-		    
-		    
-		  End If
 		End Sub
 	#tag EndMethod
 
@@ -410,18 +468,9 @@ End
 	#tag EndMethod
 
 	#tag Method, Flags = &h0
-		Sub Constructor(bWithButtons as Boolean = True)
+		Sub Constructor(bButtons as Boolean = True)
+		  bWithButtons = bButtons
 		  
-		  
-		  If bWithButtons Then
-		    
-		  Else
-		    
-		    pbAddEvent.Enabled = False
-		    pbAddEvent.Visible = False
-		    
-		    
-		  End If
 		End Sub
 	#tag EndMethod
 
@@ -522,11 +571,26 @@ End
 		End Sub
 	#tag EndMethod
 
+	#tag Method, Flags = &h0
+		Sub RefreshListbox()
+		  dim oUIState as lbUIState
+		  
+		  oUIState = lbEvents.GetUIState
+		  LoadEvents
+		  lbEvents.ResetUIState(oUIState)
+		  
+		End Sub
+	#tag EndMethod
+
 
 	#tag Hook, Flags = &h0
 		Event entDoubleClick() As Boolean
 	#tag EndHook
 
+
+	#tag Property, Flags = &h0
+		bWithButtons As Boolean
+	#tag EndProperty
 
 	#tag Property, Flags = &h0
 		dictCellTypes As Dictionary
@@ -657,10 +721,23 @@ End
 		      If oRowTag.vtblRecord <> Nil Then
 		        
 		        // Get the Event name
+		        // Get the item name
+		        dim oRecord as DataFile.tbl_events
+		        oRecord = oRowTag.vtblRecord
+		        dim sEventName as string
+		        sEventName = oRecord.sevent_name
 		        
 		        If oRowTag.pkid <> 0 Then
 		          
-		          // load up an event container
+		          // load up a inventory item container
+		          dim conEventInst as New contEvent
+		          dim oTabPanel as PagePanel = app.MainWindow.tbMainWindow
+		          
+		          app.MainWindow.AddTab(sEventName)
+		          
+		          conEventInst.EmbedWithinPanel(oTabPanel,oTabPanel.PanelCount - 1 )
+		          
+		          conEventInst.LoadEvent(oRowTag.pkid)
 		          
 		        End If
 		        
@@ -672,16 +749,168 @@ End
 		  End If
 		End Sub
 	#tag EndEvent
+	#tag Event
+		Function entContextualMenuAction(hitItem as MenuItem) As Boolean
+		  dim lbItems as entListbox = lbEvents
+		  
+		  Select Case hitItem.Text
+		  Case "Open"
+		    
+		    If lbItems.ListIndex <> -1 Then
+		      
+		      // Grab the rowtag
+		      dim oRowTag as lbRowTag
+		      oRowTag = lbItems.RowTag(lbItems.ListIndex)
+		      
+		      // Get the item name
+		      dim oRecord as DataFile.tbl_events
+		      oRecord = oRowTag.vtblRecord
+		      dim sItemName as string
+		      sItemName = oRecord.sevent_name
+		      
+		      If oRowTag.pkid <> 0 Then
+		        
+		        // load up a inventory item container
+		        dim conEventInst as New contEvent
+		        dim oTabPanel as PagePanel = app.MainWindow.tbMainWindow
+		        
+		        app.MainWindow.AddTab(sItemName)
+		        
+		        conEventInst.EmbedWithinPanel(oTabPanel,oTabPanel.PanelCount - 1 )
+		        
+		        conEventInst.LoadEvent(oRowTag.pkid)
+		      End If
+		    End If
+		    
+		  Case "Break Link"
+		    // STILLL INVETORY BASED
+		    Return False
+		    dim oRowTags() as lbRowTag
+		    oRowTags = lbItems.GetSelectedRows
+		    
+		    For  Each oRowTag as lbRowTag In oRowTags()
+		      
+		      
+		      If oRowTag.vLinkTable <> Nil Then
+		        
+		        dim oItemRecord as DataFile.tbl_inventory
+		        oItemRecord = oRowTag.vtblRecord
+		        dim oLinkRecord as DataFile.tbl_inventory_link
+		        oLinkRecord = oRowTag.vLinkTable
+		        
+		        Select Case MsgBox("Are you sure you want to break the link to the item: " + oItemRecord.sitem_name + "?",4)
+		        Case 6 ' yes pressed
+		          
+		        Case 7 ' No pressed
+		          Return False
+		        End Select
+		        
+		        oLinkRecord.Delete
+		        
+		        Methods.UpdateItemQuantity(oLinkRecord.ifkinventory_parent)
+		        
+		        
+		        
+		        RefreshListbox
+		        
+		      End If
+		      
+		    Next
+		    
+		  Case "Delete Item"
+		    
+		    dim oRowTags() as lbRowTag
+		    oRowTags = lbItems.GetSelectedRows
+		    
+		    For  Each oRowTag as lbRowTag In oRowTags()
+		      
+		      If oRowTag.vtblRecord <> Nil Then
+		        
+		        dim oItemRecord as DataFile.tbl_events
+		        oItemRecord = oRowTag.vtblRecord
+		        'dim oLinkRecord as DataFile.tbl_inventory_link
+		        'If oRowTag.vLinkTable <> Nil Then
+		        'oLinkRecord = oRowTag.vLinkTable
+		        'End If
+		        
+		        Select Case MsgBox("Are you sure you want to delete the event: " + oItemRecord.sevent_name + "?",4)
+		        Case 6 ' yes pressed
+		          
+		        Case 7 ' No pressed
+		          Return False
+		        End Select
+		        
+		        oItemRecord.Delete
+		        
+		        'If oLinkRecord <> Nil Then
+		        'oLinkRecord.Delete
+		        
+		        'Methods.UpdateItemQuantity(oLinkRecord.ifkinventory_parent)
+		        'End If
+		        
+		        
+		        
+		        RefreshListbox
+		        
+		      End If
+		      
+		    Next
+		    
+		    
+		    
+		    
+		    
+		    
+		    
+		    
+		    
+		    
+		    
+		    
+		    
+		    
+		    
+		    
+		    
+		    
+		    
+		    
+		    
+		  End Select
+		End Function
+	#tag EndEvent
+	#tag Event
+		Function entConstructContextualMenu(base as menuitem, x as integer, y as integer) As Boolean
+		  dim lbItems as entListbox = lbEvents
+		  
+		  If lbItems.ListIndex <> -1 Then
+		    
+		    // Grab the rowtag
+		    dim oRowTag as lbRowTag
+		    oRowTag = lbItems.RowTag(lbItems.ListIndex)
+		    
+		    If oRowTag.vtblRecord <> Nil Then
+		      
+		      base.Append( New MenuItem("Open") )
+		      base.Append( New MenuItem(MenuItem.TextSeparator) )
+		      
+		      If oRowTag.vLinkTable <> Nil Then
+		        dim mi1 as New MenuItem("Break Link")
+		        mi1.Enabled = False
+		        base.Append( mi1 )
+		      End If
+		      
+		      base.Append( New MenuItem("Delete Item") )
+		      
+		    End If
+		  End If
+		End Function
+	#tag EndEvent
 #tag EndEvents
 #tag Events pbRefresh
 	#tag Event
 		Sub Action()
-		  dim oUIState as lbUIState
-		  
-		  oUIState = lbEvents.GetUIState
-		  LoadEvents
-		  lbEvents.ResetUIState(oUIState)
-		  
+		  RefreshListbox
 		End Sub
 	#tag EndEvent
 #tag EndEvents
@@ -784,6 +1013,11 @@ End
 		Group="Background"
 		Type="Picture"
 		EditorType="Picture"
+	#tag EndViewProperty
+	#tag ViewProperty
+		Name="bWithButtons"
+		Group="Behavior"
+		Type="Boolean"
 	#tag EndViewProperty
 	#tag ViewProperty
 		Name="Enabled"
