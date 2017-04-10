@@ -1,5 +1,5 @@
 #tag Class
-Protected Class tbl_contacts
+Protected Class tbl_phone_numbers
 Inherits DataFile.ActiveRecordBase
 	#tag Method, Flags = &h0
 		Shared Function BaseSQL(bAsCount as Boolean = false) As String
@@ -12,7 +12,7 @@ Inherits DataFile.ActiveRecordBase
 		    ars.Append "count(*) as iCnt"
 		  end if
 		  
-		  ars.Append "From tbl_contacts"
+		  ars.Append "From tbl_phone_numbers"
 		  
 		  Return ars.JoinSQL
 		End Function
@@ -33,11 +33,11 @@ Inherits DataFile.ActiveRecordBase
 	#tag EndMethod
 
 	#tag Method, Flags = &h0
-		Shared Function FindByID(id as Integer) As DataFile.tbl_contacts
+		Shared Function FindByID(id as Integer) As DataFile.tbl_phone_numbers
 		  //Usage:
-		  //dim tbl_contacts as DataFile.tbl_contacts = DataFile.tbl_contacts.FindByID( id )
+		  //dim tbl_phone_numbers as DataFile.tbl_phone_numbers = DataFile.tbl_phone_numbers.FindByID( id )
 		  dim s as string
-		  s = "Select * from tbl_contacts WHERE pkid = " + str(id)
+		  s = "Select * from tbl_phone_numbers WHERE pkid = " + str(id)
 		  
 		  dim rs as RecordSet = DB.SQLSelect(s)
 		  
@@ -47,17 +47,17 @@ Inherits DataFile.ActiveRecordBase
 		  end
 		  if rs.RecordCount = 0 then return nil
 		  
-		  dim tbl_contacts as new DataFile.tbl_contacts
-		  tbl_contacts.ReadRecord(rs)
-		  return tbl_contacts
+		  dim tbl_phone_numbers as new DataFile.tbl_phone_numbers
+		  tbl_phone_numbers.ReadRecord(rs)
+		  return tbl_phone_numbers
 		  
 		End Function
 	#tag EndMethod
 
 	#tag Method, Flags = &h0
-		Shared Function List(stmt as PreparedSQLStatement) As DataFile.tbl_contacts()
+		Shared Function List(stmt as PreparedSQLStatement) As DataFile.tbl_phone_numbers()
 		  //Note: You should use this method if your query contains user entered data. Using this method will help prevent SQL injection attacks
-		  dim aro() as DataFile.tbl_contacts
+		  dim aro() as DataFile.tbl_phone_numbers
 		  
 		  dim rs as recordset = stmt.SQLSelect
 		  If DB.error then
@@ -67,7 +67,7 @@ Inherits DataFile.ActiveRecordBase
 		  end
 		  
 		  while rs.eof = false
-		    dim oRecord as new DataFile.tbl_contacts
+		    dim oRecord as new DataFile.tbl_phone_numbers
 		    oRecord.ReadRecord(rs)
 		    aro.Append oRecord
 		    rs.MoveNext
@@ -78,14 +78,14 @@ Inherits DataFile.ActiveRecordBase
 	#tag EndMethod
 
 	#tag Method, Flags = &h0
-		Shared Function List(sCriteria as string = "", sOrder as string = "", iOffset as Integer = -1) As DataFile.tbl_contacts()
+		Shared Function List(sCriteria as string = "", sOrder as string = "", iOffset as Integer = -1) As DataFile.tbl_phone_numbers()
 		  //Note: You should not use this method if your query contains user entered data.
 		  //Using this method with user entered data could expose you to SQL injection attacks.
-		  dim aro() as DataFile.tbl_contacts
+		  dim aro() as DataFile.tbl_phone_numbers
 		  dim ars() as string
 		  
 		  
-		  ars.append DataFile.tbl_contacts.BaseSQL
+		  ars.append DataFile.tbl_phone_numbers.BaseSQL
 		  if sCriteria.Trim <> "" then
 		    ars.append "WHERE " + sCriteria
 		  end if
@@ -109,7 +109,7 @@ Inherits DataFile.ActiveRecordBase
 		  end
 		  
 		  do until rs.EOF
-		    dim oRecord as new DataFile.tbl_contacts
+		    dim oRecord as new DataFile.tbl_phone_numbers
 		    oRecord.ReadRecord(rs)
 		    
 		    aro.Append(oRecord)
@@ -145,7 +145,7 @@ Inherits DataFile.ActiveRecordBase
 		  dim ars() as string
 		  
 		  
-		  ars.append DataFile.tbl_contacts.BaseSQL(True)
+		  ars.append DataFile.tbl_phone_numbers.BaseSQL(True)
 		  if sCriteria<>"" then
 		    ars.append "WHERE " + sCriteria
 		  end if
@@ -164,51 +164,67 @@ Inherits DataFile.ActiveRecordBase
 
 
 	#tag Property, Flags = &h0
-		saddress_city As String
+		bprimary_phone As Boolean
 	#tag EndProperty
 
 	#tag Property, Flags = &h0
-		saddress_country As String
+		ifkcontacts As Int64
 	#tag EndProperty
 
 	#tag Property, Flags = &h0
-		saddress_line1 As String
+		ifkVenues As Int64
 	#tag EndProperty
 
 	#tag Property, Flags = &h0
-		saddress_line2 As String
+		snumber_type As String
 	#tag EndProperty
 
 	#tag Property, Flags = &h0
-		saddress_state As String
-	#tag EndProperty
-
-	#tag Property, Flags = &h0
-		saddress_zip As String
-	#tag EndProperty
-
-	#tag Property, Flags = &h0
-		scontact_company As String
-	#tag EndProperty
-
-	#tag Property, Flags = &h0
-		sfkconven As String
-	#tag EndProperty
-
-	#tag Property, Flags = &h0
-		sjob_title As String
-	#tag EndProperty
-
-	#tag Property, Flags = &h0
-		sname_first As String
-	#tag EndProperty
-
-	#tag Property, Flags = &h0
-		sname_last As String
+		sphone_number As String
 	#tag EndProperty
 
 
 	#tag ViewBehavior
+		#tag ViewProperty
+			Name="idiscount_amount"
+			Group="Behavior"
+			Type="Integer"
+		#tag EndViewProperty
+		#tag ViewProperty
+			Name="idiscount_percent"
+			Group="Behavior"
+			Type="Integer"
+		#tag EndViewProperty
+		#tag ViewProperty
+			Name="idiscount_total"
+			Group="Behavior"
+			Type="Integer"
+		#tag EndViewProperty
+		#tag ViewProperty
+			Name="ieipl_balance"
+			Group="Behavior"
+			Type="Integer"
+		#tag EndViewProperty
+		#tag ViewProperty
+			Name="ieipl_grand_total"
+			Group="Behavior"
+			Type="Integer"
+		#tag EndViewProperty
+		#tag ViewProperty
+			Name="ieipl_number"
+			Group="Behavior"
+			Type="Integer"
+		#tag EndViewProperty
+		#tag ViewProperty
+			Name="ieipl_subtotal"
+			Group="Behavior"
+			Type="Integer"
+		#tag EndViewProperty
+		#tag ViewProperty
+			Name="ieipl_total_paid"
+			Group="Behavior"
+			Type="Integer"
+		#tag EndViewProperty
 		#tag ViewProperty
 			Name="Index"
 			Visible=true
@@ -220,6 +236,11 @@ Inherits DataFile.ActiveRecordBase
 			Name="ipkid"
 			Group="Behavior"
 			Type="Int64"
+		#tag EndViewProperty
+		#tag ViewProperty
+			Name="itax_total"
+			Group="Behavior"
+			Type="Integer"
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="LastInsertID"
@@ -240,79 +261,19 @@ Inherits DataFile.ActiveRecordBase
 			Type="String"
 		#tag EndViewProperty
 		#tag ViewProperty
-			Name="saddress_city"
+			Name="sdue_date"
 			Group="Behavior"
 			Type="String"
 			EditorType="MultiLineEditor"
 		#tag EndViewProperty
 		#tag ViewProperty
-			Name="saddress_country"
+			Name="seipl_type"
 			Group="Behavior"
 			Type="String"
 			EditorType="MultiLineEditor"
 		#tag EndViewProperty
 		#tag ViewProperty
-			Name="saddress_line1"
-			Group="Behavior"
-			Type="String"
-			EditorType="MultiLineEditor"
-		#tag EndViewProperty
-		#tag ViewProperty
-			Name="saddress_line2"
-			Group="Behavior"
-			Type="String"
-			EditorType="MultiLineEditor"
-		#tag EndViewProperty
-		#tag ViewProperty
-			Name="saddress_state"
-			Group="Behavior"
-			Type="String"
-			EditorType="MultiLineEditor"
-		#tag EndViewProperty
-		#tag ViewProperty
-			Name="saddress_zip"
-			Group="Behavior"
-			Type="String"
-			EditorType="MultiLineEditor"
-		#tag EndViewProperty
-		#tag ViewProperty
-			Name="scontact_company"
-			Group="Behavior"
-			Type="String"
-			EditorType="MultiLineEditor"
-		#tag EndViewProperty
-		#tag ViewProperty
-			Name="scontact_email"
-			Group="Behavior"
-			Type="String"
-			EditorType="MultiLineEditor"
-		#tag EndViewProperty
-		#tag ViewProperty
-			Name="sfkconven"
-			Group="Behavior"
-			Type="String"
-			EditorType="MultiLineEditor"
-		#tag EndViewProperty
-		#tag ViewProperty
-			Name="sjob_title"
-			Group="Behavior"
-			Type="String"
-			EditorType="MultiLineEditor"
-		#tag EndViewProperty
-		#tag ViewProperty
-			Name="sname_first"
-			Group="Behavior"
-			Type="String"
-			EditorType="MultiLineEditor"
-		#tag EndViewProperty
-		#tag ViewProperty
-			Name="sname_last"
-			Group="Behavior"
-			Type="String"
-			EditorType="MultiLineEditor"
-		#tag EndViewProperty
-		#tag ViewProperty
-			Name="sphone_number"
+			Name="sfkevents"
 			Group="Behavior"
 			Type="String"
 			EditorType="MultiLineEditor"
@@ -331,6 +292,12 @@ Inherits DataFile.ActiveRecordBase
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="srow_username"
+			Group="Behavior"
+			Type="String"
+			EditorType="MultiLineEditor"
+		#tag EndViewProperty
+		#tag ViewProperty
+			Name="sshipping_method"
 			Group="Behavior"
 			Type="String"
 			EditorType="MultiLineEditor"

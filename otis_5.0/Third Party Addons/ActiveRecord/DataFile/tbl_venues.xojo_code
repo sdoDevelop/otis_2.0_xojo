@@ -192,15 +192,7 @@ Inherits DataFile.ActiveRecordBase
 	#tag EndProperty
 
 	#tag Property, Flags = &h0
-		sphone_number As String
-	#tag EndProperty
-
-	#tag Property, Flags = &h0
 		svenue_company As String
-	#tag EndProperty
-
-	#tag Property, Flags = &h0
-		svenue_email As String
 	#tag EndProperty
 
 	#tag Property, Flags = &h0

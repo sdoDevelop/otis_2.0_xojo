@@ -199,8 +199,6 @@
         name_last                   ,
         job_title                   ,
         contact_company             ,
-        contact_email               ,
-        phone_number                ,
         address_line1               ,
         address_line2               ,
         address_city                ,
@@ -210,6 +208,31 @@
         From tbl_contacts
         ;
 
+    Select
+        pkid                        ,
+        row_created                 ,
+        row_modified                ,
+        row_username                ,
+        fkcontacts                  ,
+        fkvenues                    ,
+        phone_number                ,
+        number_type                 ,
+        primary                     
+        From tbl_phone_numbers
+        ;
+
+    Select
+        pkid                        ,
+        row_created                 ,
+        row_modified                ,
+        row_username                ,
+        fkcontacts                  ,
+        fkvenues                    ,
+        email_address               ,
+        email_type                  ,
+        primary                     
+        From tbl_email_addresses
+        ;
 
     -- venues
     Select
@@ -221,8 +244,6 @@
         venue_name                  ,
         venue_type                  ,
         venue_company               ,
-        venue_email                 ,
-        phone_number                ,
         address_line1               ,
         address_line2               ,
         address_city                ,

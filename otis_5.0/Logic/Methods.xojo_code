@@ -51,6 +51,15 @@ Protected Module Methods
 		End Function
 	#tag EndMethod
 
+	#tag Method, Flags = &h0
+		Function CreateZeroOffsetDate() As Date
+		  
+		  dim d1 as new date
+		  d1.GMTOffset = 0
+		  Return d1
+		End Function
+	#tag EndMethod
+
 	#tag Method, Flags = &h1
 		Protected Function GetNewPKID() As Int64
 		  Dim d1 as new date

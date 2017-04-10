@@ -204,14 +204,38 @@ Create Table tbl_events_link
         name_last                   text,
         job_title                   text,
         contact_company             text,
-        contact_email               text,
-        phone_number                text,
         address_line1               text,
         address_line2               text,
         address_city                text,
         address_state               text,
         address_zip                 text,
         address_country             text
+        );
+
+    CREATE TABLE tbl_phone_numbers
+        (
+        pkid                        integer Primary Key,
+        row_created                 text,
+        row_modified                text,
+        row_username                text,
+        fkcontacts                  integer,
+        fkvenues                    integer,
+        phone_number                text,
+        number_type                 text,
+        primary                     boolean
+        );
+
+    CREATE TABLE tbl_email_addresses
+        (
+        pkid                        integer Primary Key,
+        row_created                 text,
+        row_modified                text,
+        row_username                text,
+        fkcontacts                  integer,
+        fkvenues                    integer,
+        email_address               text,
+        email_type                  text,
+        primary                     boolean
         );
 
 
@@ -226,8 +250,6 @@ Create Table tbl_events_link
         venue_name                  text,
         venue_type                  text,
         venue_company               text,
-        venue_email                 text,
-        phone_number                text,
         address_line1               text,
         address_line2               text,
         address_city                text,

@@ -6,21 +6,23 @@ Inherits DataFile.ActiveRecordBase
 		  
 		  // Grab all the link children of this record from the database
 		  dim oLinkChildren() as DataFile.tbl_inventory_link
-		  oLinkChildren() = DataFile.tbl_inventory_link.List 
+		  oLinkChildren() = DataFile.tbl_inventory_link.List("fkinventory_parent = " + self.ipkid.ToText + " Or fkinventory_child = " + self.ipkid.ToText)
 		  
 		  
 		  
 		  For Each oLinkChild as DataFile.tbl_inventory_link In oLinkChildren
 		    
 		    // Grab the inventory item
-		    dim oItem as DataFile.tbl_inventory
-		    oItem = DataFile.tbl_inventory.FindByID(oLinkChild.ifkinventory_child)
+		    'dim oItem as DataFile.tbl_inventory
+		    'oItem = DataFile.tbl_inventory.FindByID(oLinkChild.ifkinventory_child)
 		    
 		    
 		    
 		    oLinkChild.Delete
 		    
 		  Next
+		  
+		  
 		End Sub
 	#tag EndEvent
 
@@ -419,12 +421,22 @@ Inherits DataFile.ActiveRecordBase
 			Type="Boolean"
 		#tag EndViewProperty
 		#tag ViewProperty
+			Name="iitem_purchase_price_cost"
+			Group="Behavior"
+			Type="Integer"
+		#tag EndViewProperty
+		#tag ViewProperty
 			Name="iitem_quantity"
 			Group="Behavior"
 			Type="Integer"
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="iitem_rental_price_cost"
+			Group="Behavior"
+			Type="Integer"
+		#tag EndViewProperty
+		#tag ViewProperty
+			Name="iitem_sale_price_cost"
 			Group="Behavior"
 			Type="Integer"
 		#tag EndViewProperty

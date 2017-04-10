@@ -1,6 +1,32 @@
 #tag Class
 Protected Class tbl_events
 Inherits DataFile.ActiveRecordBase
+	#tag Event
+		Sub PostDelete()
+		  
+		  // Grab all the link children of this record from the database
+		  dim oLinkChildren() as DataFile.tbl_events_link
+		  oLinkChildren() = DataFile.tbl_events_link.List("fkevents_parent = " + self.ipkid.ToText + " Or fkevents_child = " + self.ipkid.ToText)
+		  
+		  
+		  
+		  For Each oLinkChild as DataFile.tbl_events_link In oLinkChildren
+		    
+		    // Grab the inventory item
+		    'dim oItem as DataFile.tbl_events
+		    'oItem = DataFile.tbl_events.FindByID(oLinkChild.ifkinventory_child)
+		    
+		    
+		    
+		    oLinkChild.Delete
+		    
+		  Next
+		  
+		  
+		End Sub
+	#tag EndEvent
+
+
 	#tag Method, Flags = &h0
 		Shared Function BaseSQL(bAsCount as Boolean = false) As String
 		  dim ars() as string
@@ -353,6 +379,11 @@ Inherits DataFile.ActiveRecordBase
 
 	#tag ViewBehavior
 		#tag ViewProperty
+			Name="bhide"
+			Group="Behavior"
+			Type="Boolean"
+		#tag EndViewProperty
+		#tag ViewProperty
 			Name="Index"
 			Visible=true
 			Group="ID"
@@ -411,6 +442,11 @@ Inherits DataFile.ActiveRecordBase
 			Group="Behavior"
 			Type="String"
 			EditorType="MultiLineEditor"
+		#tag EndViewProperty
+		#tag ViewProperty
+			Name="sevent_tags"
+			Group="Behavior"
+			Type="String"
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="sloadin_date"

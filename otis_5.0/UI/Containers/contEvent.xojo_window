@@ -9,7 +9,7 @@ Begin ContainerControl contEvent
    Enabled         =   True
    EraseBackground =   True
    HasBackColor    =   False
-   Height          =   506
+   Height          =   518
    HelpTag         =   ""
    InitialParent   =   ""
    Left            =   0
@@ -205,7 +205,7 @@ Begin ContainerControl contEvent
       TextFont        =   "System"
       TextSize        =   0.0
       TextUnit        =   0
-      Top             =   73
+      Top             =   97
       Transparent     =   True
       Underline       =   False
       Visible         =   True
@@ -239,7 +239,7 @@ Begin ContainerControl contEvent
       TextFont        =   "System"
       TextSize        =   0.0
       TextUnit        =   0
-      Top             =   100
+      Top             =   124
       Transparent     =   True
       Underline       =   False
       Visible         =   True
@@ -273,7 +273,7 @@ Begin ContainerControl contEvent
       TextFont        =   "System"
       TextSize        =   0.0
       TextUnit        =   0
-      Top             =   126
+      Top             =   150
       Transparent     =   True
       Underline       =   False
       Visible         =   True
@@ -307,7 +307,7 @@ Begin ContainerControl contEvent
       TextFont        =   "System"
       TextSize        =   0.0
       TextUnit        =   0
-      Top             =   153
+      Top             =   177
       Transparent     =   True
       Underline       =   False
       Visible         =   True
@@ -341,7 +341,7 @@ Begin ContainerControl contEvent
       TextFont        =   "System"
       TextSize        =   0.0
       TextUnit        =   0
-      Top             =   179
+      Top             =   203
       Transparent     =   True
       Underline       =   False
       Visible         =   True
@@ -355,7 +355,7 @@ Begin ContainerControl contEvent
       Hours           =   0
       Index           =   -2147483648
       InitialParent   =   ""
-      Left            =   105
+      Left            =   127
       LinuxFontBold   =   False
       LinuxTextFont   =   "System"
       LinuxTextSize   =   0.0
@@ -376,9 +376,9 @@ Begin ContainerControl contEvent
       TabPanelIndex   =   0
       TabStop         =   True
       TimeFormat      =   0
-      Top             =   73
+      Top             =   97
       Visible         =   True
-      Width           =   100
+      Width           =   78
       WinFontBold     =   False
       WinTextFont     =   "System"
       WinTextSize     =   0.0
@@ -396,7 +396,7 @@ Begin ContainerControl contEvent
       HelpTag         =   ""
       Index           =   -2147483648
       InitialParent   =   ""
-      Left            =   208
+      Left            =   217
       LinuxDropDownMode=   True
       LinuxFontBold   =   False
       LinuxTextFont   =   "System"
@@ -416,7 +416,7 @@ Begin ContainerControl contEvent
       TabIndex        =   17
       TabPanelIndex   =   0
       TabStop         =   True
-      Top             =   73
+      Top             =   97
       Visible         =   True
       Width           =   115
       WinFontBold     =   False
@@ -433,7 +433,7 @@ Begin ContainerControl contEvent
       Hours           =   0
       Index           =   -2147483648
       InitialParent   =   ""
-      Left            =   105
+      Left            =   127
       LinuxFontBold   =   False
       LinuxTextFont   =   "System"
       LinuxTextSize   =   0.0
@@ -454,9 +454,9 @@ Begin ContainerControl contEvent
       TabPanelIndex   =   0
       TabStop         =   True
       TimeFormat      =   0
-      Top             =   100
+      Top             =   123
       Visible         =   True
-      Width           =   100
+      Width           =   78
       WinFontBold     =   False
       WinTextFont     =   "System"
       WinTextSize     =   0.0
@@ -474,7 +474,7 @@ Begin ContainerControl contEvent
       HelpTag         =   ""
       Index           =   -2147483648
       InitialParent   =   ""
-      Left            =   208
+      Left            =   217
       LinuxDropDownMode=   True
       LinuxFontBold   =   False
       LinuxTextFont   =   "System"
@@ -494,7 +494,7 @@ Begin ContainerControl contEvent
       TabIndex        =   19
       TabPanelIndex   =   0
       TabStop         =   True
-      Top             =   100
+      Top             =   124
       Visible         =   True
       Width           =   115
       WinFontBold     =   False
@@ -511,7 +511,7 @@ Begin ContainerControl contEvent
       Hours           =   0
       Index           =   -2147483648
       InitialParent   =   ""
-      Left            =   105
+      Left            =   127
       LinuxFontBold   =   False
       LinuxTextFont   =   "System"
       LinuxTextSize   =   0.0
@@ -532,9 +532,9 @@ Begin ContainerControl contEvent
       TabPanelIndex   =   0
       TabStop         =   True
       TimeFormat      =   0
-      Top             =   126
+      Top             =   149
       Visible         =   True
-      Width           =   100
+      Width           =   78
       WinFontBold     =   False
       WinTextFont     =   "System"
       WinTextSize     =   0.0
@@ -552,7 +552,7 @@ Begin ContainerControl contEvent
       HelpTag         =   ""
       Index           =   -2147483648
       InitialParent   =   ""
-      Left            =   208
+      Left            =   217
       LinuxDropDownMode=   True
       LinuxFontBold   =   False
       LinuxTextFont   =   "System"
@@ -572,7 +572,7 @@ Begin ContainerControl contEvent
       TabIndex        =   21
       TabPanelIndex   =   0
       TabStop         =   True
-      Top             =   126
+      Top             =   150
       Visible         =   True
       Width           =   115
       WinFontBold     =   False
@@ -589,7 +589,7 @@ Begin ContainerControl contEvent
       Hours           =   0
       Index           =   -2147483648
       InitialParent   =   ""
-      Left            =   105
+      Left            =   127
       LinuxFontBold   =   False
       LinuxTextFont   =   "System"
       LinuxTextSize   =   0.0
@@ -610,9 +610,9 @@ Begin ContainerControl contEvent
       TabPanelIndex   =   0
       TabStop         =   True
       TimeFormat      =   0
-      Top             =   153
+      Top             =   176
       Visible         =   True
-      Width           =   100
+      Width           =   78
       WinFontBold     =   False
       WinTextFont     =   "System"
       WinTextSize     =   0.0
@@ -630,7 +630,7 @@ Begin ContainerControl contEvent
       HelpTag         =   ""
       Index           =   -2147483648
       InitialParent   =   ""
-      Left            =   208
+      Left            =   217
       LinuxDropDownMode=   True
       LinuxFontBold   =   False
       LinuxTextFont   =   "System"
@@ -650,7 +650,7 @@ Begin ContainerControl contEvent
       TabIndex        =   23
       TabPanelIndex   =   0
       TabStop         =   True
-      Top             =   153
+      Top             =   177
       Visible         =   True
       Width           =   115
       WinFontBold     =   False
@@ -700,7 +700,7 @@ Begin ContainerControl contEvent
       TextFont        =   "System"
       TextSize        =   0.0
       TextUnit        =   0
-      Top             =   180
+      Top             =   204
       Underline       =   False
       UseFocusRing    =   True
       Visible         =   True
@@ -712,24 +712,30 @@ Begin ContainerControl contEvent
       AutoDeactivate  =   True
       BackColor       =   &c40004000
       Backdrop        =   0
+      bJustChildren   =   False
+      bWithButtons    =   False
       Enabled         =   True
       EraseBackground =   True
       HasBackColor    =   False
       Height          =   182
       HelpTag         =   ""
       InitialParent   =   ""
+      iParentID       =   ""
+      LastSearchValue =   ""
       Left            =   102
       LockBottom      =   True
       LockedInPosition=   False
       LockLeft        =   True
       LockRight       =   False
       LockTop         =   False
+      sCondition      =   ""
       Scope           =   0
+      sGroupByFields  =   """""event_name"""""
       sSortBy         =   0
       TabIndex        =   25
       TabPanelIndex   =   0
       TabStop         =   True
-      Top             =   285
+      Top             =   313
       Transparent     =   True
       UseFocusRing    =   False
       Visible         =   True
@@ -763,7 +769,7 @@ Begin ContainerControl contEvent
       TextFont        =   "System"
       TextSize        =   0.0
       TextUnit        =   0
-      Top             =   289
+      Top             =   317
       Transparent     =   True
       Underline       =   False
       Visible         =   True
@@ -797,7 +803,7 @@ Begin ContainerControl contEvent
       TextFont        =   "System"
       TextSize        =   0.0
       TextUnit        =   0
-      Top             =   466
+      Top             =   494
       Transparent     =   True
       Underline       =   False
       Visible         =   True
@@ -829,7 +835,7 @@ Begin ContainerControl contEvent
       TextFont        =   "System"
       TextSize        =   0.0
       TextUnit        =   0
-      Top             =   465
+      Top             =   493
       Underline       =   False
       Visible         =   True
       Width           =   82
@@ -870,18 +876,212 @@ Begin ContainerControl contEvent
       TextFont        =   "System"
       TextSize        =   0.0
       TextUnit        =   0
-      Top             =   465
+      Top             =   493
       Underline       =   False
       UseFocusRing    =   True
       Visible         =   True
       Width           =   51
+   End
+   Begin Label labHide
+      AutoDeactivate  =   True
+      Bold            =   False
+      DataField       =   ""
+      DataSource      =   ""
+      Enabled         =   True
+      Height          =   20
+      HelpTag         =   ""
+      Index           =   -2147483648
+      InitialParent   =   ""
+      Italic          =   False
+      Left            =   0
+      LockBottom      =   False
+      LockedInPosition=   False
+      LockLeft        =   True
+      LockRight       =   False
+      LockTop         =   True
+      Multiline       =   False
+      Scope           =   0
+      Selectable      =   False
+      TabIndex        =   30
+      TabPanelIndex   =   0
+      Text            =   "Hide"
+      TextAlign       =   2
+      TextColor       =   &c00000000
+      TextFont        =   "System"
+      TextSize        =   0.0
+      TextUnit        =   0
+      Top             =   72
+      Transparent     =   True
+      Underline       =   False
+      Visible         =   True
+      Width           =   100
+   End
+   Begin CheckBox chbHide
+      AutoDeactivate  =   True
+      Bold            =   False
+      Caption         =   ""
+      DataField       =   ""
+      DataSource      =   ""
+      Enabled         =   True
+      Height          =   20
+      HelpTag         =   ""
+      Index           =   -2147483648
+      InitialParent   =   ""
+      Italic          =   False
+      Left            =   105
+      LockBottom      =   False
+      LockedInPosition=   False
+      LockLeft        =   True
+      LockRight       =   False
+      LockTop         =   True
+      Scope           =   0
+      State           =   0
+      TabIndex        =   31
+      TabPanelIndex   =   0
+      TabStop         =   True
+      TextFont        =   "System"
+      TextSize        =   0.0
+      TextUnit        =   0
+      Top             =   72
+      Underline       =   False
+      Value           =   False
+      Visible         =   True
+      Width           =   100
+   End
+   Begin CheckBox chbStart
+      AutoDeactivate  =   True
+      Bold            =   False
+      Caption         =   ""
+      DataField       =   ""
+      DataSource      =   ""
+      Enabled         =   True
+      Height          =   20
+      HelpTag         =   ""
+      Index           =   -2147483648
+      InitialParent   =   ""
+      Italic          =   False
+      Left            =   105
+      LockBottom      =   False
+      LockedInPosition=   False
+      LockLeft        =   True
+      LockRight       =   False
+      LockTop         =   True
+      Scope           =   0
+      State           =   0
+      TabIndex        =   32
+      TabPanelIndex   =   0
+      TabStop         =   True
+      TextFont        =   "System"
+      TextSize        =   0.0
+      TextUnit        =   0
+      Top             =   97
+      Underline       =   False
+      Value           =   False
+      Visible         =   True
+      Width           =   17
+   End
+   Begin CheckBox chbEnd
+      AutoDeactivate  =   True
+      Bold            =   False
+      Caption         =   ""
+      DataField       =   ""
+      DataSource      =   ""
+      Enabled         =   True
+      Height          =   20
+      HelpTag         =   ""
+      Index           =   -2147483648
+      InitialParent   =   ""
+      Italic          =   False
+      Left            =   105
+      LockBottom      =   False
+      LockedInPosition=   False
+      LockLeft        =   True
+      LockRight       =   False
+      LockTop         =   True
+      Scope           =   0
+      State           =   0
+      TabIndex        =   33
+      TabPanelIndex   =   0
+      TabStop         =   True
+      TextFont        =   "System"
+      TextSize        =   0.0
+      TextUnit        =   0
+      Top             =   124
+      Underline       =   False
+      Value           =   False
+      Visible         =   True
+      Width           =   17
+   End
+   Begin CheckBox chbLoadIn
+      AutoDeactivate  =   True
+      Bold            =   False
+      Caption         =   ""
+      DataField       =   ""
+      DataSource      =   ""
+      Enabled         =   True
+      Height          =   20
+      HelpTag         =   ""
+      Index           =   -2147483648
+      InitialParent   =   ""
+      Italic          =   False
+      Left            =   105
+      LockBottom      =   False
+      LockedInPosition=   False
+      LockLeft        =   True
+      LockRight       =   False
+      LockTop         =   True
+      Scope           =   0
+      State           =   0
+      TabIndex        =   34
+      TabPanelIndex   =   0
+      TabStop         =   True
+      TextFont        =   "System"
+      TextSize        =   0.0
+      TextUnit        =   0
+      Top             =   150
+      Underline       =   False
+      Value           =   False
+      Visible         =   True
+      Width           =   17
+   End
+   Begin CheckBox chbLoadOut
+      AutoDeactivate  =   True
+      Bold            =   False
+      Caption         =   ""
+      DataField       =   ""
+      DataSource      =   ""
+      Enabled         =   True
+      Height          =   20
+      HelpTag         =   ""
+      Index           =   -2147483648
+      InitialParent   =   ""
+      Italic          =   False
+      Left            =   105
+      LockBottom      =   False
+      LockedInPosition=   False
+      LockLeft        =   True
+      LockRight       =   False
+      LockTop         =   True
+      Scope           =   0
+      State           =   0
+      TabIndex        =   35
+      TabPanelIndex   =   0
+      TabStop         =   True
+      TextFont        =   "System"
+      TextSize        =   0.0
+      TextUnit        =   0
+      Top             =   177
+      Underline       =   False
+      Value           =   False
+      Visible         =   True
+      Width           =   17
    End
 End
 #tag EndWindow
 
 #tag WindowCode
 	#tag Method, Flags = &h0
-		Sub AddLinkedItem(LinkType as string,CreateNewOrUseExisting as string = "")
+		Sub AddLinkedEvent(CreateNewOrUseExisting as string = "")
 		  dim sResult as String
 		  
 		  sResult = CreateNewOrUseExisting
@@ -923,74 +1123,51 @@ End
 		  Case "Use Existing"
 		    
 		    // Open up the inventory picker so the user can choose which item they want to link
-		    dim winPicker as New winInventoryPicker
+		    dim winPicker as New winEventPicker
 		    dim iPKIDs() as Int64
-		    iPKIDs = winPicker.MyShowModal(oCurrentInventoryItem.ipkid)
+		    iPKIDs = winPicker.MyShowModal(oCurrentEvent.ipkid)
 		    
 		    // Loop through the selected pkids and create an array of table objects for them
 		    For Each iPkid as Int64 In iPKIDs()
 		      
 		      // Get the item from the database based on pkid
-		      dim oItem as DataFile.tbl_inventory
-		      oItem = DataFile.tbl_inventory.FindByID(iPkid)
+		      dim oEvent as DataFile.tbl_events
+		      oEvent = DataFile.tbl_events.FindByID(iPkid)
 		      
 		      // append the item to the array of things to link to parent
-		      iLinkTheseToParent.Append(oItem)
+		      iLinkTheseToParent.Append(oEvent)
 		      
 		    Next
 		    
 		  Case "Create New"
 		    
-		    // Check what kind of link we are making
-		    Select Case LinkType
-		    Case "version"
+		    // Create a clone of the current Event
+		    dim vClone as Variant
+		    vClone = oCurrentEvent.Clone
+		    
+		    // Check if a clone was performed correctly
+		    If vClone IsA DataFile.tbl_events Then
+		      'success
 		      
-		      // Create a clone of the current inventory item
-		      dim vClone as Variant
-		      vClone = oCurrentInventoryItem.Clone
+		      // Extract the Clone variant into a table object
+		      dim oEvent as DataFile.tbl_events
+		      oEvent = vClone
 		      
-		      // Check if a clone was performed correctly
-		      If vClone IsA DataFile.tbl_inventory Then
-		        'success
-		        
-		        // Extract the Clone variant into a table object
-		        dim oItem as DataFile.tbl_inventory
-		        oItem = vClone
-		        
-		        // Change the :
-		        '     quantity
-		        oItem.iitem_quantity = 1
-		        '     physical item 
-		        oItem.bphysical_item = True
-		        '     hide
-		        oItem.bhide = True
-		        
-		        // Save the item
-		        oItem.Save
-		        
-		        iLinkTheseToParent.Append(oItem)
-		        
-		        
-		        
-		      End If
+		      // Change the :
+		      '     hide
+		      oEvent.bhide = True
+		      
+		      // Save the item
+		      oEvent.Save
+		      
+		      iLinkTheseToParent.Append(oEvent)
 		      
 		      
-		    Else
 		      
-		      // Create a new inventory item
-		      dim oItem as New DataFile.tbl_inventory
-		      oItem.sitem_name = "New Item"
-		      oItem.sitem_department = oCurrentInventoryItem.sitem_department
-		      oItem.iitem_quantity = 1
-		      oItem.sitem_owner = oCurrentInventoryItem.sitem_owner
-		      oItem.sitem_category = oCurrentInventoryItem.sitem_category
-		      oItem.sitem_subcategory = oCurrentInventoryItem.sitem_subcategory
-		      oItem.Save
-		      
-		      // Append the item to the items to be linked
-		      iLinkTheseToParent.Append(oItem)
-		      
-		    End Select
+		    End If
+		    
+		    
+		    
 		    
 		    
 		    
@@ -1001,17 +1178,15 @@ End
 		  
 		  
 		  // Create the linking records
-		  For Each oChild as DataFile.tbl_inventory In iLinkTheseToParent
+		  For Each oChild as DataFile.tbl_events In iLinkTheseToParent
 		    
 		    // Create a new link table item
-		    dim oLinkItem as New DataFile.tbl_inventory_link
-		    oLinkItem.ifkinventory_parent = oCurrentInventoryItem.ipkid
-		    oLinkItem.ifkinventory_child = oChild.ipkid
-		    oLinkItem.slink_type = LinkType
-		    oLinkItem.iquantity = 1
+		    dim oLinkItem as New DataFile.tbl_events_link
+		    oLinkItem.ifkevents_parent = oCurrentEvent.ipkid
+		    oLinkItem.ifkevents_child = oChild.ipkid
 		    oLinkItem.Save
 		    
-		    If sResult = "Create New" And LinkType = "version" Then
+		    If CreateNewOrUseExisting = "Create New" Then
 		      dim s5 as string
 		      
 		      If tfNextPostfix.Text = "" Then
@@ -1022,7 +1197,7 @@ End
 		      End If
 		      
 		      // Change the name of the item
-		      oChild.sitem_name = oChild.sitem_name + " - " + s5
+		      oChild.sevent_name = oChild.sevent_name + " - " + s5
 		      oChild.Save
 		    End If
 		    
@@ -1056,75 +1231,100 @@ End
 		  tfAccountManager.Text = oCurrentEvent.saccount_manager
 		  taDetails.Text = oCurrentEvent.sevent_details
 		  
+		  chbHide.Value = oCurrentEvent.bhide
+		  
 		  // Dates Times
 		  dim dt1 as New Date
 		  dim dtString, timeString as string
 		  If oCurrentEvent.sstart_date = "" Then
 		    dtString = dt1.SQLDate
+		    dcStart.DateValue = Nil
 		  Else
 		    dtString = oCurrentEvent.sstart_date
+		    dim dat1 as Date = CreateZeroOffsetDate
+		    dat1.SQLDateTime = dtString + " 11:11:11"
+		    dcStart.DateValue = dat1
 		  End If
 		  If oCurrentEvent.sstart_time = "" Then
-		    timeString = dt1.Hour.ToText + ":" + dt1.Minute.ToText + ":" + dt1.Second.ToText
+		    tcStart.TimeValue = Nil
+		    chbStart.Value = False
 		  Else
 		    timeString = oCurrentEvent.sstart_time
+		    
+		    dt1.SQLDateTime = dtString + " " + timeString
+		    tcStart.TimeValue = dt1
+		    chbStart.Value = True
 		  End If
 		  
-		  dt1.SQLDateTime = dtString + " " + timeString
-		  dt1.GMTOffset = app.GMTOffset
-		  dcStart.DateValue = dt1
-		  tcStart.TimeValue = dt1
 		  
 		  dim dt2 as New Date
 		  If oCurrentEvent.send_date = "" Then
 		    dtString = dt2.SQLDate
+		    dcEnd.DateValue = Nil
 		  Else
 		    dtString = oCurrentEvent.send_date
+		    dim dat1 as New Date
+		    dat1.SQLDateTime = dtString + " 11:11:11"
+		    dcEnd.DateValue = dat1
 		  End If
 		  If oCurrentEvent.send_time = "" Then
-		    timeString = dt2.Hour.ToText + ":" + dt2.Minute.ToText + ":" + dt2.Second.ToText
+		    tcEnd.TimeValue = Nil
+		    chbEnd.Value = False
 		  Else
 		    timeString = oCurrentEvent.send_time
+		    
+		    dt2.SQLDateTime = dtString + " " + timeString
+		    tcEnd.TimeValue = dt2
+		    chbEnd.Value = True
 		  End If
 		  
-		  dt2.SQLDateTime = dtString + " " + timeString
-		  dt2.GMTOffset = app.GMTOffset
-		  dcEnd.DateValue = dt2
-		  tcEnd.TimeValue = dt2
 		  
 		  dim dt3 as New Date
 		  If oCurrentEvent.sloadin_date = "" Then
 		    dtString = dt3.SQLDate
+		    dcLoadin.DateValue = Nil
 		  Else
 		    dtString = oCurrentEvent.sloadin_date
+		    dim dat1 as New Date
+		    dat1.SQLDateTime = dtString + " 11:11:11"
+		    dcLoadin.DateValue = dat1
 		  End If
 		  If oCurrentEvent.sloadin_time = "" Then
-		    timeString = dt3.Hour.ToText + ":" + dt3.Minute.ToText + ":" + dt3.Second.ToText
+		    tcLoadin.TimeValue = Nil
+		    chbLoadIn.Value = False
 		  Else
 		    timeString = oCurrentEvent.sloadin_time
+		    
+		    dt3.SQLDateTime = dtString + " " + timeString
+		    tcLoadin.TimeValue = dt3
+		    chbLoadIn.Value = True
 		  End If
-		  
-		  dt3.SQLDateTime = dtString + " " + timeString
-		  dt3.GMTOffset = app.GMTOffset
-		  dcLoadin.DateValue = dt3
-		  tcLoadin.TimeValue = dt3
 		  
 		  dim dt4 as New Date
 		  If oCurrentEvent.sloadout_date = "" Then
 		    dtString = dt4.SQLDate
+		    dcLoadout.DateValue = Nil
 		  Else
 		    dtString = oCurrentEvent.sloadout_date
+		    dim dat1 as New Date
+		    dat1.SQLDateTime = dtString + " 11:11:11"
+		    dcLoadout.DateValue = dat1
 		  End If
 		  If oCurrentEvent.sloadout_time = "" Then
-		    timeString = dt4.Hour.ToText + ":" + dt4.Minute.ToText + ":" + dt4.Second.ToText
+		    tcLoadout.TimeValue = Nil
+		    chbLoadOut.Value = False
 		  Else
 		    timeString = oCurrentEvent.sloadout_time
+		    
+		    dt4.SQLDateTime = dtString + " " + timeString
+		    tcLoadout.TimeValue = dt4
+		    chbLoadOut.Value = True
 		  End If
 		  
-		  dt4.SQLDateTime = dtString + " " + timeString
-		  dt4.GMTOffset = app.GMTOffset
-		  dcLoadout.DateValue = dt4
-		  tcLoadout.TimeValue = dt4
+		  
+		  If oCurrentEvent.ipkid <> 0 Then
+		    contChildEventList.LoadEvents(oCurrentEvent.ipkid)
+		  End If
 		  
 		  
 		  
@@ -1163,6 +1363,14 @@ End
 
 	#tag Property, Flags = &h21
 		Private oCurrentEvent As DataFile.tbl_events
+	#tag EndProperty
+
+	#tag Property, Flags = &h0
+		ParentPagePanel As PagePanel
+	#tag EndProperty
+
+	#tag Property, Flags = &h0
+		ParentTabPanelHeader As TabPanel
 	#tag EndProperty
 
 
@@ -1216,7 +1424,7 @@ End
 #tag Events dcStart
 	#tag Event
 		Sub LostFocus()
-		  
+		  Break
 		  dim d1 as Date
 		  dim s1 as string
 		  
@@ -1361,156 +1569,32 @@ End
 #tag EndEvents
 #tag Events contChildEventList
 	#tag Event
-		Sub AfterDelete()
-		  
-		  dim oUIState as lbUIState
-		  oUIState = me.lbItems.GetUIState
-		  LoadItem(oCurrentInventoryItem.ipkid)
-		  me.lbItems.ResetUIState(oUIState)
-		End Sub
-	#tag EndEvent
-	#tag Event
-		Sub SetColumnInformation(lbItems as entListbox, ByRef dictCellTypes as Dictionary, ByRef dictFieldNames as Dictionary)
-		  dim s1,s2() as string
-		  
-		  dim sRowType as string
-		  
-		  // Set Column Count
-		  dim iColCount as integer = 7
-		  lbItems.ColumnCount = iColCount
-		  
-		  // Initialize dictionaries
-		  dictFieldNames = New Dictionary
-		  dictCellTypes = New Dictionary
+		Sub entOpen()
+		  dim s1, s2() as string
 		  
 		  // Set header names
-		  s1 = "Name,Department,Category,SubCat,Qty,Hide,Physical"
+		  s1 = "Name,Start Date,End Date,Hide"
 		  s2() = Split(s1,",")
-		  lbItems.Heading = s2()
-		  
-		  
-		  // **********
-		  // Set up the cell types and field names for each type of row
-		  
-		  // Group Folders
-		  sRowType = "GroupFolder"
-		  'field names
-		  dictFieldNames.Value(sRowType) = Array("")
-		  
-		  'cell types
-		  dim iCellTypes() as integer
-		  ReDim iCellTypes(iColCount - 1) 
-		  dictCellTypes.Value(sRowType) = iCellTypes
-		  
-		  
-		  // GrandParent
-		  sRowType = "GrandParent"
-		  'field names
-		  s1 = "item_name,item_department,item_category,item_subcategory,tbl_inventory_link.-.quantity,hide,physical_item"
-		  s2() = Split(s1,",")
-		  dictFieldNames.Value(sRowType) = s2
-		  
-		  'cell types
-		  dim iCellTypes2() as integer
-		  ReDim iCellTypes2(iColCount - 1) 
-		  dictCellTypes.Value(sRowType) = iCellTypes2
-		  
-		  
-		  // Linking Type Folder
-		  sRowType = "LinkingTypeFolder"
-		  'field names
-		  dictFieldNames.Value(sRowType) = Array("")
-		  
-		  'cell types
-		  dim iCellTypes3() as integer
-		  ReDim iCellTypes3(iColCount - 1) 
-		  dictCellTypes.Value(sRowType) = iCellTypes3
-		  
-		  
-		  // LinkedItem - Version
-		  sRowType = "LinkedItem - version"
-		  'field names
-		  s1 = "item_name,item_department,item_category,item_subcategory,item_quantity,hide,physical_item"
-		  s2() = Split(s1,",")
-		  dictFieldNames.Value(sRowType) = s2
-		  
-		  'cell types
-		  dim iCellTypes4() as integer = Array(3,0,0,0,0,2,2)
-		  dictCellTypes.Value(sRowType) = iCellTypes4
-		  
-		  
-		  // LinkedItem - Contained
-		  sRowType = "LinkedItem - contained"
-		  'field names
-		  s1 = "item_name,item_department,item_category,item_subcategory,tbl_inventory_link.-.quantity,hide,physical_item"
-		  s2() = Split(s1,",")
-		  dictFieldNames.Value(sRowType) = s2
-		  
-		  'cell types
-		  dim iCellTypes5() as integer = Array(3,0,0,0,3,2,2)
-		  dictCellTypes.Value(sRowType) = iCellTypes5
-		  
-		  // LinkedItem - kit
-		  sRowType = "LinkedItem - kit"
-		  'field names
-		  s1 = "item_name,item_department,item_category,item_subcategory,tbl_inventory_link.-.quantity,hide,physical_item"
-		  s2() = Split(s1,",")
-		  dictFieldNames.Value(sRowType) = s2
-		  
-		  'cell types
-		  dim iCellTypes6() as integer = Array(3,0,0,0,3,2,2)
-		  dictCellTypes.Value(sRowType) = iCellTypes6
-		  
-		  // LinkedItem - Contained
-		  sRowType = "LinkedItem - package"
-		  'field names
-		  s1 = "item_name,item_department,item_category,item_subcategory,tbl_inventory_link.-.quantity,hide,physical_item"
-		  s2() = Split(s1,",")
-		  dictFieldNames.Value(sRowType) = s2
-		  
-		  'cell types
-		  dim iCellTypes7() as integer = Array(3,0,0,0,3,2,2)
-		  dictCellTypes.Value(sRowType) = iCellTypes7
-		  
-		  
+		  contChildEventList.lbEvents.Heading = s2
 		End Sub
-	#tag EndEvent
-	#tag Event
-		Function entContextualMenuAction(hititem as MenuItem) As Boolean
-		  
-		  Select Case hititem.Text
-		  Case "Push Values"
-		    
-		    EnableDisable_PushCheckboxes(True)
-		    InitCheckboxes
-		    
-		  End Select
-		End Function
-	#tag EndEvent
-	#tag Event
-		Function entConstructContextualMenu(base as MenuItem, x as integer, y as integer) As Boolean
-		  
-		  base.Append( New MenuItem("Push Values") )
-		  
-		End Function
 	#tag EndEvent
 #tag EndEvents
 #tag Events pbAddChildEvent
 	#tag Event
 		Sub Action()
-		  dim sLinkType as string
+		  dim sNewOrExisting as string
 		  
 		  // ===============================
 		  // Define menu extries
 		  // ===============================
 		  dim base as new MenuItem
-		  base.Append( new MenuItem( "Contained" ) )  '0
-		  dim MI1 as New MenuItem( "Kit" )
+		  base.Append( new MenuItem( "Create New" ) )  '0
+		  dim MI1 as New MenuItem( "Use Existing" )
 		  MI1.Enabled = True
 		  base.Append( MI1 )  '1
-		  dim MI2 as New MenuItem( "Package" )
-		  MI2.Enabled = True
-		  base.Append( new MenuItem( MI2 ) )  '2
+		  'dim MI2 as New MenuItem( "Package" )
+		  'MI2.Enabled = True
+		  'base.Append( new MenuItem( MI2 ) )  '2
 		  // ===============================
 		  // Set the enabled status
 		  // ===============================
@@ -1522,25 +1606,65 @@ End
 		  hitItem = base.PopUp
 		  
 		  Select Case hitItem.Text
-		  Case "Contained"
-		    sLinkType = "contained"
-		  Case "Kit"
-		    sLinkType = "kit"
-		  Case "Package"
-		    sLinkType = "package"
+		  Case "Create New"
+		    sNewOrExisting = "Create New"
+		  Case "Use Existing"
+		    sNewOrExisting = "Use Existing"
 		  End Select
 		  
-		  AddLinkedItem(sLinkType)
-		  
-		  // Update the quantity of the current item
-		  Methods.UpdateItemQuantity(oCurrentInventoryItem.ipkid)
+		  AddLinkedEvent(sNewOrExisting)
 		  
 		  dim olbUI as lbUIState
-		  olbUI = contInventoryExpanded.lbItems.GetUIState
-		  LoadItem(oCurrentInventoryItem.ipkid)
-		  contInventoryExpanded.lbItems.ResetUIState(olbUI)
+		  olbUI = contChildEventList.lbEvents.GetUIState
+		  LoadEvent(oCurrentEvent.ipkid)
+		  contChildEventList.lbEvents.ResetUIState(olbUI)
 		  
 		  
+		End Sub
+	#tag EndEvent
+#tag EndEvents
+#tag Events chbHide
+	#tag Event
+		Sub LostFocus()
+		  
+		  oCurrentEvent.bhide = me.Value
+		  oCurrentEvent.Save
+		End Sub
+	#tag EndEvent
+#tag EndEvents
+#tag Events chbStart
+	#tag Event
+		Sub Action()
+		  dim theTimeControl as TimeControl = tcStart
+		  
+		  theTimeControl.Enabled = me.Value
+		End Sub
+	#tag EndEvent
+#tag EndEvents
+#tag Events chbEnd
+	#tag Event
+		Sub Action()
+		  dim theTimeControl as TimeControl = tcEnd
+		  
+		  theTimeControl.Enabled = me.Value
+		End Sub
+	#tag EndEvent
+#tag EndEvents
+#tag Events chbLoadIn
+	#tag Event
+		Sub Action()
+		  dim theTimeControl as TimeControl = tcLoadin
+		  
+		  theTimeControl.Enabled = me.Value
+		End Sub
+	#tag EndEvent
+#tag EndEvents
+#tag Events chbLoadOut
+	#tag Event
+		Sub Action()
+		  dim theTimeControl as TimeControl = tcLoadout
+		  
+		  theTimeControl.Enabled = me.Value
 		End Sub
 	#tag EndEvent
 #tag EndEvents

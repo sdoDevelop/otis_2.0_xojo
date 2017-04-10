@@ -1,209 +1,90 @@
 #tag Window
-Begin Window winMain_1TabPanel
+Begin Window winEventPicker
    BackColor       =   &cFFFFFF00
    Backdrop        =   0
    CloseButton     =   True
    Compatibility   =   ""
    Composite       =   False
-   Frame           =   0
+   Frame           =   2
    FullScreen      =   False
    FullScreenButton=   False
    HasBackColor    =   False
-   Height          =   460
+   Height          =   448
    ImplicitInstance=   False
    LiveResize      =   True
    MacProcID       =   0
    MaxHeight       =   32000
    MaximizeButton  =   True
    MaxWidth        =   32000
-   MenuBar         =   1143859199
+   MenuBar         =   0
    MenuBarVisible  =   True
    MinHeight       =   64
    MinimizeButton  =   True
    MinWidth        =   64
    Placement       =   0
    Resizeable      =   True
-   Title           =   "Untitled"
-   Visible         =   False
-   Width           =   770
-   Begin PushButton bRunSync
+   Title           =   ""
+   Visible         =   True
+   Width           =   433
+   Begin entOkCancel entOkCancel
+      AcceptFocus     =   False
+      AcceptTabs      =   True
       AutoDeactivate  =   True
-      Bold            =   False
-      ButtonStyle     =   "0"
-      Cancel          =   False
-      Caption         =   "RunSync"
-      Default         =   False
+      BackColor       =   &cFFFF00FF
+      Backdrop        =   0
+      CancelButtonText=   "Cancel"
       Enabled         =   True
-      Height          =   22
+      EraseBackground =   True
+      HasBackColor    =   False
+      Height          =   30
       HelpTag         =   ""
-      Index           =   -2147483648
       InitialParent   =   ""
-      Italic          =   False
-      Left            =   690
-      LockBottom      =   False
-      LockedInPosition=   False
-      LockLeft        =   False
-      LockRight       =   True
-      LockTop         =   True
-      Scope           =   2
-      TabIndex        =   1
-      TabPanelIndex   =   0
-      TabStop         =   True
-      TextFont        =   "System"
-      TextSize        =   0.0
-      TextUnit        =   0
-      Top             =   0
-      Underline       =   False
-      Visible         =   True
-      Width           =   80
-   End
-   Begin PagePanel tbMainWindow
-      AutoDeactivate  =   True
-      Enabled         =   True
-      Height          =   438
-      HelpTag         =   ""
-      Index           =   -2147483648
-      InitialParent   =   ""
-      Left            =   7
+      Left            =   253
       LockBottom      =   True
       LockedInPosition=   False
-      LockLeft        =   True
-      LockRight       =   True
-      LockTop         =   True
-      PanelCount      =   2
-      Panels          =   ""
-      Scope           =   0
-      TabIndex        =   2
-      TabPanelIndex   =   0
-      Top             =   27
-      Value           =   1
-      Visible         =   True
-      Width           =   763
-      Begin contEventList contEventList1
-         AcceptFocus     =   False
-         AcceptTabs      =   True
-         AutoDeactivate  =   True
-         BackColor       =   &cFFFFFF00
-         Backdrop        =   0
-         bJustChildren   =   False
-         bWithButtons    =   True
-         Enabled         =   True
-         EraseBackground =   True
-         HasBackColor    =   False
-         Height          =   429
-         HelpTag         =   ""
-         InitialParent   =   "tbMainWindow"
-         iParentID       =   ""
-         LastSearchValue =   ""
-         Left            =   7
-         LockBottom      =   False
-         LockedInPosition=   False
-         LockLeft        =   True
-         LockRight       =   False
-         LockTop         =   True
-         sCondition      =   ""
-         Scope           =   0
-         sGroupByFields  =   """""event_name"""""
-         sSortBy         =   0
-         TabIndex        =   0
-         TabPanelIndex   =   1
-         TabStop         =   True
-         Top             =   29
-         Transparent     =   True
-         UseFocusRing    =   False
-         Visible         =   True
-         Width           =   763
-      End
-      Begin contInventory contInventory1
-         AcceptFocus     =   True
-         AcceptTabs      =   True
-         AutoDeactivate  =   True
-         BackColor       =   &cFFFFFF00
-         Backdrop        =   0
-         Enabled         =   True
-         EraseBackground =   True
-         HasBackColor    =   False
-         Height          =   421
-         HelpTag         =   ""
-         InitialParent   =   "tbMainWindow"
-         Left            =   10
-         LockBottom      =   False
-         LockedInPosition=   False
-         LockLeft        =   True
-         LockRight       =   False
-         LockTop         =   True
-         Scope           =   2
-         TabIndex        =   0
-         TabPanelIndex   =   2
-         TabStop         =   True
-         Top             =   30
-         Transparent     =   True
-         UseFocusRing    =   False
-         Visible         =   True
-         Width           =   756
-      End
-   End
-   Begin PushButton pbCloseTab
-      AutoDeactivate  =   True
-      Bold            =   False
-      ButtonStyle     =   "0"
-      Cancel          =   False
-      Caption         =   "Close Tab"
-      Default         =   False
-      Enabled         =   True
-      Height          =   22
-      HelpTag         =   ""
-      Index           =   -2147483648
-      InitialParent   =   ""
-      Italic          =   False
-      Left            =   611
-      LockBottom      =   False
-      LockedInPosition=   False
       LockLeft        =   False
       LockRight       =   True
-      LockTop         =   True
+      LockTop         =   False
+      OkButtonText    =   "Ok"
       Scope           =   0
-      TabIndex        =   3
+      TabIndex        =   4
       TabPanelIndex   =   0
       TabStop         =   True
-      TextFont        =   "System"
-      TextSize        =   0.0
-      TextUnit        =   0
-      Top             =   0
-      Underline       =   False
+      Top             =   418
+      Transparent     =   True
+      UseFocusRing    =   False
       Visible         =   True
-      Width           =   80
+      Width           =   176
    End
-   Begin TabPanel tbTabs
+   Begin contEventList contEventListInst
+      AcceptFocus     =   False
+      AcceptTabs      =   True
       AutoDeactivate  =   True
-      Bold            =   False
+      BackColor       =   &cFFFFFF00
+      Backdrop        =   0
       Enabled         =   True
-      Height          =   24
+      EraseBackground =   True
+      HasBackColor    =   False
+      Height          =   418
       HelpTag         =   ""
-      Index           =   -2147483648
       InitialParent   =   ""
-      Italic          =   False
-      Left            =   7
+      Left            =   -1
       LockBottom      =   False
       LockedInPosition=   False
       LockLeft        =   True
       LockRight       =   False
       LockTop         =   True
-      Panels          =   ""
       Scope           =   0
-      SmallTabs       =   False
-      TabDefinition   =   "Events\rInventory"
-      TabIndex        =   4
+      sGroupByFields  =   """""event_name"""""
+      sSortBy         =   0
+      TabIndex        =   5
       TabPanelIndex   =   0
       TabStop         =   True
-      TextFont        =   "System"
-      TextSize        =   0.0
-      TextUnit        =   0
-      Top             =   2
-      Underline       =   False
-      Value           =   1
+      Top             =   0
+      Transparent     =   True
+      UseFocusRing    =   False
       Visible         =   True
-      Width           =   605
+      Width           =   435
    End
 End
 #tag EndWindow
@@ -217,58 +98,71 @@ End
 
 
 	#tag Method, Flags = &h0
-		Sub AddTab(sName as string, GoToTab as Boolean = True)
-		  tbMainWindow.Append
-		  tbTabs.Append(sName)
+		Sub LoadEvents(sConditionpar as string = "")
 		  
-		  if GoToTab Then
-		    tbMainWindow.Value = tbMainWindow.PanelCount - 1
-		    tbTabs.Value = tbTabs.PanelCount - 1
-		  end if
+		  contEventListInst.LoadEvents(sConditionpar)
 		End Sub
 	#tag EndMethod
 
 	#tag Method, Flags = &h0
-		Sub RemoveTab(index as integer)
-		  tbTabs.Remove(index)
-		  tbMainWindow.Remove(index)
+		Function MyShowModal(iExcludePKID as int64) As Int64()
 		  
-		  dim n1 as integer
-		  n1 = tbTabs.PanelCount - 1
 		  
-		  tbTabs.Value = n1
-		  tbMainWindow.Value = n1
-		End Sub
+		  // Load the items into the listbox
+		  me.LoadEvents("pkid <> " + iExcludePKID.ToText)
+		  
+		  // Show the window
+		  me.ShowModal
+		  
+		  // Get the selected pkids from the window
+		  Return iSelectedItemPKIDs
+		End Function
 	#tag EndMethod
 
 
-	#tag Property, Flags = &h21
-		Private theid As Integer
+	#tag Property, Flags = &h0
+		iSelectedItemPKIDs() As Int64
+	#tag EndProperty
+
+	#tag Property, Flags = &h0
+		sFieldNames() As String
 	#tag EndProperty
 
 
 #tag EndWindowCode
 
-#tag Events bRunSync
+#tag Events entOkCancel
 	#tag Event
-		Sub Action()
-		  osm.RunSync
-		  'contInventory1.RefreshInventory(True)
-		End Sub
-	#tag EndEvent
-#tag EndEvents
-#tag Events pbCloseTab
-	#tag Event
-		Sub Action()
+		Sub CancelAction()
 		  
-		  RemoveTab(tbMainWindow.Value)
+		  Redim iSelectedItemPKIDs(-1)
+		  me.Window.Close
 		End Sub
 	#tag EndEvent
-#tag EndEvents
-#tag Events tbTabs
 	#tag Event
-		Sub Change()
-		  tbMainWindow.Value = tbTabs.Value
+		Sub Action()
+		  dim lbItems as entListbox
+		  
+		  // Clear the selected pkids
+		  Redim iSelectedItemPKIDs(-1)
+		  lbItems = contEventListInst.lbEvents
+		  
+		  If lbItems.ListIndex <> -1 Then
+		    
+		    dim SelectedRowtags() as lbRowTag
+		    SelectedRowtags = lbItems.GetSelectedRows
+		    
+		    For Each oRowTag as lbRowTag In SelectedRowtags()
+		      
+		      If oRowTag.pkid <> 0 Then
+		        iSelectedItemPKIDs.Append(oRowTag.pkid)
+		      End If
+		      
+		    Next
+		    
+		  End If
+		  
+		  me.Window.Close
 		End Sub
 	#tag EndEvent
 #tag EndEvents

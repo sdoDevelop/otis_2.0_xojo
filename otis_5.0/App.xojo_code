@@ -94,6 +94,10 @@ Inherits Application
 		  RegisterThirdPartyPlugins 'Register third party plugins (if needed)
 		  CheckVersions 'Checks Xojo and third plug-in versions (In the debugger only)
 		  
+		  //Set timezone
+		  dim d1 as new date 
+		  app.GMTOffset = d1.GMTOffset
+		  
 		  Dim RD1 as New ResourceDirectories
 		  
 		  
@@ -264,7 +268,7 @@ Inherits Application
 	#tag EndProperty
 
 	#tag Property, Flags = &h0
-		GMTOffset As Integer
+		GMTOffset As Integer = -6
 	#tag EndProperty
 
 	#tag Property, Flags = &h0
@@ -301,6 +305,11 @@ Inherits Application
 
 
 	#tag ViewBehavior
+		#tag ViewProperty
+			Name="GMTOffset"
+			Group="Behavior"
+			Type="Integer"
+		#tag EndViewProperty
 		#tag ViewProperty
 			Name="sUserName"
 			Group="Behavior"
