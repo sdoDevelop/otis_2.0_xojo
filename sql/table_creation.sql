@@ -192,24 +192,37 @@ Create Table tbl_events_link
         cvd_primary                 boolean
         );
 
-    -- contacts
-    CREATE TABLE tbl_contacts
+    -- contactables
+    CREATE TABLE tbl_contactables
         (
         pkid                        integer Primary Key,
         row_created                 text,
         row_modified                text,
         row_username                text,
-        fkconven                    text,
+        indv_bus_ven                text,
+        type                        text,
         name_first                  text,
         name_last                   text,
         job_title                   text,
-        contact_company             text,
+        company                     text,
         address_line1               text,
         address_line2               text,
         address_city                text,
         address_state               text,
         address_zip                 text,
-        address_country             text
+        address_country             text,
+        hide                        boolean
+        );
+
+    -- contactables link
+    CREATE TABLE tbl_contactables_link
+        (
+        pkid                        integer Primary Key,
+        row_created                 text,
+        row_modified                text,
+        row_username                text,
+        fkcontactables_parent       integer,
+        fkcontactables_child        integer
         );
 
     CREATE TABLE tbl_phone_numbers
@@ -218,11 +231,10 @@ Create Table tbl_events_link
         row_created                 text,
         row_modified                text,
         row_username                text,
-        fkcontacts                  integer,
-        fkvenues                    integer,
+        fkcontactables              integer,
         phone_number                text,
         number_type                 text,
-        primary                     boolean
+        primary_phone               boolean
         );
 
     CREATE TABLE tbl_email_addresses
@@ -231,33 +243,11 @@ Create Table tbl_events_link
         row_created                 text,
         row_modified                text,
         row_username                text,
-        fkcontacts                  integer,
-        fkvenues                    integer,
+        fkcontactables              integer,
         email_address               text,
         email_type                  text,
-        primary                     boolean
+        primary_email               boolean
         );
-
-
-    -- venues
-    CREATE TABLE tbl_venues
-        (
-        pkid                        integer Primary Key,
-        row_created                 text,
-        row_modified                text,
-        row_username                text,
-        fkconven                    text,
-        venue_name                  text,
-        venue_type                  text,
-        venue_company               text,
-        address_line1               text,
-        address_line2               text,
-        address_city                text,
-        address_state               text,
-        address_zip                 text,
-        address_country             text
-        );
-
 
     -- tbl_departments
     CREATE TABLE tbl_departments

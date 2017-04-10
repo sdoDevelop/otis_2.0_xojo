@@ -53,15 +53,21 @@ Protected Module DataFile
 	#tag Method, Flags = &h21
 		Private Sub Register(db as SQLiteDatabase)
 		  // Tables
-		  BKS_ActiveRecord.Table( db, "tbl_contacts", GetTypeInfo( tbl_contacts ) )
+		  BKS_ActiveRecord.Table( db, "tbl_contactables", GetTypeInfo( tbl_contactables ) )
+		  BKS_ActiveRecord.Table( db, "tbl_contactables_link", GetTypeInfo( tbl_contactables_link ) )
 		  BKS_ActiveRecord.Table( db, "tbl_contact_venue_data", GetTypeInfo( tbl_contact_venue_data ) )
 		  BKS_ActiveRecord.Table( db, "tbl_departments", GetTypeInfo( tbl_departments ) )
 		  BKS_ActiveRecord.Table( db, "tbl_eipl", GetTypeInfo( tbl_eipl ) )
+		  BKS_ActiveRecord.Table( db, "tbl_email_addresses", GetTypeInfo( tbl_email_addresses ) )
 		  BKS_ActiveRecord.Table( db, "tbl_events", GetTypeInfo( tbl_events ) )
+		  BKS_ActiveRecord.Table( db, "tbl_events_link", GetTypeInfo( tbl_events_link ) )
+		  BKS_ActiveRecord.Table( db, "tbl_firmware", GetTypeInfo( tbl_firmware ) )
 		  BKS_ActiveRecord.Table( db, "tbl_inventory", GetTypeInfo( tbl_inventory ) )
+		  BKS_ActiveRecord.Table( db, "tbl_inventory_link", GetTypeInfo( tbl_inventory_link ) )
 		  BKS_ActiveRecord.Table( db, "tbl_lineitems", GetTypeInfo( tbl_lineitems ) )
+		  BKS_ActiveRecord.Table( db, "tbl_maintenance_Logs", GetTypeInfo( tbl_maintenance_Logs ) )
 		  BKS_ActiveRecord.Table( db, "tbl_payments", GetTypeInfo( tbl_payments ) )
-		  BKS_ActiveRecord.Table( db, "tbl_venues", GetTypeInfo( tbl_venues ) )
+		  BKS_ActiveRecord.Table( db, "tbl_phone_numbers", GetTypeInfo( tbl_phone_numbers ) )
 		  
 		End Sub
 	#tag EndMethod

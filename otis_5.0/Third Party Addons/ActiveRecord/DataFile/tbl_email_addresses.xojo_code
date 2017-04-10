@@ -168,11 +168,7 @@ Inherits DataFile.ActiveRecordBase
 	#tag EndProperty
 
 	#tag Property, Flags = &h0
-		ifkcontacts As Int64
-	#tag EndProperty
-
-	#tag Property, Flags = &h0
-		ifkVenues As Int64
+		ifkcontactables As Int64
 	#tag EndProperty
 
 	#tag Property, Flags = &h0
@@ -191,7 +187,7 @@ Inherits DataFile.ActiveRecordBase
 			Type="Boolean"
 		#tag EndViewProperty
 		#tag ViewProperty
-			Name="ifkcontacts"
+			Name="ifkcontactables"
 			Group="Behavior"
 			Type="Int64"
 		#tag EndViewProperty

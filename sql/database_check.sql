@@ -188,24 +188,26 @@
         From tbl_contact_venue_data
         ;
 
-    -- contacts
+    -- contactables
     Select
         pkid                        ,
         row_created                 ,
         row_modified                ,
         row_username                ,
-        fkconven                    ,
+        indv_bus_ven                ,
+        type                        ,
         name_first                  ,
         name_last                   ,
         job_title                   ,
-        contact_company             ,
+        company                     ,
         address_line1               ,
         address_line2               ,
         address_city                ,
         address_state               ,
         address_zip                 ,
-        address_country             
-        From tbl_contacts
+        address_country             ,
+        hide                        
+        From tbl_contactables
         ;
 
     Select
@@ -213,11 +215,19 @@
         row_created                 ,
         row_modified                ,
         row_username                ,
-        fkcontacts                  ,
-        fkvenues                    ,
+        fkcontactables_parent       ,
+        fkcontactables_child        
+        From tbl_contactables_link
+
+    Select
+        pkid                        ,
+        row_created                 ,
+        row_modified                ,
+        row_username                ,
+        fkcontactables              ,
         phone_number                ,
         number_type                 ,
-        primary                     
+        primary_phone                     
         From tbl_phone_numbers
         ;
 
@@ -226,33 +236,12 @@
         row_created                 ,
         row_modified                ,
         row_username                ,
-        fkcontacts                  ,
-        fkvenues                    ,
+        fkcontactables              ,
         email_address               ,
         email_type                  ,
-        primary                     
+        primary_email                     
         From tbl_email_addresses
         ;
-
-    -- venues
-    Select
-        pkid                        ,
-        row_created                 ,
-        row_modified                ,
-        row_username                ,
-        fkconven                    ,
-        venue_name                  ,
-        venue_type                  ,
-        venue_company               ,
-        address_line1               ,
-        address_line2               ,
-        address_city                ,
-        address_state               ,
-        address_zip                 ,
-        address_country             
-        From tbl_venues
-        ;
-
 
     -- tbl_departments
     Select

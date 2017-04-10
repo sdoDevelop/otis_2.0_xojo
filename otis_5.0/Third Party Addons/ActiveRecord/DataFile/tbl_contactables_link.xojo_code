@@ -1,5 +1,5 @@
 #tag Class
-Protected Class tbl_phone_numbers
+Protected Class tbl_contactables_link
 Inherits DataFile.ActiveRecordBase
 	#tag Method, Flags = &h0
 		Shared Function BaseSQL(bAsCount as Boolean = false) As String
@@ -12,7 +12,7 @@ Inherits DataFile.ActiveRecordBase
 		    ars.Append "count(*) as iCnt"
 		  end if
 		  
-		  ars.Append "From tbl_phone_numbers"
+		  ars.Append "From tbl_contactables_link"
 		  
 		  Return ars.JoinSQL
 		End Function
@@ -33,11 +33,11 @@ Inherits DataFile.ActiveRecordBase
 	#tag EndMethod
 
 	#tag Method, Flags = &h0
-		Shared Function FindByID(id as Integer) As DataFile.tbl_phone_numbers
+		Shared Function FindByID(id as Integer) As DataFile.tbl_contactables_link
 		  //Usage:
-		  //dim tbl_phone_numbers as DataFile.tbl_phone_numbers = DataFile.tbl_phone_numbers.FindByID( id )
+		  //dim tbl_contactables_link as DataFile.tbl_contactables_link = DataFile.tbl_contactables_link.FindByID( id )
 		  dim s as string
-		  s = "Select * from tbl_phone_numbers WHERE pkid = " + str(id)
+		  s = "Select * from tbl_contactables_link WHERE pkid = " + str(id)
 		  
 		  dim rs as RecordSet = DB.SQLSelect(s)
 		  
@@ -47,17 +47,17 @@ Inherits DataFile.ActiveRecordBase
 		  end
 		  if rs.RecordCount = 0 then return nil
 		  
-		  dim tbl_phone_numbers as new DataFile.tbl_phone_numbers
-		  tbl_phone_numbers.ReadRecord(rs)
-		  return tbl_phone_numbers
+		  dim tbl_contactables_link as new DataFile.tbl_contactables_link
+		  tbl_contactables_link.ReadRecord(rs)
+		  return tbl_contactables_link
 		  
 		End Function
 	#tag EndMethod
 
 	#tag Method, Flags = &h0
-		Shared Function List(stmt as PreparedSQLStatement) As DataFile.tbl_phone_numbers()
+		Shared Function List(stmt as PreparedSQLStatement) As DataFile.tbl_contactables_link()
 		  //Note: You should use this method if your query contains user entered data. Using this method will help prevent SQL injection attacks
-		  dim aro() as DataFile.tbl_phone_numbers
+		  dim aro() as DataFile.tbl_contactables_link
 		  
 		  dim rs as recordset = stmt.SQLSelect
 		  If DB.error then
@@ -67,7 +67,7 @@ Inherits DataFile.ActiveRecordBase
 		  end
 		  
 		  while rs.eof = false
-		    dim oRecord as new DataFile.tbl_phone_numbers
+		    dim oRecord as new DataFile.tbl_contactables_link
 		    oRecord.ReadRecord(rs)
 		    aro.Append oRecord
 		    rs.MoveNext
@@ -78,14 +78,14 @@ Inherits DataFile.ActiveRecordBase
 	#tag EndMethod
 
 	#tag Method, Flags = &h0
-		Shared Function List(sCriteria as string = "", sOrder as string = "", iOffset as Integer = -1) As DataFile.tbl_phone_numbers()
+		Shared Function List(sCriteria as string = "", sOrder as string = "", iOffset as Integer = -1) As DataFile.tbl_contactables_link()
 		  //Note: You should not use this method if your query contains user entered data.
 		  //Using this method with user entered data could expose you to SQL injection attacks.
-		  dim aro() as DataFile.tbl_phone_numbers
+		  dim aro() as DataFile.tbl_contactables_link
 		  dim ars() as string
 		  
 		  
-		  ars.append DataFile.tbl_phone_numbers.BaseSQL
+		  ars.append DataFile.tbl_contactables_link.BaseSQL
 		  if sCriteria.Trim <> "" then
 		    ars.append "WHERE " + sCriteria
 		  end if
@@ -109,7 +109,7 @@ Inherits DataFile.ActiveRecordBase
 		  end
 		  
 		  do until rs.EOF
-		    dim oRecord as new DataFile.tbl_phone_numbers
+		    dim oRecord as new DataFile.tbl_contactables_link
 		    oRecord.ReadRecord(rs)
 		    
 		    aro.Append(oRecord)
@@ -145,7 +145,7 @@ Inherits DataFile.ActiveRecordBase
 		  dim ars() as string
 		  
 		  
-		  ars.append DataFile.tbl_phone_numbers.BaseSQL(True)
+		  ars.append DataFile.tbl_contactables_link.BaseSQL(True)
 		  if sCriteria<>"" then
 		    ars.append "WHERE " + sCriteria
 		  end if
@@ -164,62 +164,20 @@ Inherits DataFile.ActiveRecordBase
 
 
 	#tag Property, Flags = &h0
-		bprimary_phone As Boolean
+		ifkcontactables_child As Int64
 	#tag EndProperty
 
 	#tag Property, Flags = &h0
-		ifkcontactables As Int64
-	#tag EndProperty
-
-	#tag Property, Flags = &h0
-		snumber_type As String
-	#tag EndProperty
-
-	#tag Property, Flags = &h0
-		sphone_number As String
+		ifkcontactables_parent As Int64
 	#tag EndProperty
 
 
 	#tag ViewBehavior
 		#tag ViewProperty
-			Name="idiscount_amount"
+			Name="ifkcontactables_child"
 			Group="Behavior"
-			Type="Integer"
-		#tag EndViewProperty
-		#tag ViewProperty
-			Name="idiscount_percent"
-			Group="Behavior"
-			Type="Integer"
-		#tag EndViewProperty
-		#tag ViewProperty
-			Name="idiscount_total"
-			Group="Behavior"
-			Type="Integer"
-		#tag EndViewProperty
-		#tag ViewProperty
-			Name="ieipl_balance"
-			Group="Behavior"
-			Type="Integer"
-		#tag EndViewProperty
-		#tag ViewProperty
-			Name="ieipl_grand_total"
-			Group="Behavior"
-			Type="Integer"
-		#tag EndViewProperty
-		#tag ViewProperty
-			Name="ieipl_number"
-			Group="Behavior"
-			Type="Integer"
-		#tag EndViewProperty
-		#tag ViewProperty
-			Name="ieipl_subtotal"
-			Group="Behavior"
-			Type="Integer"
-		#tag EndViewProperty
-		#tag ViewProperty
-			Name="ieipl_total_paid"
-			Group="Behavior"
-			Type="Integer"
+			Type="String"
+			EditorType="MultiLineEditor"
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="Index"
@@ -232,11 +190,6 @@ Inherits DataFile.ActiveRecordBase
 			Name="ipkid"
 			Group="Behavior"
 			Type="Int64"
-		#tag EndViewProperty
-		#tag ViewProperty
-			Name="itax_total"
-			Group="Behavior"
-			Type="Integer"
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="LastInsertID"
@@ -257,19 +210,43 @@ Inherits DataFile.ActiveRecordBase
 			Type="String"
 		#tag EndViewProperty
 		#tag ViewProperty
-			Name="sdue_date"
+			Name="saddress_country"
 			Group="Behavior"
 			Type="String"
 			EditorType="MultiLineEditor"
 		#tag EndViewProperty
 		#tag ViewProperty
-			Name="seipl_type"
+			Name="saddress_line1"
 			Group="Behavior"
 			Type="String"
 			EditorType="MultiLineEditor"
 		#tag EndViewProperty
 		#tag ViewProperty
-			Name="sfkevents"
+			Name="saddress_line2"
+			Group="Behavior"
+			Type="String"
+			EditorType="MultiLineEditor"
+		#tag EndViewProperty
+		#tag ViewProperty
+			Name="saddress_state"
+			Group="Behavior"
+			Type="String"
+			EditorType="MultiLineEditor"
+		#tag EndViewProperty
+		#tag ViewProperty
+			Name="saddress_zip"
+			Group="Behavior"
+			Type="String"
+			EditorType="MultiLineEditor"
+		#tag EndViewProperty
+		#tag ViewProperty
+			Name="sfkconven"
+			Group="Behavior"
+			Type="String"
+			EditorType="MultiLineEditor"
+		#tag EndViewProperty
+		#tag ViewProperty
+			Name="sphone_number"
 			Group="Behavior"
 			Type="String"
 			EditorType="MultiLineEditor"
@@ -293,16 +270,34 @@ Inherits DataFile.ActiveRecordBase
 			EditorType="MultiLineEditor"
 		#tag EndViewProperty
 		#tag ViewProperty
-			Name="sshipping_method"
+			Name="Super"
+			Visible=true
+			Group="ID"
+			Type="String"
+		#tag EndViewProperty
+		#tag ViewProperty
+			Name="svenue_company"
 			Group="Behavior"
 			Type="String"
 			EditorType="MultiLineEditor"
 		#tag EndViewProperty
 		#tag ViewProperty
-			Name="Super"
-			Visible=true
-			Group="ID"
+			Name="svenue_email"
+			Group="Behavior"
 			Type="String"
+			EditorType="MultiLineEditor"
+		#tag EndViewProperty
+		#tag ViewProperty
+			Name="svenue_name"
+			Group="Behavior"
+			Type="String"
+			EditorType="MultiLineEditor"
+		#tag EndViewProperty
+		#tag ViewProperty
+			Name="svenue_type"
+			Group="Behavior"
+			Type="String"
+			EditorType="MultiLineEditor"
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="Top"
