@@ -163,7 +163,7 @@ Inherits DataFile.ActiveRecordBase
 	#tag EndMethod
 
 	#tag Method, Flags = &h0
-		Sub ListGrouped(sCriteria as String = "", sOrder as String = "", sGrouBy as String = "")
+		Sub ListGrouped(sCriteria as String = "", sOrder as String = "", sGroupBy as String = "")
 		  dim FullList() as DataFile.tbl_contactables
 		  
 		  
@@ -178,6 +178,23 @@ Inherits DataFile.ActiveRecordBase
 		  dim LoopIndex as integer
 		  For Each sGroupFieldName as String In s1()
 		    
+		    dim sCurValue, sCurGroup as String
+		    
+		    // Split the sGroupFieldName into its seperate table.field parts
+		    dim sField, sTable as String
+		    If sGroupFieldName.InStr(".") > 0 Then
+		      ' there is a period in the sGroupFieldName meaning there is both a table name and field name
+		      dim s87() as string = sGroupFieldName.Split(".")
+		      If s87.Ubound = 1 Then
+		        sTable = s87(0)
+		        sField = s87(1)
+		      Else
+		        sField = sGroupFieldName
+		      End If
+		    Else
+		      sField = sGroupFieldName
+		    End If
+		    
 		    dim CurrentRecordList() as DataFile.tbl_contactables
 		    If LoopIndex = 0 Then
 		      CurrentRecordList() = FullList
@@ -188,52 +205,92 @@ Inherits DataFile.ActiveRecordBase
 		      
 		      dim RelatedPhones() as DataFile.tbl_phone_numbers
 		      dim RelatedEmails() as DataFile.tbl_email_addresses
-		      dim jsRecordFieldValues as JSONItem
-		      dim sRecordKeys() as String
+		      dim jsFieldValues as JSONItem
+		      dim sKeys() as String
 		      
-		      // Get the Field names and values out of the current record
-		      jsRecordFieldValues = Record.GetMyFieldValues(True)
-		      sRecordKeys() = jsRecordFieldValues.Names
-		      
-		      // Check if this record belongs in a new group or the current one
-		      
-		      
-		      
-		      
-		      
-		      
-		      
-		      
-		      
-		      
-		      
-		      
-		      
-		      
-		      
-		      
-		      
-		      
-		      
-		      
-		      
-		      
-		      
-		      
-		      
-		      
-		      
-		      
-		      
-		      
-		      
-		      
-		      
-		      
-		      
-		      
-		      
-		      
+		      // Check if this group field is from a related table
+		      If sTable <> "" Then
+		        'it is
+		        
+		        // Check which table it is and get a copy of the primary record
+		        If sTable = "tbl_phone_numbers" Then
+		          dim RelatedRecords() as DataFile.tbl_phone_numbers
+		          dim RelatedRecord as DataFile.tbl_phone_numbers
+		          RelatedRecords = DataFile.tbl_phone_numbers.List("fkcontactables_parent = " + Record.ipkid.ToText + " And primary_phone = True")
+		          If RelatedRecords.Ubound = -1 Then
+		            RelatedRecords = DataFile.tbl_phone_numbers.List("fkcontactables_parent = " + Record.ipkid.ToText)
+		          End If
+		          If RelatedRecords.Ubound <> -1 Then
+		            RelatedRecord = RelatedRecords(0)
+		            jsFieldValues = RelatedRecord.GetMyFieldValues(True)
+		          End If
+		          
+		        ElseIf sTable = "tbl_email_addresses" Then
+		          dim RelatedRecords(), RelatedRecord as DataFile.tbl_email_addresses
+		          RelatedRecords = DataFile.tbl_email_addresses.List("fkcontactables_parent = " + Record.ipkid.ToText + " And primary_phone = True")
+		          If RelatedRecords.Ubound = -1 Then
+		            RelatedRecords = DataFile.tbl_email_addresses.List("fkcontactables_parent = " + Record.ipkid.ToText)
+		          End If
+		          If RelatedRecords.Ubound <> -1 Then
+		            RelatedRecord = RelatedRecords(0)
+		            jsFieldValues = RelatedRecord.GetMyFieldValues(True)
+		          End If
+		          
+		        Else
+		          jsFieldValues = Record.GetMyFieldValues(True)
+		        End If 
+		        
+		        // Get the keys in the json item
+		        sKeys() = jsFieldValues.Names
+		        
+		        // Check to be sure that the field is in the current jsonitem
+		        If sKeys.IndexOf(sField) <> 0 Then
+		          ' the field it in the jsonitem
+		          sCurValue = jsFieldValues.Value(sField)
+		          
+		          // Check if this record belongs in a new group or the current one
+		          If sCurValue <> "" And sCurValue = sCurGroup Then
+		            ' it belongs in the 
+		            
+		            
+		            
+		            
+		            
+		            
+		            
+		          End If
+		    Next
+		  Next
+		  
+		  
+		  
+		  
+		  
+		  
+		  
+		  
+		  
+		  
+		  
+		  
+		  
+		  
+		  
+		  
+		  
+		  
+		  
+		  
+		  
+		  
+		  
+		  
+		  
+		  
+		  
+		  
+		  
+		  
 		End Sub
 	#tag EndMethod
 
@@ -302,6 +359,11 @@ Inherits DataFile.ActiveRecordBase
 
 
 	#tag ViewBehavior
+		#tag ViewProperty
+			Name="bhide"
+			Group="Behavior"
+			Type="Boolean"
+		#tag EndViewProperty
 		#tag ViewProperty
 			Name="Index"
 			Visible=true
@@ -375,13 +437,13 @@ Inherits DataFile.ActiveRecordBase
 			EditorType="MultiLineEditor"
 		#tag EndViewProperty
 		#tag ViewProperty
-			Name="scontact_email"
+			Name="sfkconven"
 			Group="Behavior"
 			Type="String"
 			EditorType="MultiLineEditor"
 		#tag EndViewProperty
 		#tag ViewProperty
-			Name="sfkconven"
+			Name="sindv_bus_ven"
 			Group="Behavior"
 			Type="String"
 			EditorType="MultiLineEditor"
@@ -405,12 +467,6 @@ Inherits DataFile.ActiveRecordBase
 			EditorType="MultiLineEditor"
 		#tag EndViewProperty
 		#tag ViewProperty
-			Name="sphone_number"
-			Group="Behavior"
-			Type="String"
-			EditorType="MultiLineEditor"
-		#tag EndViewProperty
-		#tag ViewProperty
 			Name="srow_created"
 			Group="Behavior"
 			Type="String"
@@ -424,6 +480,12 @@ Inherits DataFile.ActiveRecordBase
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="srow_username"
+			Group="Behavior"
+			Type="String"
+			EditorType="MultiLineEditor"
+		#tag EndViewProperty
+		#tag ViewProperty
+			Name="stype"
 			Group="Behavior"
 			Type="String"
 			EditorType="MultiLineEditor"

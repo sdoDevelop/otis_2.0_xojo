@@ -120,12 +120,14 @@ Begin Window winMain_1TabPanel
          AutoDeactivate  =   True
          BackColor       =   &cFFFFFF00
          Backdrop        =   0
+         bTopLevelOnly   =   False
          Enabled         =   True
          EraseBackground =   True
          HasBackColor    =   False
          Height          =   421
          HelpTag         =   ""
          InitialParent   =   "tbMainWindow"
+         LastSearchValue =   ""
          Left            =   10
          LockBottom      =   False
          LockedInPosition=   False
@@ -212,6 +214,16 @@ End
 	#tag Event
 		Sub Open()
 		  
+		  break
+		  
+		  dim randomthing as BKS_ActiveRecord.Base
+		  dim baselistthting as New BKS_ActiveRecord.BaseList
+		  
+		  randomthing = baselistthting.Operator_Subscript(0)
+		  
+		  if 1 = 1 then
+		    
+		  end if
 		End Sub
 	#tag EndEvent
 
