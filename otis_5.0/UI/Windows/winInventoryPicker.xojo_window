@@ -30,7 +30,7 @@ Begin Window winInventoryPicker
       AcceptFocus     =   False
       AcceptTabs      =   True
       AutoDeactivate  =   True
-      BackColor       =   &cFFFF00FF
+      BackColor       =   &cFF00FFFF
       Backdrop        =   0
       CancelButtonText=   "Cancel"
       Enabled         =   True
@@ -61,7 +61,7 @@ Begin Window winInventoryPicker
       AcceptFocus     =   True
       AcceptTabs      =   True
       AutoDeactivate  =   True
-      BackColor       =   &cFFFFFF00
+      BackColor       =   &cFFFF00FF
       Backdrop        =   0
       bTopLevelOnly   =   False
       Enabled         =   True

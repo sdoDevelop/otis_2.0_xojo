@@ -29,9 +29,9 @@ Begin ContainerControl contInventory
       AcceptFocus     =   False
       AcceptTabs      =   True
       AutoDeactivate  =   True
-      BackColor       =   &cFFFFFF00
+      BackColor       =   &cFFFF00FF
       Backdrop        =   0
-      CellBackColor   =   &cFFFFFF00
+      CellBackColor   =   &cFFFF00FF
       Enabled         =   True
       EraseBackground =   True
       GridLinesColor  =   &c00000000
@@ -39,6 +39,7 @@ Begin ContainerControl contInventory
       HasHeading      =   True
       Height          =   415
       HelpTag         =   ""
+      Index           =   -2147483648
       InitialParent   =   ""
       Left            =   0
       LockBottom      =   True

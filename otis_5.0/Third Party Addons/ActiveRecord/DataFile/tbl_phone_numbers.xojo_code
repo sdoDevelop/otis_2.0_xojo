@@ -182,44 +182,14 @@ Inherits DataFile.ActiveRecordBase
 
 	#tag ViewBehavior
 		#tag ViewProperty
-			Name="idiscount_amount"
+			Name="bprimary_phone"
 			Group="Behavior"
-			Type="Integer"
+			Type="Boolean"
 		#tag EndViewProperty
 		#tag ViewProperty
-			Name="idiscount_percent"
+			Name="ifkcontactables"
 			Group="Behavior"
-			Type="Integer"
-		#tag EndViewProperty
-		#tag ViewProperty
-			Name="idiscount_total"
-			Group="Behavior"
-			Type="Integer"
-		#tag EndViewProperty
-		#tag ViewProperty
-			Name="ieipl_balance"
-			Group="Behavior"
-			Type="Integer"
-		#tag EndViewProperty
-		#tag ViewProperty
-			Name="ieipl_grand_total"
-			Group="Behavior"
-			Type="Integer"
-		#tag EndViewProperty
-		#tag ViewProperty
-			Name="ieipl_number"
-			Group="Behavior"
-			Type="Integer"
-		#tag EndViewProperty
-		#tag ViewProperty
-			Name="ieipl_subtotal"
-			Group="Behavior"
-			Type="Integer"
-		#tag EndViewProperty
-		#tag ViewProperty
-			Name="ieipl_total_paid"
-			Group="Behavior"
-			Type="Integer"
+			Type="Int64"
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="Index"
@@ -232,11 +202,6 @@ Inherits DataFile.ActiveRecordBase
 			Name="ipkid"
 			Group="Behavior"
 			Type="Int64"
-		#tag EndViewProperty
-		#tag ViewProperty
-			Name="itax_total"
-			Group="Behavior"
-			Type="Integer"
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="LastInsertID"
@@ -257,19 +222,13 @@ Inherits DataFile.ActiveRecordBase
 			Type="String"
 		#tag EndViewProperty
 		#tag ViewProperty
-			Name="sdue_date"
+			Name="snumber_type"
 			Group="Behavior"
 			Type="String"
 			EditorType="MultiLineEditor"
 		#tag EndViewProperty
 		#tag ViewProperty
-			Name="seipl_type"
-			Group="Behavior"
-			Type="String"
-			EditorType="MultiLineEditor"
-		#tag EndViewProperty
-		#tag ViewProperty
-			Name="sfkevents"
+			Name="sphone_number"
 			Group="Behavior"
 			Type="String"
 			EditorType="MultiLineEditor"
@@ -288,12 +247,6 @@ Inherits DataFile.ActiveRecordBase
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="srow_username"
-			Group="Behavior"
-			Type="String"
-			EditorType="MultiLineEditor"
-		#tag EndViewProperty
-		#tag ViewProperty
-			Name="sshipping_method"
 			Group="Behavior"
 			Type="String"
 			EditorType="MultiLineEditor"

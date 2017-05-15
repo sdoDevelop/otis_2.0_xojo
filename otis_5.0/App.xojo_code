@@ -308,6 +308,7 @@ Inherits Application
 		#tag ViewProperty
 			Name="GMTOffset"
 			Group="Behavior"
+			InitialValue="-6"
 			Type="Integer"
 		#tag EndViewProperty
 		#tag ViewProperty

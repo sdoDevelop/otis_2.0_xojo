@@ -47,6 +47,7 @@ Begin ContainerControl contEvent
       Selectable      =   False
       TabIndex        =   0
       TabPanelIndex   =   0
+      TabStop         =   True
       Text            =   "Event Name"
       TextAlign       =   2
       TextColor       =   &c00000000
@@ -64,7 +65,7 @@ Begin ContainerControl contEvent
       Alignment       =   0
       AutoDeactivate  =   True
       AutomaticallyCheckSpelling=   False
-      BackColor       =   &cFFFFFF00
+      BackColor       =   &cFFFF00FF
       Bold            =   False
       Border          =   True
       CueText         =   ""
@@ -123,6 +124,7 @@ Begin ContainerControl contEvent
       Selectable      =   False
       TabIndex        =   2
       TabPanelIndex   =   0
+      TabStop         =   True
       Text            =   "Accont Manager"
       TextAlign       =   2
       TextColor       =   &c00000000
@@ -140,7 +142,7 @@ Begin ContainerControl contEvent
       Alignment       =   0
       AutoDeactivate  =   True
       AutomaticallyCheckSpelling=   False
-      BackColor       =   &cFFFFFF00
+      BackColor       =   &cFFFF00FF
       Bold            =   False
       Border          =   True
       CueText         =   ""
@@ -199,6 +201,7 @@ Begin ContainerControl contEvent
       Selectable      =   False
       TabIndex        =   4
       TabPanelIndex   =   0
+      TabStop         =   True
       Text            =   "Start"
       TextAlign       =   2
       TextColor       =   &c00000000
@@ -233,6 +236,7 @@ Begin ContainerControl contEvent
       Selectable      =   False
       TabIndex        =   6
       TabPanelIndex   =   0
+      TabStop         =   True
       Text            =   "End"
       TextAlign       =   2
       TextColor       =   &c00000000
@@ -267,6 +271,7 @@ Begin ContainerControl contEvent
       Selectable      =   False
       TabIndex        =   8
       TabPanelIndex   =   0
+      TabStop         =   True
       Text            =   "Load-In"
       TextAlign       =   2
       TextColor       =   &c00000000
@@ -301,6 +306,7 @@ Begin ContainerControl contEvent
       Selectable      =   False
       TabIndex        =   10
       TabPanelIndex   =   0
+      TabStop         =   True
       Text            =   "Load-Out"
       TextAlign       =   2
       TextColor       =   &c00000000
@@ -335,6 +341,7 @@ Begin ContainerControl contEvent
       Selectable      =   False
       TabIndex        =   12
       TabPanelIndex   =   0
+      TabStop         =   True
       Text            =   "Details"
       TextAlign       =   2
       TextColor       =   &c00000000
@@ -390,6 +397,7 @@ Begin ContainerControl contEvent
       DateFormat      =   0
       Day             =   0
       DropDownIcon    =   0
+      DropDownIconRetina=   0
       EmptyDates      =   True
       Enabled         =   True
       Height          =   23
@@ -468,6 +476,7 @@ Begin ContainerControl contEvent
       DateFormat      =   0
       Day             =   0
       DropDownIcon    =   0
+      DropDownIconRetina=   0
       EmptyDates      =   True
       Enabled         =   True
       Height          =   23
@@ -546,6 +555,7 @@ Begin ContainerControl contEvent
       DateFormat      =   0
       Day             =   0
       DropDownIcon    =   0
+      DropDownIconRetina=   0
       EmptyDates      =   True
       Enabled         =   True
       Height          =   23
@@ -624,6 +634,7 @@ Begin ContainerControl contEvent
       DateFormat      =   0
       Day             =   0
       DropDownIcon    =   0
+      DropDownIconRetina=   0
       EmptyDates      =   True
       Enabled         =   True
       Height          =   23
@@ -664,7 +675,7 @@ Begin ContainerControl contEvent
       Alignment       =   0
       AutoDeactivate  =   True
       AutomaticallyCheckSpelling=   True
-      BackColor       =   &cFFFFFF00
+      BackColor       =   &cFFFF00FF
       Bold            =   False
       Border          =   True
       DataField       =   ""
@@ -710,7 +721,7 @@ Begin ContainerControl contEvent
       AcceptFocus     =   True
       AcceptTabs      =   True
       AutoDeactivate  =   True
-      BackColor       =   &c40004000
+      BackColor       =   &c00400040
       Backdrop        =   0
       bJustChildren   =   False
       bWithButtons    =   False
@@ -719,6 +730,7 @@ Begin ContainerControl contEvent
       HasBackColor    =   False
       Height          =   182
       HelpTag         =   ""
+      Index           =   -2147483648
       InitialParent   =   ""
       iParentID       =   ""
       LastSearchValue =   ""
@@ -763,6 +775,7 @@ Begin ContainerControl contEvent
       Selectable      =   False
       TabIndex        =   26
       TabPanelIndex   =   0
+      TabStop         =   True
       Text            =   "Child Events"
       TextAlign       =   2
       TextColor       =   &c00000000
@@ -797,6 +810,7 @@ Begin ContainerControl contEvent
       Selectable      =   False
       TabIndex        =   27
       TabPanelIndex   =   0
+      TabStop         =   True
       Text            =   "New Item Postfix"
       TextAlign       =   0
       TextColor       =   &c00000000
@@ -845,7 +859,7 @@ Begin ContainerControl contEvent
       Alignment       =   0
       AutoDeactivate  =   True
       AutomaticallyCheckSpelling=   False
-      BackColor       =   &cFFFFFF00
+      BackColor       =   &cFFFF00FF
       Bold            =   False
       Border          =   True
       CueText         =   ""
@@ -904,6 +918,7 @@ Begin ContainerControl contEvent
       Selectable      =   False
       TabIndex        =   30
       TabPanelIndex   =   0
+      TabStop         =   True
       Text            =   "Hide"
       TextAlign       =   2
       TextColor       =   &c00000000

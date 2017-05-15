@@ -192,11 +192,6 @@ Inherits DataFile.ActiveRecordBase
 			Type="Int64"
 		#tag EndViewProperty
 		#tag ViewProperty
-			Name="ifkVenues"
-			Group="Behavior"
-			Type="Int64"
-		#tag EndViewProperty
-		#tag ViewProperty
 			Name="Index"
 			Visible=true
 			Group="ID"
@@ -230,11 +225,13 @@ Inherits DataFile.ActiveRecordBase
 			Name="semail_address"
 			Group="Behavior"
 			Type="String"
+			EditorType="MultiLineEditor"
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="semail_type"
 			Group="Behavior"
 			Type="String"
+			EditorType="MultiLineEditor"
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="srow_created"

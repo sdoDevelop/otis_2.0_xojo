@@ -29,9 +29,9 @@ Begin ContainerControl contFirmware
       AcceptFocus     =   False
       AcceptTabs      =   True
       AutoDeactivate  =   True
-      BackColor       =   &cFFFFFF00
+      BackColor       =   &cFFFF00FF
       Backdrop        =   0
-      CellBackColor   =   &cFFFFFF00
+      CellBackColor   =   &cFFFF00FF
       Enabled         =   True
       EraseBackground =   True
       GridLinesColor  =   &c00000000
@@ -160,6 +160,7 @@ Begin ContainerControl contFirmware
       DateFormat      =   0
       Day             =   0
       DropDownIcon    =   0
+      DropDownIconRetina=   0
       EmptyDates      =   True
       Enabled         =   False
       Height          =   23
@@ -340,7 +341,7 @@ Begin ContainerControl contFirmware
       Alignment       =   0
       AutoDeactivate  =   True
       AutomaticallyCheckSpelling=   False
-      BackColor       =   &cFFFFFF00
+      BackColor       =   &cFFFF00FF
       Bold            =   False
       Border          =   True
       CueText         =   ""
@@ -418,7 +419,7 @@ Begin ContainerControl contFirmware
       Alignment       =   0
       AutoDeactivate  =   True
       AutomaticallyCheckSpelling=   True
-      BackColor       =   &cFFFFFF00
+      BackColor       =   &cFFFF00FF
       Bold            =   False
       Border          =   True
       DataField       =   ""

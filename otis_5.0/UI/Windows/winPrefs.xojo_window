@@ -30,13 +30,14 @@ Begin Window winPrefs
       AcceptFocus     =   False
       AcceptTabs      =   False
       AutoDeactivate  =   True
-      BackColor       =   &cFFFFFF00
+      BackColor       =   &cFFFF00FF
       Backdrop        =   0
       Enabled         =   True
       EraseBackground =   False
       HasBackColor    =   False
       Height          =   27
       HelpTag         =   ""
+      Index           =   -2147483648
       InitialParent   =   ""
       Left            =   408
       LockBottom      =   True
@@ -76,6 +77,7 @@ Begin Window winPrefs
       Selectable      =   False
       TabIndex        =   1
       TabPanelIndex   =   0
+      TabStop         =   True
       Text            =   "Note: chkSUCheckAtStartup is an example of Getting/Setting preferences. \nCurrently in this project the preference does nothing....\nAgain, this is only an example."
       TextAlign       =   0
       TextColor       =   &c00000000

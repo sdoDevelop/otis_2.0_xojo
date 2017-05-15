@@ -163,140 +163,72 @@ Inherits DataFile.ActiveRecordBase
 	#tag EndMethod
 
 	#tag Method, Flags = &h0
-		Sub ListGrouped(sCriteria as String = "", sOrder as String = "", sGroupBy as String = "")
-		  dim FullList() as DataFile.tbl_contactables
+		Shared Sub ListGrouped(sCriteria as string = "", sOrder as string = "", sGroupBy as String = "")
+		  dim jsMaster as New JSONItem
+		  dim oRecordList() as DataFile.tbl_contactables
 		  
 		  
-		  // Get the full list of events from the database
-		  FullList() = DataFile.tbl_contactables.List(sCriteria, sOrder)
+		  // Lets get the complete list of records from the database
+		  oRecordList() = DataFile.tbl_contactables.List(sCriteria, sOrder)
 		  
-		  
-		  
-		  // Now we loop through each field that we want to group by
-		  dim s1() as String
-		  s1() = Split(sGroupBy, ",")
-		  dim LoopIndex as integer
-		  For Each sGroupFieldName as String In s1()
+		  // now we need to loop through each one of the records and startp putting them in there place
+		  dim sGroupByList() as string = sGroupBy.split(", ")
+		  For Each oRecord as DataFile.tbl_contactables In oRecordList()
 		    
-		    dim sCurValue, sCurGroup as String
+		    dim jsFieldValues as JSONItem = oRecord.GetMyFieldValues(True)
 		    
-		    // Split the sGroupFieldName into its seperate table.field parts
-		    dim sField, sTable as String
-		    If sGroupFieldName.InStr(".") > 0 Then
-		      ' there is a period in the sGroupFieldName meaning there is both a table name and field name
-		      dim s87() as string = sGroupFieldName.Split(".")
-		      If s87.Ubound = 1 Then
-		        sTable = s87(0)
-		        sField = s87(1)
+		    dim jsCurrent() as JSONItem 
+		    jsCurrent(0) = jsMaster
+		    For idx1 as integer = 0 To sGroupByList.Ubound
+		      
+		      dim sGroupField as string = sGroupByList(idx1)
+		      dim n3 as integer = jsCurrent.Ubound
+		      dim sGroupValue as Variant =  jsFieldValues.Value(sGroupField)
+		      
+		      // Check if this record fits into any existing groups
+		      If jsCurrent(n3).Names.IndexOf( sGroupValue ) > -1 Then
+		        ' there is a place for this record at this level
+		        
+		        ' now we check if the value of the current level group is a jsonitem, array, or s"none"
+		        If jsCurrent(n3).Value( sGroupValue ) IsA JSONItem Then
+		          ' we must dig depper into jsonitems
+		          
+		          jsCurrent.Append( jsCurrent(n3).Value( sGroupValue )
+		          Continue
+		          
+		        Elseif jsCurrent(n3).Value( sGroupValue ) IsA DataFile.tbl_contactables Then
+		          ' we can put the record here
+		          
+		          // pull the array of records from the value
+		          dim oRecords() as DataFile.tbl_contactables
+		          oRecords() = jsCurrent(n3).Value(sGroupValue)
+		          oRecords.Append(oRecord)
+		          jsCurrent(n3).Value(sGroupValue) = oRecords
+		          
+		        ElseIf jsCurrent(n3).Value( sGroupValue ) IsA String THen
+		          If jsCurrent(n3).Value( sGroupValue ) = "none" THen
+		            
+		            dim oRecords() as DataFile.tbl_contactables
+		            oRecords.Append( oRecord )
+		            jsCurrent(n3).Value( sGroupValue ) = oRecords
+		            
+		          End If
+		          
+		        End If
+		        
 		      Else
-		        sField = sGroupFieldName
+		        ' There is no place created for this record at this level
+		        
+		        // we will create a new key for this unique value and mark it as s"none" 
+		        jsCurrent(n3).Value( sGroupValue ) = "none"
+		        
+		        // Now we will continue on with our looping with the index backtracked so we will try to categorize this record with this new key created
+		        idx1 = idx1 - 1
+		        Continue
+		        
 		      End If
-		    Else
-		      sField = sGroupFieldName
-		    End If
-		    
-		    dim CurrentRecordList() as DataFile.tbl_contactables
-		    If LoopIndex = 0 Then
-		      CurrentRecordList() = FullList
-		    End If
-		    
-		    // Now we loop through each record in the current record list
-		    For Each Record as DataFile.tbl_contactables In CurrentRecordList()
-		      
-		      dim RelatedPhones() as DataFile.tbl_phone_numbers
-		      dim RelatedEmails() as DataFile.tbl_email_addresses
-		      dim jsFieldValues as JSONItem
-		      dim sKeys() as String
-		      
-		      // Check if this group field is from a related table
-		      If sTable <> "" Then
-		        'it is
-		        
-		        // Check which table it is and get a copy of the primary record
-		        If sTable = "tbl_phone_numbers" Then
-		          dim RelatedRecords() as DataFile.tbl_phone_numbers
-		          dim RelatedRecord as DataFile.tbl_phone_numbers
-		          RelatedRecords = DataFile.tbl_phone_numbers.List("fkcontactables_parent = " + Record.ipkid.ToText + " And primary_phone = True")
-		          If RelatedRecords.Ubound = -1 Then
-		            RelatedRecords = DataFile.tbl_phone_numbers.List("fkcontactables_parent = " + Record.ipkid.ToText)
-		          End If
-		          If RelatedRecords.Ubound <> -1 Then
-		            RelatedRecord = RelatedRecords(0)
-		            jsFieldValues = RelatedRecord.GetMyFieldValues(True)
-		          End If
-		          
-		        ElseIf sTable = "tbl_email_addresses" Then
-		          dim RelatedRecords(), RelatedRecord as DataFile.tbl_email_addresses
-		          RelatedRecords = DataFile.tbl_email_addresses.List("fkcontactables_parent = " + Record.ipkid.ToText + " And primary_phone = True")
-		          If RelatedRecords.Ubound = -1 Then
-		            RelatedRecords = DataFile.tbl_email_addresses.List("fkcontactables_parent = " + Record.ipkid.ToText)
-		          End If
-		          If RelatedRecords.Ubound <> -1 Then
-		            RelatedRecord = RelatedRecords(0)
-		            jsFieldValues = RelatedRecord.GetMyFieldValues(True)
-		          End If
-		          
-		        Else
-		          jsFieldValues = Record.GetMyFieldValues(True)
-		        End If 
-		        
-		        // Get the keys in the json item
-		        sKeys() = jsFieldValues.Names
-		        
-		        // Check to be sure that the field is in the current jsonitem
-		        If sKeys.IndexOf(sField) <> 0 Then
-		          ' the field it in the jsonitem
-		          sCurValue = jsFieldValues.Value(sField)
-		          
-		          // Check if this record belongs in a new group or the current one
-		          If sCurValue <> "" And sCurValue = sCurGroup Then
-		            ' it belongs in the 
-		            
-		            
-		            
-		            
-		            
-		            
-		            
-		          End If
 		    Next
 		  Next
-		  
-		  
-		  
-		  
-		  
-		  
-		  
-		  
-		  
-		  
-		  
-		  
-		  
-		  
-		  
-		  
-		  
-		  
-		  
-		  
-		  
-		  
-		  
-		  
-		  
-		  
-		  
-		  
-		  
-		  
-		End Sub
-	#tag EndMethod
-
-	#tag Method, Flags = &h0
-		Shared Sub Untitled()
-		  
 		End Sub
 	#tag EndMethod
 

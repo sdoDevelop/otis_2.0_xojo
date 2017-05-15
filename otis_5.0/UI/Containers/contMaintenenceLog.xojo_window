@@ -29,9 +29,9 @@ Begin ContainerControl contMaintenenceLog
       AcceptFocus     =   False
       AcceptTabs      =   True
       AutoDeactivate  =   True
-      BackColor       =   &cFFFFFF00
+      BackColor       =   &cFFFF00FF
       Backdrop        =   0
-      CellBackColor   =   &cFFFFFF00
+      CellBackColor   =   &cFFFF00FF
       Enabled         =   True
       EraseBackground =   True
       GridLinesColor  =   &c00000000
@@ -39,6 +39,7 @@ Begin ContainerControl contMaintenenceLog
       HasHeading      =   True
       Height          =   392
       HelpTag         =   ""
+      Index           =   -2147483648
       InitialParent   =   ""
       Left            =   0
       LockBottom      =   True
@@ -61,7 +62,7 @@ Begin ContainerControl contMaintenenceLog
       Alignment       =   0
       AutoDeactivate  =   True
       AutomaticallyCheckSpelling=   False
-      BackColor       =   &cFFFFFF00
+      BackColor       =   &cFFFF00FF
       Bold            =   False
       Border          =   True
       CueText         =   ""
@@ -120,6 +121,7 @@ Begin ContainerControl contMaintenenceLog
       Selectable      =   False
       TabIndex        =   3
       TabPanelIndex   =   0
+      TabStop         =   True
       Text            =   "Work Summary"
       TextAlign       =   2
       TextColor       =   &c00000000
@@ -216,6 +218,7 @@ Begin ContainerControl contMaintenenceLog
       Selectable      =   False
       TabIndex        =   7
       TabPanelIndex   =   0
+      TabStop         =   True
       Text            =   "Entry Date"
       TextAlign       =   2
       TextColor       =   &c00000000
@@ -234,6 +237,7 @@ Begin ContainerControl contMaintenenceLog
       DateFormat      =   0
       Day             =   0
       DropDownIcon    =   0
+      DropDownIconRetina=   0
       EmptyDates      =   True
       Enabled         =   False
       Height          =   23
@@ -291,6 +295,7 @@ Begin ContainerControl contMaintenenceLog
       Selectable      =   False
       TabIndex        =   9
       TabPanelIndex   =   0
+      TabStop         =   True
       Text            =   "Exit Date"
       TextAlign       =   2
       TextColor       =   &c00000000
@@ -308,7 +313,7 @@ Begin ContainerControl contMaintenenceLog
       Alignment       =   0
       AutoDeactivate  =   True
       AutomaticallyCheckSpelling=   True
-      BackColor       =   &cFFFFFF00
+      BackColor       =   &cFFFF00FF
       Bold            =   False
       Border          =   True
       DataField       =   ""
@@ -372,6 +377,7 @@ Begin ContainerControl contMaintenenceLog
       Selectable      =   False
       TabIndex        =   11
       TabPanelIndex   =   0
+      TabStop         =   True
       Text            =   "Work Description"
       TextAlign       =   2
       TextColor       =   &c00000000
@@ -437,6 +443,7 @@ Begin ContainerControl contMaintenenceLog
       Selectable      =   False
       TabIndex        =   13
       TabPanelIndex   =   0
+      TabStop         =   True
       Text            =   "Type"
       TextAlign       =   2
       TextColor       =   &c00000000
@@ -455,6 +462,7 @@ Begin ContainerControl contMaintenenceLog
       DateFormat      =   0
       Day             =   0
       DropDownIcon    =   0
+      DropDownIconRetina=   0
       EmptyDates      =   True
       Enabled         =   False
       Height          =   23
@@ -512,6 +520,7 @@ Begin ContainerControl contMaintenenceLog
       Selectable      =   False
       TabIndex        =   14
       TabPanelIndex   =   0
+      TabStop         =   True
       Text            =   "Item Name"
       TextAlign       =   0
       TextColor       =   &c00000000
@@ -546,6 +555,7 @@ Begin ContainerControl contMaintenenceLog
       Selectable      =   False
       TabIndex        =   15
       TabPanelIndex   =   0
+      TabStop         =   True
       Text            =   "Serial #: "
       TextAlign       =   0
       TextColor       =   &c00000000
@@ -580,6 +590,7 @@ Begin ContainerControl contMaintenenceLog
       Selectable      =   False
       TabIndex        =   16
       TabPanelIndex   =   0
+      TabStop         =   True
       Text            =   "--"
       TextAlign       =   0
       TextColor       =   &c00000000
@@ -614,6 +625,7 @@ Begin ContainerControl contMaintenenceLog
       Selectable      =   False
       TabIndex        =   17
       TabPanelIndex   =   0
+      TabStop         =   True
       Text            =   "Cost"
       TextAlign       =   2
       TextColor       =   &c00000000
@@ -631,7 +643,7 @@ Begin ContainerControl contMaintenenceLog
       Alignment       =   0
       AutoDeactivate  =   True
       AutomaticallyCheckSpelling=   False
-      BackColor       =   &cFFFFFF00
+      BackColor       =   &cFFFF00FF
       Bold            =   False
       Border          =   True
       CueText         =   ""
@@ -691,6 +703,7 @@ Begin ContainerControl contMaintenenceLog
       Selectable      =   False
       TabIndex        =   19
       TabPanelIndex   =   0
+      TabStop         =   True
       Text            =   "Comments"
       TextAlign       =   2
       TextColor       =   &c00000000
@@ -708,7 +721,7 @@ Begin ContainerControl contMaintenenceLog
       Alignment       =   0
       AutoDeactivate  =   True
       AutomaticallyCheckSpelling=   True
-      BackColor       =   &cFFFFFF00
+      BackColor       =   &cFFFF00FF
       Bold            =   False
       Border          =   True
       DataField       =   ""

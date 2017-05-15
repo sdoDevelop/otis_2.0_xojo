@@ -75,6 +75,7 @@ Begin Window winMain_1TabPanel
       Scope           =   0
       TabIndex        =   2
       TabPanelIndex   =   0
+      TabStop         =   True
       Top             =   27
       Value           =   1
       Visible         =   True
@@ -83,7 +84,7 @@ Begin Window winMain_1TabPanel
          AcceptFocus     =   False
          AcceptTabs      =   True
          AutoDeactivate  =   True
-         BackColor       =   &cFFFFFF00
+         BackColor       =   &cFFFF00FF
          Backdrop        =   0
          bJustChildren   =   False
          bWithButtons    =   True
@@ -92,6 +93,7 @@ Begin Window winMain_1TabPanel
          HasBackColor    =   False
          Height          =   429
          HelpTag         =   ""
+         Index           =   -2147483648
          InitialParent   =   "tbMainWindow"
          iParentID       =   ""
          LastSearchValue =   ""
@@ -118,7 +120,7 @@ Begin Window winMain_1TabPanel
          AcceptFocus     =   True
          AcceptTabs      =   True
          AutoDeactivate  =   True
-         BackColor       =   &cFFFFFF00
+         BackColor       =   &cFFFF00FF
          Backdrop        =   0
          bTopLevelOnly   =   False
          Enabled         =   True
@@ -126,6 +128,7 @@ Begin Window winMain_1TabPanel
          HasBackColor    =   False
          Height          =   421
          HelpTag         =   ""
+         Index           =   -2147483648
          InitialParent   =   "tbMainWindow"
          LastSearchValue =   ""
          Left            =   10

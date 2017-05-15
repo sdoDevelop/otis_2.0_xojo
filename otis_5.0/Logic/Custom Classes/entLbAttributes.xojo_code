@@ -28,6 +28,11 @@ Protected Class entLbAttributes
 
 	#tag ViewBehavior
 		#tag ViewProperty
+			Name="iColumnCount"
+			Group="Behavior"
+			Type="Integer"
+		#tag EndViewProperty
+		#tag ViewProperty
 			Name="Index"
 			Visible=true
 			Group="ID"

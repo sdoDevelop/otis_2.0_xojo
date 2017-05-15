@@ -31,6 +31,7 @@ Begin ContainerControl contFirmwareLatest
       DateFormat      =   0
       Day             =   0
       DropDownIcon    =   0
+      DropDownIconRetina=   0
       EmptyDates      =   True
       Enabled         =   True
       Height          =   23
@@ -88,6 +89,7 @@ Begin ContainerControl contFirmwareLatest
       Selectable      =   False
       TabIndex        =   1
       TabPanelIndex   =   0
+      TabStop         =   True
       Text            =   "Updated On"
       TextAlign       =   2
       TextColor       =   &c00000000
@@ -122,6 +124,7 @@ Begin ContainerControl contFirmwareLatest
       Selectable      =   False
       TabIndex        =   2
       TabPanelIndex   =   0
+      TabStop         =   True
       Text            =   "Version"
       TextAlign       =   2
       TextColor       =   &c00000000
@@ -139,7 +142,7 @@ Begin ContainerControl contFirmwareLatest
       Alignment       =   0
       AutoDeactivate  =   True
       AutomaticallyCheckSpelling=   False
-      BackColor       =   &cFFFFFF00
+      BackColor       =   &cFFFF00FF
       Bold            =   False
       Border          =   True
       CueText         =   ""
