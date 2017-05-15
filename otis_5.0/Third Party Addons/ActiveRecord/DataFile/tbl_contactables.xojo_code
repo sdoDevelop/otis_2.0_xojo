@@ -163,10 +163,13 @@ Inherits DataFile.ActiveRecordBase
 	#tag EndMethod
 
 	#tag Method, Flags = &h0
-		Shared Sub ListGrouped(sCriteria as string = "", sOrder as string = "", sGroupBy as String = "")
+		Shared Function ListGrouped(sCriteria as string = "", sOrder as string = "", sGroupBy as String = "") As JSONItem
 		  dim jsMaster as New JSONItem
 		  dim oRecordList() as DataFile.tbl_contactables
 		  
+		  If sGroupBy = "" Then
+		    Return Nil
+		  End If
 		  
 		  // Lets get the complete list of records from the database
 		  oRecordList() = DataFile.tbl_contactables.List(sCriteria, sOrder)
@@ -175,15 +178,17 @@ Inherits DataFile.ActiveRecordBase
 		  dim sGroupByList() as string = sGroupBy.split(", ")
 		  For Each oRecord as DataFile.tbl_contactables In oRecordList()
 		    
+		    dim jsCurrent(0) as JSONItem 
+		    jsCurrent(0) = jsMaster
+		    
 		    dim jsFieldValues as JSONItem = oRecord.GetMyFieldValues(True)
 		    
-		    dim jsCurrent() as JSONItem 
-		    jsCurrent(0) = jsMaster
+		    
 		    For idx1 as integer = 0 To sGroupByList.Ubound
 		      
 		      dim sGroupField as string = sGroupByList(idx1)
 		      dim n3 as integer = jsCurrent.Ubound
-		      dim sGroupValue as Variant =  jsFieldValues.Value(sGroupField)
+		      dim sGroupValue as String =  jsFieldValues.Value(sGroupField)
 		      
 		      // Check if this record fits into any existing groups
 		      If jsCurrent(n3).Names.IndexOf( sGroupValue ) > -1 Then
@@ -193,7 +198,7 @@ Inherits DataFile.ActiveRecordBase
 		        If jsCurrent(n3).Value( sGroupValue ) IsA JSONItem Then
 		          ' we must dig depper into jsonitems
 		          
-		          jsCurrent.Append( jsCurrent(n3).Value( sGroupValue )
+		          jsCurrent.Append( jsCurrent(n3).Value( sGroupValue ) )
 		          Continue
 		          
 		        Elseif jsCurrent(n3).Value( sGroupValue ) IsA DataFile.tbl_contactables Then
@@ -205,13 +210,23 @@ Inherits DataFile.ActiveRecordBase
 		          oRecords.Append(oRecord)
 		          jsCurrent(n3).Value(sGroupValue) = oRecords
 		          
-		        ElseIf jsCurrent(n3).Value( sGroupValue ) IsA String THen
+		        Else
+		          'ElseIf jsCurrent(n3).Value( sGroupValue ) IsA String THen
 		          If jsCurrent(n3).Value( sGroupValue ) = "none" THen
 		            
-		            dim oRecords() as DataFile.tbl_contactables
-		            oRecords.Append( oRecord )
-		            jsCurrent(n3).Value( sGroupValue ) = oRecords
-		            
+		            // We need to check if this is the last group by field
+		            If idx1 = sGroupByList.Ubound Then
+		              // this is the last of the group by fields so we can put an array with this record in the value
+		              dim oRecords() as DataFile.tbl_contactables
+		              oRecords.Append( oRecord )
+		              jsCurrent(n3).Value( sGroupValue ) = oRecords
+		            Else
+		              // We still need to group by deeper
+		              // we will continue on the loop so as to advance the level of deepness by one group creating field
+		              jsCurrent(n3).Value( sGroupValue ) = New JSONItem
+		              jsCurrent.Append( jsCurrent(n3).Value( sGroupValue ) )
+		              Continue
+		            End If
 		          End If
 		          
 		        End If
@@ -229,7 +244,9 @@ Inherits DataFile.ActiveRecordBase
 		      End If
 		    Next
 		  Next
-		End Sub
+		  
+		  Return jsMaster
+		End Function
 	#tag EndMethod
 
 

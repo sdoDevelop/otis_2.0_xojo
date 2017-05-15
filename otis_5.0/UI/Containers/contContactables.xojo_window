@@ -101,7 +101,6 @@ Begin ContainerControl contContactables
       HasHeading      =   True
       Height          =   315
       HelpTag         =   ""
-      Index           =   -2147483648
       InitialParent   =   ""
       Left            =   0
       LockBottom      =   False

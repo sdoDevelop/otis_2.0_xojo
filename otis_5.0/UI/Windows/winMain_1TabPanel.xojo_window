@@ -219,14 +219,18 @@ End
 		  
 		  break
 		  
-		  dim randomthing as BKS_ActiveRecord.Base
-		  dim baselistthting as New BKS_ActiveRecord.BaseList
+		  dim thinsl as JSONItem
+		  thinsl = DataFile.tbl_contactables.ListGrouped("","name_first,name_last,job_title","name_first, name_last, job_title")
+		  dim s1 as string = thinsl.ToString
+		  dim s2 as string
+		  'dim randomthing as BKS_ActiveRecord.Base
+		  'dim baselistthting as New BKS_ActiveRecord.BaseList
 		  
-		  randomthing = baselistthting.Operator_Subscript(0)
+		  'randomthing = baselistthting.Operator_Subscript(0)
 		  
-		  if 1 = 1 then
-		    
-		  end if
+		  'if 1 = 1 then
+		  
+		  'end if
 		End Sub
 	#tag EndEvent
 
