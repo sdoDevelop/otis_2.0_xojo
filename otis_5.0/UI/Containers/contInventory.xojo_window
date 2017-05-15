@@ -583,7 +583,7 @@ End
 		    sCondition = sCondition + sConditionpar
 		  End If
 		  sOrder = sGroupByField
-		  dictGroupedItems = DataFile.tbl_inventory.ListGrouped(sCondition,sOrder)
+		  dictGroupedItems = DataFile.tbl_inventory.ListGrouped(sCondition,sOrder,sGroupByField)
 		  
 		  // Pull the name of the groups into an array
 		  dim sGroupNames() as String

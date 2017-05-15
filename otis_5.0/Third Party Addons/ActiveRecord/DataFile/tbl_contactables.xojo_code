@@ -163,8 +163,8 @@ Inherits DataFile.ActiveRecordBase
 	#tag EndMethod
 
 	#tag Method, Flags = &h0
-		Shared Function ListGrouped(sCriteria as string = "", sOrder as string = "", sGroupBy as String = "") As JSONItem
-		  dim jsMaster as New JSONItem
+		Shared Function ListGrouped(sCriteria as string = "", sOrder as string = "", sGroupBy as String = "") As Dictionary
+		  dim jsMaster as New Dictionary
 		  dim oRecordList() as DataFile.tbl_contactables
 		  
 		  If sGroupBy = "" Then
@@ -176,10 +176,11 @@ Inherits DataFile.ActiveRecordBase
 		  
 		  // now we need to loop through each one of the records and startp putting them in there place
 		  dim sGroupByList() as string = sGroupBy.split(", ")
+		  dim jsCurrent() as Dictionary
+		  dim idx_record as integer
 		  For Each oRecord as DataFile.tbl_contactables In oRecordList()
 		    
-		    dim jsCurrent(0) as JSONItem 
-		    jsCurrent(0) = jsMaster
+		    jsCurrent.append( jsMaster)
 		    
 		    dim jsFieldValues as JSONItem = oRecord.GetMyFieldValues(True)
 		    
@@ -191,11 +192,16 @@ Inherits DataFile.ActiveRecordBase
 		      dim sGroupValue as String =  jsFieldValues.Value(sGroupField)
 		      
 		      // Check if this record fits into any existing groups
-		      If jsCurrent(n3).Names.IndexOf( sGroupValue ) > -1 Then
+		      dim sArray() as string
+		      for Each vKey as Variant In jsCurrent(n3).Keys
+		        sArray.Append( str( vKey ) )
+		      Next
+		      'If jsCurrent(n3).Keys.IndexOf( sGroupValue ) > -1 Then
+		      If sArray.IndexOf( sGroupValue ) > -1 THen
 		        ' there is a place for this record at this level
 		        
 		        ' now we check if the value of the current level group is a jsonitem, array, or s"none"
-		        If jsCurrent(n3).Value( sGroupValue ) IsA JSONItem Then
+		        If jsCurrent(n3).Value( sGroupValue ) IsA Dictionary Then
 		          ' we must dig depper into jsonitems
 		          
 		          jsCurrent.Append( jsCurrent(n3).Value( sGroupValue ) )
@@ -204,13 +210,20 @@ Inherits DataFile.ActiveRecordBase
 		        Elseif jsCurrent(n3).Value( sGroupValue ) IsA DataFile.tbl_contactables Then
 		          ' we can put the record here
 		          
-		          // pull the array of records from the value
-		          dim oRecords() as DataFile.tbl_contactables
-		          oRecords() = jsCurrent(n3).Value(sGroupValue)
-		          oRecords.Append(oRecord)
-		          jsCurrent(n3).Value(sGroupValue) = oRecords
-		          
 		        Else
+		          
+		          #Pragma BreakOnExceptions Off
+		          Try
+		            // pull the array of records from the value
+		            dim oRecords() as DataFile.tbl_contactables
+		            oRecords() = jsCurrent(n3).Value(sGroupValue)
+		            oRecords.Append(oRecord)
+		            jsCurrent(n3).Value(sGroupValue) = oRecords
+		            Continue
+		          Exception
+		          End Try
+		          #Pragma BreakOnExceptions Default
+		          
 		          'ElseIf jsCurrent(n3).Value( sGroupValue ) IsA String THen
 		          If jsCurrent(n3).Value( sGroupValue ) = "none" THen
 		            
@@ -223,7 +236,7 @@ Inherits DataFile.ActiveRecordBase
 		            Else
 		              // We still need to group by deeper
 		              // we will continue on the loop so as to advance the level of deepness by one group creating field
-		              jsCurrent(n3).Value( sGroupValue ) = New JSONItem
+		              jsCurrent(n3).Value( sGroupValue ) = New Dictionary
 		              jsCurrent.Append( jsCurrent(n3).Value( sGroupValue ) )
 		              Continue
 		            End If
@@ -243,6 +256,9 @@ Inherits DataFile.ActiveRecordBase
 		        
 		      End If
 		    Next
+		    
+		    ReDim jsCurrent(-1)
+		    idx_record = idx_record + 1
 		  Next
 		  
 		  Return jsMaster

@@ -215,13 +215,13 @@ End
 
 #tag WindowCode
 	#tag Event
-		Sub Open()
+		Sub Activate()
 		  
 		  break
 		  
-		  dim thinsl as JSONItem
+		  dim thinsl as Dictionary
 		  thinsl = DataFile.tbl_contactables.ListGrouped("","name_first,name_last,job_title","name_first, name_last, job_title")
-		  dim s1 as string = thinsl.ToString
+		  'dim s1 as string = thinsl.ToString
 		  dim s2 as string
 		  'dim randomthing as BKS_ActiveRecord.Base
 		  'dim baselistthting as New BKS_ActiveRecord.BaseList
@@ -231,6 +231,12 @@ End
 		  'if 1 = 1 then
 		  
 		  'end if
+		End Sub
+	#tag EndEvent
+
+	#tag Event
+		Sub Open()
+		  
 		End Sub
 	#tag EndEvent
 
