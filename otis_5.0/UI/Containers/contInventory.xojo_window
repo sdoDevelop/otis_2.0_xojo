@@ -119,12 +119,31 @@ Begin ContainerControl contInventory
       Width           =   81
    End
    Begin SearchControl scSearchInventory
+      AutoDeactivate  =   True
+      Enabled         =   True
+      HasCancelButton =   False
+      HasMenu         =   False
       Height          =   32
+      HelpTag         =   ""
       Index           =   -2147483648
+      InitialParent   =   ""
       Left            =   540
+      LockBottom      =   False
       LockedInPosition=   False
+      LockLeft        =   False
+      LockRight       =   False
+      LockTop         =   False
+      MacBorderStyle  =   0
+      PlaceHolderText =   ""
+      Scope           =   0
+      SendSearchStringImmediately=   False
+      SendWholeSearchString=   False
+      TabIndex        =   3
       TabPanelIndex   =   0
+      TabStop         =   True
+      Text            =   ""
       Top             =   2
+      Visible         =   True
       Width           =   32
    End
    Begin CheckBox chbShowHidden
@@ -516,7 +535,7 @@ End
 	#tag EndMethod
 
 	#tag Method, Flags = &h0
-		Sub CreateRowTags(vRecords as Variant)
+		Sub CreateRowTags(vRecords as Dictionary)
 		  // vRecords will either be 
 		  // an array of ActiveRecordBase objects
 		  //      or
@@ -525,16 +544,63 @@ End
 		  // Check if vRecords is grouped or not
 		  Select Case vRecords
 		  Case IsA DataFile.ActiveRecordBase
-		    
-		    // Loop through each record
-		    For Each oRecord as DataFile.tbl_inventory In vRecords
-		      
-		    Next
-		    
+		    //Problem!!! should be in other form of method
+		    Return
 		  Case IsA Dictionary
 		    
 		    
 		    
+		  End Select
+		End Sub
+	#tag EndMethod
+
+	#tag Method, Flags = &h0
+		Sub CreateRowTags(vRecords() as Variant)
+		  // vRecords will either be 
+		  // an array of ActiveRecordBase objects
+		  //      or
+		  // a Dictionary or grouped records
+		  
+		  // Check if vRecords is grouped or not
+		  Select Case vRecords
+		  Case IsA Dictionary
+		    //Problem!!! should be in other form of method
+		    Return
+		  Case IsA DataFile.ActiveRecordBase
+		    
+		    // Loop through each record
+		    For Each oRecord as DataFile.tbl_inventory In vRecords
+		      
+		      // Set up some basic things for the rowtag that we know already
+		      dim oCurrentRowtag as New lbRowTag
+		      'put the record we are on into the rowtag
+		      oCurrentRowtag.vtblRecord = oRecord
+		      
+		      
+		      // This shit needs to go into the build rowtag step so we can self reciprocate it
+		      
+		      
+		      // Check to see if this record has any children
+		      dim arLinkArray() as DataFile.tbl_inventory_link
+		      dim arChildRecords() as DataFile.tbl_inventory
+		      arLinkArray = DataFile.tbl_inventory_link.List( "fkinventory_parent = " + oRecord.ipkid )
+		      
+		      // Loop through each link child
+		      If arLinkArray.Ubound <> -1 Then
+		        For Each oLinkRecord as DataFile.tbl_inventory_link
+		          
+		          // Get the child record
+		          dim oChild as DataFile.tbl_inventory = DataFile.tbl_inventory.FindByID( GetChildID(oLinkRecord) )
+		          If oChild <> Nil Then
+		            arChildRecords.Append(  oChild )
+		          End If
+		          
+		          
+		          
+		        Next
+		      End If
+		      
+		      
 		  End Select
 		End Sub
 	#tag EndMethod
@@ -662,6 +728,22 @@ End
 		    
 		  Wend
 		End Sub
+	#tag EndMethod
+
+	#tag Method, Flags = &h0
+		Function GetChildID(vLinkTableRecord as Variant) As int64
+		  dim vReturnArray() as Variant
+		  
+		  Select Case vTableRecord
+		  Case IsA DataFile.tbl_inventory_link Then
+		    dim oRecord as DataFile.tbl_inventory_link = vTableRecord
+		    Return oRecord.ifkinventory_child
+		    
+		  Case IsA DataFile.tbl_events Then
+		    
+		    
+		  End Select
+		End Function
 	#tag EndMethod
 
 	#tag Method, Flags = &h0
