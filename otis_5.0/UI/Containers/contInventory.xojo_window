@@ -39,7 +39,6 @@ Begin ContainerControl contInventory
       HasHeading      =   True
       Height          =   415
       HelpTag         =   ""
-      Index           =   -2147483648
       InitialParent   =   ""
       Left            =   0
       LockBottom      =   True
@@ -120,32 +119,13 @@ Begin ContainerControl contInventory
       Width           =   81
    End
    Begin SearchControl scSearchInventory
-      AutoDeactivate  =   True
-      Enabled         =   True
-      HasCancelButton =   True
-      HasMenu         =   False
-      Height          =   22
-      HelpTag         =   ""
+      Height          =   32
       Index           =   -2147483648
-      InitialParent   =   ""
       Left            =   540
-      LockBottom      =   False
       LockedInPosition=   False
-      LockLeft        =   False
-      LockRight       =   True
-      LockTop         =   True
-      MacBorderStyle  =   0
-      PlaceHolderText =   ""
-      Scope           =   0
-      SendSearchStringImmediately=   False
-      SendWholeSearchString=   False
-      TabIndex        =   8
       TabPanelIndex   =   0
-      TabStop         =   True
-      Text            =   ""
       Top             =   2
-      Visible         =   True
-      Width           =   160
+      Width           =   32
    End
    Begin CheckBox chbShowHidden
       AutoDeactivate  =   True
@@ -536,6 +516,30 @@ End
 	#tag EndMethod
 
 	#tag Method, Flags = &h0
+		Sub CreateRowTags(vRecords as Variant)
+		  // vRecords will either be 
+		  // an array of ActiveRecordBase objects
+		  //      or
+		  // a Dictionary or grouped records
+		  
+		  // Check if vRecords is grouped or not
+		  Select Case vRecords
+		  Case IsA DataFile.ActiveRecordBase
+		    
+		    // Loop through each record
+		    For Each oRecord as DataFile.tbl_inventory In vRecords
+		      
+		    Next
+		    
+		  Case IsA Dictionary
+		    
+		    
+		    
+		  End Select
+		End Sub
+	#tag EndMethod
+
+	#tag Method, Flags = &h0
 		Sub CreateZeroLevelRowTags(sConditionpar as string = "", sGroupByField as String = "item_department")
 		  dim dictGroupedItems as Dictionary
 		  
@@ -658,6 +662,60 @@ End
 		    
 		  Wend
 		End Sub
+	#tag EndMethod
+
+	#tag Method, Flags = &h0
+		Function GetRecordList() As Dictionary
+		  dim dictGroupedItems as Dictionary
+		  
+		  // Delete all rows in listbox
+		  lbItems.DeleteAllRows
+		  
+		  // Grab the search value
+		  dim sSearchValue as String
+		  sSearchValue = scSearchInventory.Text
+		  
+		  // Get the inventory items from the database grouped by sGroupByField
+		  dim sSearchCondition,sExcludeHiddenItemsCondition as String
+		  dim sCondition,sOrder as String
+		  
+		  // Set up the search condition
+		  If sSearchValue = "" Then
+		    sSearchCondition = ""
+		  Else
+		    sSearchCondition = "item_name Like '%" + sSearchValue + "%'"
+		  End If
+		  
+		  // Set up Hidden Condition
+		  dim HiddenValue as Boolean
+		  HiddenValue = chbShowHidden.Value
+		  If HiddenValue Then
+		    sExcludeHiddenItemsCondition = ""
+		  Else
+		    sExcludeHiddenItemsCondition = "(hide <> 1 Or hide Is Null)"
+		  End If
+		  
+		  // Set up the condition
+		  If sSearchCondition <> "" Then
+		    sCondition = sSearchCondition
+		    If sExcludeHiddenItemsCondition <> "" Then
+		      sCondition = sCondition + " And "
+		    End If
+		  End If
+		  If  sExcludeHiddenItemsCondition <> "" Then
+		    sCondition = sCondition + sExcludeHiddenItemsCondition
+		    If sConditionpar <> "" Then
+		      sCondition = sCondition + " And " 
+		    End If
+		  End If 
+		  If sConditionpar <> "" Then
+		    sCondition = sCondition + sConditionpar
+		  End If
+		  sOrder = sGroupByField
+		  dictGroupedItems = DataFile.tbl_inventory.ListGrouped(sCondition,sOrder,sGroupByField)
+		  
+		  Return dictGroupedItems
+		End Function
 	#tag EndMethod
 
 	#tag Method, Flags = &h0
