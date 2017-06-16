@@ -300,7 +300,7 @@ End
 		  
 		  
 		  // Populate the listbox
-		  CreateZeroLevelRowTags()'"hide <> 1 Or hide IS Null")
+		  'CreateZeroLevelRowTags()'"hide <> 1 Or hide IS Null")
 		  
 		  
 		  
@@ -342,16 +342,15 @@ End
 		    // Check to see if this record has any children
 		    dim arLinkArray() as DataFile.tbl_internal_linking
 		    dim dictChildRecords as New Dictionary
-		    arLinkArray = DataFile.tbl_internal_linking.List( "fk_parent = " + oRecord.ipkid )
+		    arLinkArray = DataFile.tbl_internal_linking.List( "fk_parent = " + otblRecord.ipkid.ToText )
 		    
 		    // Loop through each link child
 		    If arLinkArray.Ubound <> -1 Then
-		      For Each oLinkRecord as DataFile.tbl_internal_linking
+		      For Each oLinkRecord as DataFile.tbl_internal_linking In arLinkArray
 		        
 		        // Get the child record
-		        dim oChild as DataFile.tbl_inventory = DataFile.tbl_inventory.FindByID( GetChildID(oLinkRecord) )
+		        dim oChild as DataFile.tbl_inventory = DataFile.tbl_inventory.FindByID( oLinkRecord.ifk_child )
 		        If oChild <> Nil Then
-		          arChildRecords.Append(  oChild )
 		          
 		          dim dictKeys() as Variant
 		          dim sLinkType as string
@@ -365,7 +364,7 @@ End
 		          
 		          // Create new rowtag for this child
 		          dim oSubRowtag as New lbRowTag
-		          oSubRowtag.vtblRecord = oRecord
+		          oSubRowtag.vtblRecord = otblRecord
 		          oSubRowtag.iFolderLevel = oRowTag.iFolderLevel + 1
 		          oSubRowtag.vtblRecord = oChild
 		          oSubRowtag.vLinkTable = oLinkRecord
@@ -391,7 +390,7 @@ End
 		      Next
 		      
 		      // Loop through each of the categories in dictChildRecords
-		      dim dictKeys as Variant = dictChildRecords.Keys
+		      dim dictKeys() as Variant = dictChildRecords.Keys
 		      For Each key as Variant In dictKeys
 		        
 		        // Pull all of the child rowtags out of this category
@@ -443,358 +442,6 @@ End
 	#tag EndMethod
 
 	#tag Method, Flags = &h0
-		Sub BuildRowTagold(ByRef oRowTag as lbRowTag, iFolderLevel as integer = 0)
-		  dim sRowType as string
-		  dim oItem as DataFile.tbl_inventory
-		  
-		  
-		  sRowType = oRowTag.sRowType
-		  
-		  // Check if we want only the top level, grandparents
-		  If bTopLevelOnly Then
-		    
-		    If sRowType = "GrandParent" Or sRowType = "GroupFolder" Then
-		    Else
-		      sRowType = ""
-		    End If
-		  End If
-		  
-		  Select Case sRowType
-		  Case ""
-		    
-		  Case "GroupFolder"
-		    
-		    // Set Cell types and field names
-		    oRowTag.iCellTypes() = dictCellTypes.Value(sRowType)
-		    oRowTag.sFieldNames() = dictFieldNames.Value(sRowType)
-		    oRowTag.isFolder = True
-		    
-		    // Set the Folder Level
-		    oRowTag.iFolderLevel = 0
-		    
-		    // Set the pkid
-		    oRowTag.pkid = 0
-		    
-		  Case "GrandParent"
-		    
-		    // Set Cell types and field names
-		    oRowTag.iCellTypes() = dictCellTypes.Value(sRowType)
-		    oRowTag.sFieldNames() = dictFieldNames.Value(sRowType)
-		    
-		    // Set the Folder Level
-		    oRowTag.iFolderLevel = 1
-		    
-		    // Extract tablerecord
-		    oItem = oRowTag.vtblRecord
-		    
-		    // Set the pkid
-		    oRowTag.pkid = oItem.ipkid
-		    
-		    // Pull the field values our of the record
-		    dim jsFieldValues as JSONItem
-		    jsFieldValues = oItem.GetMyFieldValues(True)
-		    
-		    // Extract keys out of JSONItem
-		    dim sKeys() as string
-		    sKeys = jsFieldValues.Names
-		    
-		    // Determine Column Values
-		    For Each sFieldName as string In oRowTag.sFieldNames()
-		      dim sField as string = sFieldName
-		      
-		      // Check if the field name exists as a key in the json item to avoid KeyNotFoundException
-		      dim n1 as integer
-		      n1 = sKeys.IndexOf(sField)
-		      If n1 <> -1 Then
-		        'the key exists
-		        
-		        dim sRawValue as String
-		        sRawValue = jsFieldValues.Value(sField)
-		        
-		        // Format the value
-		        dim sFormattedValue as String
-		        If sField.InStr("_cost") <> 0 Then
-		          sFormattedValue = ConvertCentsString_To_DollarString(sRawValue)
-		        Else 
-		          sFormattedValue = sRawValue
-		        End If
-		        
-		        // Append the formatted value to the rowtag
-		        oRowTag.vColumnValues.Append(sFormattedValue)
-		        
-		      End If
-		      
-		    Next
-		    
-		    If Not bTopLevelOnly Then
-		      // Check for children 
-		      
-		      // Grab the children from inventory
-		      ' we get it grouped by the rowtype
-		      dim dictLinkChildren as Dictionary
-		      dim sCondition,sOrder as string
-		      sCondition = "fkinventory_parent = " + oRowTag.pkid.ToText
-		      sOrder = "link_type"
-		      dictLinkChildren = DataFile.tbl_inventory_link.ListGrouped(sCondition,sOrder)
-		      
-		      // Extract the varient keys from dictionary
-		      dim vSubSetNames() as Variant
-		      vSubSetNames() = dictLinkChildren.Keys
-		      
-		      // Loop through each Subset of linked items
-		      For Each vSubSetName as Variant In vSubSetNames()
-		        
-		        // Convert the subset name to string
-		        dim sSubSetName as string
-		        sSubSetName = str(vSubSetName)
-		        
-		        // Pull the records from the current subset
-		        dim oLinkRecords() as DataFile.tbl_inventory_link
-		        oLinkRecords() = dictLinkChildren.Value(vSubSetName)
-		        
-		        // Create a rowtag for this subset folder
-		        dim oSubSetRowTag as New lbRowTag
-		        oSubSetRowTag.iFolderLevel = oRowTag.iFolderLevel + 1
-		        oSubSetRowTag.sRowType = "LinkingTypeFolder"
-		        oSubSetRowTag.sSubRowType = sSubSetName
-		        oSubSetRowTag.vtblRecord = oRowTag.vtblRecord
-		        oSubSetRowTag.vColumnValues.Append(sSubSetName)
-		        
-		        // Loop through each child listed in the array
-		        For Each oLinkRecord as DataFile.tbl_inventory_link In oLinkRecords()
-		          
-		          // Create a rowtag for this link record
-		          dim oChildRowTag as new lbRowTag
-		          oChildRowTag.iFolderLevel = oSubSetRowTag.iFolderLevel + 1
-		          oChildRowTag.sRowType = "LinkedItem"
-		          oChildRowTag.sSubRowType = sSubSetName
-		          oChildRowTag.vLinkTable = oLinkRecord
-		          
-		          // Finish building the child rowtag
-		          BuildRowTag(oChildRowTag)
-		          
-		          // Append the child to the sub set rowtag
-		          oSubSetRowTag.aroChildren.Append(oChildRowTag)
-		          
-		        Next
-		        
-		        // FInish building the subset rowtag
-		        BuildRowTag(oSubSetRowTag)
-		        
-		        // append the subset rowtag to the children array of the parent rowtag
-		        oRowTag.aroChildren.Append(oSubSetRowTag)
-		        
-		      Next
-		      
-		      // Check if we need to make this row a folder
-		      If oRowTag.aroChildren.Ubound <> -1 Then
-		        oRowTag.isFolder = True
-		      End If
-		    End If
-		    
-		  Case "LinkingTypeFolder"
-		    
-		    oRowTag.iCellTypes = dictCellTypes.value(sRowType)
-		    oRowTag.pkid = 0
-		    oRowTag.sFieldNames() = dictFieldNames.Value(sRowType)
-		    oRowTag.isFolder = True
-		    
-		    
-		  Case "LinkedItem"
-		    
-		    // Extract the link table record
-		    dim oLinkItem as DataFile.tbl_inventory_link
-		    oLinkItem = oRowTag.vLinkTable
-		    
-		    sRowType = sRowType + " - " + oLinkItem.slink_type
-		    
-		    // Set Cell types and field names
-		    oRowTag.iCellTypes() = dictCellTypes.Value(sRowType)
-		    oRowTag.sFieldNames() = dictFieldNames.Value(sRowType)
-		    
-		    // Extract tablerecord from database
-		    oItem = DataFile.tbl_inventory.FindByID(oLinkItem.ifkinventory_child)
-		    oRowTag.vtblRecord = oItem
-		    
-		    // Set the pkid
-		    oRowTag.pkid = oItem.ipkid
-		    
-		    // Pull the field values our of the record
-		    dim jsFieldValues as JSONItem
-		    jsFieldValues = oItem.GetMyFieldValues(True)
-		    dim jsLinkFieldValues as JSONItem
-		    jsLinkFieldValues = oLinkItem.GetMyFieldValues(True)
-		    
-		    // Extract keys out of JSONItem
-		    dim sKeys() as string
-		    sKeys = jsFieldValues.Names
-		    dim sLinkKeys() as string
-		    sLinkKeys = jsLinkFieldValues.Names
-		    
-		    // Determine Column Values
-		    For Each sFieldName as string In oRowTag.sFieldNames()
-		      dim sField as string = sFieldName
-		      dim sTable as string
-		      
-		      // Split the sFieldName into sField and sTable
-		      dim n2 as integer
-		      n2 = InStr(sField,".-.")
-		      If n2 <> 0 Then
-		        sTable = Left(sField,n2 - 1)
-		        sField = Mid(sField,n2 + 3)
-		      End If
-		      
-		      // Check which table it is apart of
-		      dim sRawValue as String
-		      Select Case sTable
-		      Case "tbl_inventory_link"
-		        If sLinkKeys.IndexOf(sField) <> -1 Then
-		          sRawValue = jsLinkFieldValues.Value(sField)
-		        End If
-		      Case ""
-		        If sKeys.IndexOf(sField) <> -1 Then
-		          sRawValue = jsFieldValues.Value(sField)
-		        End If
-		      End Select
-		      
-		      // Format the value
-		      dim sFormattedValue as String
-		      If sField.InStr("_cost") <> 0 Then
-		        sFormattedValue = ConvertCentsString_To_DollarString(sRawValue)
-		      Else 
-		        sFormattedValue = sRawValue
-		      End If
-		      
-		      // Append the formatted value to the rowtag
-		      oRowTag.vColumnValues.Append(sFormattedValue)
-		      
-		      
-		    Next
-		    
-		    // Check for children 
-		    
-		    // Grab the children from inventory
-		    ' we get it grouped by the rowtype
-		    dim dictLinkChildren as Dictionary
-		    dim sCondition,sOrder as string
-		    sCondition = "fkinventory_parent = " + oRowTag.pkid.ToText
-		    sOrder = "link_type"
-		    dictLinkChildren = DataFile.tbl_inventory_link.ListGrouped(sCondition,sOrder)
-		    
-		    // Extract the varient keys from dictionary
-		    dim vSubSetNames() as Variant
-		    vSubSetNames() = dictLinkChildren.Keys
-		    
-		    // Loop through each Subset of linked items
-		    For Each vSubSetName as Variant In vSubSetNames()
-		      
-		      // Convert the subset name to string
-		      dim sSubSetName as string
-		      sSubSetName = str(vSubSetName)
-		      
-		      // Pull the records from the current subset
-		      dim oLinkRecords() as DataFile.tbl_inventory_link
-		      oLinkRecords() = dictLinkChildren.Value(vSubSetName)
-		      
-		      // Create a rowtag for this subset folder
-		      dim oSubSetRowTag as New lbRowTag
-		      oSubSetRowTag.iFolderLevel = oRowTag.iFolderLevel + 1
-		      oSubSetRowTag.sRowType = "LinkingTypeFolder"
-		      oSubSetRowTag.sSubRowType = sSubSetName
-		      oSubSetRowTag.vtblRecord = oRowTag.vtblRecord
-		      oSubSetRowTag.vColumnValues.Append(sSubSetName)
-		      
-		      // Loop through each child listed in the array
-		      For Each oLinkRecord as DataFile.tbl_inventory_link In oLinkRecords()
-		        
-		        // Set the Parent inventory item as folder
-		        oRowTag.isFolder = True
-		        
-		        // Create a rowtag for this link record
-		        dim oChildRowTag as new lbRowTag
-		        oChildRowTag.iFolderLevel = oSubSetRowTag.iFolderLevel + 1
-		        oChildRowTag.sRowType = "LinkedItem"
-		        oChildRowTag.sSubRowType = sSubSetName
-		        oChildRowTag.vLinkTable = oLinkRecord
-		        
-		        // Finish building the child rowtag
-		        BuildRowTag(oChildRowTag)
-		        
-		        // Append the child to the sub set rowtag
-		        oSubSetRowTag.aroChildren.Append(oChildRowTag)
-		        
-		      Next
-		      
-		      // FInish building the subset rowtag
-		      BuildRowTag(oSubSetRowTag)
-		      
-		      // append the subset rowtag to the children array of the parent rowtag
-		      oRowTag.aroChildren.Append(oSubSetRowTag)
-		      
-		    Next
-		    
-		    // Check if we need to make this row a folder
-		    If oRowTag.aroChildren.Ubound <> -1 Then
-		      oRowTag.isFolder = True
-		    End If
-		    
-		  End Select
-		  
-		  
-		  
-		  
-		  
-		  
-		  
-		  
-		  
-		  
-		  
-		  
-		  
-		  
-		  
-		  
-		  
-		  
-		  
-		  
-		  
-		  
-		  
-		  
-		  
-		  
-		  
-		  
-		  
-		  
-		  
-		  
-		  
-		  
-		  
-		  
-		  
-		  
-		  
-		  
-		  
-		  
-		  
-		  
-		  
-		  
-		  
-		  
-		  
-		  
-		  
-		  
-		End Sub
-	#tag EndMethod
-
-	#tag Method, Flags = &h0
 		Sub CreateRowTags(vRecords as Dictionary)
 		  // vRecords will either be 
 		  // an array of ActiveRecordBase objects
@@ -824,10 +471,11 @@ End
 		  dim oReturnRowtags() as lbRowTag 
 		  
 		  // Check if vRecords is grouped or not
-		  Select Case vRecords
+		  
+		  Select Case vRecords(0)
 		  Case IsA Dictionary
 		    //Problem!!! should be in other form of method
-		    Return
+		    Return Array(new lbRowTag)
 		  Case IsA DataFile.ActiveRecordBase
 		    
 		    // Loop through each record
@@ -853,97 +501,6 @@ End
 		  Return oReturnRowtags
 		  
 		End Function
-	#tag EndMethod
-
-	#tag Method, Flags = &h0
-		Sub CreateZeroLevelRowTags(sConditionpar as string = "", sGroupByField as String = "item_department")
-		  dim dictGroupedItems as Dictionary
-		  
-		  // Delete all rows in listbox
-		  lbItems.DeleteAllRows
-		  
-		  // Grab the search value
-		  dim sSearchValue as String
-		  sSearchValue = scSearchInventory.Text
-		  
-		  // Get the inventory items from the database grouped by sGroupByField
-		  dim sSearchCondition,sExcludeHiddenItemsCondition as String
-		  dim sCondition,sOrder as String
-		  
-		  // Set up the search condition
-		  If sSearchValue = "" Then
-		    sSearchCondition = ""
-		  Else
-		    sSearchCondition = "item_name Like '%" + sSearchValue + "%'"
-		  End If
-		  
-		  // Set up Hidden Condition
-		  dim HiddenValue as Boolean
-		  HiddenValue = chbShowHidden.Value
-		  If HiddenValue Then
-		    sExcludeHiddenItemsCondition = ""
-		  Else
-		    sExcludeHiddenItemsCondition = "(hide <> 1 Or hide Is Null)"
-		  End If
-		  
-		  // Set up the condition
-		  If sSearchCondition <> "" Then
-		    sCondition = sSearchCondition
-		    If sExcludeHiddenItemsCondition <> "" Then
-		      sCondition = sCondition + " And "
-		    End If
-		  End If
-		  If  sExcludeHiddenItemsCondition <> "" Then
-		    sCondition = sCondition + sExcludeHiddenItemsCondition
-		    If sConditionpar <> "" Then
-		      sCondition = sCondition + " And " 
-		    End If
-		  End If 
-		  If sConditionpar <> "" Then
-		    sCondition = sCondition + sConditionpar
-		  End If
-		  sOrder = sGroupByField
-		  dictGroupedItems = DataFile.tbl_inventory.ListGrouped(sCondition,sOrder,sGroupByField)
-		  
-		  // Pull the name of the groups into an array
-		  dim sGroupNames() as String
-		  For Each vGroupName as variant In dictGroupedItems.Keys
-		    sGroupNames.Append(str(vGroupName))
-		  Next
-		  
-		  // Loop through each group
-		  For Each sGroupName as String In sGroupNames
-		    
-		    // Create a new row as a folder
-		    lbItems.AddRow(sGroupName)
-		    dim oGroupRowTag as New lbRowTag
-		    oGroupRowTag.sRowType = "GroupFolder"
-		    oGroupRowTag.vColumnValues.Append(sGroupName)
-		    
-		    // Extract the array of records in this group
-		    dim oGroupItems() as DataFile.tbl_inventory
-		    oGroupItems = dictGroupedItems.Value(sGroupName)
-		    
-		    // loop through the children and build their rowtags here
-		    For Each oItem as DataFile.tbl_inventory In oGroupItems
-		      
-		      dim oChildRowTag as New lbRowTag
-		      oChildRowTag.vtblRecord = oItem
-		      oChildRowTag.sRowType = "GrandParent"
-		      BuildRowTag(oChildRowTag,1)
-		      
-		      // Append the child rowtag to our parent
-		      oGroupRowTag.aroChildren.Append(oChildRowTag)
-		      
-		    Next
-		    
-		    // Finish building the rowtag
-		    BuildRowTag(oGroupRowTag)
-		    
-		    LoadRow(lbItems.LastIndex,oGroupRowTag)
-		    
-		  Next
-		End Sub
 	#tag EndMethod
 
 	#tag Method, Flags = &h0
@@ -981,23 +538,7 @@ End
 	#tag EndMethod
 
 	#tag Method, Flags = &h0
-		Function GetChildID(vLinkTableRecord as Variant) As int64
-		  dim vReturnArray() as Variant
-		  
-		  Select Case vTableRecord
-		  Case IsA DataFile.tbl_inventory_link Then
-		    dim oRecord as DataFile.tbl_inventory_link = vTableRecord
-		    Return oRecord.ifkinventory_child
-		    
-		  Case IsA DataFile.tbl_events Then
-		    
-		    
-		  End Select
-		End Function
-	#tag EndMethod
-
-	#tag Method, Flags = &h0
-		Function GetRecordList() As Dictionary
+		Function GetRecordList_Grouped(sGroupByField as string, sConditionpar as string) As Dictionary
 		  dim dictGroupedItems as Dictionary
 		  
 		  // Delete all rows in listbox
@@ -1047,6 +588,60 @@ End
 		  dictGroupedItems = DataFile.tbl_inventory.ListGrouped(sCondition,sOrder,sGroupByField)
 		  
 		  Return dictGroupedItems
+		End Function
+	#tag EndMethod
+
+	#tag Method, Flags = &h0
+		Function GetRecordList_UnGrouped(sOrderByFields as string, sConditionpar as string) As DataFile.tbl_inventory()
+		  dim aroRecords() as DataFile.tbl_inventory
+		  
+		  // Delete all rows in listbox
+		  lbItems.DeleteAllRows
+		  
+		  // Grab the search value
+		  dim sSearchValue as String
+		  sSearchValue = scSearchInventory.Text
+		  
+		  // Get the inventory items from the database grouped by sGroupByField
+		  dim sSearchCondition,sExcludeHiddenItemsCondition as String
+		  dim sCondition,sOrder as String
+		  
+		  // Set up the search condition
+		  If sSearchValue = "" Then
+		    sSearchCondition = ""
+		  Else
+		    sSearchCondition = "item_name Like '%" + sSearchValue + "%'"
+		  End If
+		  
+		  // Set up Hidden Condition
+		  dim HiddenValue as Boolean
+		  HiddenValue = chbShowHidden.Value
+		  If HiddenValue Then
+		    sExcludeHiddenItemsCondition = ""
+		  Else
+		    sExcludeHiddenItemsCondition = "(hide <> 1 Or hide Is Null)"
+		  End If
+		  
+		  // Set up the condition
+		  If sSearchCondition <> "" Then
+		    sCondition = sSearchCondition
+		    If sExcludeHiddenItemsCondition <> "" Then
+		      sCondition = sCondition + " And "
+		    End If
+		  End If
+		  If  sExcludeHiddenItemsCondition <> "" Then
+		    sCondition = sCondition + sExcludeHiddenItemsCondition
+		    If sConditionpar <> "" Then
+		      sCondition = sCondition + " And " 
+		    End If
+		  End If 
+		  If sConditionpar <> "" Then
+		    sCondition = sCondition + sConditionpar
+		  End If
+		  
+		  aroRecords = DataFile.tbl_inventory.List(sCondition,sOrderByFields)
+		  
+		  Return aroRecords
 		End Function
 	#tag EndMethod
 
@@ -1276,7 +871,6 @@ End
 		  
 		  
 		  // Populate the listbox
-		  CreateZeroLevelRowTags()'"hide <> 1 Or hide IS Null")
 		  
 		  
 		  
@@ -1415,7 +1009,7 @@ End
 		        
 		        dim oOpenFolders() as lbRowTag
 		        oOpenFolders = lbItems.GetOpenedFolders
-		        CreateZeroLevelRowTags
+		        'CreateZeroLevelRowTags
 		        lbItems.reopenFolders(oOpenFolders)
 		        
 		      End If
@@ -1458,7 +1052,7 @@ End
 		        
 		        dim oOpenFolders() as lbRowTag
 		        oOpenFolders = lbItems.GetOpenedFolders
-		        CreateZeroLevelRowTags
+		        'CreateZeroLevelRowTags
 		        lbItems.reopenFolders(oOpenFolders)
 		        
 		      End If
@@ -1555,7 +1149,7 @@ End
 		  
 		  dim oUIState as lbUIState
 		  oUIState = lbItems.GetUIState
-		  CreateZeroLevelRowTags()'"hide <> 1 Or hide Is Null")
+		  'CreateZeroLevelRowTags()'"hide <> 1 Or hide Is Null")
 		  lbItems.ResetUIState(oUIState)
 		End Sub
 	#tag EndEvent
@@ -1589,7 +1183,7 @@ End
 		  End If
 		  
 		  // Populate listbox with filterd inventory
-		  CreateZeroLevelRowTags
+		  'CreateZeroLevelRowTags
 		  
 		  
 		  If len(sSearchValue) = 0 Then
@@ -1695,7 +1289,7 @@ End
 		  
 		  dim oUIState as lbUIState
 		  oUIState = lbItems.GetUIState
-		  CreateZeroLevelRowTags
+		  'CreateZeroLevelRowTags
 		  lbItems.ResetUIState(oUIState)
 		End Sub
 	#tag EndEvent
