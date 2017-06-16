@@ -19,6 +19,18 @@ Create Table tbl_events
         hide                boolean
         );
 
+Create Table tbl_internal_linking
+        (
+        pkid                integer Primary Key,
+        row_created         text,
+        row_modified        text,
+        row_username        text,
+        fk_parent           integer,
+        fk_child            integer,
+        fk_table_name       text,
+        link_type           text
+        );
+
 Create Table tbl_events_link
         (
         pkid                integer Primary Key,

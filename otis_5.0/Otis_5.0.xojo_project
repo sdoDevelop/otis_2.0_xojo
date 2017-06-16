@@ -129,6 +129,7 @@ Class=tbl_contactables_link;Third Party Addons/ActiveRecord/DataFile/tbl_contact
 Class=tbl_email_addresses;Third Party Addons/ActiveRecord/DataFile/tbl_email_addresses.xojo_code;&hEFF7FFF;&hB28FFF;false
 Window=contContactables;UI/Containers/contContactables.xojo_window;&h1CBF67FF;&h77254FFF;false
 Class=entLbAttributes;Logic/Custom Classes/entLbAttributes.xojo_code;&h4253F7FF;&h1C2447FF;false
+Class=tbl_internal_linking;Third Party Addons/ActiveRecord/DataFile/tbl_internal_linking.xojo_code;&h781CAFFF;&hB28FFF;false
 AppMenuBar=MainMenuBar
 MajorVersion=1
 MinorVersion=0

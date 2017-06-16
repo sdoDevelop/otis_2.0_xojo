@@ -39,7 +39,6 @@ Begin ContainerControl contInventoryExpanded
       HasHeading      =   True
       Height          =   181
       HelpTag         =   ""
-      Index           =   -2147483648
       InitialParent   =   ""
       Left            =   6
       LockBottom      =   True

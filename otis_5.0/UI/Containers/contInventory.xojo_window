@@ -123,7 +123,7 @@ Begin ContainerControl contInventory
       Enabled         =   True
       HasCancelButton =   False
       HasMenu         =   False
-      Height          =   32
+      Height          =   21
       HelpTag         =   ""
       Index           =   -2147483648
       InitialParent   =   ""
@@ -144,7 +144,7 @@ Begin ContainerControl contInventory
       Text            =   ""
       Top             =   2
       Visible         =   True
-      Width           =   32
+      Width           =   160
    End
    Begin CheckBox chbShowHidden
       AutoDeactivate  =   True
@@ -182,8 +182,268 @@ End
 #tag EndWindow
 
 #tag WindowCode
+	#tag Event
+		Sub Activate()
+		  
+		  
+		  // Set up some basic stuff
+		  
+		  // trigger event to allow me to set information externally
+		  SetColumnInformation(lbItems,dictCellTypes,dictFieldNames)
+		  
+		  If dictFieldNames = Nil And dictCellTypes = Nil Then
+		    
+		    dim s1,s2() as string
+		    
+		    dim sRowType as string
+		    
+		    // Set Column Count
+		    dim iColCount as integer = 10
+		    lbItems.ColumnCount = iColCount
+		    
+		    // Initialize dictionaries
+		    dictFieldNames = New Dictionary
+		    dictCellTypes = New Dictionary
+		    
+		    // Set header names
+		    s1 = "Name,Manufacturer,Model,Department,Category,SubCat,Description,Qty,Price,Owner"
+		    s2() = Split(s1,",")
+		    sHeaders = s2
+		    lbItems.Heading = s2()
+		    
+		    
+		    // **********
+		    // Set up the cell types and field names for each type of row
+		    
+		    // Group Folders
+		    sRowType = "GroupFolder"
+		    'field names
+		    dictFieldNames.Value(sRowType) = Array("")
+		    
+		    'cell types
+		    dim iCellTypes() as integer
+		    ReDim iCellTypes(iColCount - 1) 
+		    dictCellTypes.Value(sRowType) = iCellTypes
+		    
+		    
+		    // GrandParent
+		    sRowType = "GrandParent"
+		    'field names
+		    s1 = "item_name,item_manufacturer,item_model,item_department,item_category,item_subcategory,item_description,item_quantity,item_rental_price_cost,item_owner"
+		    s2() = Split(s1,",")
+		    dictFieldNames.Value(sRowType) = s2
+		    
+		    'cell types
+		    dim iCellTypes2() as integer
+		    ReDim iCellTypes2(iColCount - 1) 
+		    dictCellTypes.Value(sRowType) = iCellTypes2
+		    
+		    
+		    // Linking Type Folder
+		    sRowType = "LinkingTypeFolder"
+		    'field names
+		    dictFieldNames.Value(sRowType) = Array("")
+		    
+		    'cell types
+		    dim iCellTypes3() as integer
+		    ReDim iCellTypes3(iColCount - 1) 
+		    dictCellTypes.Value(sRowType) = iCellTypes3
+		    
+		    
+		    // LinkedItem - Version
+		    sRowType = "LinkedItem - version"
+		    'field names
+		    s1 = "item_name,item_manufacturer,item_model,item_department,item_category,item_subcategory,item_description,item_quantity,|SKIP|,item_owner"
+		    s2() = Split(s1,",")
+		    dictFieldNames.Value(sRowType) = s2
+		    
+		    'cell types
+		    dim iCellTypes4() as integer = Array(0,0,0,0,0,0,0,3,0,0)
+		    dictCellTypes.Value(sRowType) = iCellTypes4
+		    
+		    
+		    // LinkedItem - Contained
+		    sRowType = "LinkedItem - contained"
+		    'field names
+		    s1 = "item_name,item_manufacturer,item_model,item_department,item_category,item_subcategory,item_description,tbl_inventory_link.-.quantity,|SKIP|,item_owner"
+		    s2() = Split(s1,",")
+		    dictFieldNames.Value(sRowType) = s2
+		    
+		    'cell types
+		    dim iCellTypes5() as integer = Array(0,0,0,0,0,0,0,3,0,0)
+		    dictCellTypes.Value(sRowType) = iCellTypes5
+		    
+		    // LinkedItem - Contained
+		    sRowType = "LinkedItem - kit"
+		    'field names
+		    s1 = "item_name,item_manufacturer,item_model,item_department,item_category,item_subcategory,item_description,tbl_inventory_link.-.quantity,|SKIP|,item_owner"
+		    s2() = Split(s1,",")
+		    dictFieldNames.Value(sRowType) = s2
+		    
+		    'cell types
+		    dim iCellTypes6() as integer = Array(0,0,0,0,0,0,0,3,0,0)
+		    dictCellTypes.Value(sRowType) = iCellTypes6
+		    
+		    // LinkedItem - Contained
+		    sRowType = "LinkedItem - package"
+		    'field names
+		    s1 = "item_name,item_manufacturer,item_model,item_department,item_category,item_subcategory,item_description,tbl_inventory_link.-.quantity,|SKIP|,item_owner"
+		    s2() = Split(s1,",")
+		    dictFieldNames.Value(sRowType) = s2
+		    
+		    'cell types
+		    dim iCellTypes7() as integer = Array(0,0,0,0,0,0,0,3,0,0)
+		    dictCellTypes.Value(sRowType) = iCellTypes7
+		    
+		  End If
+		  
+		  
+		  
+		  // Populate the listbox
+		  CreateZeroLevelRowTags()'"hide <> 1 Or hide IS Null")
+		  
+		  
+		  
+		  
+		  
+		  
+		  
+		  
+		  
+		  
+		End Sub
+	#tag EndEvent
+
+
 	#tag Method, Flags = &h0
-		Sub BuildRowTag(ByRef oRowTag as lbRowTag, iFolderLevel as integer = 0)
+		Sub BuildRowTag(ByRef oRowTag as lbRowTag)
+		  dim otblRecord as DataFile.tbl_inventory
+		  dim iPKID as Int64
+		  
+		  // Check  to see what kind of row this will be based on varying conditions
+		  If oRowTag.vtblRecord IsA DataFile.tbl_inventory Then
+		    'there is a table record and it is our primary table
+		    
+		    // Put the table record into a variable
+		    otblRecord = oRowTag.vtblRecord
+		    
+		    // FIll in some rowtag info that we know already
+		    iPKID = otblRecord.ipkid
+		    If iPKID <> 0 Then
+		      oRowTag.pkid = iPKID
+		    End If
+		    If oRowTag.iFolderLevel = 1 Then
+		      'grandparent level row
+		      oRowTag.sRowType = "GrandParent"
+		      oRowTag.sFieldNames = dictFieldNames.Value("GrandParent")
+		      oRowTag.iCellTypes = dictCellTypes.Value("GrandParent")
+		    End If
+		    
+		    // Check to see if this record has any children
+		    dim arLinkArray() as DataFile.tbl_internal_linking
+		    dim dictChildRecords as New Dictionary
+		    arLinkArray = DataFile.tbl_internal_linking.List( "fk_parent = " + oRecord.ipkid )
+		    
+		    // Loop through each link child
+		    If arLinkArray.Ubound <> -1 Then
+		      For Each oLinkRecord as DataFile.tbl_internal_linking
+		        
+		        // Get the child record
+		        dim oChild as DataFile.tbl_inventory = DataFile.tbl_inventory.FindByID( GetChildID(oLinkRecord) )
+		        If oChild <> Nil Then
+		          arChildRecords.Append(  oChild )
+		          
+		          dim dictKeys() as Variant
+		          dim sLinkType as string
+		          sLinkType = oLinkRecord.slink_type
+		          dictKeys() = dictChildRecords.Keys
+		          If sLinkType <> "" Then
+		            sLinkType = "NoType"
+		          End If
+		          
+		          dim aroSubChildren() as lbRowTag
+		          
+		          // Create new rowtag for this child
+		          dim oSubRowtag as New lbRowTag
+		          oSubRowtag.vtblRecord = oRecord
+		          oSubRowtag.iFolderLevel = oRowTag.iFolderLevel + 1
+		          oSubRowtag.vtblRecord = oChild
+		          oSubRowtag.vLinkTable = oLinkRecord
+		          
+		          If dictKeys.IndexOf(sLinkType) >=0 Then
+		            ' there is already a dictionary entry for this link type
+		            // Pull its fellow rowtags out of Dictionary
+		            aroSubChildren() = dictChildRecords.Value(sLinkType)
+		            
+		          Else
+		            'there is no dictionary entry for this link type
+		          End If
+		          
+		          // Feed this rowtag back into our build rowtag method to build it out
+		          BuildRowTag(oSubRowtag)
+		          
+		          // Add our current child rowtag to the array and then back into the dictionary
+		          aroSubChildren.Append(oSubRowtag)
+		          dictChildRecords.Value(sLinkType) = aroSubChildren
+		          
+		        End If
+		        
+		      Next
+		      
+		      // Loop through each of the categories in dictChildRecords
+		      dim dictKeys as Variant = dictChildRecords.Keys
+		      For Each key as Variant In dictKeys
+		        
+		        // Pull all of the child rowtags out of this category
+		        dim aroChildRecords() as lbRowTag = dictChildRecords.Value(key)
+		        
+		        // Check to see if there is a link type that would force us to create a sub folder to contain sub reacord
+		        If key = "NoType" Then
+		          
+		          // Loop through each child rowtag
+		          For Each Child as lbRowTag In aroChildRecords
+		            oRowTag.aroChildren.Append(Child)
+		          Next
+		          
+		        Else
+		          
+		          // Create a link folder rowtag
+		          dim oLinkRowtag as New lbRowTag
+		          oLinkRowtag.aroChildren() = aroChildRecords()
+		          oLinkRowtag.iCellTypes = dictCellTypes.Value("LinkingTypeFolder")
+		          oLinkRowtag.iFolderLevel = oRowTag.iFolderLevel + 1
+		          oLinkRowtag.isFolder = True
+		          oLinkRowtag.sFieldNames = dictFieldNames.Value("LinkingTypeFolder")
+		          oLinkRowtag.sRowType = "LinkingTypeFolder"
+		          oLinkRowtag.vColumnValues = Array(key)
+		          
+		          oRowTag.aroChildren.Append(oLinkRowtag)
+		          
+		        End If
+		        
+		      Next
+		      
+		    End If
+		    
+		    
+		  End If
+		  
+		  
+		  
+		  
+		  
+		  
+		  
+		  
+		  
+		  
+		  
+		  
+		End Sub
+	#tag EndMethod
+
+	#tag Method, Flags = &h0
+		Sub BuildRowTagold(ByRef oRowTag as lbRowTag, iFolderLevel as integer = 0)
 		  dim sRowType as string
 		  dim oItem as DataFile.tbl_inventory
 		  
@@ -555,11 +815,13 @@ End
 	#tag EndMethod
 
 	#tag Method, Flags = &h0
-		Sub CreateRowTags(vRecords() as Variant)
+		Function CreateRowTags(vRecords() as Variant) As lbRowTag()
 		  // vRecords will either be 
 		  // an array of ActiveRecordBase objects
 		  //      or
 		  // a Dictionary or grouped records
+		  
+		  dim oReturnRowtags() as lbRowTag 
 		  
 		  // Check if vRecords is grouped or not
 		  Select Case vRecords
@@ -575,34 +837,22 @@ End
 		      dim oCurrentRowtag as New lbRowTag
 		      'put the record we are on into the rowtag
 		      oCurrentRowtag.vtblRecord = oRecord
+		      oCurrentRowtag.iFolderLevel = 1
 		      
+		      // Build that damn rowtag
+		      BuildRowTag(oCurrentRowtag)
 		      
-		      // This shit needs to go into the build rowtag step so we can self reciprocate it
+		      oReturnRowtags.Append( oCurrentRowtag )
 		      
-		      
-		      // Check to see if this record has any children
-		      dim arLinkArray() as DataFile.tbl_inventory_link
-		      dim arChildRecords() as DataFile.tbl_inventory
-		      arLinkArray = DataFile.tbl_inventory_link.List( "fkinventory_parent = " + oRecord.ipkid )
-		      
-		      // Loop through each link child
-		      If arLinkArray.Ubound <> -1 Then
-		        For Each oLinkRecord as DataFile.tbl_inventory_link
-		          
-		          // Get the child record
-		          dim oChild as DataFile.tbl_inventory = DataFile.tbl_inventory.FindByID( GetChildID(oLinkRecord) )
-		          If oChild <> Nil Then
-		            arChildRecords.Append(  oChild )
-		          End If
-		          
-		          
-		          
-		        Next
-		      End If
-		      
-		      
+		    Next
+		    
+		    
+		    
 		  End Select
-		End Sub
+		  
+		  Return oReturnRowtags
+		  
+		End Function
 	#tag EndMethod
 
 	#tag Method, Flags = &h0
