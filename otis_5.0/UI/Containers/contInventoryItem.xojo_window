@@ -817,7 +817,7 @@ Begin ContainerControl contInventoryItem
       Visible         =   True
       Width           =   80
    End
-   Begin contInventoryExpanded contInventoryExpanded
+   Begin contInventory contInventoryExpanded
       AcceptFocus     =   True
       AcceptTabs      =   True
       AutoDeactivate  =   True
@@ -828,7 +828,6 @@ Begin ContainerControl contInventoryItem
       HasBackColor    =   False
       Height          =   182
       HelpTag         =   ""
-      ifkinventory_parent=   ""
       InitialParent   =   ""
       Left            =   123
       LockBottom      =   False
@@ -2983,7 +2982,7 @@ End
 		  contItemFirmwareLatest.LoadMe(oCurrentInventoryItem.ipkid)
 		  
 		  If oCurrentInventoryItem.ipkid <> 0 Then
-		    contInventoryExpanded.LoadItems(oCurrentInventoryItem.ipkid)
+		    contInventoryExpanded.methLoadMe_ExpandSingleRecord(oCurrentInventoryItem)
 		  End If
 		  
 		  // Item status popup
@@ -3069,7 +3068,7 @@ End
 		  
 		  dim oUISTate as lbUIState
 		  oUISTate = lbItems.GetUIState
-		  contInventoryExpanded.LoadItems(oParentItem.ipkid)
+		  contInventoryExpanded.methLoadMe_ExpandSingleRecord(oParentItem)
 		  lbItems.ResetUIState(oUISTate) 
 		End Sub
 	#tag EndMethod
@@ -3223,16 +3222,7 @@ End
 #tag EndEvents
 #tag Events contInventoryExpanded
 	#tag Event
-		Sub AfterDelete()
-		  
-		  dim oUIState as lbUIState
-		  oUIState = me.lbItems.GetUIState
-		  LoadItem(oCurrentInventoryItem.ipkid)
-		  me.lbItems.ResetUIState(oUIState)
-		End Sub
-	#tag EndEvent
-	#tag Event
-		Sub SetColumnInformation(lbItems as entListbox, ByRef dictCellTypes as Dictionary, ByRef dictFieldNames as Dictionary)
+		Sub evdefListboxSettings(lbItems as entListbox, ByRef dictCellTypes as Dictionary, ByRef dictFieldNames as Dictionary)
 		  dim s1,s2() as string
 		  
 		  dim sRowType as string
@@ -3336,25 +3326,6 @@ End
 		  
 		  
 		End Sub
-	#tag EndEvent
-	#tag Event
-		Function entContextualMenuAction(hititem as MenuItem) As Boolean
-		  
-		  Select Case hititem.Text
-		  Case "Push Values"
-		    
-		    EnableDisable_PushCheckboxes(True)
-		    InitCheckboxes
-		    
-		  End Select
-		End Function
-	#tag EndEvent
-	#tag Event
-		Function entConstructContextualMenu(base as MenuItem, x as integer, y as integer) As Boolean
-		  
-		  base.Append( New MenuItem("Push Values") )
-		  
-		End Function
 	#tag EndEvent
 #tag EndEvents
 #tag Events chbHide
