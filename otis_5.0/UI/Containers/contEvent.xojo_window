@@ -1338,7 +1338,8 @@ End
 		  
 		  
 		  If oCurrentEvent.ipkid <> 0 Then
-		    contChildEventList.LoadEvents(oCurrentEvent.ipkid)
+		    dim oRecord as DataFile.tbl_events = DataFile.tbl_events.FindByID(oCurrentEvent.ipkid)
+		    contChildEventList.methLoadMe_ExpandSingleRecord(oRecord)
 		  End If
 		  
 		  
@@ -1584,7 +1585,7 @@ End
 #tag EndEvents
 #tag Events contChildEventList
 	#tag Event
-		Sub entOpen()
+		Sub evdefOpen()
 		  dim s1, s2() as string
 		  
 		  // Set header names

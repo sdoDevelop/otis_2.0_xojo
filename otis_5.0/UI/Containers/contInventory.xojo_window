@@ -503,9 +503,6 @@ End
 		Function methGetRecordList_Grouped(sGroupByField as string, sConditionpar as string) As Dictionary
 		  dim dictGroupedItems as Dictionary
 		  
-		  // Delete all rows in listbox
-		  lbItems.DeleteAllRows
-		  
 		  // Grab the search value
 		  dim sSearchValue as String
 		  sSearchValue = scSearchField.Text  
@@ -558,9 +555,6 @@ End
 		  '!@! Table Dependent In Return Type !@!
 		  
 		  dim aroRecords() as DataFile.tbl_inventory  '!@! Table Dependent !@!
-		  
-		  // Delete all rows in listbox
-		  lbItems.DeleteAllRows
 		  
 		  // Grab the search value
 		  dim sSearchValue as String
@@ -627,10 +621,10 @@ End
 		    lb1.AddRow("")
 		    
 		    // Load the rowtag into the row
-		    lb1.RowTag(lbItems.LastIndex) = oChild
+		    lb1.RowTag(lb1.LastIndex) = oChild
 		    
 		    // Load the row
-		    methLoadRow(lbItems.LastIndex,oChild)
+		    methLoadRow(lb1.LastIndex,oChild)
 		    
 		  Next
 		  
@@ -1153,7 +1147,7 @@ End
 		  
 		  dim oUIState as lbUIState
 		  oUIState = lbItems.GetUIState
-		  methLoadMe
+		  methLoadMe(False)
 		  lbItems.ResetUIState(oUIState)
 		End Sub
 	#tag EndEvent
@@ -1162,6 +1156,7 @@ End
 	#tag Event
 		Sub Search()
 		  dim sSearchValue as string
+		  dim lb1 as entListbox = lbItems
 		  
 		  sSearchValue = scSearchField.Text
 		  
@@ -1174,7 +1169,7 @@ End
 		      
 		      // Get UIState
 		      dim oUIState as lbUIState
-		      oUIState = lbItems.GetUIState
+		      oUIState = lb1.GetUIState
 		      LastUIState = oUIState
 		      
 		    End If
@@ -1182,7 +1177,7 @@ End
 		  End If
 		  
 		  // Populate listbox with filterd inventory
-		  methLoadMe
+		  methLoadMe(False)
 		  
 		  
 		  If len(sSearchValue) = 0 Then
@@ -1193,10 +1188,10 @@ End
 		      
 		      // Close all the folders by passing a nil array
 		      dim nilarray() as lbRowTag
-		      lbItems.reopenFolders(nilarray)
+		      lb1.reopenFolders(nilarray)
 		      
 		      If LastUIState <> Nil Then
-		        lbItems.ResetUIState(LastUIState)
+		        lb1.ResetUIState(LastUIState)
 		        LastUIState = Nil 
 		      Else
 		        
@@ -1229,7 +1224,7 @@ End
 		  
 		  dim oUIState as lbUIState
 		  oUIState = lbItems.GetUIState
-		  methLoadMe
+		  methLoadMe(False)
 		  lbItems.ResetUIState(oUIState)
 		End Sub
 	#tag EndEvent

@@ -120,7 +120,6 @@ Begin Window winMain_1TabPanel
          AutoDeactivate  =   True
          BackColor       =   &cFF00FFFF
          Backdrop        =   0
-         bTopLevelOnly   =   False
          Enabled         =   True
          EraseBackground =   True
          HasBackColor    =   False

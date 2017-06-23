@@ -107,7 +107,7 @@ End
 	#tag Method, Flags = &h0
 		Sub LoadEvents(sConditionpar as string = "")
 		  
-		  contEventListInst.LoadEvents(sConditionpar)
+		  contEventListInst.methLoadMe(False)
 		End Sub
 	#tag EndMethod
 
