@@ -118,7 +118,7 @@ Begin ContainerControl contInventory
       Visible         =   True
       Width           =   81
    End
-   Begin SearchControl scSearchInventory
+   Begin SearchControl scSearchField
       AutoDeactivate  =   True
       Enabled         =   True
       HasCancelButton =   False
@@ -183,20 +183,470 @@ End
 
 #tag WindowCode
 	#tag Event
-		Sub Activate()
+		Sub Open()
+		  
+		  // Set all the settings up for our listbox
+		  methListboxSettings
+		  
+		  // Grab all the records and load them into the listbox
+		  methLoadMe(True)
 		  
 		End Sub
 	#tag EndEvent
 
-	#tag Event
-		Sub Open()
+
+	#tag Method, Flags = &h0
+		Sub methBuildRowTag(ByRef oRowTag as lbRowTag)
+		  dim otblRecord as DataFile.tbl_inventory  '!@! Table Dependent !@!
+		  dim iPKID as Int64
+		  
+		  // Check  to see what kind of row this will be based on varying conditions
+		  If oRowTag.vtblRecord IsA DataFile.tbl_inventory Then  '!@! Table Dependent !@!
+		    'there is a table record and it is our primary table
+		    
+		    // Put the table record into a variable
+		    otblRecord = oRowTag.vtblRecord
+		    
+		    // Pull the table name into a variable
+		    dim sTableName as String = otblRecord.GetTableName
+		    
+		    // FIll in some rowtag info that we know already
+		    iPKID = otblRecord.ipkid
+		    If iPKID <> 0 Then
+		      oRowTag.pkid = iPKID
+		    End If
+		    If oRowTag.sRowType = "Grandparent" Then
+		      'grandparent level row
+		      oRowTag.sFieldNames = dictFieldNames.Value("GrandParent")
+		      oRowTag.iCellTypes = dictCellTypes.Value("GrandParent")
+		    Else
+		      oRowTag.sFieldNames = dictFieldNames.Value(oRowTag.sRowType)
+		      oRowTag.iCellTypes = dictCellTypes.Value(oRowTag.sRowType)
+		    End If
+		    
+		    // Populate the Column values for this row
+		    For Each sFieldName as String In oRowTag.sFieldNames
+		      
+		      // Get the field names and values as a json item from the database record
+		      dim jsFieldValues as JSONItem = otblRecord.GetMyFieldValues(True)
+		      dim sKeys() as string = jsFieldValues.Names
+		      
+		      // Check to make sure that the field we are looking for really exists
+		      If sKeys.IndexOf(sFieldName) <> -1 Then
+		        
+		        // Format the value for display
+		        dim sUnFormattedValue as String = jsFieldValues.value(sFieldName)
+		        dim sFormattedValue as String
+		        If sFieldName.InStr(".") = 0 Then
+		          sFormattedValue = FormatValue_ForDisplay(sTableName + "." + sFieldName, sUnFormattedValue)
+		        Else
+		          sFormattedValue = FormatValue_ForDisplay(sFieldName, sUnFormattedValue)
+		        End If
+		        
+		        // append this value to the rowtag array
+		        oRowTag.vColumnValues.Append(sFormattedValue)
+		        
+		      End If
+		    Next
+		    
+		    // Check to see if this record has any children
+		    dim arLinkArray() as DataFile.tbl_internal_linking
+		    dim dictChildRecords as New Dictionary
+		    arLinkArray = DataFile.tbl_internal_linking.List( "fk_parent = " + otblRecord.ipkid.ToText )
+		    
+		    // Loop through each link child
+		    If arLinkArray.Ubound <> -1 Then
+		      
+		      // This Rowtag is a folder
+		      oRowTag.isFolder = True
+		      
+		      For Each oLinkRecord as DataFile.tbl_internal_linking In arLinkArray
+		        
+		        // Get the child record
+		        dim oChild as DataFile.tbl_inventory = DataFile.tbl_inventory.FindByID( oLinkRecord.ifk_child )  '!@! Table Dependent !@!
+		        If oChild <> Nil Then
+		          
+		          dim dictKeys() as Variant
+		          dim sLinkType as string
+		          sLinkType = oLinkRecord.slink_type
+		          dictKeys() = dictChildRecords.Keys
+		          If sLinkType = "" Then
+		            sLinkType = "NoType"
+		          End If
+		          
+		          dim aroSubChildren() as lbRowTag
+		          
+		          // Create new rowtag for this child
+		          dim oSubRowtag as New lbRowTag
+		          oSubRowtag.vtblRecord = otblRecord
+		          oSubRowtag.iFolderLevel = oRowTag.iFolderLevel + 1
+		          oSubRowtag.vtblRecord = oChild
+		          oSubRowtag.vLinkTable = oLinkRecord
+		          oSubRowtag.sRowType = "Linked - " + sLinkType
+		          
+		          If dictKeys.IndexOf(sLinkType) >=0 Then
+		            ' there is already a dictionary entry for this link type
+		            // Pull its fellow rowtags out of Dictionary
+		            aroSubChildren() = dictChildRecords.Value(sLinkType)
+		            
+		          Else
+		            'there is no dictionary entry for this link type
+		          End If
+		          
+		          // Feed this rowtag back into our build rowtag method to build it out
+		          methBuildRowTag(oSubRowtag)
+		          
+		          // Add our current child rowtag to the array and then back into the dictionary
+		          aroSubChildren.Append(oSubRowtag)
+		          dictChildRecords.Value(sLinkType) = aroSubChildren
+		          
+		        End If
+		        
+		      Next
+		      
+		      // Loop through each of the categories in dictChildRecords
+		      dim dictKeys() as Variant = dictChildRecords.Keys
+		      For Each key as Variant In dictKeys
+		        
+		        // Pull all of the child rowtags out of this category
+		        dim aroChildRecords() as lbRowTag = dictChildRecords.Value(key)
+		        
+		        // Check to see if there is a link type that would force us to create a sub folder to contain sub reacord
+		        If key = "NoType" Then
+		          
+		          // Loop through each child rowtag
+		          For Each Child as lbRowTag In aroChildRecords
+		            oRowTag.aroChildren.Append(Child)
+		          Next
+		          
+		        Else
+		          
+		          // Create a link folder rowtag
+		          dim oLinkRowtag as New lbRowTag
+		          oLinkRowtag.aroChildren() = aroChildRecords()
+		          oLinkRowtag.iCellTypes = dictCellTypes.Value("LinkingTypeFolder")
+		          oLinkRowtag.iFolderLevel = oRowTag.iFolderLevel + 1
+		          oLinkRowtag.isFolder = True
+		          oLinkRowtag.sFieldNames = dictFieldNames.Value("LinkingTypeFolder")
+		          oLinkRowtag.sRowType = "LinkingTypeFolder"
+		          oLinkRowtag.vColumnValues = Array(key)
+		          
+		          oRowTag.aroChildren.Append(oLinkRowtag)
+		          
+		        End If
+		        
+		      Next
+		      
+		    End If
+		    
+		    
+		  End If
+		  
+		  
+		  
+		  
+		  
+		  
+		  
+		  
+		  
+		  
+		  
+		  
+		End Sub
+	#tag EndMethod
+
+	#tag Method, Flags = &h0
+		Function methCreateRowTags(vRecords() as DataFile.tbl_inventory) As lbRowTag()
+		  '!@! Table Dependent In Parameters !@!
+		  
+		  // vRecords will either be 
+		  // an array of ActiveRecordBase objects
+		  //      or
+		  // a Dictionary or grouped records
+		  
+		  dim oReturnRowtags() as lbRowTag 
+		  
+		  // Check if vRecords is grouped or not
+		  
+		  Select Case vRecords(0)
+		  Case IsA Dictionary
+		    //Problem!!! should be in other form of method
+		    Return Array(new lbRowTag)
+		  Case IsA DataFile.ActiveRecordBase
+		    
+		    // Loop through each record
+		    For Each oRecord as DataFile.tbl_inventory In vRecords  '!@! Table Dependent !@!
+		      
+		      // Set up some basic things for the rowtag that we know already
+		      dim oCurrentRowtag as New lbRowTag
+		      'put the record we are on into the rowtag
+		      oCurrentRowtag.vtblRecord = oRecord
+		      oCurrentRowtag.iFolderLevel = 1
+		      oCurrentRowtag.sRowType = "GrandParent"
+		      
+		      // Build that damn rowtag
+		      methBuildRowTag(oCurrentRowtag)
+		      
+		      oReturnRowtags.Append( oCurrentRowtag )
+		      
+		    Next
+		    
+		    
+		    
+		  End Select
+		  
+		  Return oReturnRowtags
+		  
+		End Function
+	#tag EndMethod
+
+	#tag Method, Flags = &h0
+		Function methCreateRowTags_dict(dictRecords as Dictionary) As lbRowTag()
+		  // vRecords will either be 
+		  // an array of ActiveRecordBase objects
+		  //      or
+		  // a Dictionary or grouped records
+		  
+		  // Check if vRecords is grouped or not
+		  Select Case dictRecords
+		  Case IsA DataFile.ActiveRecordBase
+		    //Problem!!! should be in other form of method
+		    Return Array(New lbRowTag)
+		  Case IsA Dictionary
+		    
+		    dim aroGroupRowtags() as lbRowTag
+		    
+		    // Loop through all of the groups
+		    For Each vGroupName as Variant In dictRecords.Keys
+		      
+		      // Create the rowtags for this groups children
+		      dim aroChildRowTags() as lbRowTag
+		      aroChildRowTags() = methCreateRowTags(dictRecords.Value(vGroupName))
+		      
+		      // Create a New Rowtag for the Group
+		      dim oGroupRowtag as New lbRowTag
+		      oGroupRowtag.aroChildren() = aroChildRowTags()
+		      oGroupRowtag.iCellTypes = dictCellTypes.Value("GroupFolder")
+		      oGroupRowtag.iFolderLevel = 0
+		      oGroupRowtag.isFolder = True
+		      oGroupRowtag.sFieldNames = dictFieldNames.Value("GroupFolder")
+		      oGroupRowtag.sRowType = "GroupFolder"
+		      oGroupRowtag.vColumnValues = Array( vGroupname )
+		      
+		      aroGroupRowtags.Append(oGroupRowtag)
+		      
+		    Next
+		    
+		    Return aroGroupRowtags()
+		    
+		  End Select
+		End Function
+	#tag EndMethod
+
+	#tag Method, Flags = &h0
+		Sub methCreateTopLevelRows(aroRowtags() As lbRowTag)
+		  dim lb1 as entListbox = lbItems  '!@! Table Dependent !@!
+		  
+		  // Clear the listbox
+		  lb1.DeleteAllRows
+		  
+		  
+		  // Loop through each rowtag
+		  For Each oRowtag as lbRowTag In aroRowtags()
+		    
+		    // Create a row for this rowtag
+		    lb1.AddRow("")
+		    
+		    // Load the Row
+		    methLoadRow(lb1.LastIndex, oRowtag)
+		    
+		  Next
+		End Sub
+	#tag EndMethod
+
+	#tag Method, Flags = &h0
+		Sub methExpandAllRows(JustTopLevel as Boolean = True)
+		  dim lb1 As entListbox = lbItems  '!@! Table Dependent !@!
+		  
+		  // Loop through all the rows
+		  dim i1 as integer
+		  While i1 < lb1.ListCount 
+		    
+		    dim oRowTag as lbRowTag
+		    
+		    // extract the rowtag
+		    oRowTag = lb1.RowTag(i1)
+		    
+		    // Chgeck if its a folder
+		    If lb1.RowIsFolder(i1) Then
+		      
+		      // Check if its a top level folder
+		      Select Case oRowTag.iFolderLevel
+		      Case 0 
+		        lb1.Expanded(i1) = True
+		      Else
+		        If Not JustTopLevel Then
+		          lb1.Expanded(i1) = True
+		        End If
+		      End Select
+		      
+		    End If
+		    
+		    i1 = i1 + 1
+		    
+		  Wend
+		End Sub
+	#tag EndMethod
+
+	#tag Method, Flags = &h0
+		Function methGetRecordList_Grouped(sGroupByField as string, sConditionpar as string) As Dictionary
+		  dim dictGroupedItems as Dictionary
+		  
+		  // Delete all rows in listbox
+		  lbItems.DeleteAllRows
+		  
+		  // Grab the search value
+		  dim sSearchValue as String
+		  sSearchValue = scSearchField.Text  
+		  
+		  // Get the inventory items from the database grouped by sGroupByField
+		  dim sSearchCondition,sExcludeHiddenItemsCondition as String
+		  dim sCondition,sOrder as String
+		  
+		  // Set up the search condition
+		  If sSearchValue = "" Then
+		    sSearchCondition = ""
+		  Else
+		    sSearchCondition = "item_name Like '%" + sSearchValue + "%'"
+		  End If
+		  
+		  // Set up Hidden Condition
+		  dim HiddenValue as Boolean
+		  HiddenValue = chbShowHidden.Value
+		  If HiddenValue Then
+		    sExcludeHiddenItemsCondition = ""
+		  Else
+		    sExcludeHiddenItemsCondition = "(hide <> 1 Or hide Is Null)"
+		  End If
+		  
+		  // Set up the condition
+		  If sSearchCondition <> "" Then
+		    sCondition = sSearchCondition
+		    If sExcludeHiddenItemsCondition <> "" Then
+		      sCondition = sCondition + " And "
+		    End If
+		  End If
+		  If  sExcludeHiddenItemsCondition <> "" Then
+		    sCondition = sCondition + sExcludeHiddenItemsCondition
+		    If sConditionpar <> "" Then
+		      sCondition = sCondition + " And " 
+		    End If
+		  End If 
+		  If sConditionpar <> "" Then
+		    sCondition = sCondition + sConditionpar
+		  End If
+		  sOrder = sGroupByField
+		  dictGroupedItems = DataFile.tbl_inventory.ListGrouped(sCondition,sOrder,sGroupByField)  '!@! Table Dependent !@!
+		  
+		  Return dictGroupedItems
+		End Function
+	#tag EndMethod
+
+	#tag Method, Flags = &h0
+		Function methGetRecordList_UnGrouped(sOrderByFields as string, sConditionpar as string) As DataFile.tbl_inventory()
+		  '!@! Table Dependent In Return Type !@!
+		  
+		  dim aroRecords() as DataFile.tbl_inventory  '!@! Table Dependent !@!
+		  
+		  // Delete all rows in listbox
+		  lbItems.DeleteAllRows
+		  
+		  // Grab the search value
+		  dim sSearchValue as String
+		  sSearchValue = scSearchField.Text
+		  
+		  // Get the inventory items from the database grouped by sGroupByField
+		  dim sSearchCondition,sExcludeHiddenItemsCondition as String
+		  dim sCondition,sOrder as String
+		  
+		  // Set up the search condition
+		  If sSearchValue = "" Then
+		    sSearchCondition = ""
+		  Else
+		    sSearchCondition = "item_name Like '%" + sSearchValue + "%'"
+		  End If
+		  
+		  // Set up Hidden Condition
+		  dim HiddenValue as Boolean
+		  HiddenValue = chbShowHidden.Value
+		  If HiddenValue Then
+		    sExcludeHiddenItemsCondition = ""
+		  Else
+		    sExcludeHiddenItemsCondition = "(hide <> 1 Or hide Is Null)"
+		  End If
+		  
+		  // Set up the condition
+		  If sSearchCondition <> "" Then
+		    sCondition = sSearchCondition
+		    If sExcludeHiddenItemsCondition <> "" Then
+		      sCondition = sCondition + " And "
+		    End If
+		  End If
+		  If  sExcludeHiddenItemsCondition <> "" Then
+		    sCondition = sCondition + sExcludeHiddenItemsCondition
+		    If sConditionpar <> "" Then
+		      sCondition = sCondition + " And " 
+		    End If
+		  End If 
+		  If sConditionpar <> "" Then
+		    sCondition = sCondition + sConditionpar
+		  End If
+		  
+		  aroRecords = DataFile.tbl_inventory.List(sCondition,sOrderByFields)  '!@! Table Dependent !@!
+		  
+		  Return aroRecords
+		End Function
+	#tag EndMethod
+
+	#tag Method, Flags = &h0
+		Sub methHandleExpandRow(row as integer)
+		  dim lb1 as entListbox = lbItems  '!@! Table Dependent !@!
+		  
+		  // Extract the rowtag out of the parent
+		  dim oParentRowTag as lbRowTag
+		  oParentRowTag = lb1.RowTag(row)
+		  
+		  // Grab all the children
+		  dim aroChildrenRowTag() as lbRowTag
+		  aroChildrenRowTag() = oParentRowTag.aroChildren
+		  
+		  For Each oChild as lbRowTag In aroChildrenRowTag
+		    
+		    // Add a row
+		    lb1.AddRow("")
+		    
+		    // Load the rowtag into the row
+		    lb1.RowTag(lbItems.LastIndex) = oChild
+		    
+		    // Load the row
+		    methLoadRow(lbItems.LastIndex,oChild)
+		    
+		  Next
+		  
+		  
+		End Sub
+	#tag EndMethod
+
+	#tag Method, Flags = &h0
+		Sub methListboxSettings()
 		  _
 		  
 		  
 		  // Set up some basic stuff
 		  
 		  // trigger event to allow me to set information externally
-		  SetColumnInformation(lbItems,dictCellTypes,dictFieldNames)
+		  evdefListboxSettings(lbItems,dictCellTypes,dictFieldNames)
 		  
 		  If dictFieldNames = Nil And dictCellTypes = Nil Then
 		    
@@ -215,7 +665,6 @@ End
 		    // Set header names
 		    s1 = "Name,Manufacturer,Model,Department,Category,SubCat,Description,Qty,Price,Owner"
 		    s2() = Split(s1,",")
-		    sHeaders = s2
 		    lbItems.Heading = s2()
 		    
 		    
@@ -304,169 +753,6 @@ End
 		    
 		  End If
 		  
-		  LoadMe(True)
-		  
-		  
-		  
-		  
-		  
-		  
-		  
-		  
-		End Sub
-	#tag EndEvent
-
-
-	#tag Method, Flags = &h0
-		Sub BuildRowTag(ByRef oRowTag as lbRowTag)
-		  dim otblRecord as DataFile.tbl_inventory
-		  dim iPKID as Int64
-		  
-		  // Check  to see what kind of row this will be based on varying conditions
-		  If oRowTag.vtblRecord IsA DataFile.tbl_inventory Then
-		    'there is a table record and it is our primary table
-		    
-		    // Put the table record into a variable
-		    otblRecord = oRowTag.vtblRecord
-		    
-		    // Pull the table name into a variable
-		    dim sTableName as String = otblRecord.GetTableName
-		    
-		    // FIll in some rowtag info that we know already
-		    iPKID = otblRecord.ipkid
-		    If iPKID <> 0 Then
-		      oRowTag.pkid = iPKID
-		    End If
-		    If oRowTag.sRowType = "Grandparent" Then
-		      'grandparent level row
-		      oRowTag.sFieldNames = dictFieldNames.Value("GrandParent")
-		      oRowTag.iCellTypes = dictCellTypes.Value("GrandParent")
-		    Else
-		      oRowTag.sFieldNames = dictFieldNames.Value(oRowTag.sRowType)
-		      oRowTag.iCellTypes = dictCellTypes.Value(oRowTag.sRowType)
-		    End If
-		    
-		    // Populate the Column values for this row
-		    For Each sFieldName as String In oRowTag.sFieldNames
-		      
-		      // Get the field names and values as a json item from the database record
-		      dim jsFieldValues as JSONItem = otblRecord.GetMyFieldValues(True)
-		      dim sKeys() as string = jsFieldValues.Names
-		      
-		      // Check to make sure that the field we are looking for really exists
-		      If sKeys.IndexOf(sFieldName) <> -1 Then
-		        
-		        // Format the value for display
-		        dim sUnFormattedValue as String = jsFieldValues.value(sFieldName)
-		        dim sFormattedValue as String
-		        If sFieldName.InStr(".") = 0 Then
-		          sFormattedValue = FormatValue_ForDisplay(sTableName + "." + sFieldName, sUnFormattedValue)
-		        Else
-		          sFormattedValue = FormatValue_ForDisplay(sFieldName, sUnFormattedValue)
-		        End If
-		        
-		        // append this value to the rowtag array
-		        oRowTag.vColumnValues.Append(sFormattedValue)
-		        
-		      End If
-		    Next
-		    
-		    // Check to see if this record has any children
-		    dim arLinkArray() as DataFile.tbl_internal_linking
-		    dim dictChildRecords as New Dictionary
-		    arLinkArray = DataFile.tbl_internal_linking.List( "fk_parent = " + otblRecord.ipkid.ToText )
-		    
-		    // Loop through each link child
-		    If arLinkArray.Ubound <> -1 Then
-		      
-		      // This Rowtag is a folder
-		      oRowTag.isFolder = True
-		      
-		      For Each oLinkRecord as DataFile.tbl_internal_linking In arLinkArray
-		        
-		        // Get the child record
-		        dim oChild as DataFile.tbl_inventory = DataFile.tbl_inventory.FindByID( oLinkRecord.ifk_child )
-		        If oChild <> Nil Then
-		          
-		          dim dictKeys() as Variant
-		          dim sLinkType as string
-		          sLinkType = oLinkRecord.slink_type
-		          dictKeys() = dictChildRecords.Keys
-		          If sLinkType = "" Then
-		            sLinkType = "NoType"
-		          End If
-		          
-		          dim aroSubChildren() as lbRowTag
-		          
-		          // Create new rowtag for this child
-		          dim oSubRowtag as New lbRowTag
-		          oSubRowtag.vtblRecord = otblRecord
-		          oSubRowtag.iFolderLevel = oRowTag.iFolderLevel + 1
-		          oSubRowtag.vtblRecord = oChild
-		          oSubRowtag.vLinkTable = oLinkRecord
-		          oSubRowtag.sRowType = "Linked - " + sLinkType
-		          
-		          If dictKeys.IndexOf(sLinkType) >=0 Then
-		            ' there is already a dictionary entry for this link type
-		            // Pull its fellow rowtags out of Dictionary
-		            aroSubChildren() = dictChildRecords.Value(sLinkType)
-		            
-		          Else
-		            'there is no dictionary entry for this link type
-		          End If
-		          
-		          // Feed this rowtag back into our build rowtag method to build it out
-		          BuildRowTag(oSubRowtag)
-		          
-		          // Add our current child rowtag to the array and then back into the dictionary
-		          aroSubChildren.Append(oSubRowtag)
-		          dictChildRecords.Value(sLinkType) = aroSubChildren
-		          
-		        End If
-		        
-		      Next
-		      
-		      // Loop through each of the categories in dictChildRecords
-		      dim dictKeys() as Variant = dictChildRecords.Keys
-		      For Each key as Variant In dictKeys
-		        
-		        // Pull all of the child rowtags out of this category
-		        dim aroChildRecords() as lbRowTag = dictChildRecords.Value(key)
-		        
-		        // Check to see if there is a link type that would force us to create a sub folder to contain sub reacord
-		        If key = "NoType" Then
-		          
-		          // Loop through each child rowtag
-		          For Each Child as lbRowTag In aroChildRecords
-		            oRowTag.aroChildren.Append(Child)
-		          Next
-		          
-		        Else
-		          
-		          // Create a link folder rowtag
-		          dim oLinkRowtag as New lbRowTag
-		          oLinkRowtag.aroChildren() = aroChildRecords()
-		          oLinkRowtag.iCellTypes = dictCellTypes.Value("LinkingTypeFolder")
-		          oLinkRowtag.iFolderLevel = oRowTag.iFolderLevel + 1
-		          oLinkRowtag.isFolder = True
-		          oLinkRowtag.sFieldNames = dictFieldNames.Value("LinkingTypeFolder")
-		          oLinkRowtag.sRowType = "LinkingTypeFolder"
-		          oLinkRowtag.vColumnValues = Array(key)
-		          
-		          oRowTag.aroChildren.Append(oLinkRowtag)
-		          
-		        End If
-		        
-		      Next
-		      
-		    End If
-		    
-		    
-		  End If
-		  
-		  
-		  
-		  
 		  
 		  
 		  
@@ -479,309 +765,31 @@ End
 	#tag EndMethod
 
 	#tag Method, Flags = &h0
-		Function CreateRowTags(vRecords() as DataFile.tbl_inventory) As lbRowTag()
-		  // vRecords will either be 
-		  // an array of ActiveRecordBase objects
-		  //      or
-		  // a Dictionary or grouped records
-		  
-		  dim oReturnRowtags() as lbRowTag 
-		  
-		  // Check if vRecords is grouped or not
-		  
-		  Select Case vRecords(0)
-		  Case IsA Dictionary
-		    //Problem!!! should be in other form of method
-		    Return Array(new lbRowTag)
-		  Case IsA DataFile.ActiveRecordBase
-		    
-		    // Loop through each record
-		    For Each oRecord as DataFile.tbl_inventory In vRecords
-		      
-		      // Set up some basic things for the rowtag that we know already
-		      dim oCurrentRowtag as New lbRowTag
-		      'put the record we are on into the rowtag
-		      oCurrentRowtag.vtblRecord = oRecord
-		      oCurrentRowtag.iFolderLevel = 1
-		      oCurrentRowtag.sRowType = "GrandParent"
-		      
-		      // Build that damn rowtag
-		      BuildRowTag(oCurrentRowtag)
-		      
-		      oReturnRowtags.Append( oCurrentRowtag )
-		      
-		    Next
-		    
-		    
-		    
-		  End Select
-		  
-		  Return oReturnRowtags
-		  
-		End Function
-	#tag EndMethod
-
-	#tag Method, Flags = &h0
-		Function CreateRowTags_dict(dictRecords as Dictionary) As lbRowTag()
-		  // vRecords will either be 
-		  // an array of ActiveRecordBase objects
-		  //      or
-		  // a Dictionary or grouped records
-		  
-		  // Check if vRecords is grouped or not
-		  Select Case dictRecords
-		  Case IsA DataFile.ActiveRecordBase
-		    //Problem!!! should be in other form of method
-		    Return Array(New lbRowTag)
-		  Case IsA Dictionary
-		    
-		    dim aroGroupRowtags() as lbRowTag
-		    
-		    // Loop through all of the groups
-		    For Each vGroupName as Variant In dictRecords.Keys
-		      
-		      // Create the rowtags for this groups children
-		      dim aroChildRowTags() as lbRowTag
-		      aroChildRowTags() = CreateRowTags(dictRecords.Value(vGroupName))
-		      
-		      // Create a New Rowtag for the Group
-		      dim oGroupRowtag as New lbRowTag
-		      oGroupRowtag.aroChildren() = aroChildRowTags()
-		      oGroupRowtag.iCellTypes = dictCellTypes.Value("GroupFolder")
-		      oGroupRowtag.iFolderLevel = 0
-		      oGroupRowtag.isFolder = True
-		      oGroupRowtag.sFieldNames = dictFieldNames.Value("GroupFolder")
-		      oGroupRowtag.sRowType = "GroupFolder"
-		      oGroupRowtag.vColumnValues = Array( vGroupname )
-		      
-		      aroGroupRowtags.Append(oGroupRowtag)
-		      
-		    Next
-		    
-		    Return aroGroupRowtags()
-		    
-		  End Select
-		End Function
-	#tag EndMethod
-
-	#tag Method, Flags = &h0
-		Sub CreateTopLevelRows(aroRowtags() As lbRowTag)
-		  dim lb1 as entListbox = lbItems
-		  
-		  // Clear the listbox
-		  lb1.DeleteAllRows
-		  
-		  
-		  // Loop through each rowtag
-		  For Each oRowtag as lbRowTag In aroRowtags()
-		    
-		    // Create a row for this rowtag
-		    lb1.AddRow("")
-		    
-		    // Load the Row
-		    LoadRow(lb1.LastIndex, oRowtag)
-		    
-		  Next
-		End Sub
-	#tag EndMethod
-
-	#tag Method, Flags = &h0
-		Sub ExpandAllRows(JustTopLevel as Boolean = True)
-		  
-		  
-		  // Loop through all the rows
-		  dim i1 as integer
-		  While i1 < lbItems.ListCount 
-		    
-		    dim oRowTag as lbRowTag
-		    
-		    // extract the rowtag
-		    oRowTag = lbItems.RowTag(i1)
-		    
-		    // Chgeck if its a folder
-		    If lbItems.RowIsFolder(i1) Then
-		      
-		      // Check if its a top level folder
-		      Select Case oRowTag.iFolderLevel
-		      Case 0 
-		        lbItems.Expanded(i1) = True
-		      Else
-		        If Not JustTopLevel Then
-		          lbItems.Expanded(i1) = True
-		        End If
-		      End Select
-		      
-		    End If
-		    
-		    i1 = i1 + 1
-		    
-		  Wend
-		End Sub
-	#tag EndMethod
-
-	#tag Method, Flags = &h0
-		Function GetRecordList_Grouped(sGroupByField as string, sConditionpar as string) As Dictionary
-		  dim dictGroupedItems as Dictionary
-		  
-		  // Delete all rows in listbox
-		  lbItems.DeleteAllRows
-		  
-		  // Grab the search value
-		  dim sSearchValue as String
-		  sSearchValue = scSearchInventory.Text
-		  
-		  // Get the inventory items from the database grouped by sGroupByField
-		  dim sSearchCondition,sExcludeHiddenItemsCondition as String
-		  dim sCondition,sOrder as String
-		  
-		  // Set up the search condition
-		  If sSearchValue = "" Then
-		    sSearchCondition = ""
-		  Else
-		    sSearchCondition = "item_name Like '%" + sSearchValue + "%'"
-		  End If
-		  
-		  // Set up Hidden Condition
-		  dim HiddenValue as Boolean
-		  HiddenValue = chbShowHidden.Value
-		  If HiddenValue Then
-		    sExcludeHiddenItemsCondition = ""
-		  Else
-		    sExcludeHiddenItemsCondition = "(hide <> 1 Or hide Is Null)"
-		  End If
-		  
-		  // Set up the condition
-		  If sSearchCondition <> "" Then
-		    sCondition = sSearchCondition
-		    If sExcludeHiddenItemsCondition <> "" Then
-		      sCondition = sCondition + " And "
-		    End If
-		  End If
-		  If  sExcludeHiddenItemsCondition <> "" Then
-		    sCondition = sCondition + sExcludeHiddenItemsCondition
-		    If sConditionpar <> "" Then
-		      sCondition = sCondition + " And " 
-		    End If
-		  End If 
-		  If sConditionpar <> "" Then
-		    sCondition = sCondition + sConditionpar
-		  End If
-		  sOrder = sGroupByField
-		  dictGroupedItems = DataFile.tbl_inventory.ListGrouped(sCondition,sOrder,sGroupByField)
-		  
-		  Return dictGroupedItems
-		End Function
-	#tag EndMethod
-
-	#tag Method, Flags = &h0
-		Function GetRecordList_UnGrouped(sOrderByFields as string, sConditionpar as string) As DataFile.tbl_inventory()
-		  dim aroRecords() as DataFile.tbl_inventory
-		  
-		  // Delete all rows in listbox
-		  lbItems.DeleteAllRows
-		  
-		  // Grab the search value
-		  dim sSearchValue as String
-		  sSearchValue = scSearchInventory.Text
-		  
-		  // Get the inventory items from the database grouped by sGroupByField
-		  dim sSearchCondition,sExcludeHiddenItemsCondition as String
-		  dim sCondition,sOrder as String
-		  
-		  // Set up the search condition
-		  If sSearchValue = "" Then
-		    sSearchCondition = ""
-		  Else
-		    sSearchCondition = "item_name Like '%" + sSearchValue + "%'"
-		  End If
-		  
-		  // Set up Hidden Condition
-		  dim HiddenValue as Boolean
-		  HiddenValue = chbShowHidden.Value
-		  If HiddenValue Then
-		    sExcludeHiddenItemsCondition = ""
-		  Else
-		    sExcludeHiddenItemsCondition = "(hide <> 1 Or hide Is Null)"
-		  End If
-		  
-		  // Set up the condition
-		  If sSearchCondition <> "" Then
-		    sCondition = sSearchCondition
-		    If sExcludeHiddenItemsCondition <> "" Then
-		      sCondition = sCondition + " And "
-		    End If
-		  End If
-		  If  sExcludeHiddenItemsCondition <> "" Then
-		    sCondition = sCondition + sExcludeHiddenItemsCondition
-		    If sConditionpar <> "" Then
-		      sCondition = sCondition + " And " 
-		    End If
-		  End If 
-		  If sConditionpar <> "" Then
-		    sCondition = sCondition + sConditionpar
-		  End If
-		  
-		  aroRecords = DataFile.tbl_inventory.List(sCondition,sOrderByFields)
-		  
-		  Return aroRecords
-		End Function
-	#tag EndMethod
-
-	#tag Method, Flags = &h0
-		Sub HandleExpandRow(row as integer)
-		  
-		  
-		  // Extract the rowtag out of the parent
-		  dim oParentRowTag as lbRowTag
-		  oParentRowTag = lbItems.RowTag(row)
-		  
-		  // Grab all the children
-		  dim aroChildrenRowTag() as lbRowTag
-		  aroChildrenRowTag() = oParentRowTag.aroChildren
-		  
-		  For Each oChild as lbRowTag In aroChildrenRowTag
-		    
-		    // Add a row
-		    lbItems.AddRow("")
-		    
-		    // Load the rowtag into the row
-		    lbItems.RowTag(lbItems.LastIndex) = oChild
-		    
-		    // Load the row
-		    LoadRow(lbItems.LastIndex,oChild)
-		    
-		  Next
-		  
-		  
-		End Sub
-	#tag EndMethod
-
-	#tag Method, Flags = &h0
-		Sub LoadMe(IsGrouped as Boolean)
+		Sub methLoadMe(IsGrouped as Boolean)
 		  
 		  
 		  //UnGrouped
 		  If Not IsGrouped Then
 		    
 		    // Get the records
-		    dim inventory_records() as DataFile.tbl_inventory = GetRecordList_UnGrouped("item_department","")
+		    dim records() as DataFile.tbl_inventory = methGetRecordList_UnGrouped("item_department","")    '!@! Table Dependent !@!
 		    
 		    // Build the rowtags
 		    dim theRowtags() as lbRowTag
-		    theRowtags = CreateRowTags(inventory_records)
+		    theRowtags = methCreateRowTags(records)
 		    
-		    CreateTopLevelRows(theRowtags)
+		    methCreateTopLevelRows(theRowtags)
 		    
 		    //Grouped
 		  ElseIf IsGrouped Then
 		    
 		    // Get the Records
-		    dim dict_inventory_records as Dictionary = GetRecordList_Grouped("item_department", "")
+		    dim dictRecords as Dictionary = methGetRecordList_Grouped("item_department", "")    '!@! Table Dependent !@!
 		    
 		    dim theRowtagsGrouped() as lbRowTag
-		    theRowtagsGrouped = CreateRowTags_dict(dict_inventory_records)
+		    theRowtagsGrouped = methCreateRowTags_dict(dictRecords)
 		    
-		    CreateTopLevelRows(theRowtagsGrouped)
+		    methCreateTopLevelRows(theRowtagsGrouped)
 		    
 		  End If
 		  
@@ -789,76 +797,73 @@ End
 	#tag EndMethod
 
 	#tag Method, Flags = &h0
-		Sub LoadMe_ExpandSingleRecord(oRecord as DataFile.tbl_inventory)
+		Sub methLoadMe_ExpandSingleRecord(oRecord as DataFile.tbl_inventory)
+		  '!@! Table Dependent In Parameters !@!
 		  
 		  If oRecord <> Nil Then
 		    
-		    dim aroRecords() as DataFile.tbl_inventory
+		    dim aroRecords() as DataFile.tbl_inventory     '!@! Table Dependent !@!
 		    aroRecords.Append(oRecord)
 		    
 		    // Create rowtags based of the record we want to expand
 		    dim oRowTags() as lbRowTag
-		    oRowTags = CreateRowTags(aroRecords)
+		    oRowTags = methCreateRowTags(aroRecords)
 		    
-		    CreateTopLevelRows(oRowTags(0).aroChildren)
+		    methCreateTopLevelRows(oRowTags(0).aroChildren)
 		    
 		  End If
 		End Sub
 	#tag EndMethod
 
 	#tag Method, Flags = &h0
-		Sub LoadRow(RowIndex as integer, oRowTag as lbRowTag)
-		  
+		Sub methLoadRow(RowIndex as integer, oRowTag as lbRowTag)
+		  dim lb1 as entListbox = lbItems    '!@! Table Dependent !@!
 		  
 		  
 		  
 		  dim i1 as integer 
 		  For Each vValue as Variant In oRowTag.vColumnValues
 		    
-		    lbItems.CellType(RowIndex,i1) = oRowTag.iCellTypes(i1)
+		    lb1.CellType(RowIndex,i1) = oRowTag.iCellTypes(i1)
 		    
-		    Select Case lbItems.CellType(RowIndex,i1)
+		    Select Case lb1.CellType(RowIndex,i1)
 		    Case 0 'default
-		      lbItems.Cell(RowIndex,i1) = vValue
+		      lb1.Cell(RowIndex,i1) = vValue
 		    Case 1 'text
-		      lbItems.Cell(RowIndex,i1) = vValue
+		      lb1.Cell(RowIndex,i1) = vValue
 		    Case 2 'CheckBox
 		      If vValue = True then
-		        lbItems.CellState(RowIndex,i1) = CheckBox.CheckedStates.Checked
+		        lb1.CellState(RowIndex,i1) = CheckBox.CheckedStates.Checked
 		      Else
-		        lbItems.CellState(RowIndex,i1) = CheckBox.CheckedStates.Unchecked
+		        lb1.CellState(RowIndex,i1) = CheckBox.CheckedStates.Unchecked
 		      End If
 		    Case 3 'edit text
-		      lbItems.Cell(RowIndex,i1) = vValue
+		      lb1.Cell(RowIndex,i1) = vValue
 		    Else
-		      lbItems.Cell(RowIndex,i1) = vValue
+		      lb1.Cell(RowIndex,i1) = vValue
 		    End Select
 		    
 		    i1 = i1 + 1
 		  Next
 		  
-		  lbItems.RowTag(RowIndex) = oRowTag
+		  lb1.RowTag(RowIndex) = oRowTag
 		  
 		  // Make it a folder if neccessary
 		  If oRowTag.isFolder Then
-		    lbItems.RowisFolder(RowIndex) = True
+		    lb1.RowisFolder(RowIndex) = True
 		  End If
 		End Sub
 	#tag EndMethod
 
 
 	#tag Hook, Flags = &h0
-		Event entDoubleClick() As Boolean
+		Event evdefDoubleClick() As Boolean
 	#tag EndHook
 
 	#tag Hook, Flags = &h0
-		Event SetColumnInformation(lbItems as entListbox, ByRef dictCellTypes as Dictionary, ByRef dictFieldNames as Dictionary)
+		Event evdefListboxSettings(lbItems as entListbox, ByRef dictCellTypes as Dictionary, ByRef dictFieldNames as Dictionary)
 	#tag EndHook
 
-
-	#tag Property, Flags = &h0
-		bTopLevelOnly As Boolean
-	#tag EndProperty
 
 	#tag Property, Flags = &h0
 		dictCellTypes As Dictionary
@@ -869,10 +874,6 @@ End
 	#tag EndProperty
 
 	#tag Property, Flags = &h0
-		LastOpenFolders() As lbRowTag
-	#tag EndProperty
-
-	#tag Property, Flags = &h0
 		LastSearchValue As String
 	#tag EndProperty
 
@@ -880,141 +881,10 @@ End
 		LastUIState As lbUIState
 	#tag EndProperty
 
-	#tag Property, Flags = &h0
-		sHeaders() As String
-	#tag EndProperty
-
 
 #tag EndWindowCode
 
 #tag Events lbItems
-	#tag Event
-		Sub Open()
-		  
-		  
-		  'SetColumnInformation(lbItems,dictCellTypes,dictFieldNames)
-		  
-		  'If dictFieldNames = Nil And dictCellTypes = Nil Then
-		  
-		  'dim s1,s2() as string
-		  
-		  'dim sRowType as string
-		  
-		  // Set Column Count
-		  'dim iColCount as integer = 10
-		  'lbItems.ColumnCount = iColCount
-		  
-		  // Initialize dictionaries
-		  'dictFieldNames = New Dictionary
-		  'dictCellTypes = New Dictionary
-		  
-		  // Set header names
-		  's1 = "Name,Manufacturer,Model,Department,Category,SubCat,Description,Qty,Price,Owner"
-		  's2() = Split(s1,",")
-		  'sHeaders = s2
-		  'lbItems.Heading = s2()
-		  
-		  
-		  // **********
-		  // Set up the cell types and field names for each type of row
-		  
-		  // Group Folders
-		  'sRowType = "GroupFolder"
-		  'field names
-		  'dictFieldNames.Value(sRowType) = Array("")
-		  
-		  'cell types
-		  'dim iCellTypes() as integer
-		  'ReDim iCellTypes(iColCount - 1) 
-		  'dictCellTypes.Value(sRowType) = iCellTypes
-		  
-		  
-		  // GrandParent
-		  'sRowType = "GrandParent"
-		  'field names
-		  's1 = "item_name,item_manufacturer,item_model,item_department,item_category,item_subcategory,item_description,item_quantity,item_rental_price_cost,item_owner"
-		  's2() = Split(s1,",")
-		  'dictFieldNames.Value(sRowType) = s2
-		  
-		  ''cell types
-		  'dim iCellTypes2() as integer
-		  'ReDim iCellTypes2(iColCount - 1) 
-		  'dictCellTypes.Value(sRowType) = iCellTypes2
-		  '
-		  
-		  // Linking Type Folder
-		  'sRowType = "LinkingTypeFolder"
-		  'field names
-		  'dictFieldNames.Value(sRowType) = Array("")
-		  
-		  'cell types
-		  'dim iCellTypes3() as integer
-		  'ReDim iCellTypes3(iColCount - 1) 
-		  'dictCellTypes.Value(sRowType) = iCellTypes3
-		  '
-		  
-		  // LinkedItem - Version
-		  'sRowType = "LinkedItem - version"
-		  ''field names
-		  's1 = "item_name,item_manufacturer,item_model,item_department,item_category,item_subcategory,item_description,item_quantity,|SKIP|,item_owner"
-		  's2() = Split(s1,",")
-		  'dictFieldNames.Value(sRowType) = s2
-		  '
-		  ''cell types
-		  'dim iCellTypes4() as integer = Array(0,0,0,0,0,0,0,3,0,0)
-		  'dictCellTypes.Value(sRowType) = iCellTypes4
-		  '
-		  '
-		  '// LinkedItem - Contained
-		  'sRowType = "LinkedItem - contained"
-		  ''field names
-		  's1 = "item_name,item_manufacturer,item_model,item_department,item_category,item_subcategory,item_description,tbl_inventory_link.-.quantity,|SKIP|,item_owner"
-		  's2() = Split(s1,",")
-		  'dictFieldNames.Value(sRowType) = s2
-		  '
-		  ''cell types
-		  'dim iCellTypes5() as integer = Array(0,0,0,0,0,0,0,3,0,0)
-		  'dictCellTypes.Value(sRowType) = iCellTypes5
-		  '
-		  '// LinkedItem - Contained
-		  'sRowType = "LinkedItem - kit"
-		  ''field names
-		  's1 = "item_name,item_manufacturer,item_model,item_department,item_category,item_subcategory,item_description,tbl_inventory_link.-.quantity,|SKIP|,item_owner"
-		  's2() = Split(s1,",")
-		  'dictFieldNames.Value(sRowType) = s2
-		  '
-		  ''cell types
-		  'dim iCellTypes6() as integer = Array(0,0,0,0,0,0,0,3,0,0)
-		  'dictCellTypes.Value(sRowType) = iCellTypes6
-		  '
-		  '// LinkedItem - Contained
-		  'sRowType = "LinkedItem - package"
-		  ''field names
-		  's1 = "item_name,item_manufacturer,item_model,item_department,item_category,item_subcategory,item_description,tbl_inventory_link.-.quantity,|SKIP|,item_owner"
-		  's2() = Split(s1,",")
-		  'dictFieldNames.Value(sRowType) = s2
-		  '
-		  ''cell types
-		  'dim iCellTypes7() as integer = Array(0,0,0,0,0,0,0,3,0,0)
-		  'dictCellTypes.Value(sRowType) = iCellTypes7
-		  '
-		  'End If
-		  '
-		  '
-		  '
-		  '// Populate the listbox
-		  '
-		  '
-		  '
-		  '
-		  '
-		  '
-		  '
-		  '
-		  '
-		  ''''
-		End Sub
-	#tag EndEvent
 	#tag Event
 		Function CellBackgroundPaint(g as Graphics,row as integer, column as integer) As Boolean
 		  
@@ -1030,13 +900,13 @@ End
 	#tag Event
 		Sub ExpandRow(Row as integer)
 		  
-		  HandleExpandRow(row)
+		  methHandleExpandRow(row)
 		End Sub
 	#tag EndEvent
 	#tag Event
 		Sub DoubleClick()
 		  
-		  If entDoubleClick Then
+		  If evdefDoubleClick Then
 		    
 		    // the event was handled and we do not want to do anything else
 		    
@@ -1045,29 +915,29 @@ End
 		    
 		    dim oRowTag as lbRowTag
 		    
-		    If lbItems.ListIndex <> -1 Then
+		    If me.ListIndex <> -1 Then
 		      
-		      oRowTag = lbItems.RowTag(lbItems.ListIndex)
+		      oRowTag = me.RowTag(me.ListIndex)
 		      
 		      If oRowTag.vtblRecord <> Nil Then
 		        
 		        // Get the item name
-		        dim oRecord as DataFile.tbl_inventory
+		        dim oRecord as DataFile.tbl_inventory    '!@! Table Dependent !@!
 		        oRecord = oRowTag.vtblRecord
-		        dim sItemName as string
-		        sItemName = oRecord.sitem_name
+		        dim sTabName as string
+		        sTabName = oRecord.sitem_name    '!@! Table Dependent !@!
 		        
 		        If oRowTag.pkid <> 0 Then
 		          
 		          // load up a inventory item container
-		          dim conItem as New contInventoryItem
+		          dim conItem as New contInventoryItem    '!@! Table Dependent !@!
 		          dim oTabPanel as PagePanel = app.MainWindow.tbMainWindow
 		          
-		          app.MainWindow.AddTab(sItemName)
+		          app.MainWindow.AddTab(sTabName)
 		          
 		          conItem.EmbedWithinPanel(oTabPanel,oTabPanel.PanelCount - 1 )
 		          
-		          conItem.LoadItem(oRowTag.pkid)
+		          conItem.LoadItem(oRowTag.pkid)    '!@! Table Dependent !@!
 		        End If
 		        
 		      End If
@@ -1080,7 +950,7 @@ End
 	#tag EndEvent
 	#tag Event
 		Function entContextualMenuAction(hitItem as MenuItem) As Boolean
-		  
+		  '!@! Table Dependent !@!
 		  
 		  Select Case hitItem.Text
 		  Case "Open"
@@ -1231,7 +1101,7 @@ End
 	#tag EndEvent
 	#tag Event
 		Function entConstructContextualMenu(base as menuitem, x as integer, y as integer) As Boolean
-		  
+		  '!@! Table Dependent !@!
 		  
 		  If lbItems.ListIndex <> -1 Then
 		    
@@ -1286,12 +1156,12 @@ End
 		End Sub
 	#tag EndEvent
 #tag EndEvents
-#tag Events scSearchInventory
+#tag Events scSearchField
 	#tag Event
 		Sub Search()
 		  dim sSearchValue as string
 		  
-		  sSearchValue = scSearchInventory.Text
+		  sSearchValue = scSearchField.Text
 		  
 		  If len(sSearchValue) <> 0 Then
 		    ' there is something to be searched
@@ -1305,17 +1175,12 @@ End
 		      oUIState = lbItems.GetUIState
 		      LastUIState = oUIState
 		      
-		      '// Get which folders are open and store them
-		      'dim oOpenFolders() as lbRowTag
-		      'oOpenFolders = lbItems.GetOpenedFolders
-		      'LastOpenFolders = oOpenFolders
-		      
 		    End If
 		    
 		  End If
 		  
 		  // Populate listbox with filterd inventory
-		  'CreateZeroLevelRowTags
+		  methLoadMe
 		  
 		  
 		  If len(sSearchValue) = 0 Then
@@ -1335,22 +1200,13 @@ End
 		        
 		      End If
 		      
-		      'If LastOpenFolders.Ubound <> -1 Then
-		      ' There are recored previously open folders
-		      
-		      'lbItems.reopenFolders(LastOpenFolders)
-		      'Redim LastOpenFolders(-1)
-		      
-		      'End If
-		      
 		    End If
 		    
 		  Else
 		    '  there is something in the search field
 		    
 		    // Open all the top level folders
-		    ExpandAllRows(True)
-		    
+		    methExpandAllRows(True)
 		    
 		  End If
 		  
@@ -1358,56 +1214,6 @@ End
 		  
 		  
 		  LastSearchValue = sSearchValue
-		  
-		  
-		  
-		  
-		  
-		  
-		  
-		  
-		  
-		  
-		  
-		  
-		  
-		  
-		  
-		  
-		  
-		  
-		  
-		  
-		  
-		  
-		  
-		  
-		  
-		  
-		  
-		  
-		  
-		  
-		  
-		  
-		  
-		  
-		  
-		  
-		  
-		  
-		  
-		  
-		  
-		  
-		  
-		  
-		  
-		  
-		  
-		  
-		  
-		  
 		  
 		  
 		  
@@ -1463,11 +1269,6 @@ End
 		Group="Background"
 		Type="Picture"
 		EditorType="Picture"
-	#tag EndViewProperty
-	#tag ViewProperty
-		Name="bTopLevelOnly"
-		Group="Behavior"
-		Type="Boolean"
 	#tag EndViewProperty
 	#tag ViewProperty
 		Name="Enabled"

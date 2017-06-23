@@ -38,7 +38,6 @@ Begin Window winInventoryPicker
       HasBackColor    =   False
       Height          =   30
       HelpTag         =   ""
-      Index           =   -2147483648
       InitialParent   =   ""
       Left            =   253
       LockBottom      =   True
@@ -63,13 +62,11 @@ Begin Window winInventoryPicker
       AutoDeactivate  =   True
       BackColor       =   &cFFFF00FF
       Backdrop        =   0
-      bTopLevelOnly   =   False
       Enabled         =   True
       EraseBackground =   True
       HasBackColor    =   False
       Height          =   418
       HelpTag         =   ""
-      Index           =   -2147483648
       InitialParent   =   ""
       LastSearchValue =   ""
       Left            =   0
@@ -170,7 +167,15 @@ End
 #tag EndEvents
 #tag Events contItems
 	#tag Event
-		Sub SetColumnInformation(lbItems as entListbox, ByRef dictCellTypes as Dictionary, ByRef dictFieldNames as Dictionary)
+		Function evdefDoubleClick() As Boolean
+		  
+		  
+		  // stops the inventory listbox from opening the inventory item in a new tab
+		  Return True
+		End Function
+	#tag EndEvent
+	#tag Event
+		Sub evdefListboxSettings(lbItems as entListbox, ByRef dictCellTypes as Dictionary, ByRef dictFieldNames as Dictionary)
 		  
 		  dim s1,s2() as string
 		  
@@ -229,7 +234,7 @@ End
 		  
 		  
 		  // LinkedItem - Version
-		  sRowType = "LinkedItem - version"
+		  sRowType = "Linked - version"
 		  'field names
 		  s1 = "item_name,item_category,item_subcategory,item_quantity"
 		  s2() = Split(s1,",")
@@ -241,7 +246,7 @@ End
 		  
 		  
 		  // LinkedItem - Contained
-		  sRowType = "LinkedItem - contained"
+		  sRowType = "Linked - contained"
 		  'field names
 		  s1 = "item_name,item_category,item_subcategory,tbl_inventory_link.-.quantity"
 		  s2() = Split(s1,",")
@@ -252,7 +257,7 @@ End
 		  dictCellTypes.Value(sRowType) = iCellTypes5
 		  
 		  // LinkedItem - kit
-		  sRowType = "LinkedItem - kit"
+		  sRowType = "Linked - kit"
 		  'field names
 		  s1 = "item_name,item_category,item_subcategory,tbl_inventory_link.-.quantity"
 		  s2() = Split(s1,",")
@@ -263,7 +268,7 @@ End
 		  dictCellTypes.Value(sRowType) = iCellTypes6
 		  
 		  // LinkedItem - package
-		  sRowType = "LinkedItem - package"
+		  sRowType = "Linked - package"
 		  'field names
 		  s1 = "item_name,item_category,item_subcategory,tbl_inventory_link.-.quantity"
 		  s2() = Split(s1,",")
@@ -273,14 +278,6 @@ End
 		  dim iCellTypes7() as integer = Array(0,0,0,0)
 		  dictCellTypes.Value(sRowType) = iCellTypes7
 		End Sub
-	#tag EndEvent
-	#tag Event
-		Function entDoubleClick() As Boolean
-		  
-		  
-		  // stops the inventory listbox from opening the inventory item in a new tab
-		  Return True
-		End Function
 	#tag EndEvent
 #tag EndEvents
 #tag ViewBehavior

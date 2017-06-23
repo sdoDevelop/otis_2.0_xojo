@@ -861,11 +861,11 @@ End
 
 
 	#tag Hook, Flags = &h0
-		Event entDoubleClick() As Boolean
+		Event entOpen()
 	#tag EndHook
 
 	#tag Hook, Flags = &h0
-		Event entOpen()
+		Event evdefDoubleClick() As Boolean
 	#tag EndHook
 
 
@@ -951,7 +951,7 @@ End
 		  dim lbItems as entListbox = lbEvents
 		  
 		  
-		  If entDoubleClick Then
+		  If evdefDoubleClick Then
 		    
 		    // the event was handled and we do not want to do anything else
 		    
