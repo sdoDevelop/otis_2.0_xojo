@@ -1129,6 +1129,8 @@ End
 #tag Events bAddItem
 	#tag Event
 		Sub Action()
+		  '!@! Table Dependent !@!
+		  
 		  
 		  dim oNewItem as New DataFile.tbl_inventory
 		  oNewItem.sitem_name = "-"
@@ -1151,7 +1153,7 @@ End
 		  
 		  dim oUIState as lbUIState
 		  oUIState = lbItems.GetUIState
-		  'CreateZeroLevelRowTags()'"hide <> 1 Or hide Is Null")
+		  methLoadMe
 		  lbItems.ResetUIState(oUIState)
 		End Sub
 	#tag EndEvent
@@ -1227,7 +1229,7 @@ End
 		  
 		  dim oUIState as lbUIState
 		  oUIState = lbItems.GetUIState
-		  'CreateZeroLevelRowTags
+		  methLoadMe
 		  lbItems.ResetUIState(oUIState)
 		End Sub
 	#tag EndEvent
