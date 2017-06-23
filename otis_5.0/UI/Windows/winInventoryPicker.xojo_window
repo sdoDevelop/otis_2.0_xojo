@@ -102,7 +102,7 @@ End
 	#tag Method, Flags = &h0
 		Sub LoadItems(sConditionpar as string = "", sGroupBy as string = "item_department")
 		  
-		  contItems.CreateZeroLevelRowTags(sConditionpar,"item_department")
+		  'contItems.CreateZeroLevelRowTags(sConditionpar,"item_department")
 		End Sub
 	#tag EndMethod
 

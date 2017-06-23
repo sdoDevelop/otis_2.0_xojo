@@ -75,7 +75,6 @@ Begin Window winMain_1TabPanel
       Scope           =   0
       TabIndex        =   2
       TabPanelIndex   =   0
-      TabStop         =   True
       Top             =   27
       Value           =   1
       Visible         =   True
@@ -84,7 +83,7 @@ Begin Window winMain_1TabPanel
          AcceptFocus     =   False
          AcceptTabs      =   True
          AutoDeactivate  =   True
-         BackColor       =   &cFFFF00FF
+         BackColor       =   &cFF00FFFF
          Backdrop        =   0
          bJustChildren   =   False
          bWithButtons    =   True
@@ -93,7 +92,6 @@ Begin Window winMain_1TabPanel
          HasBackColor    =   False
          Height          =   429
          HelpTag         =   ""
-         Index           =   -2147483648
          InitialParent   =   "tbMainWindow"
          iParentID       =   ""
          LastSearchValue =   ""
@@ -120,7 +118,7 @@ Begin Window winMain_1TabPanel
          AcceptFocus     =   True
          AcceptTabs      =   True
          AutoDeactivate  =   True
-         BackColor       =   &cFFFF00FF
+         BackColor       =   &cFF00FFFF
          Backdrop        =   0
          bTopLevelOnly   =   False
          Enabled         =   True
@@ -128,7 +126,6 @@ Begin Window winMain_1TabPanel
          HasBackColor    =   False
          Height          =   421
          HelpTag         =   ""
-         Index           =   -2147483648
          InitialParent   =   "tbMainWindow"
          LastSearchValue =   ""
          Left            =   10
@@ -217,12 +214,13 @@ End
 	#tag Event
 		Sub Activate()
 		  
-		  break
 		  
-		  dim thinsl as Dictionary
-		  thinsl = DataFile.tbl_contactables.ListGrouped("","name_first,name_last,job_title","name_first, name_last, job_title")
+		  
+		  
+		  ''dim thinsl as Dictionary
+		  ''thinsl = DataFile.tbl_contactables.ListGrouped("","name_first,name_last,job_title","name_first, name_last, job_title")
 		  'dim s1 as string = thinsl.ToString
-		  dim s2 as string
+		  ''dim s2 as string
 		  'dim randomthing as BKS_ActiveRecord.Base
 		  'dim baselistthting as New BKS_ActiveRecord.BaseList
 		  

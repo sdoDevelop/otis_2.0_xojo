@@ -28,7 +28,8 @@ Create Table tbl_internal_linking
         fk_parent           integer,
         fk_child            integer,
         fk_table_name       text,
-        link_type           text
+        link_type           text,
+        quantity            integer
         );
 
 Create Table tbl_events_link

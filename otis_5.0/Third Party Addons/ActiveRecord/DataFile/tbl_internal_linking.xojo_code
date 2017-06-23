@@ -172,6 +172,10 @@ Inherits DataFile.ActiveRecordBase
 	#tag EndProperty
 
 	#tag Property, Flags = &h0
+		iquantity As Integer
+	#tag EndProperty
+
+	#tag Property, Flags = &h0
 		sfk_table_name As Integer
 	#tag EndProperty
 
@@ -182,42 +186,12 @@ Inherits DataFile.ActiveRecordBase
 
 	#tag ViewBehavior
 		#tag ViewProperty
-			Name="idiscount_amount"
+			Name="ifk_child"
 			Group="Behavior"
 			Type="Integer"
 		#tag EndViewProperty
 		#tag ViewProperty
-			Name="idiscount_percent"
-			Group="Behavior"
-			Type="Integer"
-		#tag EndViewProperty
-		#tag ViewProperty
-			Name="idiscount_total"
-			Group="Behavior"
-			Type="Integer"
-		#tag EndViewProperty
-		#tag ViewProperty
-			Name="ieipl_balance"
-			Group="Behavior"
-			Type="Integer"
-		#tag EndViewProperty
-		#tag ViewProperty
-			Name="ieipl_grand_total"
-			Group="Behavior"
-			Type="Integer"
-		#tag EndViewProperty
-		#tag ViewProperty
-			Name="ieipl_number"
-			Group="Behavior"
-			Type="Integer"
-		#tag EndViewProperty
-		#tag ViewProperty
-			Name="ieipl_subtotal"
-			Group="Behavior"
-			Type="Integer"
-		#tag EndViewProperty
-		#tag ViewProperty
-			Name="ieipl_total_paid"
+			Name="ifk_parent"
 			Group="Behavior"
 			Type="Integer"
 		#tag EndViewProperty
@@ -234,7 +208,7 @@ Inherits DataFile.ActiveRecordBase
 			Type="Int64"
 		#tag EndViewProperty
 		#tag ViewProperty
-			Name="itax_total"
+			Name="iquantity"
 			Group="Behavior"
 			Type="Integer"
 		#tag EndViewProperty
@@ -257,19 +231,12 @@ Inherits DataFile.ActiveRecordBase
 			Type="String"
 		#tag EndViewProperty
 		#tag ViewProperty
-			Name="sdue_date"
+			Name="sfk_table_name"
 			Group="Behavior"
-			Type="String"
-			EditorType="MultiLineEditor"
+			Type="Integer"
 		#tag EndViewProperty
 		#tag ViewProperty
-			Name="seipl_type"
-			Group="Behavior"
-			Type="String"
-			EditorType="MultiLineEditor"
-		#tag EndViewProperty
-		#tag ViewProperty
-			Name="sfkevents"
+			Name="slink_type"
 			Group="Behavior"
 			Type="String"
 			EditorType="MultiLineEditor"
@@ -288,12 +255,6 @@ Inherits DataFile.ActiveRecordBase
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="srow_username"
-			Group="Behavior"
-			Type="String"
-			EditorType="MultiLineEditor"
-		#tag EndViewProperty
-		#tag ViewProperty
-			Name="sshipping_method"
 			Group="Behavior"
 			Type="String"
 			EditorType="MultiLineEditor"

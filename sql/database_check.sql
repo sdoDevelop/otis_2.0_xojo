@@ -17,6 +17,18 @@
         hide
         From tbl_events;
 
+Select
+        pkid               ,
+        row_created        ,
+        row_modified       ,
+        row_username       ,
+        fk_parent          ,
+        fk_child           ,
+        fk_table_name      ,
+        link_type          ,
+        quantity           
+        From tbl_internal_linking;
+
     Select
         pkid                ,
         row_created         ,

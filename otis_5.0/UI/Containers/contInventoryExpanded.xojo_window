@@ -29,9 +29,9 @@ Begin ContainerControl contInventoryExpanded
       AcceptFocus     =   False
       AcceptTabs      =   True
       AutoDeactivate  =   True
-      BackColor       =   &cFFFF00FF
+      BackColor       =   &cFF00FFFF
       Backdrop        =   0
-      CellBackColor   =   &cFFFF00FF
+      CellBackColor   =   &cFF00FFFF
       Enabled         =   True
       EraseBackground =   True
       GridLinesColor  =   &c00000000

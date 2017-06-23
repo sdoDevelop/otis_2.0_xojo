@@ -58,32 +58,32 @@ Begin ContainerControl contEventList
       Width           =   498
    End
    Begin SearchControl scEventSearch
-      AutoDeactivate  =   "True"
+      AutoDeactivate  =   True
       Enabled         =   True
-      HasCancelButton =   "True"
-      HasMenu         =   "False"
-      Height          =   "22"
+      HasCancelButton =   True
+      HasMenu         =   False
+      Height          =   22
       HelpTag         =   ""
       Index           =   -2147483648
       InitialParent   =   ""
-      Left            =   "363"
-      LockBottom      =   "False"
+      Left            =   363
+      LockBottom      =   False
       LockedInPosition=   False
-      LockLeft        =   "False"
-      LockRight       =   "True"
-      LockTop         =   "True"
-      MacBorderStyle  =   "0"
+      LockLeft        =   False
+      LockRight       =   True
+      LockTop         =   True
+      MacBorderStyle  =   0
       PlaceHolderText =   ""
       Scope           =   0
-      SendSearchStringImmediately=   "False"
-      SendWholeSearchString=   "False"
-      TabIndex        =   "1"
+      SendSearchStringImmediately=   False
+      SendWholeSearchString=   False
+      TabIndex        =   1
       TabPanelIndex   =   0
       TabStop         =   True
       Text            =   ""
-      Top             =   "0"
+      Top             =   0
       Visible         =   True
-      Width           =   "135"
+      Width           =   135
    End
    Begin PushButton pbRefresh
       AutoDeactivate  =   True

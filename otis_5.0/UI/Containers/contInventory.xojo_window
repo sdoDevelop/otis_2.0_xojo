@@ -185,6 +185,13 @@ End
 	#tag Event
 		Sub Activate()
 		  
+		End Sub
+	#tag EndEvent
+
+	#tag Event
+		Sub Open()
+		  _
+		  
 		  
 		  // Set up some basic stuff
 		  
@@ -251,7 +258,7 @@ End
 		    
 		    
 		    // LinkedItem - Version
-		    sRowType = "LinkedItem - version"
+		    sRowType = "Linked - version"
 		    'field names
 		    s1 = "item_name,item_manufacturer,item_model,item_department,item_category,item_subcategory,item_description,item_quantity,|SKIP|,item_owner"
 		    s2() = Split(s1,",")
@@ -263,7 +270,7 @@ End
 		    
 		    
 		    // LinkedItem - Contained
-		    sRowType = "LinkedItem - contained"
+		    sRowType = "Linked - contained"
 		    'field names
 		    s1 = "item_name,item_manufacturer,item_model,item_department,item_category,item_subcategory,item_description,tbl_inventory_link.-.quantity,|SKIP|,item_owner"
 		    s2() = Split(s1,",")
@@ -274,7 +281,7 @@ End
 		    dictCellTypes.Value(sRowType) = iCellTypes5
 		    
 		    // LinkedItem - Contained
-		    sRowType = "LinkedItem - kit"
+		    sRowType = "Linked - kit"
 		    'field names
 		    s1 = "item_name,item_manufacturer,item_model,item_department,item_category,item_subcategory,item_description,tbl_inventory_link.-.quantity,|SKIP|,item_owner"
 		    s2() = Split(s1,",")
@@ -285,7 +292,7 @@ End
 		    dictCellTypes.Value(sRowType) = iCellTypes6
 		    
 		    // LinkedItem - Contained
-		    sRowType = "LinkedItem - package"
+		    sRowType = "Linked - package"
 		    'field names
 		    s1 = "item_name,item_manufacturer,item_model,item_department,item_category,item_subcategory,item_description,tbl_inventory_link.-.quantity,|SKIP|,item_owner"
 		    s2() = Split(s1,",")
@@ -297,12 +304,7 @@ End
 		    
 		  End If
 		  
-		  
-		  
-		  // Populate the listbox
-		  'CreateZeroLevelRowTags()'"hide <> 1 Or hide IS Null")
-		  
-		  
+		  LoadMe(True)
 		  
 		  
 		  
@@ -327,17 +329,47 @@ End
 		    // Put the table record into a variable
 		    otblRecord = oRowTag.vtblRecord
 		    
+		    // Pull the table name into a variable
+		    dim sTableName as String = otblRecord.GetTableName
+		    
 		    // FIll in some rowtag info that we know already
 		    iPKID = otblRecord.ipkid
 		    If iPKID <> 0 Then
 		      oRowTag.pkid = iPKID
 		    End If
-		    If oRowTag.iFolderLevel = 1 Then
+		    If oRowTag.sRowType = "Grandparent" Then
 		      'grandparent level row
-		      oRowTag.sRowType = "GrandParent"
 		      oRowTag.sFieldNames = dictFieldNames.Value("GrandParent")
 		      oRowTag.iCellTypes = dictCellTypes.Value("GrandParent")
+		    Else
+		      oRowTag.sFieldNames = dictFieldNames.Value(oRowTag.sRowType)
+		      oRowTag.iCellTypes = dictCellTypes.Value(oRowTag.sRowType)
 		    End If
+		    
+		    // Populate the Column values for this row
+		    For Each sFieldName as String In oRowTag.sFieldNames
+		      
+		      // Get the field names and values as a json item from the database record
+		      dim jsFieldValues as JSONItem = otblRecord.GetMyFieldValues(True)
+		      dim sKeys() as string = jsFieldValues.Names
+		      
+		      // Check to make sure that the field we are looking for really exists
+		      If sKeys.IndexOf(sFieldName) <> -1 Then
+		        
+		        // Format the value for display
+		        dim sUnFormattedValue as String = jsFieldValues.value(sFieldName)
+		        dim sFormattedValue as String
+		        If sFieldName.InStr(".") = 0 Then
+		          sFormattedValue = FormatValue_ForDisplay(sTableName + "." + sFieldName, sUnFormattedValue)
+		        Else
+		          sFormattedValue = FormatValue_ForDisplay(sFieldName, sUnFormattedValue)
+		        End If
+		        
+		        // append this value to the rowtag array
+		        oRowTag.vColumnValues.Append(sFormattedValue)
+		        
+		      End If
+		    Next
 		    
 		    // Check to see if this record has any children
 		    dim arLinkArray() as DataFile.tbl_internal_linking
@@ -346,6 +378,10 @@ End
 		    
 		    // Loop through each link child
 		    If arLinkArray.Ubound <> -1 Then
+		      
+		      // This Rowtag is a folder
+		      oRowTag.isFolder = True
+		      
 		      For Each oLinkRecord as DataFile.tbl_internal_linking In arLinkArray
 		        
 		        // Get the child record
@@ -356,7 +392,7 @@ End
 		          dim sLinkType as string
 		          sLinkType = oLinkRecord.slink_type
 		          dictKeys() = dictChildRecords.Keys
-		          If sLinkType <> "" Then
+		          If sLinkType = "" Then
 		            sLinkType = "NoType"
 		          End If
 		          
@@ -368,6 +404,7 @@ End
 		          oSubRowtag.iFolderLevel = oRowTag.iFolderLevel + 1
 		          oSubRowtag.vtblRecord = oChild
 		          oSubRowtag.vLinkTable = oLinkRecord
+		          oSubRowtag.sRowType = "Linked - " + sLinkType
 		          
 		          If dictKeys.IndexOf(sLinkType) >=0 Then
 		            ' there is already a dictionary entry for this link type
@@ -442,27 +479,7 @@ End
 	#tag EndMethod
 
 	#tag Method, Flags = &h0
-		Sub CreateRowTags(vRecords as Dictionary)
-		  // vRecords will either be 
-		  // an array of ActiveRecordBase objects
-		  //      or
-		  // a Dictionary or grouped records
-		  
-		  // Check if vRecords is grouped or not
-		  Select Case vRecords
-		  Case IsA DataFile.ActiveRecordBase
-		    //Problem!!! should be in other form of method
-		    Return
-		  Case IsA Dictionary
-		    
-		    
-		    
-		  End Select
-		End Sub
-	#tag EndMethod
-
-	#tag Method, Flags = &h0
-		Function CreateRowTags(vRecords() as Variant) As lbRowTag()
+		Function CreateRowTags(vRecords() as DataFile.tbl_inventory) As lbRowTag()
 		  // vRecords will either be 
 		  // an array of ActiveRecordBase objects
 		  //      or
@@ -486,6 +503,7 @@ End
 		      'put the record we are on into the rowtag
 		      oCurrentRowtag.vtblRecord = oRecord
 		      oCurrentRowtag.iFolderLevel = 1
+		      oCurrentRowtag.sRowType = "GrandParent"
 		      
 		      // Build that damn rowtag
 		      BuildRowTag(oCurrentRowtag)
@@ -501,6 +519,70 @@ End
 		  Return oReturnRowtags
 		  
 		End Function
+	#tag EndMethod
+
+	#tag Method, Flags = &h0
+		Function CreateRowTags_dict(dictRecords as Dictionary) As lbRowTag()
+		  // vRecords will either be 
+		  // an array of ActiveRecordBase objects
+		  //      or
+		  // a Dictionary or grouped records
+		  
+		  // Check if vRecords is grouped or not
+		  Select Case dictRecords
+		  Case IsA DataFile.ActiveRecordBase
+		    //Problem!!! should be in other form of method
+		    Return Array(New lbRowTag)
+		  Case IsA Dictionary
+		    
+		    dim aroGroupRowtags() as lbRowTag
+		    
+		    // Loop through all of the groups
+		    For Each vGroupName as Variant In dictRecords.Keys
+		      
+		      // Create the rowtags for this groups children
+		      dim aroChildRowTags() as lbRowTag
+		      aroChildRowTags() = CreateRowTags(dictRecords.Value(vGroupName))
+		      
+		      // Create a New Rowtag for the Group
+		      dim oGroupRowtag as New lbRowTag
+		      oGroupRowtag.aroChildren() = aroChildRowTags()
+		      oGroupRowtag.iCellTypes = dictCellTypes.Value("GroupFolder")
+		      oGroupRowtag.iFolderLevel = 0
+		      oGroupRowtag.isFolder = True
+		      oGroupRowtag.sFieldNames = dictFieldNames.Value("GroupFolder")
+		      oGroupRowtag.sRowType = "GroupFolder"
+		      oGroupRowtag.vColumnValues = Array( vGroupname )
+		      
+		      aroGroupRowtags.Append(oGroupRowtag)
+		      
+		    Next
+		    
+		    Return aroGroupRowtags()
+		    
+		  End Select
+		End Function
+	#tag EndMethod
+
+	#tag Method, Flags = &h0
+		Sub CreateTopLevelRows(aroRowtags() As lbRowTag)
+		  dim lb1 as entListbox = lbItems
+		  
+		  // Clear the listbox
+		  lb1.DeleteAllRows
+		  
+		  
+		  // Loop through each rowtag
+		  For Each oRowtag as lbRowTag In aroRowtags()
+		    
+		    // Create a row for this rowtag
+		    lb1.AddRow("")
+		    
+		    // Load the Row
+		    LoadRow(lb1.LastIndex, oRowtag)
+		    
+		  Next
+		End Sub
 	#tag EndMethod
 
 	#tag Method, Flags = &h0
@@ -675,6 +757,56 @@ End
 	#tag EndMethod
 
 	#tag Method, Flags = &h0
+		Sub LoadMe(IsGrouped as Boolean)
+		  
+		  
+		  //UnGrouped
+		  If Not IsGrouped Then
+		    
+		    // Get the records
+		    dim inventory_records() as DataFile.tbl_inventory = GetRecordList_UnGrouped("item_department","")
+		    
+		    // Build the rowtags
+		    dim theRowtags() as lbRowTag
+		    theRowtags = CreateRowTags(inventory_records)
+		    
+		    CreateTopLevelRows(theRowtags)
+		    
+		    //Grouped
+		  ElseIf IsGrouped Then
+		    
+		    // Get the Records
+		    dim dict_inventory_records as Dictionary = GetRecordList_Grouped("item_department", "")
+		    
+		    dim theRowtagsGrouped() as lbRowTag
+		    theRowtagsGrouped = CreateRowTags_dict(dict_inventory_records)
+		    
+		    CreateTopLevelRows(theRowtagsGrouped)
+		    
+		  End If
+		  
+		End Sub
+	#tag EndMethod
+
+	#tag Method, Flags = &h0
+		Sub LoadMe_ExpandSingleRecord(oRecord as DataFile.tbl_inventory)
+		  
+		  If oRecord <> Nil Then
+		    
+		    dim aroRecords() as DataFile.tbl_inventory
+		    aroRecords.Append(oRecord)
+		    
+		    // Create rowtags based of the record we want to expand
+		    dim oRowTags() as lbRowTag
+		    oRowTags = CreateRowTags(aroRecords)
+		    
+		    CreateTopLevelRows(oRowTags(0).aroChildren)
+		    
+		  End If
+		End Sub
+	#tag EndMethod
+
+	#tag Method, Flags = &h0
 		Sub LoadRow(RowIndex as integer, oRowTag as lbRowTag)
 		  
 		  
@@ -760,127 +892,127 @@ End
 		Sub Open()
 		  
 		  
-		  SetColumnInformation(lbItems,dictCellTypes,dictFieldNames)
+		  'SetColumnInformation(lbItems,dictCellTypes,dictFieldNames)
 		  
-		  If dictFieldNames = Nil And dictCellTypes = Nil Then
-		    
-		    dim s1,s2() as string
-		    
-		    dim sRowType as string
-		    
-		    // Set Column Count
-		    dim iColCount as integer = 10
-		    lbItems.ColumnCount = iColCount
-		    
-		    // Initialize dictionaries
-		    dictFieldNames = New Dictionary
-		    dictCellTypes = New Dictionary
-		    
-		    // Set header names
-		    s1 = "Name,Manufacturer,Model,Department,Category,SubCat,Description,Qty,Price,Owner"
-		    s2() = Split(s1,",")
-		    sHeaders = s2
-		    lbItems.Heading = s2()
-		    
-		    
-		    // **********
-		    // Set up the cell types and field names for each type of row
-		    
-		    // Group Folders
-		    sRowType = "GroupFolder"
-		    'field names
-		    dictFieldNames.Value(sRowType) = Array("")
-		    
-		    'cell types
-		    dim iCellTypes() as integer
-		    ReDim iCellTypes(iColCount - 1) 
-		    dictCellTypes.Value(sRowType) = iCellTypes
-		    
-		    
-		    // GrandParent
-		    sRowType = "GrandParent"
-		    'field names
-		    s1 = "item_name,item_manufacturer,item_model,item_department,item_category,item_subcategory,item_description,item_quantity,item_rental_price_cost,item_owner"
-		    s2() = Split(s1,",")
-		    dictFieldNames.Value(sRowType) = s2
-		    
-		    'cell types
-		    dim iCellTypes2() as integer
-		    ReDim iCellTypes2(iColCount - 1) 
-		    dictCellTypes.Value(sRowType) = iCellTypes2
-		    
-		    
-		    // Linking Type Folder
-		    sRowType = "LinkingTypeFolder"
-		    'field names
-		    dictFieldNames.Value(sRowType) = Array("")
-		    
-		    'cell types
-		    dim iCellTypes3() as integer
-		    ReDim iCellTypes3(iColCount - 1) 
-		    dictCellTypes.Value(sRowType) = iCellTypes3
-		    
-		    
-		    // LinkedItem - Version
-		    sRowType = "LinkedItem - version"
-		    'field names
-		    s1 = "item_name,item_manufacturer,item_model,item_department,item_category,item_subcategory,item_description,item_quantity,|SKIP|,item_owner"
-		    s2() = Split(s1,",")
-		    dictFieldNames.Value(sRowType) = s2
-		    
-		    'cell types
-		    dim iCellTypes4() as integer = Array(0,0,0,0,0,0,0,3,0,0)
-		    dictCellTypes.Value(sRowType) = iCellTypes4
-		    
-		    
-		    // LinkedItem - Contained
-		    sRowType = "LinkedItem - contained"
-		    'field names
-		    s1 = "item_name,item_manufacturer,item_model,item_department,item_category,item_subcategory,item_description,tbl_inventory_link.-.quantity,|SKIP|,item_owner"
-		    s2() = Split(s1,",")
-		    dictFieldNames.Value(sRowType) = s2
-		    
-		    'cell types
-		    dim iCellTypes5() as integer = Array(0,0,0,0,0,0,0,3,0,0)
-		    dictCellTypes.Value(sRowType) = iCellTypes5
-		    
-		    // LinkedItem - Contained
-		    sRowType = "LinkedItem - kit"
-		    'field names
-		    s1 = "item_name,item_manufacturer,item_model,item_department,item_category,item_subcategory,item_description,tbl_inventory_link.-.quantity,|SKIP|,item_owner"
-		    s2() = Split(s1,",")
-		    dictFieldNames.Value(sRowType) = s2
-		    
-		    'cell types
-		    dim iCellTypes6() as integer = Array(0,0,0,0,0,0,0,3,0,0)
-		    dictCellTypes.Value(sRowType) = iCellTypes6
-		    
-		    // LinkedItem - Contained
-		    sRowType = "LinkedItem - package"
-		    'field names
-		    s1 = "item_name,item_manufacturer,item_model,item_department,item_category,item_subcategory,item_description,tbl_inventory_link.-.quantity,|SKIP|,item_owner"
-		    s2() = Split(s1,",")
-		    dictFieldNames.Value(sRowType) = s2
-		    
-		    'cell types
-		    dim iCellTypes7() as integer = Array(0,0,0,0,0,0,0,3,0,0)
-		    dictCellTypes.Value(sRowType) = iCellTypes7
-		    
-		  End If
+		  'If dictFieldNames = Nil And dictCellTypes = Nil Then
+		  
+		  'dim s1,s2() as string
+		  
+		  'dim sRowType as string
+		  
+		  // Set Column Count
+		  'dim iColCount as integer = 10
+		  'lbItems.ColumnCount = iColCount
+		  
+		  // Initialize dictionaries
+		  'dictFieldNames = New Dictionary
+		  'dictCellTypes = New Dictionary
+		  
+		  // Set header names
+		  's1 = "Name,Manufacturer,Model,Department,Category,SubCat,Description,Qty,Price,Owner"
+		  's2() = Split(s1,",")
+		  'sHeaders = s2
+		  'lbItems.Heading = s2()
 		  
 		  
+		  // **********
+		  // Set up the cell types and field names for each type of row
 		  
-		  // Populate the listbox
+		  // Group Folders
+		  'sRowType = "GroupFolder"
+		  'field names
+		  'dictFieldNames.Value(sRowType) = Array("")
+		  
+		  'cell types
+		  'dim iCellTypes() as integer
+		  'ReDim iCellTypes(iColCount - 1) 
+		  'dictCellTypes.Value(sRowType) = iCellTypes
 		  
 		  
+		  // GrandParent
+		  'sRowType = "GrandParent"
+		  'field names
+		  's1 = "item_name,item_manufacturer,item_model,item_department,item_category,item_subcategory,item_description,item_quantity,item_rental_price_cost,item_owner"
+		  's2() = Split(s1,",")
+		  'dictFieldNames.Value(sRowType) = s2
 		  
+		  ''cell types
+		  'dim iCellTypes2() as integer
+		  'ReDim iCellTypes2(iColCount - 1) 
+		  'dictCellTypes.Value(sRowType) = iCellTypes2
+		  '
 		  
+		  // Linking Type Folder
+		  'sRowType = "LinkingTypeFolder"
+		  'field names
+		  'dictFieldNames.Value(sRowType) = Array("")
 		  
+		  'cell types
+		  'dim iCellTypes3() as integer
+		  'ReDim iCellTypes3(iColCount - 1) 
+		  'dictCellTypes.Value(sRowType) = iCellTypes3
+		  '
 		  
-		  
-		  
-		  
-		  
+		  // LinkedItem - Version
+		  'sRowType = "LinkedItem - version"
+		  ''field names
+		  's1 = "item_name,item_manufacturer,item_model,item_department,item_category,item_subcategory,item_description,item_quantity,|SKIP|,item_owner"
+		  's2() = Split(s1,",")
+		  'dictFieldNames.Value(sRowType) = s2
+		  '
+		  ''cell types
+		  'dim iCellTypes4() as integer = Array(0,0,0,0,0,0,0,3,0,0)
+		  'dictCellTypes.Value(sRowType) = iCellTypes4
+		  '
+		  '
+		  '// LinkedItem - Contained
+		  'sRowType = "LinkedItem - contained"
+		  ''field names
+		  's1 = "item_name,item_manufacturer,item_model,item_department,item_category,item_subcategory,item_description,tbl_inventory_link.-.quantity,|SKIP|,item_owner"
+		  's2() = Split(s1,",")
+		  'dictFieldNames.Value(sRowType) = s2
+		  '
+		  ''cell types
+		  'dim iCellTypes5() as integer = Array(0,0,0,0,0,0,0,3,0,0)
+		  'dictCellTypes.Value(sRowType) = iCellTypes5
+		  '
+		  '// LinkedItem - Contained
+		  'sRowType = "LinkedItem - kit"
+		  ''field names
+		  's1 = "item_name,item_manufacturer,item_model,item_department,item_category,item_subcategory,item_description,tbl_inventory_link.-.quantity,|SKIP|,item_owner"
+		  's2() = Split(s1,",")
+		  'dictFieldNames.Value(sRowType) = s2
+		  '
+		  ''cell types
+		  'dim iCellTypes6() as integer = Array(0,0,0,0,0,0,0,3,0,0)
+		  'dictCellTypes.Value(sRowType) = iCellTypes6
+		  '
+		  '// LinkedItem - Contained
+		  'sRowType = "LinkedItem - package"
+		  ''field names
+		  's1 = "item_name,item_manufacturer,item_model,item_department,item_category,item_subcategory,item_description,tbl_inventory_link.-.quantity,|SKIP|,item_owner"
+		  's2() = Split(s1,",")
+		  'dictFieldNames.Value(sRowType) = s2
+		  '
+		  ''cell types
+		  'dim iCellTypes7() as integer = Array(0,0,0,0,0,0,0,3,0,0)
+		  'dictCellTypes.Value(sRowType) = iCellTypes7
+		  '
+		  'End If
+		  '
+		  '
+		  '
+		  '// Populate the listbox
+		  '
+		  '
+		  '
+		  '
+		  '
+		  '
+		  '
+		  '
+		  '
+		  ''''
 		End Sub
 	#tag EndEvent
 	#tag Event

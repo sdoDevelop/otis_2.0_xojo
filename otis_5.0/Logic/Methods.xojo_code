@@ -60,6 +60,22 @@ Protected Module Methods
 		End Function
 	#tag EndMethod
 
+	#tag Method, Flags = &h0
+		Function FormatValue_ForDb(sFieldName as string, sValue as String) As String
+		  
+		  
+		  Return sValue
+		End Function
+	#tag EndMethod
+
+	#tag Method, Flags = &h0
+		Function FormatValue_ForDisplay(sFieldName as string, sValue as String) As String
+		  
+		  
+		  Return sValue
+		End Function
+	#tag EndMethod
+
 	#tag Method, Flags = &h1
 		Protected Function GetNewPKID() As Int64
 		  Dim d1 as new date

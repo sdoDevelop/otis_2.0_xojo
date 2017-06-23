@@ -169,7 +169,7 @@ Begin Window window_login
       TabStop         =   True
       Text            =   "Authentication Failed"
       TextAlign       =   0
-      TextColor       =   &c00E30A0A
+      TextColor       =   &cE30A0A00
       TextFont        =   "FreeSerif"
       TextSize        =   10.0
       TextUnit        =   0
@@ -316,7 +316,7 @@ Begin Window window_login
       Alignment       =   0
       AutoDeactivate  =   True
       AutomaticallyCheckSpelling=   False
-      BackColor       =   &cFFFF00FF
+      BackColor       =   &cFF00FFFF
       Bold            =   False
       Border          =   True
       CueText         =   ""
@@ -358,7 +358,7 @@ Begin Window window_login
       Alignment       =   0
       AutoDeactivate  =   True
       AutomaticallyCheckSpelling=   False
-      BackColor       =   &cFFFF00FF
+      BackColor       =   &cFF00FFFF
       Bold            =   False
       Border          =   True
       CueText         =   ""

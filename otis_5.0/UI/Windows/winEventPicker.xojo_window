@@ -30,7 +30,7 @@ Begin Window winEventPicker
       AcceptFocus     =   False
       AcceptTabs      =   True
       AutoDeactivate  =   True
-      BackColor       =   &cFF00FFFF
+      BackColor       =   &c00FFFFFF
       Backdrop        =   0
       CancelButtonText=   "Cancel"
       Enabled         =   True
@@ -61,7 +61,7 @@ Begin Window winEventPicker
       AcceptFocus     =   False
       AcceptTabs      =   True
       AutoDeactivate  =   True
-      BackColor       =   &cFFFF00FF
+      BackColor       =   &cFF00FFFF
       Backdrop        =   0
       bJustChildren   =   False
       bWithButtons    =   True
