@@ -63,8 +63,8 @@ Begin Window winEventPicker
       AutoDeactivate  =   True
       BackColor       =   &cFF00FFFF
       Backdrop        =   0
-      bJustChildren   =   False
-      bWithButtons    =   True
+      bJustChildren   =   "False"
+      bWithButtons    =   "True"
       Enabled         =   True
       EraseBackground =   True
       HasBackColor    =   False
@@ -83,7 +83,7 @@ Begin Window winEventPicker
       sCondition      =   ""
       Scope           =   0
       sGroupByFields  =   """""event_name"""""
-      sSortBy         =   0
+      sSortBy         =   "0"
       TabIndex        =   5
       TabPanelIndex   =   0
       TabStop         =   True
@@ -107,7 +107,7 @@ End
 	#tag Method, Flags = &h0
 		Sub LoadEvents(sConditionpar as string = "")
 		  
-		  contEventListInst.methLoadMe(False)
+		  contEventListInst.methLoadMe()
 		End Sub
 	#tag EndMethod
 

@@ -10,7 +10,7 @@ Inherits BKS_ActiveRecord.Base
 		    osm.StoreSync(oChangeDescription)
 		  End If
 		  
-		  
+		  PostDelete
 		End Sub
 	#tag EndEvent
 
@@ -43,7 +43,8 @@ Inherits BKS_ActiveRecord.Base
 		  // username
 		  me.srow_username = app.sUserName
 		  
-		  
+		  // Trigger Pre Create Event 
+		  PreCreate
 		  
 		  If me.IsModified Then
 		    
@@ -148,6 +149,10 @@ Inherits BKS_ActiveRecord.Base
 
 	#tag Hook, Flags = &h0
 		Event PostDelete()
+	#tag EndHook
+
+	#tag Hook, Flags = &h0
+		Event PreCreate()
 	#tag EndHook
 
 

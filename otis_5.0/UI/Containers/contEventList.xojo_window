@@ -214,14 +214,20 @@ End
 
 #tag WindowCode
 	#tag Event
+		Function MouseWheel(X As Integer, Y As Integer, DeltaX as Integer, DeltaY as Integer) As Boolean
+		  
+		  
+		  Return methHandleMouseWheel(X,Y,DeltaX,DeltaY)
+		End Function
+	#tag EndEvent
+
+	#tag Event
 		Sub Open()
 		  
 		  // Set all the settings up for our listbox
 		  methListboxSettings
 		  
-		  // Grab all the records and load them into the listbox
-		  methLoadMe(False)
-		  
+		  evdefOpen
 		End Sub
 	#tag EndEvent
 
@@ -297,10 +303,10 @@ End
 		    // Loop through each link child
 		    If arLinkArray.Ubound <> -1 Then
 		      
-		      // This Rowtag is a folder
-		      oRowTag.isFolder = True
-		      
-		      For Each oLinkRecord as DataFile.tbl_internal_linking In arLinkArray
+		      For iLinkIndex as integer = 0 To arLinkArray.Ubound
+		        
+		        // Pull the link record out of the array
+		        dim oLinkRecord as DataFile.tbl_internal_linking = arLinkArray( iLinkIndex )
 		        
 		        // Get the child record
 		        dim oChild as DataFile.tbl_events = DataFile.tbl_events.FindByID( oLinkRecord.ifk_child )  '!@! Table Dependent !@!
@@ -340,9 +346,23 @@ End
 		          aroSubChildren.Append(oSubRowtag)
 		          dictChildRecords.Value(sLinkType) = aroSubChildren
 		          
+		        Else
+		          // The child specified by the link record does not exist
+		          
+		          // Delete the child from the array
+		          arLinkArray.Remove( iLinkIndex )
+		          
 		        End If
 		        
 		      Next
+		      
+		      // Check again if there are any link records left
+		      If arLinkArray.Ubound = -1 Then
+		        // No link records left 
+		      Else
+		        // Link records left
+		        oRowTag.isFolder = True
+		      End If
 		      
 		      // Loop through each of the categories in dictChildRecords
 		      dim dictKeys() as Variant = dictChildRecords.Keys
@@ -608,7 +628,7 @@ End
 		  If sSearchValue = "" Then
 		    sSearchCondition = ""
 		  Else
-		    sSearchCondition = "item_name Like '%" + sSearchValue + "%'"
+		    sSearchCondition = "event_name Like '%" + sSearchValue + "%'"  '!@! Table Dependent !@!
 		  End If
 		  
 		  // Set up Hidden Condition
@@ -670,6 +690,15 @@ End
 		  
 		  
 		End Sub
+	#tag EndMethod
+
+	#tag Method, Flags = &h0
+		Function methHandleMouseWheel(X As Integer, Y As Integer, DeltaX as Integer, DeltaY as Integer) As Boolean
+		  'me.EraseBackground = False
+		  
+		  me.top = me.Top + DeltaY
+		  me.Invalidate
+		End Function
 	#tag EndMethod
 
 	#tag Method, Flags = &h0
@@ -767,8 +796,8 @@ End
 	#tag EndMethod
 
 	#tag Method, Flags = &h0
-		Sub methLoadMe(IsGrouped as Boolean)
-		  
+		Sub methLoadMe()
+		  dim IsGrouped as Boolean = bDisplayGrouped
 		  
 		  //UnGrouped
 		  If Not IsGrouped Then
@@ -861,7 +890,7 @@ End
 		Sub methRefresh()
 		  
 		  
-		  methLoadMe(False)
+		  methLoadMe()
 		End Sub
 	#tag EndMethod
 
@@ -880,11 +909,19 @@ End
 
 
 	#tag Property, Flags = &h0
+		bDisplayGrouped As Boolean
+	#tag EndProperty
+
+	#tag Property, Flags = &h0
 		dictCellTypes As Dictionary
 	#tag EndProperty
 
 	#tag Property, Flags = &h0
 		dictFieldNames As Dictionary
+	#tag EndProperty
+
+	#tag Property, Flags = &h0
+		DoNotLoad As Boolean
 	#tag EndProperty
 
 	#tag Property, Flags = &h0
@@ -1233,6 +1270,12 @@ End
 		  End If
 		End Sub
 	#tag EndEvent
+	#tag Event
+		Function evdefMouseWheel(X As Integer, Y As Integer, DeltaX as Integer, DeltaY as Integer) As Boolean
+		  
+		  Return methHandleMouseWheel(X,Y,DeltaX,DeltaY)
+		End Function
+	#tag EndEvent
 #tag EndEvents
 #tag Events scSearchField
 	#tag Event
@@ -1259,7 +1302,7 @@ End
 		  End If
 		  
 		  // Populate listbox with filterd inventory
-		  methLoadMe(False)
+		  methLoadMe()
 		  
 		  
 		  If len(sSearchValue) = 0 Then
@@ -1310,7 +1353,21 @@ End
 #tag Events pbAddEvent
 	#tag Event
 		Sub Action()
+		  '!@! Table Dependent !@!
 		  
+		  
+		  // Create the new record
+		  dim oNew as New DataFile.tbl_events  '!@! Table Dependent !@!
+		  oNew.sevent_name = "-"  '!@! Table Dependent !@!
+		  
+		  
+		  dim NewCont as New contEvent  '!@! Table Dependent !@!
+		  
+		  app.MainWindow.AddTab("New Event")
+		  
+		  NewCont.EmbedWithinPanel(app.MainWindow.tbMainWindow, app.MainWindow.tbMainWindow.PanelCount - 1)
+		  
+		  NewCont.LoadEvent(oNew)
 		End Sub
 	#tag EndEvent
 #tag EndEvents
@@ -1373,7 +1430,7 @@ End
 		  
 		  dim oUIState as lbUIState
 		  oUIState = lbEvents.GetUIState
-		  methLoadMe(False)
+		  methLoadMe()
 		  lbEvents.ResetUIState(oUIState)
 		End Sub
 	#tag EndEvent
@@ -1415,6 +1472,16 @@ End
 		Group="Background"
 		Type="Picture"
 		EditorType="Picture"
+	#tag EndViewProperty
+	#tag ViewProperty
+		Name="bDisplayGrouped"
+		Group="Behavior"
+		Type="Boolean"
+	#tag EndViewProperty
+	#tag ViewProperty
+		Name="DoNotLoad"
+		Group="Behavior"
+		Type="Boolean"
 	#tag EndViewProperty
 	#tag ViewProperty
 		Name="Enabled"

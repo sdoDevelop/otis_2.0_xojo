@@ -39,7 +39,6 @@ Begin ContainerControl contFirmware
       HasHeading      =   True
       Height          =   220
       HelpTag         =   ""
-      Index           =   -2147483648
       InitialParent   =   ""
       Left            =   0
       LockBottom      =   True
@@ -141,7 +140,6 @@ Begin ContainerControl contFirmware
       Selectable      =   False
       TabIndex        =   7
       TabPanelIndex   =   0
-      TabStop         =   True
       Text            =   "Update Date"
       TextAlign       =   2
       TextColor       =   &c00000000
@@ -218,7 +216,6 @@ Begin ContainerControl contFirmware
       Selectable      =   False
       TabIndex        =   14
       TabPanelIndex   =   0
-      TabStop         =   True
       Text            =   "Item Name"
       TextAlign       =   0
       TextColor       =   &c00000000
@@ -253,7 +250,6 @@ Begin ContainerControl contFirmware
       Selectable      =   False
       TabIndex        =   15
       TabPanelIndex   =   0
-      TabStop         =   True
       Text            =   "Serial #: "
       TextAlign       =   0
       TextColor       =   &c00000000
@@ -288,7 +284,6 @@ Begin ContainerControl contFirmware
       Selectable      =   False
       TabIndex        =   16
       TabPanelIndex   =   0
-      TabStop         =   True
       Text            =   "--"
       TextAlign       =   0
       TextColor       =   &c00000000
@@ -323,7 +318,6 @@ Begin ContainerControl contFirmware
       Selectable      =   False
       TabIndex        =   17
       TabPanelIndex   =   0
-      TabStop         =   True
       Text            =   "Version"
       TextAlign       =   2
       TextColor       =   &c00000000
@@ -401,7 +395,6 @@ Begin ContainerControl contFirmware
       Selectable      =   False
       TabIndex        =   19
       TabPanelIndex   =   0
-      TabStop         =   True
       Text            =   "Comments"
       TextAlign       =   2
       TextColor       =   &c00000000

@@ -38,6 +38,7 @@ Begin Window winInventoryPicker
       HasBackColor    =   False
       Height          =   30
       HelpTag         =   ""
+      Index           =   -2147483648
       InitialParent   =   ""
       Left            =   253
       LockBottom      =   True
@@ -67,7 +68,9 @@ Begin Window winInventoryPicker
       HasBackColor    =   False
       Height          =   418
       HelpTag         =   ""
+      Index           =   -2147483648
       InitialParent   =   ""
+      iStartingTop    =   0
       LastSearchValue =   ""
       Left            =   0
       LockBottom      =   True

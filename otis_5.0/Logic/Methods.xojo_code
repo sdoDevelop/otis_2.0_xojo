@@ -44,7 +44,7 @@ Protected Module Methods
 		  
 		  Select Case sContainerName
 		  Case "contInventoryExpanded"
-		    Return New contInventoryExpanded
+		    'Return New contInventoryExpanded
 		  Else
 		    // No container by this name
 		  End Select

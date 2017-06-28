@@ -39,7 +39,6 @@ Begin ContainerControl contMaintenenceLog
       HasHeading      =   True
       Height          =   392
       HelpTag         =   ""
-      Index           =   -2147483648
       InitialParent   =   ""
       Left            =   0
       LockBottom      =   True
@@ -121,7 +120,6 @@ Begin ContainerControl contMaintenenceLog
       Selectable      =   False
       TabIndex        =   3
       TabPanelIndex   =   0
-      TabStop         =   True
       Text            =   "Work Summary"
       TextAlign       =   2
       TextColor       =   &c00000000
@@ -218,7 +216,6 @@ Begin ContainerControl contMaintenenceLog
       Selectable      =   False
       TabIndex        =   7
       TabPanelIndex   =   0
-      TabStop         =   True
       Text            =   "Entry Date"
       TextAlign       =   2
       TextColor       =   &c00000000
@@ -295,7 +292,6 @@ Begin ContainerControl contMaintenenceLog
       Selectable      =   False
       TabIndex        =   9
       TabPanelIndex   =   0
-      TabStop         =   True
       Text            =   "Exit Date"
       TextAlign       =   2
       TextColor       =   &c00000000
@@ -377,7 +373,6 @@ Begin ContainerControl contMaintenenceLog
       Selectable      =   False
       TabIndex        =   11
       TabPanelIndex   =   0
-      TabStop         =   True
       Text            =   "Work Description"
       TextAlign       =   2
       TextColor       =   &c00000000
@@ -443,7 +438,6 @@ Begin ContainerControl contMaintenenceLog
       Selectable      =   False
       TabIndex        =   13
       TabPanelIndex   =   0
-      TabStop         =   True
       Text            =   "Type"
       TextAlign       =   2
       TextColor       =   &c00000000
@@ -520,7 +514,6 @@ Begin ContainerControl contMaintenenceLog
       Selectable      =   False
       TabIndex        =   14
       TabPanelIndex   =   0
-      TabStop         =   True
       Text            =   "Item Name"
       TextAlign       =   0
       TextColor       =   &c00000000
@@ -555,7 +548,6 @@ Begin ContainerControl contMaintenenceLog
       Selectable      =   False
       TabIndex        =   15
       TabPanelIndex   =   0
-      TabStop         =   True
       Text            =   "Serial #: "
       TextAlign       =   0
       TextColor       =   &c00000000
@@ -590,7 +582,6 @@ Begin ContainerControl contMaintenenceLog
       Selectable      =   False
       TabIndex        =   16
       TabPanelIndex   =   0
-      TabStop         =   True
       Text            =   "--"
       TextAlign       =   0
       TextColor       =   &c00000000
@@ -625,7 +616,6 @@ Begin ContainerControl contMaintenenceLog
       Selectable      =   False
       TabIndex        =   17
       TabPanelIndex   =   0
-      TabStop         =   True
       Text            =   "Cost"
       TextAlign       =   2
       TextColor       =   &c00000000
@@ -703,7 +693,6 @@ Begin ContainerControl contMaintenenceLog
       Selectable      =   False
       TabIndex        =   19
       TabPanelIndex   =   0
-      TabStop         =   True
       Text            =   "Comments"
       TextAlign       =   2
       TextColor       =   &c00000000

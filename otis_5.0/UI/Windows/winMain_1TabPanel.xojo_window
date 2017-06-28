@@ -60,88 +60,110 @@ Begin Window winMain_1TabPanel
    Begin PagePanel tbMainWindow
       AutoDeactivate  =   True
       Enabled         =   True
-      Height          =   438
+      Height          =   437
       HelpTag         =   ""
       Index           =   -2147483648
       InitialParent   =   ""
-      Left            =   7
+      Left            =   0
       LockBottom      =   True
       LockedInPosition=   False
       LockLeft        =   True
       LockRight       =   True
       LockTop         =   True
-      PanelCount      =   2
+      PanelCount      =   3
       Panels          =   ""
       Scope           =   0
       TabIndex        =   2
       TabPanelIndex   =   0
-      Top             =   27
-      Value           =   1
+      Top             =   24
+      Value           =   2
       Visible         =   True
-      Width           =   763
+      Width           =   770
       Begin contEventList contEventList1
          AcceptFocus     =   False
          AcceptTabs      =   True
          AutoDeactivate  =   True
          BackColor       =   &cFF00FFFF
          Backdrop        =   0
-         bJustChildren   =   False
-         bWithButtons    =   True
          Enabled         =   True
          EraseBackground =   True
          HasBackColor    =   False
-         Height          =   429
+         Height          =   437
          HelpTag         =   ""
          InitialParent   =   "tbMainWindow"
-         iParentID       =   ""
          LastSearchValue =   ""
-         Left            =   7
-         LockBottom      =   False
+         Left            =   0
+         LockBottom      =   True
          LockedInPosition=   False
          LockLeft        =   True
-         LockRight       =   False
+         LockRight       =   True
          LockTop         =   True
-         sCondition      =   ""
          Scope           =   0
-         sGroupByFields  =   """""event_name"""""
-         sSortBy         =   0
          TabIndex        =   0
          TabPanelIndex   =   1
          TabStop         =   True
-         Top             =   29
+         Top             =   24
          Transparent     =   True
          UseFocusRing    =   False
          Visible         =   True
-         Width           =   763
+         Width           =   770
       End
       Begin contInventory contInventory1
          AcceptFocus     =   True
          AcceptTabs      =   True
          AutoDeactivate  =   True
-         BackColor       =   &cFF00FFFF
+         BackColor       =   &cFFFFFF00
          Backdrop        =   0
          Enabled         =   True
          EraseBackground =   True
          HasBackColor    =   False
-         Height          =   421
+         Height          =   436
          HelpTag         =   ""
          InitialParent   =   "tbMainWindow"
-         LastSearchValue =   ""
-         Left            =   10
-         LockBottom      =   False
+         iStartingTop    =   0
+         Left            =   1
+         LockBottom      =   True
          LockedInPosition=   False
          LockLeft        =   True
-         LockRight       =   False
+         LockRight       =   True
          LockTop         =   True
-         Scope           =   2
+         Scope           =   0
          TabIndex        =   0
          TabPanelIndex   =   2
          TabStop         =   True
-         Top             =   30
+         Top             =   25
          Transparent     =   True
          UseFocusRing    =   False
          Visible         =   True
-         Width           =   756
+         Width           =   769
+      End
+      Begin contContactableList contContactableList1
+         AcceptFocus     =   False
+         AcceptTabs      =   True
+         AutoDeactivate  =   True
+         BackColor       =   &cFFFFFF00
+         Backdrop        =   0
+         Enabled         =   True
+         EraseBackground =   True
+         HasBackColor    =   False
+         Height          =   433
+         HelpTag         =   ""
+         InitialParent   =   "tbMainWindow"
+         Left            =   2
+         LockBottom      =   True
+         LockedInPosition=   False
+         LockLeft        =   True
+         LockRight       =   True
+         LockTop         =   True
+         Scope           =   0
+         TabIndex        =   0
+         TabPanelIndex   =   3
+         TabStop         =   True
+         Top             =   26
+         Transparent     =   True
+         UseFocusRing    =   False
+         Visible         =   True
+         Width           =   766
       End
    End
    Begin PushButton pbCloseTab
@@ -193,14 +215,14 @@ Begin Window winMain_1TabPanel
       Panels          =   ""
       Scope           =   0
       SmallTabs       =   False
-      TabDefinition   =   "Events\rInventory"
+      TabDefinition   =   "Events\rInventory\rContacts"
       TabIndex        =   4
       TabPanelIndex   =   0
       TabStop         =   True
       TextFont        =   "System"
       TextSize        =   0.0
       TextUnit        =   0
-      Top             =   2
+      Top             =   0
       Underline       =   False
       Value           =   1
       Visible         =   True
@@ -276,6 +298,33 @@ End
 		Sub Action()
 		  osm.RunSync
 		  'contInventory1.RefreshInventory(True)
+		End Sub
+	#tag EndEvent
+#tag EndEvents
+#tag Events contEventList1
+	#tag Event
+		Sub evdefOpen()
+		  
+		  me.bDisplayGrouped = False
+		  me.methLoadMe()
+		End Sub
+	#tag EndEvent
+#tag EndEvents
+#tag Events contInventory1
+	#tag Event
+		Sub evdefOpen()
+		  
+		  me.bDisplayGrouped = True
+		  me.methLoadMe()
+		End Sub
+	#tag EndEvent
+#tag EndEvents
+#tag Events contContactableList1
+	#tag Event
+		Sub evdefOpen()
+		  
+		  me.bDisplayGrouped = True
+		  me.methLoadMe()
 		End Sub
 	#tag EndEvent
 #tag EndEvents

@@ -5,23 +5,14 @@ Inherits DataFile.ActiveRecordBase
 		Sub PostDelete()
 		  
 		  // Grab all the link children of this record from the database
-		  dim oLinkChildren() as DataFile.tbl_inventory_link
-		  oLinkChildren() = DataFile.tbl_inventory_link.List("fkinventory_parent = " + self.ipkid.ToText + " Or fkinventory_child = " + self.ipkid.ToText)
+		  dim oLinkChildren() as DataFile.tbl_internal_linking
+		  oLinkChildren() = DataFile.tbl_internal_linking.List("fk_parent = " + self.ipkid.ToText + " Or fk_child = " + self.ipkid.ToText)
 		  
-		  
-		  
-		  For Each oLinkChild as DataFile.tbl_inventory_link In oLinkChildren
-		    
-		    // Grab the inventory item
-		    'dim oItem as DataFile.tbl_inventory
-		    'oItem = DataFile.tbl_inventory.FindByID(oLinkChild.ifkinventory_child)
-		    
-		    
+		  For Each oLinkChild as DataFile.tbl_internal_linking In oLinkChildren
 		    
 		    oLinkChild.Delete
 		    
 		  Next
-		  
 		  
 		End Sub
 	#tag EndEvent

@@ -5,23 +5,14 @@ Inherits DataFile.ActiveRecordBase
 		Sub PostDelete()
 		  
 		  // Grab all the link children of this record from the database
-		  dim oLinkChildren() as DataFile.tbl_events_link
-		  oLinkChildren() = DataFile.tbl_events_link.List("fkevents_parent = " + self.ipkid.ToText + " Or fkevents_child = " + self.ipkid.ToText)
+		  dim oLinkChildren() as DataFile.tbl_internal_linking
+		  oLinkChildren() = DataFile.tbl_internal_linking.List("fk_parent = " + self.ipkid.ToText + " Or fk_child = " + self.ipkid.ToText)
 		  
-		  
-		  
-		  For Each oLinkChild as DataFile.tbl_events_link In oLinkChildren
-		    
-		    // Grab the inventory item
-		    'dim oItem as DataFile.tbl_events
-		    'oItem = DataFile.tbl_events.FindByID(oLinkChild.ifkinventory_child)
-		    
-		    
+		  For Each oLinkChild as DataFile.tbl_internal_linking In oLinkChildren
 		    
 		    oLinkChild.Delete
 		    
 		  Next
-		  
 		  
 		End Sub
 	#tag EndEvent
@@ -418,12 +409,6 @@ Inherits DataFile.ActiveRecordBase
 		  
 		  
 		End Function
-	#tag EndMethod
-
-	#tag Method, Flags = &h0
-		Sub Untitled()
-		  
-		End Sub
 	#tag EndMethod
 
 

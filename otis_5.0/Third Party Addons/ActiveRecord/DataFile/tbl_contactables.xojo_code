@@ -1,6 +1,31 @@
 #tag Class
 Protected Class tbl_contactables
 Inherits DataFile.ActiveRecordBase
+	#tag Event
+		Sub PostDelete()
+		  
+		  // Grab all the link children of this record from the database
+		  dim oLinkChildren() as DataFile.tbl_internal_linking
+		  oLinkChildren() = DataFile.tbl_internal_linking.List("fk_parent = " + self.ipkid.ToText + " Or fk_child = " + self.ipkid.ToText)
+		  
+		  For Each oLinkChild as DataFile.tbl_internal_linking In oLinkChildren
+		    
+		    oLinkChild.Delete
+		    
+		  Next
+		  
+		End Sub
+	#tag EndEvent
+
+	#tag Event
+		Sub PreCreate()
+		  
+		  // Set the Country Default
+		  me.saddress_country = "United States"
+		End Sub
+	#tag EndEvent
+
+
 	#tag Method, Flags = &h0
 		Shared Function BaseSQL(bAsCount as Boolean = false) As String
 		  dim ars() as string

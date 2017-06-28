@@ -829,6 +829,8 @@ Begin ContainerControl contInventoryItem
       Height          =   182
       HelpTag         =   ""
       InitialParent   =   ""
+      iStartingTop    =   0
+      LastSearchValue =   ""
       Left            =   123
       LockBottom      =   False
       LockedInPosition=   False
@@ -2674,6 +2676,15 @@ End
 #tag EndWindow
 
 #tag WindowCode
+	#tag Event
+		Function MouseWheel(X As Integer, Y As Integer, DeltaX as Integer, DeltaY as Integer) As Boolean
+		  
+		  
+		  Return methHandleMouseWheel(X,Y,DeltaX,DeltaY)
+		End Function
+	#tag EndEvent
+
+
 	#tag Method, Flags = &h0
 		Sub AddLinkedItem(LinkType as string,CreateNewOrUseExisting as string = "")
 		  dim sResult as String
@@ -3029,6 +3040,15 @@ End
 	#tag EndMethod
 
 	#tag Method, Flags = &h0
+		Function methHandleMouseWheel(X As Integer, Y As Integer, DeltaX as Integer, DeltaY as Integer) As Boolean
+		  'me.EraseBackground = False
+		  
+		  me.top = me.Top + DeltaY
+		  me.Invalidate
+		End Function
+	#tag EndMethod
+
+	#tag Method, Flags = &h0
 		Sub PushValues()
 		  dim lbItems as entListbox
 		  
@@ -3280,7 +3300,7 @@ End
 		  
 		  
 		  // LinkedItem - Version
-		  sRowType = "LinkedItem - version"
+		  sRowType = "Linked - version"
 		  'field names
 		  s1 = "item_name,item_department,item_category,item_subcategory,item_quantity,hide,physical_item"
 		  s2() = Split(s1,",")
@@ -3292,7 +3312,7 @@ End
 		  
 		  
 		  // LinkedItem - Contained
-		  sRowType = "LinkedItem - contained"
+		  sRowType = "Linked - contained"
 		  'field names
 		  s1 = "item_name,item_department,item_category,item_subcategory,tbl_inventory_link.-.quantity,hide,physical_item"
 		  s2() = Split(s1,",")
@@ -3303,7 +3323,7 @@ End
 		  dictCellTypes.Value(sRowType) = iCellTypes5
 		  
 		  // LinkedItem - kit
-		  sRowType = "LinkedItem - kit"
+		  sRowType = "Linked - kit"
 		  'field names
 		  s1 = "item_name,item_department,item_category,item_subcategory,tbl_inventory_link.-.quantity,hide,physical_item"
 		  s2() = Split(s1,",")
@@ -3314,7 +3334,7 @@ End
 		  dictCellTypes.Value(sRowType) = iCellTypes6
 		  
 		  // LinkedItem - Contained
-		  sRowType = "LinkedItem - package"
+		  sRowType = "Linked - package"
 		  'field names
 		  s1 = "item_name,item_department,item_category,item_subcategory,tbl_inventory_link.-.quantity,hide,physical_item"
 		  s2() = Split(s1,",")
@@ -3326,6 +3346,27 @@ End
 		  
 		  
 		End Sub
+	#tag EndEvent
+	#tag Event
+		Function evdefConstructContextualMenu(base as MenuItem, x as integer, y as integer) As Boolean
+		  
+		  
+		  
+		  base.Append( New MenuItem(MenuItem.TextSeparator) )
+		  base.Append( New MenuItem("Push Values") )
+		  
+		End Function
+	#tag EndEvent
+	#tag Event
+		Function evdefContextualMenuAction(hitItem as MenuItem) As Boolean
+		  
+		  Select Case hitItem.Text
+		  Case "Push Values"
+		    
+		    EnableDisable_PushCheckboxes(True)
+		    
+		  End Select
+		End Function
 	#tag EndEvent
 #tag EndEvents
 #tag Events chbHide

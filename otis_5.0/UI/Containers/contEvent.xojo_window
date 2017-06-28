@@ -47,7 +47,6 @@ Begin ContainerControl contEvent
       Selectable      =   False
       TabIndex        =   0
       TabPanelIndex   =   0
-      TabStop         =   True
       Text            =   "Event Name"
       TextAlign       =   2
       TextColor       =   &c00000000
@@ -124,7 +123,6 @@ Begin ContainerControl contEvent
       Selectable      =   False
       TabIndex        =   2
       TabPanelIndex   =   0
-      TabStop         =   True
       Text            =   "Accont Manager"
       TextAlign       =   2
       TextColor       =   &c00000000
@@ -201,7 +199,6 @@ Begin ContainerControl contEvent
       Selectable      =   False
       TabIndex        =   4
       TabPanelIndex   =   0
-      TabStop         =   True
       Text            =   "Start"
       TextAlign       =   2
       TextColor       =   &c00000000
@@ -236,7 +233,6 @@ Begin ContainerControl contEvent
       Selectable      =   False
       TabIndex        =   6
       TabPanelIndex   =   0
-      TabStop         =   True
       Text            =   "End"
       TextAlign       =   2
       TextColor       =   &c00000000
@@ -271,7 +267,6 @@ Begin ContainerControl contEvent
       Selectable      =   False
       TabIndex        =   8
       TabPanelIndex   =   0
-      TabStop         =   True
       Text            =   "Load-In"
       TextAlign       =   2
       TextColor       =   &c00000000
@@ -306,7 +301,6 @@ Begin ContainerControl contEvent
       Selectable      =   False
       TabIndex        =   10
       TabPanelIndex   =   0
-      TabStop         =   True
       Text            =   "Load-Out"
       TextAlign       =   2
       TextColor       =   &c00000000
@@ -341,7 +335,6 @@ Begin ContainerControl contEvent
       Selectable      =   False
       TabIndex        =   12
       TabPanelIndex   =   0
-      TabStop         =   True
       Text            =   "Details"
       TextAlign       =   2
       TextColor       =   &c00000000
@@ -723,16 +716,12 @@ Begin ContainerControl contEvent
       AutoDeactivate  =   True
       BackColor       =   &c40004000
       Backdrop        =   0
-      bJustChildren   =   False
-      bWithButtons    =   False
       Enabled         =   True
       EraseBackground =   True
       HasBackColor    =   False
       Height          =   182
       HelpTag         =   ""
-      Index           =   -2147483648
       InitialParent   =   ""
-      iParentID       =   ""
       LastSearchValue =   ""
       Left            =   102
       LockBottom      =   True
@@ -740,10 +729,7 @@ Begin ContainerControl contEvent
       LockLeft        =   True
       LockRight       =   False
       LockTop         =   False
-      sCondition      =   ""
       Scope           =   0
-      sGroupByFields  =   """""event_name"""""
-      sSortBy         =   0
       TabIndex        =   25
       TabPanelIndex   =   0
       TabStop         =   True
@@ -775,7 +761,6 @@ Begin ContainerControl contEvent
       Selectable      =   False
       TabIndex        =   26
       TabPanelIndex   =   0
-      TabStop         =   True
       Text            =   "Child Events"
       TextAlign       =   2
       TextColor       =   &c00000000
@@ -810,7 +795,6 @@ Begin ContainerControl contEvent
       Selectable      =   False
       TabIndex        =   27
       TabPanelIndex   =   0
-      TabStop         =   True
       Text            =   "New Item Postfix"
       TextAlign       =   0
       TextColor       =   &c00000000
@@ -918,7 +902,6 @@ Begin ContainerControl contEvent
       Selectable      =   False
       TabIndex        =   30
       TabPanelIndex   =   0
-      TabStop         =   True
       Text            =   "Hide"
       TextAlign       =   2
       TextColor       =   &c00000000
@@ -1340,6 +1323,8 @@ End
 		  If oCurrentEvent.ipkid <> 0 Then
 		    dim oRecord as DataFile.tbl_events = DataFile.tbl_events.FindByID(oCurrentEvent.ipkid)
 		    contChildEventList.methLoadMe_ExpandSingleRecord(oRecord)
+		  Else
+		    contChildEventList.DoNotLoad = True
 		  End If
 		  
 		  
@@ -1440,7 +1425,7 @@ End
 #tag Events dcStart
 	#tag Event
 		Sub LostFocus()
-		  Break
+		  
 		  dim d1 as Date
 		  dim s1 as string
 		  

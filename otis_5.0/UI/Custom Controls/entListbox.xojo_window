@@ -740,6 +740,10 @@ End
 	#tag EndHook
 
 	#tag Hook, Flags = &h0
+		Event evdefMouseWheel(X As Integer, Y As Integer, DeltaX as Integer, DeltaY as Integer) As Boolean
+	#tag EndHook
+
+	#tag Hook, Flags = &h0
 		Event ExpandRow(Row as integer)
 	#tag EndHook
 
@@ -829,6 +833,41 @@ End
 		Sub CellLostFocus(row as Integer, column as Integer)
 		  CellLostFocus(row,column)
 		End Sub
+	#tag EndEvent
+	#tag Event
+		Function MouseWheel(X As Integer, Y As Integer, deltaX as Integer, deltaY as Integer) As Boolean
+		  
+		  // Get the number of displayable rows available from listbox
+		  dim iNumOfRows as integer = floor( me.Height / me.RowHeight ) - 1
+		  
+		  // Check if the wheel scrolled up or down
+		  If deltaY < 0 Then
+		    'Scrolling up
+		    
+		    // Check if we are scrolled all the way up
+		    If me.ScrollPosition = 0 Then
+		      ' We are scrolled to the top
+		      ' Pass this method along
+		      Return evdefMouseWheel(X,Y,deltaX,deltaY)
+		    Else
+		      
+		    End If
+		    
+		  Else
+		    'Scrolling down
+		    
+		    // Check if we are scrolled all the way Down
+		    If (me.ListCount - 1) - me.ScrollPosition <= iNumOfRows Then
+		      'We are scrolled to the bottom
+		      'Pass this method along
+		      Return evdefMouseWheel(X,Y,deltaX,deltaY)
+		    Else
+		      
+		    End If
+		    
+		  End If
+		  
+		End Function
 	#tag EndEvent
 #tag EndEvents
 #tag ViewBehavior

@@ -131,8 +131,8 @@ Begin ContainerControl contInventory
       LockBottom      =   False
       LockedInPosition=   False
       LockLeft        =   False
-      LockRight       =   False
-      LockTop         =   False
+      LockRight       =   True
+      LockTop         =   True
       MacBorderStyle  =   0
       PlaceHolderText =   ""
       Scope           =   0
@@ -158,7 +158,7 @@ Begin ContainerControl contInventory
       Index           =   -2147483648
       InitialParent   =   ""
       Italic          =   False
-      Left            =   437
+      Left            =   436
       LockBottom      =   False
       LockedInPosition=   False
       LockLeft        =   False
@@ -183,13 +183,22 @@ End
 
 #tag WindowCode
 	#tag Event
+		Function MouseWheel(X As Integer, Y As Integer, DeltaX as Integer, DeltaY as Integer) As Boolean
+		  
+		  Return methHandleMouseWheel(X,Y,DeltaX,DeltaY)
+		End Function
+	#tag EndEvent
+
+	#tag Event
 		Sub Open()
+		  
+		  // Set the Starting Top variable so we know where the top is later for scrolling
+		  iStartingTop = me.Top
 		  
 		  // Set all the settings up for our listbox
 		  methListboxSettings
 		  
-		  // Grab all the records and load them into the listbox
-		  methLoadMe(True)
+		  evdefOpen
 		  
 		End Sub
 	#tag EndEvent
@@ -220,7 +229,8 @@ End
 		      oRowTag.sFieldNames = dictFieldNames.Value("GrandParent")
 		      oRowTag.iCellTypes = dictCellTypes.Value("GrandParent")
 		    Else
-		      oRowTag.sFieldNames = dictFieldNames.Value(oRowTag.sRowType)
+		      dim sRowType as String = oRowTag.sRowType
+		      oRowTag.sFieldNames = dictFieldNames.Value(sRowType)
 		      oRowTag.iCellTypes = dictCellTypes.Value(oRowTag.sRowType)
 		    End If
 		    
@@ -633,6 +643,14 @@ End
 	#tag EndMethod
 
 	#tag Method, Flags = &h0
+		Function methHandleMouseWheel(X As Integer, Y As Integer, DeltaX as Integer, DeltaY as Integer) As Boolean
+		  _
+		  
+		  me.top = me.Top + DeltaY 
+		End Function
+	#tag EndMethod
+
+	#tag Method, Flags = &h0
 		Sub methListboxSettings()
 		  _
 		  
@@ -759,8 +777,8 @@ End
 	#tag EndMethod
 
 	#tag Method, Flags = &h0
-		Sub methLoadMe(IsGrouped as Boolean)
-		  
+		Sub methLoadMe()
+		  dim IsGrouped as Boolean = bDisplayGrouped
 		  
 		  //UnGrouped
 		  If Not IsGrouped Then
@@ -851,6 +869,14 @@ End
 
 
 	#tag Hook, Flags = &h0
+		Event evdefConstructContextualMenu(base as MenuItem, x as integer, y as integer) As Boolean
+	#tag EndHook
+
+	#tag Hook, Flags = &h0
+		Event evdefContextualMenuAction(hitItem as MenuItem) As Boolean
+	#tag EndHook
+
+	#tag Hook, Flags = &h0
 		Event evdefDoubleClick() As Boolean
 	#tag EndHook
 
@@ -858,6 +884,14 @@ End
 		Event evdefListboxSettings(lbItems as entListbox, ByRef dictCellTypes as Dictionary, ByRef dictFieldNames as Dictionary)
 	#tag EndHook
 
+	#tag Hook, Flags = &h0
+		Event evdefOpen()
+	#tag EndHook
+
+
+	#tag Property, Flags = &h0
+		bDisplayGrouped As Boolean
+	#tag EndProperty
 
 	#tag Property, Flags = &h0
 		dictCellTypes As Dictionary
@@ -865,6 +899,10 @@ End
 
 	#tag Property, Flags = &h0
 		dictFieldNames As Dictionary
+	#tag EndProperty
+
+	#tag Property, Flags = &h0
+		iStartingTop As Integer
 	#tag EndProperty
 
 	#tag Property, Flags = &h0
@@ -1071,26 +1109,10 @@ End
 		    cont1.EmbedWithinPanel(app.MainWindow.tbMainWindow,app.MainWindow.tbMainWindow.PanelCount - 1)
 		    cont1.LoadUniversalInfo(oItem.ipkid)
 		    
-		    
-		    
-		    
-		    
-		    
-		    
-		    
-		    
-		    
-		    
-		    
-		    
-		    
-		    
-		    
-		    
-		    
-		    
-		    
 		  End Select
+		  
+		  dim boo as Boolean
+		  boo = evdefContextualMenuAction(hitItem)
 		End Function
 	#tag EndEvent
 	#tag Event
@@ -1116,7 +1138,16 @@ End
 		      base.Append( New MenuItem("Delete Item") )
 		      
 		    End If
+		    
+		    dim boo as Boolean
+		    boo = evdefConstructContextualMenu(base, x, y)
 		  End If
+		End Function
+	#tag EndEvent
+	#tag Event
+		Function evdefMouseWheel(X As Integer, Y As Integer, DeltaX as Integer, DeltaY as Integer) As Boolean
+		  
+		  Return methHandleMouseWheel(X,Y,DeltaX,DeltaY)
 		End Function
 	#tag EndEvent
 #tag EndEvents
@@ -1147,7 +1178,7 @@ End
 		  
 		  dim oUIState as lbUIState
 		  oUIState = lbItems.GetUIState
-		  methLoadMe(False)
+		  methLoadMe()
 		  lbItems.ResetUIState(oUIState)
 		End Sub
 	#tag EndEvent
@@ -1177,7 +1208,7 @@ End
 		  End If
 		  
 		  // Populate listbox with filterd inventory
-		  methLoadMe(False)
+		  methLoadMe()
 		  
 		  
 		  If len(sSearchValue) = 0 Then
@@ -1224,7 +1255,7 @@ End
 		  
 		  dim oUIState as lbUIState
 		  oUIState = lbItems.GetUIState
-		  methLoadMe(False)
+		  methLoadMe()
 		  lbItems.ResetUIState(oUIState)
 		End Sub
 	#tag EndEvent
@@ -1268,6 +1299,11 @@ End
 		EditorType="Picture"
 	#tag EndViewProperty
 	#tag ViewProperty
+		Name="bDisplayGrouped"
+		Group="Behavior"
+		Type="Boolean"
+	#tag EndViewProperty
+	#tag ViewProperty
 		Name="Enabled"
 		Visible=true
 		Group="Appearance"
@@ -1307,6 +1343,11 @@ End
 		Name="InitialParent"
 		Group="Position"
 		Type="String"
+	#tag EndViewProperty
+	#tag ViewProperty
+		Name="iStartingTop"
+		Group="Behavior"
+		Type="Integer"
 	#tag EndViewProperty
 	#tag ViewProperty
 		Name="LastSearchValue"
