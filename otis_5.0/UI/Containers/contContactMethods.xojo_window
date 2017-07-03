@@ -1,6 +1,6 @@
 #tag Window
-Begin ContainerControl contInventory
-   AcceptFocus     =   True
+Begin ContainerControl contContactMethods
+   AcceptFocus     =   False
    AcceptTabs      =   True
    AutoDeactivate  =   True
    BackColor       =   &cFFFFFF00
@@ -9,7 +9,7 @@ Begin ContainerControl contInventory
    Enabled         =   True
    EraseBackground =   True
    HasBackColor    =   False
-   Height          =   440
+   Height          =   200
    HelpTag         =   ""
    InitialParent   =   ""
    Left            =   0
@@ -24,59 +24,87 @@ Begin ContainerControl contInventory
    Transparent     =   True
    UseFocusRing    =   False
    Visible         =   True
-   Width           =   700
-   Begin entListbox lbItems
+   Width           =   356
+   Begin entListbox lbMethods
       AcceptFocus     =   False
       AcceptTabs      =   True
       AutoDeactivate  =   True
-      BackColor       =   &cFFFF00FF
+      BackColor       =   &cFFFFFF00
       Backdrop        =   0
-      CellBackColor   =   &cFFFF00FF
+      CellBackColor   =   &cFFFFFF00
       Enabled         =   True
       EraseBackground =   True
       GridLinesColor  =   &c00000000
       HasBackColor    =   False
       HasHeading      =   True
-      Height          =   415
+      Height          =   179
       HelpTag         =   ""
       InitialParent   =   ""
       Left            =   0
-      LockBottom      =   True
-      LockedInPosition=   False
-      LockLeft        =   True
-      LockRight       =   True
-      LockTop         =   True
-      Scope           =   0
-      TabIndex        =   0
-      TabPanelIndex   =   0
-      TabStop         =   True
-      Top             =   24
-      Transparent     =   True
-      UseFocusRing    =   False
-      Visible         =   True
-      Width           =   700
-   End
-   Begin PushButton bAddItem
-      AutoDeactivate  =   True
-      Bold            =   False
-      ButtonStyle     =   "0"
-      Cancel          =   False
-      Caption         =   "Add Item"
-      Default         =   False
-      Enabled         =   True
-      Height          =   24
-      HelpTag         =   ""
-      Index           =   -2147483648
-      InitialParent   =   ""
-      Italic          =   False
-      Left            =   80
       LockBottom      =   False
       LockedInPosition=   False
       LockLeft        =   True
       LockRight       =   False
       LockTop         =   True
       Scope           =   0
+      TabIndex        =   0
+      TabPanelIndex   =   0
+      TabStop         =   True
+      Top             =   21
+      Transparent     =   True
+      UseFocusRing    =   False
+      Visible         =   True
+      Width           =   356
+   End
+   Begin SearchControl scSearchField
+      AutoDeactivate  =   True
+      Enabled         =   True
+      HasCancelButton =   True
+      HasMenu         =   False
+      Height          =   22
+      HelpTag         =   ""
+      Index           =   -2147483648
+      InitialParent   =   ""
+      Left            =   209
+      LockBottom      =   False
+      LockedInPosition=   False
+      LockLeft        =   False
+      LockRight       =   True
+      LockTop         =   True
+      MacBorderStyle  =   0
+      PlaceHolderText =   ""
+      Scope           =   0
+      SendSearchStringImmediately=   False
+      SendWholeSearchString=   False
       TabIndex        =   1
+      TabPanelIndex   =   0
+      TabStop         =   True
+      Text            =   ""
+      Top             =   0
+      Visible         =   True
+      Width           =   147
+   End
+   Begin CheckBox chbShowHidden
+      AutoDeactivate  =   True
+      Bold            =   False
+      Caption         =   "Show Hidden"
+      DataField       =   ""
+      DataSource      =   ""
+      Enabled         =   True
+      Height          =   20
+      HelpTag         =   ""
+      Index           =   -2147483648
+      InitialParent   =   ""
+      Italic          =   False
+      Left            =   118
+      LockBottom      =   False
+      LockedInPosition=   False
+      LockLeft        =   False
+      LockRight       =   True
+      LockTop         =   True
+      Scope           =   0
+      State           =   0
+      TabIndex        =   2
       TabPanelIndex   =   0
       TabStop         =   True
       TextFont        =   "System"
@@ -84,8 +112,9 @@ Begin ContainerControl contInventory
       TextUnit        =   0
       Top             =   0
       Underline       =   False
+      Value           =   False
       Visible         =   True
-      Width           =   81
+      Width           =   90
    End
    Begin PushButton bRefresh
       AutoDeactivate  =   True
@@ -107,76 +136,47 @@ Begin ContainerControl contInventory
       LockRight       =   False
       LockTop         =   True
       Scope           =   0
-      TabIndex        =   2
+      TabIndex        =   3
       TabPanelIndex   =   0
       TabStop         =   True
       TextFont        =   "System"
       TextSize        =   0.0
       TextUnit        =   0
-      Top             =   0
+      Top             =   -2
       Underline       =   False
       Visible         =   True
-      Width           =   81
+      Width           =   55
    End
-   Begin SearchControl scSearchField
-      AutoDeactivate  =   True
-      Enabled         =   True
-      HasCancelButton =   False
-      HasMenu         =   False
-      Height          =   21
-      HelpTag         =   ""
-      Index           =   -2147483648
-      InitialParent   =   ""
-      Left            =   540
-      LockBottom      =   False
-      LockedInPosition=   False
-      LockLeft        =   False
-      LockRight       =   True
-      LockTop         =   True
-      MacBorderStyle  =   0
-      PlaceHolderText =   ""
-      Scope           =   0
-      SendSearchStringImmediately=   False
-      SendWholeSearchString=   False
-      TabIndex        =   3
-      TabPanelIndex   =   0
-      TabStop         =   True
-      Text            =   ""
-      Top             =   2
-      Visible         =   True
-      Width           =   160
-   End
-   Begin CheckBox chbShowHidden
+   Begin PushButton bAddItem
       AutoDeactivate  =   True
       Bold            =   False
-      Caption         =   "Show Hidden"
-      DataField       =   ""
-      DataSource      =   ""
+      ButtonStyle     =   "0"
+      Cancel          =   False
+      Caption         =   "Add Item"
+      Default         =   False
       Enabled         =   True
-      Height          =   20
+      Height          =   24
       HelpTag         =   ""
       Index           =   -2147483648
       InitialParent   =   ""
       Italic          =   False
-      Left            =   436
+      Left            =   53
       LockBottom      =   False
       LockedInPosition=   False
-      LockLeft        =   False
-      LockRight       =   True
+      LockLeft        =   True
+      LockRight       =   False
       LockTop         =   True
       Scope           =   0
-      State           =   0
-      TabIndex        =   9
+      TabIndex        =   4
       TabPanelIndex   =   0
       TabStop         =   True
       TextFont        =   "System"
       TextSize        =   0.0
       TextUnit        =   0
-      Top             =   2
+      Top             =   -2
       Underline       =   False
-      Value           =   False
       Visible         =   True
-      Width           =   100
+      Width           =   53
    End
 End
 #tag EndWindow
@@ -185,6 +185,7 @@ End
 	#tag Event
 		Function MouseWheel(X As Integer, Y As Integer, DeltaX as Integer, DeltaY as Integer) As Boolean
 		  
+		  
 		  Return methHandleMouseWheel(X,Y,DeltaX,DeltaY)
 		End Function
 	#tag EndEvent
@@ -192,25 +193,21 @@ End
 	#tag Event
 		Sub Open()
 		  
-		  // Set the Starting Top variable so we know where the top is later for scrolling
-		  iStartingTop = me.Top
-		  
 		  // Set all the settings up for our listbox
 		  methListboxSettings
 		  
 		  evdefOpen
-		  
 		End Sub
 	#tag EndEvent
 
 
 	#tag Method, Flags = &h0
 		Sub methBuildRowTag(ByRef oRowTag as lbRowTag)
-		  dim otblRecord as DataFile.tbl_inventory  '!@! Table Dependent !@!
+		  dim otblRecord as DataFile.tbl_contact_methods  '!@! Table Dependent !@!
 		  dim iPKID as Int64
 		  
 		  // Check  to see what kind of row this will be based on varying conditions
-		  If oRowTag.vtblRecord IsA DataFile.tbl_inventory Then  '!@! Table Dependent !@!
+		  If oRowTag.vtblRecord IsA DataFile.tbl_contact_methods Then  '!@! Table Dependent !@!
 		    'there is a table record and it is our primary table
 		    
 		    // Put the table record into a variable
@@ -229,23 +226,31 @@ End
 		      oRowTag.sFieldNames = dictFieldNames.Value("GrandParent")
 		      oRowTag.iCellTypes = dictCellTypes.Value("GrandParent")
 		    Else
-		      dim sRowType as String = oRowTag.sRowType
-		      oRowTag.sFieldNames = dictFieldNames.Value(sRowType)
+		      oRowTag.sFieldNames = dictFieldNames.Value(oRowTag.sRowType)
 		      oRowTag.iCellTypes = dictCellTypes.Value(oRowTag.sRowType)
 		    End If
 		    
 		    // Populate the Column values for this row
 		    For Each sFieldName as String In oRowTag.sFieldNames
 		      
+		      // make sure the table name isn't included in this
+		      dim sFieldNameStripped as string
+		      dim x1 as integer = sFieldName.InStr(".")
+		      If x1 = 0 Then
+		        sFieldNameStripped = sFieldName
+		      Else
+		        sFieldNameStripped = Mid(sFieldName, x1 + 1)
+		      End If
+		      
 		      // Get the field names and values as a json item from the database record
 		      dim jsFieldValues as JSONItem = otblRecord.GetMyFieldValues(True)
 		      dim sKeys() as string = jsFieldValues.Names
 		      
 		      // Check to make sure that the field we are looking for really exists
-		      If sKeys.IndexOf(sFieldName) <> -1 Then
+		      If sKeys.IndexOf(sFieldNameStripped) <> -1 Then
 		        
 		        // Format the value for display
-		        dim sUnFormattedValue as String = jsFieldValues.value(sFieldName)
+		        dim sUnFormattedValue as String = jsFieldValues.value(sFieldNameStripped)
 		        dim sFormattedValue as String
 		        If sFieldName.InStr(".") = 0 Then
 		          sFormattedValue = FormatValue_ForDisplay(sTableName + "." + sFieldName, sUnFormattedValue)
@@ -267,13 +272,13 @@ End
 		    // Loop through each link child
 		    If arLinkArray.Ubound <> -1 Then
 		      
-		      // This Rowtag is a folder
-		      oRowTag.isFolder = True
-		      
-		      For Each oLinkRecord as DataFile.tbl_internal_linking In arLinkArray
+		      For iLinkIndex as integer = 0 To arLinkArray.Ubound
+		        
+		        // Pull the link record out of the array
+		        dim oLinkRecord as DataFile.tbl_internal_linking = arLinkArray( iLinkIndex )
 		        
 		        // Get the child record
-		        dim oChild as DataFile.tbl_inventory = DataFile.tbl_inventory.FindByID( oLinkRecord.ifk_child )  '!@! Table Dependent !@!
+		        dim oChild as DataFile.tbl_contact_methods = DataFile.tbl_contact_methods.FindByID( oLinkRecord.ifk_child )  '!@! Table Dependent !@!
 		        If oChild <> Nil Then
 		          
 		          dim dictKeys() as Variant
@@ -310,9 +315,23 @@ End
 		          aroSubChildren.Append(oSubRowtag)
 		          dictChildRecords.Value(sLinkType) = aroSubChildren
 		          
+		        Else
+		          // The child specified by the link record does not exist
+		          
+		          // Delete the child from the array
+		          arLinkArray.Remove( iLinkIndex )
+		          
 		        End If
 		        
 		      Next
+		      
+		      // Check again if there are any link records left
+		      If arLinkArray.Ubound = -1 Then
+		        // No link records left 
+		      Else
+		        // Link records left
+		        oRowTag.isFolder = True
+		      End If
 		      
 		      // Loop through each of the categories in dictChildRecords
 		      dim dictKeys() as Variant = dictChildRecords.Keys
@@ -367,7 +386,7 @@ End
 	#tag EndMethod
 
 	#tag Method, Flags = &h0
-		Function methCreateRowTags(vRecords() as DataFile.tbl_inventory) As lbRowTag()
+		Function methCreateRowTags(vRecords() as DataFile.tbl_contact_methods) As lbRowTag()
 		  '!@! Table Dependent In Parameters !@!
 		  
 		  // vRecords will either be 
@@ -386,7 +405,7 @@ End
 		  Case IsA DataFile.ActiveRecordBase
 		    
 		    // Loop through each record
-		    For Each oRecord as DataFile.tbl_inventory In vRecords  '!@! Table Dependent !@!
+		    For Each oRecord as DataFile.tbl_contact_methods In vRecords  '!@! Table Dependent !@!
 		      
 		      // Set up some basic things for the rowtag that we know already
 		      dim oCurrentRowtag as New lbRowTag
@@ -456,7 +475,7 @@ End
 
 	#tag Method, Flags = &h0
 		Sub methCreateTopLevelRows(aroRowtags() As lbRowTag)
-		  dim lb1 as entListbox = lbItems  '!@! Table Dependent !@!
+		  dim lb1 as entListbox = lbMethods  '!@! Table Dependent !@!
 		  
 		  // Clear the listbox
 		  lb1.DeleteAllRows
@@ -477,7 +496,7 @@ End
 
 	#tag Method, Flags = &h0
 		Sub methExpandAllRows(JustTopLevel as Boolean = True)
-		  dim lb1 As entListbox = lbItems  '!@! Table Dependent !@!
+		  dim lb1 As entListbox = lbMethods  '!@! Table Dependent !@!
 		  
 		  // Loop through all the rows
 		  dim i1 as integer
@@ -554,17 +573,17 @@ End
 		    sCondition = sCondition + sConditionpar
 		  End If
 		  sOrder = sGroupByField
-		  dictGroupedItems = DataFile.tbl_inventory.ListGrouped(sCondition,sOrder,sGroupByField)  '!@! Table Dependent !@!
+		  dictGroupedItems = DataFile.tbl_contact_methods.ListGrouped(sCondition,sOrder,sGroupByField)  '!@! Table Dependent !@!
 		  
 		  Return dictGroupedItems
 		End Function
 	#tag EndMethod
 
 	#tag Method, Flags = &h0
-		Function methGetRecordList_UnGrouped(sOrderByFields as string, sConditionpar as string) As DataFile.tbl_inventory()
+		Function methGetRecordList_UnGrouped(sOrderByFields as string, sConditionpar as string) As DataFile.tbl_contact_methods()
 		  '!@! Table Dependent In Return Type !@!
 		  
-		  dim aroRecords() as DataFile.tbl_inventory  '!@! Table Dependent !@!
+		  dim aroRecords() as DataFile.tbl_contact_methods  '!@! Table Dependent !@!
 		  
 		  // Grab the search value
 		  dim sSearchValue as String
@@ -578,7 +597,7 @@ End
 		  If sSearchValue = "" Then
 		    sSearchCondition = ""
 		  Else
-		    sSearchCondition = "item_name Like '%" + sSearchValue + "%'"
+		    sSearchCondition = "method Like '%" + sSearchValue + "%' Or method_type Like '%" + sSearchValue + "%' Or method_location Like '%" + sSearchValue + "%'  "  '!@! Table Dependent !@!
 		  End If
 		  
 		  // Set up Hidden Condition
@@ -607,7 +626,7 @@ End
 		    sCondition = sCondition + sConditionpar
 		  End If
 		  
-		  aroRecords = DataFile.tbl_inventory.List(sCondition,sOrderByFields)  '!@! Table Dependent !@!
+		  aroRecords = DataFile.tbl_contact_methods.List(sCondition,sOrderByFields)  '!@! Table Dependent !@!
 		  
 		  Return aroRecords
 		End Function
@@ -615,7 +634,7 @@ End
 
 	#tag Method, Flags = &h0
 		Sub methHandleExpandRow(row as integer)
-		  dim lb1 as entListbox = lbItems  '!@! Table Dependent !@!
+		  dim lb1 as entListbox = lbMethods  '!@! Table Dependent !@!
 		  
 		  // Extract the rowtag out of the parent
 		  dim oParentRowTag as lbRowTag
@@ -634,7 +653,7 @@ End
 		    lb1.RowTag(lb1.LastIndex) = oChild
 		    
 		    // Load the row
-		    methLoadRow(lb1.LastIndex,oChild)
+		    methLoadRow(lbMethods.LastIndex,oChild)  '!@! Table Dependent !@!
 		    
 		  Next
 		  
@@ -644,9 +663,10 @@ End
 
 	#tag Method, Flags = &h0
 		Function methHandleMouseWheel(X As Integer, Y As Integer, DeltaX as Integer, DeltaY as Integer) As Boolean
-		  _
+		  'me.EraseBackground = False
 		  
-		  me.top = me.Top - DeltaY 
+		  me.top = me.Top - DeltaY
+		  me.Invalidate
 		End Function
 	#tag EndMethod
 
@@ -658,7 +678,7 @@ End
 		  // Set up some basic stuff
 		  
 		  // trigger event to allow me to set information externally
-		  evdefListboxSettings(lbItems,dictCellTypes,dictFieldNames)
+		  evdefListboxSettings(lbMethods,dictCellTypes,dictFieldNames)  '!@! Table Dependent
 		  
 		  If dictFieldNames = Nil And dictCellTypes = Nil Then
 		    
@@ -667,17 +687,17 @@ End
 		    dim sRowType as string
 		    
 		    // Set Column Count
-		    dim iColCount as integer = 10
-		    lbItems.ColumnCount = iColCount
+		    dim iColCount as integer = 4
+		    lbMethods.ColumnCount = iColCount  '!@! Table Dependent !@!
 		    
 		    // Initialize dictionaries
 		    dictFieldNames = New Dictionary
 		    dictCellTypes = New Dictionary
 		    
 		    // Set header names
-		    s1 = "Name,Manufacturer,Model,Department,Category,SubCat,Description,Qty,Price,Owner"
+		    s1 = "Name, ,Job Title,Company"
 		    s2() = Split(s1,",")
-		    lbItems.Heading = s2()
+		    lbMethods.Heading = s2()  '!@! Table Dependent !@!
 		    
 		    
 		    // **********
@@ -697,7 +717,7 @@ End
 		    // GrandParent
 		    sRowType = "GrandParent"
 		    'field names
-		    s1 = "item_name,item_manufacturer,item_model,item_department,item_category,item_subcategory,item_description,item_quantity,item_rental_price_cost,item_owner"
+		    s1 = "tbl_contactables.name_first,tbl_contactables.name_last,tbl_contactables.job_title,tbl_contactables.company"
 		    s2() = Split(s1,",")
 		    dictFieldNames.Value(sRowType) = s2
 		    
@@ -718,50 +738,18 @@ End
 		    dictCellTypes.Value(sRowType) = iCellTypes3
 		    
 		    
-		    // LinkedItem - Version
-		    sRowType = "Linked - version"
+		    // Linked - 
+		    sRowType = "Linked - NoType"
 		    'field names
-		    s1 = "item_name,item_manufacturer,item_model,item_department,item_category,item_subcategory,item_description,item_quantity,|SKIP|,item_owner"
+		    s1 = "tbl_contactables.name_first,tbl_contactables.name_last,tbl_contactables.job_title,tbl_contactables.company"
 		    s2() = Split(s1,",")
 		    dictFieldNames.Value(sRowType) = s2
 		    
 		    'cell types
-		    dim iCellTypes4() as integer = Array(0,0,0,0,0,0,0,3,0,0)
+		    dim iCellTypes4() as integer = Array(0,0,0,0)
 		    dictCellTypes.Value(sRowType) = iCellTypes4
 		    
 		    
-		    // LinkedItem - Contained
-		    sRowType = "Linked - contained"
-		    'field names
-		    s1 = "item_name,item_manufacturer,item_model,item_department,item_category,item_subcategory,item_description,tbl_inventory_link.-.quantity,|SKIP|,item_owner"
-		    s2() = Split(s1,",")
-		    dictFieldNames.Value(sRowType) = s2
-		    
-		    'cell types
-		    dim iCellTypes5() as integer = Array(0,0,0,0,0,0,0,3,0,0)
-		    dictCellTypes.Value(sRowType) = iCellTypes5
-		    
-		    // LinkedItem - Contained
-		    sRowType = "Linked - kit"
-		    'field names
-		    s1 = "item_name,item_manufacturer,item_model,item_department,item_category,item_subcategory,item_description,tbl_inventory_link.-.quantity,|SKIP|,item_owner"
-		    s2() = Split(s1,",")
-		    dictFieldNames.Value(sRowType) = s2
-		    
-		    'cell types
-		    dim iCellTypes6() as integer = Array(0,0,0,0,0,0,0,3,0,0)
-		    dictCellTypes.Value(sRowType) = iCellTypes6
-		    
-		    // LinkedItem - Contained
-		    sRowType = "Linked - package"
-		    'field names
-		    s1 = "item_name,item_manufacturer,item_model,item_department,item_category,item_subcategory,item_description,tbl_inventory_link.-.quantity,|SKIP|,item_owner"
-		    s2() = Split(s1,",")
-		    dictFieldNames.Value(sRowType) = s2
-		    
-		    'cell types
-		    dim iCellTypes7() as integer = Array(0,0,0,0,0,0,0,3,0,0)
-		    dictCellTypes.Value(sRowType) = iCellTypes7
 		    
 		  End If
 		  
@@ -777,14 +765,27 @@ End
 	#tag EndMethod
 
 	#tag Method, Flags = &h0
-		Sub methLoadMe()
+		Sub methLoadMe(iContactableID as int64 = -1)
 		  dim IsGrouped as Boolean = bDisplayGrouped
 		  
 		  //UnGrouped
 		  If Not IsGrouped Then
 		    
+		    dim sCondition as String
+		    
+		    If iContactableID <> -1 Then
+		      sCondition = "fkcontactables = " + iContactableID.ToText
+		    Else
+		      sCondition = ""
+		    End If
+		    
 		    // Get the records
-		    dim records() as DataFile.tbl_inventory = methGetRecordList_UnGrouped("item_department","")    '!@! Table Dependent !@!
+		    dim records() as DataFile.tbl_contact_methods = methGetRecordList_UnGrouped("method_type", sCondition)    '!@! Table Dependent !@!
+		    
+		    // Abort if there are no records
+		    If records.Ubound = -1 Then
+		      Return
+		    End If
 		    
 		    // Build the rowtags
 		    dim theRowtags() as lbRowTag
@@ -795,8 +796,21 @@ End
 		    //Grouped
 		  ElseIf IsGrouped Then
 		    
+		    dim sCondition as String
+		    
+		    If iContactableID <> -1 Then
+		      sCondition = "fkcontactables = " + iContactableID.ToText
+		    Else
+		      sCondition = ""
+		    End If
+		    
 		    // Get the Records
-		    dim dictRecords as Dictionary = methGetRecordList_Grouped("item_department", "")    '!@! Table Dependent !@!
+		    dim dictRecords as Dictionary = methGetRecordList_Grouped("method_type", sCondition)    '!@! Table Dependent !@!
+		    
+		    // Abort if there are no records
+		    If dictRecords.Keys.Ubound = -1 Then
+		      Return
+		    End If
 		    
 		    dim theRowtagsGrouped() as lbRowTag
 		    theRowtagsGrouped = methCreateRowTags_dict(dictRecords)
@@ -809,12 +823,12 @@ End
 	#tag EndMethod
 
 	#tag Method, Flags = &h0
-		Sub methLoadMe_ExpandSingleRecord(oRecord as DataFile.tbl_inventory)
+		Sub methLoadMe_ExpandSingleRecord(oRecord as DataFile.tbl_contact_methods)
 		  '!@! Table Dependent In Parameters !@!
 		  
 		  If oRecord <> Nil Then
 		    
-		    dim aroRecords() as DataFile.tbl_inventory     '!@! Table Dependent !@!
+		    dim aroRecords() as DataFile.tbl_contact_methods     '!@! Table Dependent !@!
 		    aroRecords.Append(oRecord)
 		    
 		    // Create rowtags based of the record we want to expand
@@ -829,7 +843,7 @@ End
 
 	#tag Method, Flags = &h0
 		Sub methLoadRow(RowIndex as integer, oRowTag as lbRowTag)
-		  dim lb1 as entListbox = lbItems    '!@! Table Dependent !@!
+		  dim lb1 as entListbox = lbMethods    '!@! Table Dependent !@!
 		  
 		  
 		  
@@ -867,21 +881,49 @@ End
 		End Sub
 	#tag EndMethod
 
+	#tag Method, Flags = &h0
+		Sub methOpenRecordInNewTab(oRowTag as lbRowTag)
+		  
+		  // Get the name
+		  dim oRecord as DataFile.tbl_contactables
+		  oRecord = oRowTag.vtblRecord
+		  dim sName as string
+		  sName = oRecord.sname_first
+		  
+		  If oRowTag.pkid <> 0 Then
+		    
+		    // load up a inventory item container
+		    dim conInst as New contContactable
+		    dim oTabPanel as PagePanel = app.MainWindow.tbMainWindow
+		    
+		    app.MainWindow.AddTab(sName)
+		    
+		    conInst.EmbedWithinPanel(oTabPanel,oTabPanel.PanelCount - 1 )
+		    
+		    conInst.LoadMe(oRowTag.pkid)
+		    
+		  End If
+		End Sub
+	#tag EndMethod
 
-	#tag Hook, Flags = &h0
-		Event evdefConstructContextualMenu(base as MenuItem, x as integer, y as integer) As Boolean
-	#tag EndHook
+	#tag Method, Flags = &h0
+		Sub methRefresh()
+		  
+		  dim oUIState as lbUIState
+		  oUIState = lbMethods.GetUIState
+		  methLoadMe()
+		  lbMethods.ResetUIState(oUIState)
+		  
+		End Sub
+	#tag EndMethod
 
-	#tag Hook, Flags = &h0
-		Event evdefContextualMenuAction(hitItem as MenuItem) As Boolean
-	#tag EndHook
 
 	#tag Hook, Flags = &h0
 		Event evdefDoubleClick() As Boolean
 	#tag EndHook
 
 	#tag Hook, Flags = &h0
-		Event evdefListboxSettings(lbItems as entListbox, ByRef dictCellTypes as Dictionary, ByRef dictFieldNames as Dictionary)
+		Event evdefListBoxSettings(theListbox as entListbox, CellTypes as Dictionary, Fieldnames as Dictionary)
 	#tag EndHook
 
 	#tag Hook, Flags = &h0
@@ -902,7 +944,7 @@ End
 	#tag EndProperty
 
 	#tag Property, Flags = &h0
-		iStartingTop As Integer
+		DoNotLoad As Boolean
 	#tag EndProperty
 
 	#tag Property, Flags = &h0
@@ -916,105 +958,41 @@ End
 
 #tag EndWindowCode
 
-#tag Events lbItems
-	#tag Event
-		Function CellBackgroundPaint(g as Graphics,row as integer, column as integer) As Boolean
-		  
-		  If row Mod 2 = 0 Then
-		    g.ForeColor = UiColors.ListboxRowEven
-		  Else
-		    g.ForeColor = UiColors.ListboxRowOdd
-		  End If
-		  
-		  g.FillRect(0,0,g.Width,g.Height)
-		End Function
-	#tag EndEvent
+#tag Events lbMethods
 	#tag Event
 		Sub ExpandRow(Row as integer)
 		  
-		  methHandleExpandRow(row)
+		  methHandleExpandRow(Row)
 		End Sub
 	#tag EndEvent
 	#tag Event
-		Sub DoubleClick()
+		Function evdefMouseWheel(X As Integer, Y As Integer, DeltaX as Integer, DeltaY as Integer) As Boolean
 		  
-		  If evdefDoubleClick Then
-		    
-		    // the event was handled and we do not want to do anything else
-		    
-		  Else
-		    
-		    
-		    dim oRowTag as lbRowTag
-		    
-		    If me.ListIndex <> -1 Then
-		      
-		      oRowTag = me.RowTag(me.ListIndex)
-		      
-		      If oRowTag.vtblRecord <> Nil Then
-		        
-		        // Get the item name
-		        dim oRecord as DataFile.tbl_inventory    '!@! Table Dependent !@!
-		        oRecord = oRowTag.vtblRecord
-		        dim sTabName as string
-		        sTabName = oRecord.sitem_name    '!@! Table Dependent !@!
-		        
-		        If oRowTag.pkid <> 0 Then
-		          
-		          // load up a inventory item container
-		          dim conItem as New contInventoryItem    '!@! Table Dependent !@!
-		          dim oTabPanel as PagePanel = app.MainWindow.tbMainWindow
-		          
-		          app.MainWindow.AddTab(sTabName)
-		          
-		          conItem.EmbedWithinPanel(oTabPanel,oTabPanel.PanelCount - 1 )
-		          
-		          conItem.LoadItem(oRowTag.pkid)    '!@! Table Dependent !@!
-		        End If
-		        
-		      End If
-		      
-		    End If
-		    
-		    
-		  End If
-		End Sub
+		  Return methHandleMouseWheel(X,Y,DeltaX,DeltaY)
+		End Function
 	#tag EndEvent
 	#tag Event
 		Function entContextualMenuAction(hitItem as MenuItem) As Boolean
-		  '!@! Table Dependent !@!
+		  dim lbItems as entListbox = lbMethods  '!@! Table Dependent !@!
 		  
 		  Select Case hitItem.Text
 		  Case "Open"
 		    
+		    dim oRowTag as lbRowTag
+		    
 		    If lbItems.ListIndex <> -1 Then
 		      
-		      // Grab the rowtag
-		      dim oRowTag as lbRowTag
 		      oRowTag = lbItems.RowTag(lbItems.ListIndex)
 		      
-		      // Get the item name
-		      dim oRecord as DataFile.tbl_inventory
-		      oRecord = oRowTag.vtblRecord
-		      dim sItemName as string
-		      sItemName = oRecord.sitem_name
-		      
-		      If oRowTag.pkid <> 0 Then
+		      If oRowTag.vtblRecord <> Nil Then
 		        
-		        // load up a inventory item container
-		        dim conItem as New contInventoryItem
-		        dim oTabPanel as PagePanel = app.MainWindow.tbMainWindow
+		        methOpenRecordInNewTab(oRowTag)
 		        
-		        app.MainWindow.AddTab(sItemName)
-		        
-		        conItem.EmbedWithinPanel(oTabPanel,oTabPanel.PanelCount - 1 )
-		        
-		        conItem.LoadItem(oRowTag.pkid)
 		      End If
+		      
 		    End If
 		    
 		  Case "Break Link"
-		    
 		    dim oRowTags() as lbRowTag
 		    oRowTags = lbItems.GetSelectedRows
 		    
@@ -1023,12 +1001,12 @@ End
 		      
 		      If oRowTag.vLinkTable <> Nil Then
 		        
-		        dim oItemRecord as DataFile.tbl_inventory
-		        oItemRecord = oRowTag.vtblRecord
-		        dim oLinkRecord as DataFile.tbl_inventory_link
+		        dim oRecord as DataFile.tbl_contact_methods  '!@! Table Dependent !@!
+		        oRecord = oRowTag.vtblRecord
+		        dim oLinkRecord as DataFile.tbl_internal_linking
 		        oLinkRecord = oRowTag.vLinkTable
 		        
-		        Select Case MsgBox("Are you sure you want to break the link to the item: " + oItemRecord.sitem_name + "?",4)
+		        Select Case MsgBox("Are you sure you want to break the link to the item: " + oRecord.smethod + "?",4)  '!@! Table Dependent !@!
 		        Case 6 ' yes pressed
 		          
 		        Case 7 ' No pressed
@@ -1037,14 +1015,7 @@ End
 		        
 		        oLinkRecord.Delete
 		        
-		        Methods.UpdateItemQuantity(oLinkRecord.ifkinventory_parent)
-		        
-		        
-		        
-		        dim oOpenFolders() as lbRowTag
-		        oOpenFolders = lbItems.GetOpenedFolders
-		        'CreateZeroLevelRowTags
-		        lbItems.reopenFolders(oOpenFolders)
+		        methRefresh
 		        
 		      End If
 		      
@@ -1059,65 +1030,30 @@ End
 		      
 		      If oRowTag.vtblRecord <> Nil Then
 		        
-		        dim oItemRecord as DataFile.tbl_inventory
-		        oItemRecord = oRowTag.vtblRecord
-		        dim oLinkRecord as DataFile.tbl_inventory_link
-		        If oRowTag.vLinkTable <> Nil Then
-		          oLinkRecord = oRowTag.vLinkTable
-		        End If
+		        dim oRecord as DataFile.tbl_contact_methods  '!@! Table Dependent !@!
+		        oRecord = oRowTag.vtblRecord
 		        
-		        Select Case MsgBox("Are you sure you want to delete the item: " + oItemRecord.sitem_name + "?",4)
+		        Select Case MsgBox("Are you sure you want to delete the record: " + oRecord.smethod + "?",4)  '!@! Table Dependent !@!
 		        Case 6 ' yes pressed
 		          
 		        Case 7 ' No pressed
 		          Return False
 		        End Select
 		        
-		        oItemRecord.Delete
+		        oRecord.Delete
 		        
-		        If oLinkRecord <> Nil Then
-		          oLinkRecord.Delete
-		          
-		          Methods.UpdateItemQuantity(oLinkRecord.ifkinventory_parent)
-		        End If
-		        
-		        
-		        
-		        
-		        dim oOpenFolders() as lbRowTag
-		        oOpenFolders = lbItems.GetOpenedFolders
-		        'CreateZeroLevelRowTags
-		        lbItems.reopenFolders(oOpenFolders)
+		        methRefresh
 		        
 		      End If
 		      
 		    Next
 		    
-		  Case "Maintenance Logs"
-		    
-		    // Grab the rowtag
-		    dim oRowTag as lbRowTag
-		    oRowTag = lbItems.RowTag(lbItems.ListIndex)
-		    
-		    dim oItem as DataFile.tbl_inventory
-		    oItem = oRowTag.vtblRecord
-		    
-		    dim cont1 as New contMaintenenceLog
-		    
-		    app.MainWindow.AddTab("Maintenance Log")
-		    
-		    cont1.EmbedWithinPanel(app.MainWindow.tbMainWindow,app.MainWindow.tbMainWindow.PanelCount - 1)
-		    cont1.LoadUniversalInfo(oItem.ipkid)
-		    
 		  End Select
-		  
-		  dim boo as Boolean
-		  boo = evdefContextualMenuAction(hitItem)
 		End Function
 	#tag EndEvent
 	#tag Event
 		Function entConstructContextualMenu(base as menuitem, x as integer, y as integer) As Boolean
-		  '!@! Table Dependent !@!
+		  dim lbItems as entListbox = lbMethods  '!@! Table Dependent !@!
 		  
 		  If lbItems.ListIndex <> -1 Then
 		    
@@ -1128,68 +1064,70 @@ End
 		    If oRowTag.vtblRecord <> Nil Then
 		      
 		      base.Append( New MenuItem("Open") )
-		      base.Append( New MenuItem("Maintenance Logs") )
 		      base.Append( New MenuItem(MenuItem.TextSeparator) )
 		      
 		      If oRowTag.vLinkTable <> Nil Then
-		        base.Append( New MenuItem("Break Link") )
+		        dim mi1 as New MenuItem("Break Link")
+		        mi1.Enabled = False
+		        base.Append( mi1 )
 		      End If
 		      
-		      base.Append( New MenuItem("Delete Item") )
+		      base.Append( New MenuItem("Delete") )
 		      
 		    End If
-		    
-		    dim boo as Boolean
-		    boo = evdefConstructContextualMenu(base, x, y)
 		  End If
 		End Function
 	#tag EndEvent
 	#tag Event
-		Function evdefMouseWheel(X As Integer, Y As Integer, DeltaX as Integer, DeltaY as Integer) As Boolean
+		Sub DoubleClick()
+		  dim lbItems as entListbox = lbMethods  '!@! Table Dependent !@!
 		  
-		  Return methHandleMouseWheel(X,Y,DeltaX,DeltaY)
+		  
+		  If evdefDoubleClick Then
+		    
+		    // the event was handled and we do not want to do anything else
+		    
+		  Else
+		    
+		    
+		    dim oRowTag as lbRowTag
+		    
+		    If lbItems.ListIndex <> -1 Then
+		      
+		      oRowTag = lbItems.RowTag(lbItems.ListIndex)
+		      
+		      If oRowTag.vtblRecord <> Nil Then
+		        
+		        methOpenRecordInNewTab(oRowTag)
+		        
+		      End If
+		      
+		    End If
+		    
+		    
+		  End If
+		End Sub
+	#tag EndEvent
+	#tag Event
+		Function CellBackgroundPaint(g as Graphics,row as integer, column as integer) As Boolean
+		  
+		  If row Mod 2 = 0 Then
+		    g.ForeColor = UiColors.ListboxRowEven
+		  Else
+		    g.ForeColor = UiColors.ListboxRowOdd
+		  End If
+		  
+		  g.FillRect(0,0,g.Width,g.Height)
 		End Function
-	#tag EndEvent
-#tag EndEvents
-#tag Events bAddItem
-	#tag Event
-		Sub Action()
-		  '!@! Table Dependent !@!
-		  
-		  
-		  dim oNewItem as New DataFile.tbl_inventory
-		  oNewItem.sitem_name = "-"
-		  oNewItem.iitem_quantity = 0
-		  
-		  
-		  dim NewCont as New contInventoryItem
-		  
-		  app.MainWindow.AddTab("New Item")
-		  
-		  NewCont.EmbedWithinPanel(app.MainWindow.tbMainWindow, app.MainWindow.tbMainWindow.PanelCount - 1)
-		  
-		  NewCont.LoadItem(oNewItem)
-		End Sub
-	#tag EndEvent
-#tag EndEvents
-#tag Events bRefresh
-	#tag Event
-		Sub Action()
-		  
-		  dim oUIState as lbUIState
-		  oUIState = lbItems.GetUIState
-		  methLoadMe()
-		  lbItems.ResetUIState(oUIState)
-		End Sub
 	#tag EndEvent
 #tag EndEvents
 #tag Events scSearchField
 	#tag Event
 		Sub Search()
 		  dim sSearchValue as string
-		  dim lb1 as entListbox = lbItems
+		  dim lb1 as entListbox = lbMethods  '!@! Table Dependent !@!
 		  
-		  sSearchValue = scSearchField.Text
+		  sSearchValue = me.Text
 		  
 		  If len(sSearchValue) <> 0 Then
 		    ' there is something to be searched
@@ -1252,11 +1190,36 @@ End
 #tag Events chbShowHidden
 	#tag Event
 		Sub Action()
+		  methLoadMe
+		End Sub
+	#tag EndEvent
+#tag EndEvents
+#tag Events bRefresh
+	#tag Event
+		Sub Action()
 		  
-		  dim oUIState as lbUIState
-		  oUIState = lbItems.GetUIState
-		  methLoadMe()
-		  lbItems.ResetUIState(oUIState)
+		  methRefresh
+		End Sub
+	#tag EndEvent
+#tag EndEvents
+#tag Events bAddItem
+	#tag Event
+		Sub Action()
+		  '!@! Table Dependent !@!
+		  
+		  
+		  // Create the new record
+		  dim oNew as New DataFile.tbl_contactables  '!@! Table Dependent !@!
+		  oNew.sname_first = "-"  '!@! Table Dependent !@!
+		  
+		  
+		  dim NewCont as New contContactable  '!@! Table Dependent !@!
+		  
+		  app.MainWindow.AddTab("New Contact")
+		  
+		  NewCont.EmbedWithinPanel(app.MainWindow.tbMainWindow, app.MainWindow.tbMainWindow.PanelCount - 1)
+		  
+		  NewCont.LoadMe(oNew)
 		End Sub
 	#tag EndEvent
 #tag EndEvents
@@ -1304,6 +1267,11 @@ End
 		Type="Boolean"
 	#tag EndViewProperty
 	#tag ViewProperty
+		Name="DoNotLoad"
+		Group="Behavior"
+		Type="Boolean"
+	#tag EndViewProperty
+	#tag ViewProperty
 		Name="Enabled"
 		Visible=true
 		Group="Appearance"
@@ -1343,11 +1311,6 @@ End
 		Name="InitialParent"
 		Group="Position"
 		Type="String"
-	#tag EndViewProperty
-	#tag ViewProperty
-		Name="iStartingTop"
-		Group="Behavior"
-		Type="Integer"
 	#tag EndViewProperty
 	#tag ViewProperty
 		Name="LastSearchValue"

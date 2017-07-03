@@ -696,7 +696,7 @@ End
 		Function methHandleMouseWheel(X As Integer, Y As Integer, DeltaX as Integer, DeltaY as Integer) As Boolean
 		  'me.EraseBackground = False
 		  
-		  me.top = me.Top + DeltaY
+		  me.top = me.Top - DeltaY
 		  me.Invalidate
 		End Function
 	#tag EndMethod

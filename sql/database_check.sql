@@ -241,22 +241,12 @@ Select
     row_modified                ,
     row_username                ,
     fkcontactables              ,
-    phone_number                ,
-    number_type                 ,
-    primary_phone                     
-    From tbl_phone_numbers
-    ;
-
-Select
-    pkid                        ,
-    row_created                 ,
-    row_modified                ,
-    row_username                ,
-    fkcontactables              ,
-    email_address               ,
-    email_type                  ,
-    primary_email                     
-    From tbl_email_addresses
+    method                      ,
+    method_type                 ,
+    method_location             ,
+    primary_method              ,
+    hide
+    From tbl_contact_methods                     
     ;
 
 -- tbl_departments

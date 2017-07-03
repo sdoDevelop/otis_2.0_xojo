@@ -238,28 +238,18 @@ Create Table tbl_events_link
         fkcontactables_child        integer
         );
 
-    CREATE TABLE tbl_phone_numbers
+    CREATE TABLE tbl_contact_methods
         (
         pkid                        integer Primary Key,
         row_created                 text,
         row_modified                text,
         row_username                text,
         fkcontactables              integer,
-        phone_number                text,
-        number_type                 text,
-        primary_phone               boolean
-        );
-
-    CREATE TABLE tbl_email_addresses
-        (
-        pkid                        integer Primary Key,
-        row_created                 text,
-        row_modified                text,
-        row_username                text,
-        fkcontactables              integer,
-        email_address               text,
-        email_type                  text,
-        primary_email               boolean
+        method                      text,
+        method_type                 text,
+        method_location             text,
+        primary_method              boolean,
+        hide                        boolean
         );
 
     -- tbl_departments

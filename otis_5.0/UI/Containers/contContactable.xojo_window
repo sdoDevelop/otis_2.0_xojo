@@ -51,7 +51,7 @@ Begin ContainerControl contContactable
       TextFont        =   "System"
       TextSize        =   0.0
       TextUnit        =   0
-      Top             =   19
+      Top             =   37
       Underline       =   False
       Visible         =   True
       Width           =   165
@@ -84,7 +84,7 @@ Begin ContainerControl contContactable
       TextFont        =   "System"
       TextSize        =   0.0
       TextUnit        =   0
-      Top             =   20
+      Top             =   38
       Transparent     =   True
       Underline       =   False
       Visible         =   True
@@ -118,7 +118,7 @@ Begin ContainerControl contContactable
       TextFont        =   "System"
       TextSize        =   0.0
       TextUnit        =   0
-      Top             =   46
+      Top             =   64
       Transparent     =   True
       Underline       =   False
       Visible         =   True
@@ -161,7 +161,7 @@ Begin ContainerControl contContactable
       TextFont        =   "System"
       TextSize        =   0.0
       TextUnit        =   0
-      Top             =   45
+      Top             =   63
       Underline       =   False
       UseFocusRing    =   True
       Visible         =   True
@@ -195,7 +195,7 @@ Begin ContainerControl contContactable
       TextFont        =   "System"
       TextSize        =   0.0
       TextUnit        =   0
-      Top             =   71
+      Top             =   89
       Transparent     =   True
       Underline       =   False
       Visible         =   True
@@ -237,7 +237,7 @@ Begin ContainerControl contContactable
       TextFont        =   "System"
       TextSize        =   0.0
       TextUnit        =   0
-      Top             =   70
+      Top             =   88
       Underline       =   False
       UseFocusRing    =   True
       Visible         =   True
@@ -271,7 +271,7 @@ Begin ContainerControl contContactable
       TextFont        =   "System"
       TextSize        =   0.0
       TextUnit        =   0
-      Top             =   96
+      Top             =   114
       Transparent     =   True
       Underline       =   False
       Visible         =   True
@@ -313,7 +313,7 @@ Begin ContainerControl contContactable
       TextFont        =   "System"
       TextSize        =   0.0
       TextUnit        =   0
-      Top             =   95
+      Top             =   113
       Underline       =   False
       UseFocusRing    =   True
       Visible         =   True
@@ -347,7 +347,7 @@ Begin ContainerControl contContactable
       TextFont        =   "System"
       TextSize        =   0.0
       TextUnit        =   0
-      Top             =   121
+      Top             =   139
       Transparent     =   True
       Underline       =   False
       Visible         =   True
@@ -389,7 +389,7 @@ Begin ContainerControl contContactable
       TextFont        =   "System"
       TextSize        =   0.0
       TextUnit        =   0
-      Top             =   120
+      Top             =   138
       Underline       =   False
       UseFocusRing    =   True
       Visible         =   True
@@ -862,7 +862,7 @@ Begin ContainerControl contContactable
       Index           =   -2147483648
       InitialParent   =   ""
       Italic          =   False
-      Left            =   20
+      Left            =   0
       LockBottom      =   False
       LockedInPosition=   False
       LockLeft        =   True
@@ -879,11 +879,11 @@ Begin ContainerControl contContactable
       TextFont        =   "System"
       TextSize        =   0.0
       TextUnit        =   0
-      Top             =   154
+      Top             =   4
       Transparent     =   True
       Underline       =   False
       Visible         =   True
-      Width           =   100
+      Width           =   40
    End
    Begin CheckBox chbHide
       AutoDeactivate  =   True
@@ -897,7 +897,7 @@ Begin ContainerControl contContactable
       Index           =   -2147483648
       InitialParent   =   ""
       Italic          =   False
-      Left            =   132
+      Left            =   52
       LockBottom      =   False
       LockedInPosition=   False
       LockLeft        =   True
@@ -911,10 +911,39 @@ Begin ContainerControl contContactable
       TextFont        =   "System"
       TextSize        =   0.0
       TextUnit        =   0
-      Top             =   153
+      Top             =   3
       Underline       =   False
+      Value           =   False
       Visible         =   True
-      Width           =   165
+      Width           =   22
+   End
+   Begin contContactMethods contMethodsList
+      AcceptFocus     =   False
+      AcceptTabs      =   True
+      AutoDeactivate  =   True
+      BackColor       =   &cFFFFFF00
+      Backdrop        =   0
+      Enabled         =   True
+      EraseBackground =   True
+      HasBackColor    =   False
+      Height          =   200
+      HelpTag         =   ""
+      InitialParent   =   ""
+      Left            =   345
+      LockBottom      =   False
+      LockedInPosition=   False
+      LockLeft        =   True
+      LockRight       =   False
+      LockTop         =   True
+      Scope           =   0
+      TabIndex        =   24
+      TabPanelIndex   =   0
+      TabStop         =   True
+      Top             =   38
+      Transparent     =   True
+      UseFocusRing    =   False
+      Visible         =   True
+      Width           =   356
    End
 End
 #tag EndWindow
@@ -922,6 +951,10 @@ End
 #tag WindowCode
 	#tag Method, Flags = &h0
 		Sub LoadFields()
+		  
+		  if oCurrentRecord = Nil Then
+		    Return
+		  end if
 		  
 		  // popup menus
 		  dim sType as string = oCurrentRecord.stype
@@ -945,6 +978,9 @@ End
 		  
 		  // Check Boxes
 		  chbHide.Value = oCurrentRecord.bhide
+		  
+		  // Contact Methods Listbox
+		  contMethodsList.methLoadMe( oCurrentRecord.ipkid )
 		End Sub
 	#tag EndMethod
 

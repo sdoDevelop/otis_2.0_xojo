@@ -823,6 +823,7 @@ Begin ContainerControl contInventoryItem
       AutoDeactivate  =   True
       BackColor       =   &c40004000
       Backdrop        =   0
+      bDisplayGrouped =   False
       Enabled         =   True
       EraseBackground =   True
       HasBackColor    =   False
@@ -3043,7 +3044,7 @@ End
 		Function methHandleMouseWheel(X As Integer, Y As Integer, DeltaX as Integer, DeltaY as Integer) As Boolean
 		  'me.EraseBackground = False
 		  
-		  me.top = me.Top + DeltaY
+		  me.top = me.Top - DeltaY
 		  me.Invalidate
 		End Function
 	#tag EndMethod
