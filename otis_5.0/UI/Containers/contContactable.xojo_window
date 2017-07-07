@@ -917,24 +917,27 @@ Begin ContainerControl contContactable
       Visible         =   True
       Width           =   22
    End
-   Begin contContactMethods contMethodsList
+   Begin contContactMethodList contMethodsList
       AcceptFocus     =   False
       AcceptTabs      =   True
       AutoDeactivate  =   True
       BackColor       =   &cFFFFFF00
       Backdrop        =   0
+      bDisplayGrouped =   False
+      DoNotLoad       =   False
       Enabled         =   True
       EraseBackground =   True
       HasBackColor    =   False
-      Height          =   200
+      Height          =   121
       HelpTag         =   ""
       InitialParent   =   ""
+      LastSearchValue =   ""
       Left            =   345
       LockBottom      =   False
       LockedInPosition=   False
-      LockLeft        =   True
+      LockLeft        =   False
       LockRight       =   False
-      LockTop         =   True
+      LockTop         =   False
       Scope           =   0
       TabIndex        =   24
       TabPanelIndex   =   0

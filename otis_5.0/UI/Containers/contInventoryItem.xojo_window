@@ -2810,9 +2810,9 @@ End
 		  For Each oChild as DataFile.tbl_inventory In iLinkTheseToParent
 		    
 		    // Create a new link table item
-		    dim oLinkItem as New DataFile.tbl_inventory_link
-		    oLinkItem.ifkinventory_parent = oCurrentInventoryItem.ipkid
-		    oLinkItem.ifkinventory_child = oChild.ipkid
+		    dim oLinkItem as New DataFile.tbl_internal_linking
+		    oLinkItem.ifk_parent = oCurrentInventoryItem.ipkid
+		    oLinkItem.ifk_child = oChild.ipkid
 		    oLinkItem.slink_type = LinkType
 		    oLinkItem.iquantity = 1
 		    oLinkItem.Save
@@ -3383,6 +3383,7 @@ End
 #tag Events pbIncreaseQuantity
 	#tag Event
 		Sub Action()
+		  Break
 		  
 		  dim s1 as string
 		  dim n1 as integer
