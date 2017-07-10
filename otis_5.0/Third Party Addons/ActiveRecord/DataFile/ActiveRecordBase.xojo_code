@@ -25,6 +25,12 @@ Inherits BKS_ActiveRecord.Base
 	#tag EndEvent
 
 	#tag Event
+		Sub AfterUpdate()
+		  
+		End Sub
+	#tag EndEvent
+
+	#tag Event
 		Sub BeforeCreate()
 		  Dim StatementType as string
 		  dim n1 as integer
@@ -106,6 +112,7 @@ Inherits BKS_ActiveRecord.Base
 		  dim n1 as integer
 		  
 		  
+		  
 		  // MODIFIED VALUES
 		  // row username
 		  me.srow_username = app.sUserName
@@ -120,6 +127,9 @@ Inherits BKS_ActiveRecord.Base
 		    Dim oJSON as New JSONItem
 		    dim j2 as New JSONItem
 		    j2 = me.GetMyFieldValues
+		    
+		    // Launch our PreUpdate definition
+		    PreUpdate
 		    
 		    // Grab the pkid value and put it in the fields value
 		    'j2.value("pkid") =  ipkid
@@ -153,6 +163,10 @@ Inherits BKS_ActiveRecord.Base
 
 	#tag Hook, Flags = &h0
 		Event PreCreate()
+	#tag EndHook
+
+	#tag Hook, Flags = &h0
+		Event PreUpdate()
 	#tag EndHook
 
 

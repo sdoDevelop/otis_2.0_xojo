@@ -954,12 +954,15 @@ Begin ContainerControl contContactable
       AutoDeactivate  =   True
       BackColor       =   &cFFFFFF00
       Backdrop        =   0
+      bDisplayGrouped =   False
+      DoNotLoad       =   False
       Enabled         =   True
       EraseBackground =   True
       HasBackColor    =   False
       Height          =   161
       HelpTag         =   ""
       InitialParent   =   ""
+      LastSearchValue =   ""
       Left            =   132
       LockBottom      =   False
       LockedInPosition=   False
@@ -1012,6 +1015,9 @@ End
 		  
 		  // Contact Methods Listbox
 		  contMethodsList.methLoadMe( oCurrentRecord.ipkid )
+		  
+		  // Child Contacts listbox
+		  contLinkedContactables.methLoadMe_ExpandSingleRecord( oCurrentRecord )
 		End Sub
 	#tag EndMethod
 

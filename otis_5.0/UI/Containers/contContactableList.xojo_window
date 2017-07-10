@@ -226,8 +226,15 @@ End
 		      oRowTag.sFieldNames = dictFieldNames.Value("GrandParent")
 		      oRowTag.iCellTypes = dictCellTypes.Value("GrandParent")
 		    Else
-		      oRowTag.sFieldNames = dictFieldNames.Value(oRowTag.sRowType)
-		      oRowTag.iCellTypes = dictCellTypes.Value(oRowTag.sRowType)
+		      #Pragma BreakOnExceptions False
+		      Try
+		        oRowTag.sFieldNames = dictFieldNames.Value(oRowTag.sRowType)
+		        oRowTag.iCellTypes = dictCellTypes.Value(oRowTag.sRowType)
+		      Catch KeyNotFoundException
+		        oRowTag.sFieldNames = dictFieldNames.Value("GrandParent")
+		        oRowTag.iCellTypes = dictCellTypes.Value("GrandParent")
+		      End Try
+		      #Pragma BreakOnExceptions True
 		    End If
 		    
 		    // Populate the Column values for this row
@@ -320,6 +327,7 @@ End
 		          
 		          // Delete the child from the array
 		          arLinkArray.Remove( iLinkIndex )
+		          iLinkIndex = iLinkIndex - 1
 		          
 		        End If
 		        
@@ -769,7 +777,7 @@ End
 		  dim IsGrouped as Boolean = bDisplayGrouped
 		  
 		  If oParentRecord <> Nil Then
-		    methLoadMe_ExpandSingleRecord(oParentRecord
+		    methLoadMe_ExpandSingleRecord(oParentRecord)
 		    Return
 		  End If
 		  
@@ -952,6 +960,15 @@ End
 		  // Create the new record
 		  dim oNew as New DataFile.tbl_contactables  '!@! Table Dependent !@!
 		  oNew.sname_first = "-"  '!@! Table Dependent !@!
+		  
+		  // Create a link record if there is a parent 
+		  If oParentRecord <> Nil Then
+		    oNew.Save
+		    dim oNewLink as New DataFile.tbl_internal_linking
+		    oNewLink.ifk_parent = oParentRecord.ipkid
+		    oNewLink.ifk_child = oNew.ipkid
+		    oNewLink.Save
+		  End If
 		  
 		  
 		  dim NewCont as New contContactable  '!@! Table Dependent !@!

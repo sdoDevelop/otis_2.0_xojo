@@ -22,6 +22,15 @@ Inherits DataFile.ActiveRecordBase
 		  
 		  // Set the Country Default
 		  me.saddress_country = "United States"
+		  
+		  UpdateLinkRecordType
+		End Sub
+	#tag EndEvent
+
+	#tag Event
+		Sub PreUpdate()
+		  
+		  UpdateLinkRecordType
 		End Sub
 	#tag EndEvent
 
@@ -288,6 +297,38 @@ Inherits DataFile.ActiveRecordBase
 		  
 		  Return jsMaster
 		End Function
+	#tag EndMethod
+
+	#tag Method, Flags = &h0
+		Sub UpdateLinkRecordType()
+		  
+		  // Get which fields have been modified
+		  dim jsFieldValuePairs as JSONItem
+		  jsFieldValuePairs = me.GetMyFieldValues
+		  
+		  If jsFieldValuePairs.Names.IndexOf("type") <> -1 Then
+		    // The type has been changed
+		    
+		    // We need to check if there are any linking records in internal linking that we need to update as well
+		    dim aroLinkingRecords() as DataFile.tbl_internal_linking
+		    aroLinkingRecords = DataFile.tbl_internal_linking.List( "fk_child = " + me.ipkid.ToText )
+		    
+		    If aroLinkingRecords.Ubound <> -1 Then
+		      
+		      // We have found linking records with this record as the child
+		      // Lets change the Link Type on these
+		      
+		      For Each LinkRecord as DataFile.tbl_internal_linking In aroLinkingRecords
+		        
+		        LinkRecord.slink_type = jsFieldValuePairs.Value("type")
+		        LinkRecord.Save
+		        
+		      Next
+		      
+		    End If
+		    
+		  End If
+		End Sub
 	#tag EndMethod
 
 
