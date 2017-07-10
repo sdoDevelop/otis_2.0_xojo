@@ -101,7 +101,6 @@ Begin ContainerControl contContactableList
       HasHeading      =   True
       Height          =   315
       HelpTag         =   ""
-      Index           =   -2147483648
       InitialParent   =   ""
       Left            =   0
       LockBottom      =   True
@@ -769,6 +768,11 @@ End
 		Sub methLoadMe()
 		  dim IsGrouped as Boolean = bDisplayGrouped
 		  
+		  If oParentRecord <> Nil Then
+		    methLoadMe_ExpandSingleRecord(oParentRecord
+		    Return
+		  End If
+		  
 		  //UnGrouped
 		  If Not IsGrouped Then
 		    
@@ -802,6 +806,8 @@ End
 		  '!@! Table Dependent In Parameters !@!
 		  
 		  If oRecord <> Nil Then
+		    
+		    oParentRecord = oRecord
 		    
 		    dim aroRecords() as DataFile.tbl_contactables     '!@! Table Dependent !@!
 		    aroRecords.Append(oRecord)
@@ -928,6 +934,10 @@ End
 
 	#tag Property, Flags = &h0
 		LastUIState As lbUIState
+	#tag EndProperty
+
+	#tag Property, Flags = &h0
+		oParentRecord As DataFile.tbl_contactables
 	#tag EndProperty
 
 

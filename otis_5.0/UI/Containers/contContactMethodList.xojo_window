@@ -41,10 +41,10 @@ Begin ContainerControl contContactMethodList
       HelpTag         =   ""
       InitialParent   =   ""
       Left            =   0
-      LockBottom      =   False
+      LockBottom      =   True
       LockedInPosition=   False
       LockLeft        =   True
-      LockRight       =   False
+      LockRight       =   True
       LockTop         =   True
       Scope           =   0
       TabIndex        =   0

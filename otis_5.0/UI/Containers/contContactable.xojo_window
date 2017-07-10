@@ -948,6 +948,34 @@ Begin ContainerControl contContactable
       Visible         =   True
       Width           =   356
    End
+   Begin contContactableList contLinkedContactables
+      AcceptFocus     =   False
+      AcceptTabs      =   True
+      AutoDeactivate  =   True
+      BackColor       =   &cFFFFFF00
+      Backdrop        =   0
+      Enabled         =   True
+      EraseBackground =   True
+      HasBackColor    =   False
+      Height          =   161
+      HelpTag         =   ""
+      InitialParent   =   ""
+      Left            =   132
+      LockBottom      =   False
+      LockedInPosition=   False
+      LockLeft        =   True
+      LockRight       =   False
+      LockTop         =   True
+      Scope           =   0
+      TabIndex        =   25
+      TabPanelIndex   =   0
+      TabStop         =   True
+      Top             =   343
+      Transparent     =   True
+      UseFocusRing    =   False
+      Visible         =   True
+      Width           =   569
+   End
 End
 #tag EndWindow
 
