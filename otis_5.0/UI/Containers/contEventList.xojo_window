@@ -1037,38 +1037,72 @@ End
 		    End If
 		    
 		  Case "Break Link"
-		    // STILLL INVETORY BASED
-		    Return False
+		    
 		    dim oRowTags() as lbRowTag
 		    oRowTags = lbItems.GetSelectedRows
 		    
-		    For  Each oRowTag as lbRowTag In oRowTags()
+		    // Goal is to delete all selected rows allowing the user an option to apply their choice of whether or not to delete an item to all items
+		    
+		    dim sYesOrNoToAll as String
+		    
+		    // Loop through each row
+		    For Each oRowTag as lbRowTag in oRowTags
 		      
-		      
+		      // Get the table record out of the rowtag
+		      dim oRecord as DataFile.tbl_events
+		      If oRowTag.vtblRecord <> Nil Then
+		        oRecord = oRowTag.vtblRecord
+		      Else
+		        Continue
+		      End If
+		      dim oLinkRecord as DataFile.tbl_internal_linking
 		      If oRowTag.vLinkTable <> Nil Then
-		        
-		        dim oItemRecord as DataFile.tbl_inventory
-		        oItemRecord = oRowTag.vtblRecord
-		        dim oLinkRecord as DataFile.tbl_inventory_link
 		        oLinkRecord = oRowTag.vLinkTable
-		        
-		        Select Case MsgBox("Are you sure you want to break the link to the item: " + oItemRecord.sitem_name + "?",4)
-		        Case 6 ' yes pressed
-		          
-		        Case 7 ' No pressed
-		          Return False
-		        End Select
-		        
-		        oLinkRecord.Delete
-		        
-		        Methods.UpdateItemQuantity(oLinkRecord.ifkinventory_parent)
-		        
-		        
-		        
-		        methRefresh
-		        
+		      Else
+		        Continue
 		      End If
 		      
+		      // Get the name of the item
+		      dim sName as string
+		      sName = oRecord.sevent_name
+		      
+		      dim bDelete as Boolean
+		      
+		      If sYesOrNoToAll = "" Then
+		        
+		        // Prepare the prompt window
+		        dim contDeletePromt as New contDeleteBreakPrompt
+		        dim winWindow as New winFloatingWindow
+		        winWindow.Width = contDeletePromt.Width
+		        winWindow.Height = contDeletePromt.Height
+		        
+		        contDeletePromt.EmbedWithin(winWindow)
+		        contDeletePromt.labMesgTop.Text = "Are you sure you want to break link to " + sName + "."
+		        contDeletePromt.labMesgBottom.Text = ""
+		        
+		        // Display the window to the user
+		        winWindow.ShowModal
+		        
+		        // Chekc the users response
+		        bDelete = contDeletePromt.UserResponse
+		        If contDeletePromt.propApplyToAll Then
+		          If bDelete Then
+		            sYesOrNoToAll = "Yes"
+		          Else
+		            sYesOrNoToAll = "No"
+		          End If
+		        End If
+		        
+		      ElseIf sYesOrNoToAll = "Yes" Then
+		        bDelete = True
+		      ElseIf sYesOrNoToAll = "No" Then
+		        bDelete = False
+		      End If
+		      
+		      // Carry out the users request
+		      If bDelete Then
+		        oLinkRecord.Delete
+		      End If
 		    Next
 		    
 		  Case "Delete Item"
@@ -1076,39 +1110,66 @@ End
 		    dim oRowTags() as lbRowTag
 		    oRowTags = lbItems.GetSelectedRows
 		    
-		    For  Each oRowTag as lbRowTag In oRowTags()
+		    // Goal is to delete all selected rows allowing the user an option to apply their choice of whether or not to delete an item to all items
+		    
+		    dim sYesOrNoToAll as String
+		    
+		    // Loop through each row
+		    For Each oRowTag as lbRowTag in oRowTags
 		      
+		      // Get the table record out of the rowtag
+		      dim oRecord as DataFile.tbl_events
 		      If oRowTag.vtblRecord <> Nil Then
-		        
-		        dim oItemRecord as DataFile.tbl_events
-		        oItemRecord = oRowTag.vtblRecord
-		        'dim oLinkRecord as DataFile.tbl_inventory_link
-		        'If oRowTag.vLinkTable <> Nil Then
-		        'oLinkRecord = oRowTag.vLinkTable
-		        'End If
-		        
-		        Select Case MsgBox("Are you sure you want to delete the event: " + oItemRecord.sevent_name + "?",4)
-		        Case 6 ' yes pressed
-		          
-		        Case 7 ' No pressed
-		          Return False
-		        End Select
-		        
-		        oItemRecord.Delete
-		        
-		        'If oLinkRecord <> Nil Then
-		        'oLinkRecord.Delete
-		        
-		        'Methods.UpdateItemQuantity(oLinkRecord.ifkinventory_parent)
-		        'End If
-		        
-		        
-		        
-		        methRefresh
-		        
+		        oRecord = oRowTag.vtblRecord
+		      Else
+		        Continue
 		      End If
 		      
+		      // Get the name of the item
+		      dim sName as string
+		      sName = oRecord.sevent_name
+		      
+		      dim bDelete as Boolean
+		      
+		      If sYesOrNoToAll = "" Then
+		        
+		        // Prepare the prompt window
+		        dim contDeletePromt as New contDeleteBreakPrompt
+		        dim winWindow as New winFloatingWindow
+		        winWindow.Width = contDeletePromt.Width
+		        winWindow.Height = contDeletePromt.Height
+		        
+		        contDeletePromt.EmbedWithin(winWindow)
+		        contDeletePromt.labMesgTop.Text = "Are you sure you want to delete " + sName + "."
+		        contDeletePromt.labMesgBottom.Text = ""
+		        
+		        // Display the window to the user
+		        winWindow.ShowModal
+		        
+		        // Chekc the users response
+		        bDelete = contDeletePromt.UserResponse
+		        If contDeletePromt.propApplyToAll Then
+		          If bDelete Then
+		            sYesOrNoToAll = "Yes"
+		          Else
+		            sYesOrNoToAll = "No"
+		          End If
+		        End If
+		        
+		      ElseIf sYesOrNoToAll = "Yes" Then
+		        bDelete = True
+		      ElseIf sYesOrNoToAll = "No" Then
+		        bDelete = False
+		      End If
+		      
+		      // Carry out the users request
+		      If bDelete Then
+		        oRecord.Delete
+		      End If
 		    Next
+		    
+		    
+		    
 		    
 		    
 		    

@@ -285,6 +285,11 @@ End
 		          dim sLinkType as string
 		          sLinkType = oLinkRecord.slink_type
 		          dictKeys() = dictChildRecords.Keys
+		          dim sKeys() as string
+		          For Each Key as Variant In dictKeys()
+		            sKeys.Append( str(Key) )
+		          Next
+		          
 		          If sLinkType = "" Then
 		            sLinkType = "NoType"
 		          End If
@@ -299,7 +304,7 @@ End
 		          oSubRowtag.vLinkTable = oLinkRecord
 		          oSubRowtag.sRowType = "Linked - " + sLinkType
 		          
-		          If dictKeys.IndexOf(sLinkType) >=0 Then
+		          If sKeys.IndexOf(sLinkType) >=0 Then
 		            ' there is already a dictionary entry for this link type
 		            // Pull its fellow rowtags out of Dictionary
 		            aroSubChildren() = dictChildRecords.Value(sLinkType)
@@ -768,6 +773,10 @@ End
 		Sub methLoadMe(iContactableID as int64 = -1)
 		  dim IsGrouped as Boolean = bDisplayGrouped
 		  
+		  If oParentRecord <> Nil And iContactableID = -1 Then
+		    iContactableID = oParentRecord.ipkid
+		  End If
+		  
 		  If iContactableID <> -1 Then
 		    // Get the parent record object
 		    oParentRecord = DataFile.tbl_contactables.FindByID(iContactableID)
@@ -1003,32 +1012,72 @@ End
 		    End If
 		    
 		  Case "Break Link"
+		    
 		    dim oRowTags() as lbRowTag
 		    oRowTags = lbItems.GetSelectedRows
 		    
-		    For  Each oRowTag as lbRowTag In oRowTags()
+		    // Goal is to delete all selected rows allowing the user an option to apply their choice of whether or not to delete an item to all items
+		    
+		    dim sYesOrNoToAll as String
+		    
+		    // Loop through each row
+		    For Each oRowTag as lbRowTag in oRowTags
 		      
-		      
-		      If oRowTag.vLinkTable <> Nil Then
-		        
-		        dim oRecord as DataFile.tbl_contact_methods  '!@! Table Dependent !@!
+		      // Get the table record out of the rowtag
+		      dim oRecord as DataFile.tbl_contact_methods
+		      If oRowTag.vtblRecord <> Nil Then
 		        oRecord = oRowTag.vtblRecord
-		        dim oLinkRecord as DataFile.tbl_internal_linking
+		      Else
+		        Continue
+		      End If
+		      dim oLinkRecord as DataFile.tbl_internal_linking
+		      If oRowTag.vLinkTable <> Nil Then
 		        oLinkRecord = oRowTag.vLinkTable
-		        
-		        Select Case MsgBox("Are you sure you want to break the link to the item: " + oRecord.smethod + "?",4)  '!@! Table Dependent !@!
-		        Case 6 ' yes pressed
-		          
-		        Case 7 ' No pressed
-		          Return False
-		        End Select
-		        
-		        oLinkRecord.Delete
-		        
-		        methRefresh
-		        
+		      Else
+		        Continue
 		      End If
 		      
+		      // Get the name of the item
+		      dim sName as string
+		      sName = oRecord.smethod
+		      
+		      dim bDelete as Boolean
+		      
+		      If sYesOrNoToAll = "" Then
+		        
+		        // Prepare the prompt window
+		        dim contDeletePromt as New contDeleteBreakPrompt
+		        dim winWindow as New winFloatingWindow
+		        winWindow.Width = contDeletePromt.Width
+		        winWindow.Height = contDeletePromt.Height
+		        
+		        contDeletePromt.EmbedWithin(winWindow)
+		        contDeletePromt.labMesgTop.Text = "Are you sure you want to break link to " + sName + "."
+		        contDeletePromt.labMesgBottom.Text = ""
+		        
+		        // Display the window to the user
+		        winWindow.ShowModal
+		        
+		        // Chekc the users response
+		        bDelete = contDeletePromt.UserResponse
+		        If contDeletePromt.propApplyToAll Then
+		          If bDelete Then
+		            sYesOrNoToAll = "Yes"
+		          Else
+		            sYesOrNoToAll = "No"
+		          End If
+		        End If
+		        
+		      ElseIf sYesOrNoToAll = "Yes" Then
+		        bDelete = True
+		      ElseIf sYesOrNoToAll = "No" Then
+		        bDelete = False
+		      End If
+		      
+		      // Carry out the users request
+		      If bDelete Then
+		        oLinkRecord.Delete
+		      End If
 		    Next
 		    
 		  Case "Delete Item"
@@ -1036,27 +1085,64 @@ End
 		    dim oRowTags() as lbRowTag
 		    oRowTags = lbItems.GetSelectedRows
 		    
-		    For  Each oRowTag as lbRowTag In oRowTags()
+		    // Goal is to delete all selected rows allowing the user an option to apply their choice of whether or not to delete an item to all items
+		    
+		    dim sYesOrNoToAll as String
+		    
+		    // Loop through each row
+		    For Each oRowTag as lbRowTag in oRowTags
 		      
+		      // Get the table record out of the rowtag
+		      dim oRecord as DataFile.tbl_contact_methods
 		      If oRowTag.vtblRecord <> Nil Then
-		        
-		        dim oRecord as DataFile.tbl_contact_methods  '!@! Table Dependent !@!
 		        oRecord = oRowTag.vtblRecord
-		        
-		        Select Case MsgBox("Are you sure you want to delete the record: " + oRecord.smethod + "?",4)  '!@! Table Dependent !@!
-		        Case 6 ' yes pressed
-		          
-		        Case 7 ' No pressed
-		          Return False
-		        End Select
-		        
-		        oRecord.Delete
-		        
-		        methRefresh
-		        
+		      Else
+		        Continue
 		      End If
 		      
+		      // Get the name of the item
+		      dim sName as string
+		      sName = oRecord.smethod
+		      
+		      dim bDelete as Boolean
+		      
+		      If sYesOrNoToAll = "" Then
+		        
+		        // Prepare the prompt window
+		        dim contDeletePromt as New contDeleteBreakPrompt
+		        dim winWindow as New winFloatingWindow
+		        winWindow.Width = contDeletePromt.Width
+		        winWindow.Height = contDeletePromt.Height
+		        
+		        contDeletePromt.EmbedWithin(winWindow)
+		        contDeletePromt.labMesgTop.Text = "Are you sure you want to delete " + sName + "."
+		        contDeletePromt.labMesgBottom.Text = ""
+		        
+		        // Display the window to the user
+		        winWindow.ShowModal
+		        
+		        // Chekc the users response
+		        bDelete = contDeletePromt.UserResponse
+		        If contDeletePromt.propApplyToAll Then
+		          If bDelete Then
+		            sYesOrNoToAll = "Yes"
+		          Else
+		            sYesOrNoToAll = "No"
+		          End If
+		        End If
+		        
+		      ElseIf sYesOrNoToAll = "Yes" Then
+		        bDelete = True
+		      ElseIf sYesOrNoToAll = "No" Then
+		        bDelete = False
+		      End If
+		      
+		      // Carry out the users request
+		      If bDelete Then
+		        oRecord.Delete
+		      End If
 		    Next
+		    
 		    
 		  End Select
 		End Function

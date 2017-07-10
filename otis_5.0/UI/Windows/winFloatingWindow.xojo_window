@@ -10,7 +10,7 @@ Begin Window winFloatingWindow
    FullScreenButton=   False
    HasBackColor    =   False
    Height          =   400
-   ImplicitInstance=   True
+   ImplicitInstance=   False
    LiveResize      =   True
    MacProcID       =   0
    MaxHeight       =   32000

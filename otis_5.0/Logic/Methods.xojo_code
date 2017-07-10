@@ -130,7 +130,7 @@ Protected Module Methods
 		Protected Sub UpdateItemQuantity(fkInventory as int64)
 		  // Figure out how many inventory expanded items there are related to our inventory item
 		  dim qty as integer
-		  qty = DataFile.tbl_inventory_link.ListCount("fkInventory_parent = " + fkInventory.ToText + " And link_type = 'version'" )
+		  qty = DataFile.tbl_internal_linking.ListCount("fk_parent = " + fkInventory.ToText + " And link_type = 'version'" )
 		  
 		  // Change the quantity of said inventory item
 		  dim oItem as DataFile.tbl_inventory
