@@ -779,7 +779,7 @@ End
 	#tag EndMethod
 
 	#tag Method, Flags = &h0
-		Sub methLoadMe()
+		Sub methLoadMe(FilterByParentID as Boolean = False)
 		  dim IsGrouped as Boolean = bDisplayGrouped
 		  
 		  If oParentRecord <> Nil Then
@@ -797,6 +797,29 @@ End
 		    dim theRowtags() as lbRowTag
 		    theRowtags = methCreateRowTags(records)
 		    
+		    // Check if we are filtering by a parent id
+		    If FilterByParentID And iFilterID <> 0 Then
+		      
+		      // Loop through each rowtag and check if it is linked to the parent
+		      For i1 as integer = theRowtags.Ubound DownTo 0
+		        
+		        dim oRowTag as lbRowTag = theRowtags(i1)
+		        
+		        If oRowTag.vtblRecord <> Nil Then
+		          
+		          dim iRecordCount as integer
+		          iRecordCount = DataFile.tbl_internal_linking.ListCount( "fk_parent = " + iFilterID.ToText + " And fk_child = " + oRowTag.pkid.ToText )
+		          
+		          If iRecordCount = 0 Then
+		            theRowtags.Remove(i1)
+		          End If
+		          
+		        End If
+		        
+		      Next
+		      
+		    End If
+		    
 		    methCreateTopLevelRows(theRowtags)
 		    
 		    //Grouped
@@ -807,6 +830,29 @@ End
 		    
 		    dim theRowtagsGrouped() as lbRowTag
 		    theRowtagsGrouped = methCreateRowTags_dict(dictRecords)
+		    
+		    // Check if we are filtering by a parent id
+		    If FilterByParentID And iFilterID <> 0 Then
+		      
+		      // Loop through each rowtag and check if it is linked to the parent
+		      For i1 as integer = theRowtagsGrouped.Ubound DownTo 0
+		        
+		        dim oRowTag as lbRowTag = theRowtagsGrouped(i1)
+		        
+		        If oRowTag.vtblRecord <> Nil Then
+		          
+		          dim iRecordCount as integer
+		          iRecordCount = DataFile.tbl_internal_linking.ListCount( "fk_parent = " + iFilterID.ToText + " And fk_child = " + oRowTag.pkid.ToText )
+		          
+		          If iRecordCount = 0 Then
+		            theRowtagsGrouped.Remove(i1)
+		          End If
+		          
+		        End If
+		        
+		      Next
+		      
+		    End If
 		    
 		    methCreateTopLevelRows(theRowtagsGrouped)
 		    
@@ -940,6 +986,10 @@ End
 
 	#tag Property, Flags = &h0
 		DoNotLoad As Boolean
+	#tag EndProperty
+
+	#tag Property, Flags = &h0
+		iFilterID As Int64
 	#tag EndProperty
 
 	#tag Property, Flags = &h0
@@ -1527,6 +1577,11 @@ End
 		Visible=true
 		Group="Appearance"
 		Type="String"
+	#tag EndViewProperty
+	#tag ViewProperty
+		Name="iFilterID"
+		Group="Behavior"
+		Type="Int64"
 	#tag EndViewProperty
 	#tag ViewProperty
 		Name="InitialParent"

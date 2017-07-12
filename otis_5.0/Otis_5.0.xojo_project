@@ -97,6 +97,7 @@ Folder=Custom Controls;UI/Custom Controls;&h19DE6FFF;&h470C97FF;false
 Window=entOkCancel;UI/Custom Controls/entOkCancel.xojo_window;&h1AC0D7FF;&h19DE6FFF;false
 Folder=Generic BKS Controls;UI/Custom Controls/Generic BKS Controls;&h633367FF;&h19DE6FFF;false
 Folder=Containers;UI/Containers;&h77254FFF;&h470C97FF;false
+Window=contEventContactablesList;UI/Containers/contEventContactablesList.xojo_window;&h228757FF;&h77254FFF;false
 Window=contDeleteBreakPrompt;UI/Containers/contDeleteBreakPrompt.xojo_window;&h1F4D47FF;&h77254FFF;false
 Window=contContactMethodList;UI/Containers/contContactMethodList.xojo_window;&h3829FFF;&h77254FFF;false
 Window=contContactable;UI/Containers/contContactable.xojo_window;&h7CC75FFF;&h77254FFF;false
