@@ -47,7 +47,6 @@ Begin ContainerControl contInventoryItem
       Selectable      =   False
       TabIndex        =   1
       TabPanelIndex   =   0
-      TabStop         =   True
       Text            =   "Item Name"
       TextAlign       =   0
       TextColor       =   &c00000000
@@ -82,7 +81,6 @@ Begin ContainerControl contInventoryItem
       Selectable      =   False
       TabIndex        =   2
       TabPanelIndex   =   0
-      TabStop         =   True
       Text            =   "Item Name"
       TextAlign       =   2
       TextColor       =   &c00000000
@@ -201,7 +199,6 @@ Begin ContainerControl contInventoryItem
       Selectable      =   False
       TabIndex        =   6
       TabPanelIndex   =   0
-      TabStop         =   True
       Text            =   "Model"
       TextAlign       =   2
       TextColor       =   &c00000000
@@ -278,7 +275,6 @@ Begin ContainerControl contInventoryItem
       Selectable      =   False
       TabIndex        =   8
       TabPanelIndex   =   0
-      TabStop         =   True
       Text            =   "Department"
       TextAlign       =   2
       TextColor       =   &c00000000
@@ -355,7 +351,6 @@ Begin ContainerControl contInventoryItem
       Selectable      =   False
       TabIndex        =   10
       TabPanelIndex   =   0
-      TabStop         =   True
       Text            =   "Category"
       TextAlign       =   2
       TextColor       =   &c00000000
@@ -432,7 +427,6 @@ Begin ContainerControl contInventoryItem
       Selectable      =   False
       TabIndex        =   12
       TabPanelIndex   =   0
-      TabStop         =   True
       Text            =   "Sub-Category"
       TextAlign       =   2
       TextColor       =   &c00000000
@@ -509,7 +503,6 @@ Begin ContainerControl contInventoryItem
       Selectable      =   False
       TabIndex        =   14
       TabPanelIndex   =   0
-      TabStop         =   True
       Text            =   "Description"
       TextAlign       =   2
       TextColor       =   &c00000000
@@ -628,7 +621,6 @@ Begin ContainerControl contInventoryItem
       Selectable      =   False
       TabIndex        =   18
       TabPanelIndex   =   0
-      TabStop         =   True
       Text            =   "Quantity"
       TextAlign       =   2
       TextColor       =   &c00000000
@@ -705,7 +697,6 @@ Begin ContainerControl contInventoryItem
       Selectable      =   False
       TabIndex        =   20
       TabPanelIndex   =   0
-      TabStop         =   True
       Text            =   "Rental Price"
       TextAlign       =   2
       TextColor       =   &c00000000
@@ -814,7 +805,6 @@ Begin ContainerControl contInventoryItem
       Selectable      =   False
       TabIndex        =   27
       TabPanelIndex   =   0
-      TabStop         =   True
       Text            =   "Related Items"
       TextAlign       =   2
       TextColor       =   &c00000000
@@ -839,7 +829,6 @@ Begin ContainerControl contInventoryItem
       HasBackColor    =   False
       Height          =   182
       HelpTag         =   ""
-      Index           =   -2147483648
       InitialParent   =   ""
       iStartingTop    =   0
       LastSearchValue =   ""
@@ -944,7 +933,6 @@ Begin ContainerControl contInventoryItem
       Selectable      =   False
       TabIndex        =   4
       TabPanelIndex   =   0
-      TabStop         =   True
       Text            =   "Manufacturer"
       TextAlign       =   2
       TextColor       =   &c00000000
@@ -979,7 +967,6 @@ Begin ContainerControl contInventoryItem
       Selectable      =   False
       TabIndex        =   33
       TabPanelIndex   =   0
-      TabStop         =   True
       Text            =   "Weight"
       TextAlign       =   2
       TextColor       =   &c00000000
@@ -1056,7 +1043,6 @@ Begin ContainerControl contInventoryItem
       Selectable      =   False
       TabIndex        =   35
       TabPanelIndex   =   0
-      TabStop         =   True
       Text            =   "Height"
       TextAlign       =   2
       TextColor       =   &c00000000
@@ -1133,7 +1119,6 @@ Begin ContainerControl contInventoryItem
       Selectable      =   False
       TabIndex        =   37
       TabPanelIndex   =   0
-      TabStop         =   True
       Text            =   "Width"
       TextAlign       =   2
       TextColor       =   &c00000000
@@ -1210,7 +1195,6 @@ Begin ContainerControl contInventoryItem
       Selectable      =   False
       TabIndex        =   39
       TabPanelIndex   =   0
-      TabStop         =   True
       Text            =   "Depth"
       TextAlign       =   2
       TextColor       =   &c00000000
@@ -1350,7 +1334,6 @@ Begin ContainerControl contInventoryItem
       Selectable      =   False
       TabIndex        =   45
       TabPanelIndex   =   0
-      TabStop         =   True
       Text            =   "Serial #"
       TextAlign       =   2
       TextColor       =   &c00000000
@@ -1511,7 +1494,6 @@ Begin ContainerControl contInventoryItem
       Selectable      =   False
       TabIndex        =   46
       TabPanelIndex   =   0
-      TabStop         =   True
       Text            =   "Barcode"
       TextAlign       =   2
       TextColor       =   &c00000000
@@ -1546,7 +1528,6 @@ Begin ContainerControl contInventoryItem
       Selectable      =   False
       TabIndex        =   44
       TabPanelIndex   =   0
-      TabStop         =   True
       Text            =   "RFID Code"
       TextAlign       =   2
       TextColor       =   &c00000000
@@ -1571,7 +1552,6 @@ Begin ContainerControl contInventoryItem
       Height          =   52
       HelpTag         =   ""
       ifkInventory    =   ""
-      Index           =   -2147483648
       InitialParent   =   ""
       Left            =   389
       LockBottom      =   False
@@ -1611,7 +1591,6 @@ Begin ContainerControl contInventoryItem
       Selectable      =   False
       TabIndex        =   51
       TabPanelIndex   =   0
-      TabStop         =   True
       Text            =   "Firmware"
       TextAlign       =   2
       TextColor       =   &c00000000
@@ -1646,7 +1625,6 @@ Begin ContainerControl contInventoryItem
       Selectable      =   False
       TabIndex        =   52
       TabPanelIndex   =   0
-      TabStop         =   True
       Text            =   "New Item Postfix"
       TextAlign       =   0
       TextColor       =   &c00000000
@@ -1723,7 +1701,6 @@ Begin ContainerControl contInventoryItem
       Selectable      =   False
       TabIndex        =   54
       TabPanelIndex   =   0
-      TabStop         =   True
       Text            =   "by: 0"
       TextAlign       =   0
       TextColor       =   &c00000000
@@ -2321,7 +2298,6 @@ Begin ContainerControl contInventoryItem
       Selectable      =   False
       TabIndex        =   75
       TabPanelIndex   =   0
-      TabStop         =   True
       Text            =   "Sale Price"
       TextAlign       =   2
       TextColor       =   &c00000000
@@ -2430,7 +2406,6 @@ Begin ContainerControl contInventoryItem
       Selectable      =   False
       TabIndex        =   72
       TabPanelIndex   =   0
-      TabStop         =   True
       Text            =   "Purchase Price"
       TextAlign       =   2
       TextColor       =   &c00000000
@@ -2465,7 +2440,6 @@ Begin ContainerControl contInventoryItem
       Selectable      =   False
       TabIndex        =   16
       TabPanelIndex   =   0
-      TabStop         =   True
       Text            =   "Owner"
       TextAlign       =   2
       TextColor       =   &c00000000
@@ -2532,7 +2506,6 @@ Begin ContainerControl contInventoryItem
       Selectable      =   False
       TabIndex        =   79
       TabPanelIndex   =   0
-      TabStop         =   True
       Text            =   "Status"
       TextAlign       =   2
       TextColor       =   &c00000000
@@ -3410,7 +3383,7 @@ End
 #tag Events pbIncreaseQuantity
 	#tag Event
 		Sub Action()
-		  Break
+		  
 		  
 		  dim s1 as string
 		  dim n1 as integer

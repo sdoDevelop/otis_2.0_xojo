@@ -25,7 +25,7 @@ Begin ContainerControl contContactableList
    UseFocusRing    =   False
    Visible         =   True
    Width           =   536
-   Begin PushButton bAddItem
+   Begin PushButton pbAddItem
       AutoDeactivate  =   True
       Bold            =   False
       ButtonStyle     =   "0"
@@ -197,6 +197,12 @@ End
 		  methListboxSettings
 		  
 		  evdefOpen
+		  
+		  If PickerMode Then
+		    pbAddItem.Enabled = False
+		    pbAddItem.Visible = False
+		  End If
+		  
 		End Sub
 	#tag EndEvent
 
@@ -948,10 +954,14 @@ End
 		oParentRecord As DataFile.tbl_contactables
 	#tag EndProperty
 
+	#tag Property, Flags = &h0
+		PickerMode As Boolean
+	#tag EndProperty
+
 
 #tag EndWindowCode
 
-#tag Events bAddItem
+#tag Events pbAddItem
 	#tag Event
 		Sub Action()
 		  '!@! Table Dependent !@!
@@ -1198,7 +1208,7 @@ End
 		      
 		      If oRowTag.vLinkTable <> Nil Then
 		        dim mi1 as New MenuItem("Break Link")
-		        mi1.Enabled = False
+		        mi1.Enabled = True
 		        base.Append( mi1 )
 		      End If
 		      
@@ -1565,6 +1575,11 @@ End
 		Group="ID"
 		Type="String"
 		EditorType="String"
+	#tag EndViewProperty
+	#tag ViewProperty
+		Name="PickerMode"
+		Group="Behavior"
+		Type="Boolean"
 	#tag EndViewProperty
 	#tag ViewProperty
 		Name="Super"

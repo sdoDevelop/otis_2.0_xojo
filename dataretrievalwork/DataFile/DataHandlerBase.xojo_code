@@ -2,12 +2,30 @@
 Protected Class DataHandlerBase
 	#tag Method, Flags = &h0
 		Sub BeginTransaction()
+		  dim db1 as SQLiteDatabase
+		  
+		  db1 = GetDatabase
+		  
+		  If db1 <> Nil Then
+		    db1.SQLExecute("Begin Transaction")
+		  Else
+		    
+		  End If
 		  
 		End Sub
 	#tag EndMethod
 
 	#tag Method, Flags = &h0
 		Sub CommitTransaction()
+		  dim db1 as SQLiteDatabase
+		  
+		  db1 = GetDatabase
+		  
+		  If db1 <> Nil Then
+		    db1.SQLExecute("Commit Transaction")
+		  Else
+		    
+		  End If
 		  
 		End Sub
 	#tag EndMethod
@@ -31,7 +49,7 @@ Protected Class DataHandlerBase
 		  If App.db <> Nil Then
 		    Return App.db
 		  Else
-		    ErrManage(0, "Could not get database")
+		    ErrManage(0, "Could not get database from app variable")
 		    Return Nil
 		  End If
 		End Function
@@ -39,6 +57,15 @@ Protected Class DataHandlerBase
 
 	#tag Method, Flags = &h0
 		Sub RollbackTransaction()
+		  dim db1 as SQLiteDatabase
+		  
+		  db1 = GetDatabase
+		  
+		  If db1 <> Nil Then
+		    db1.SQLExecute("Rollback Transaction")
+		  Else
+		    
+		  End If
 		  
 		End Sub
 	#tag EndMethod

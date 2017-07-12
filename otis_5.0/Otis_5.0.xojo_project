@@ -134,6 +134,7 @@ Window=contContactMethod;UI/Containers/contContactMethod.xojo_window;&h375EFFFF;
 Class=entLbAttributes;Logic/Custom Classes/entLbAttributes.xojo_code;&h4253F7FF;&h1C2447FF;false
 Class=tbl_internal_linking;Third Party Addons/ActiveRecord/DataFile/tbl_internal_linking.xojo_code;&h781CAFFF;&hB28FFF;false
 Window=winModalDialog;UI/Windows/winModalDialog.xojo_window;&h19613FFF;&h65BDA7FF;false
+Window=winContactablePicker;UI/Windows/winContactablePicker.xojo_window;&h192137FF;&h65BDA7FF;false
 AppMenuBar=MainMenuBar
 MajorVersion=1
 MinorVersion=0

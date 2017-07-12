@@ -799,6 +799,11 @@ End
 		Sub methLoadMe()
 		  dim IsGrouped as Boolean = bDisplayGrouped
 		  
+		  If oParentRecord <> Nil Then
+		    methLoadMe_ExpandSingleRecord(oParentRecord)
+		    Return
+		  End If
+		  
 		  //UnGrouped
 		  If Not IsGrouped Then
 		    
@@ -832,6 +837,11 @@ End
 		  '!@! Table Dependent In Parameters !@!
 		  
 		  If oRecord <> Nil Then
+		    
+		    // Make the add event button invisible
+		    pbAddEvent.Visible = False
+		    
+		    oParentRecord = oRecord
 		    
 		    dim aroRecords() as DataFile.tbl_events     '!@! Table Dependent !@!
 		    aroRecords.Append(oRecord)
@@ -930,6 +940,14 @@ End
 
 	#tag Property, Flags = &h0
 		LastUIState As lbUIState
+	#tag EndProperty
+
+	#tag Property, Flags = &h0
+		oParentRecord As DataFile.tbl_events
+	#tag EndProperty
+
+	#tag Property, Flags = &h0
+		PickerMode As Boolean
 	#tag EndProperty
 
 
@@ -1627,6 +1645,11 @@ End
 		Group="ID"
 		Type="String"
 		EditorType="String"
+	#tag EndViewProperty
+	#tag ViewProperty
+		Name="PickerMode"
+		Group="Behavior"
+		Type="Boolean"
 	#tag EndViewProperty
 	#tag ViewProperty
 		Name="Super"

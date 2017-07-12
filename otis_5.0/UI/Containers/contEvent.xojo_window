@@ -716,6 +716,8 @@ Begin ContainerControl contEvent
       AutoDeactivate  =   True
       BackColor       =   &c40004000
       Backdrop        =   0
+      bDisplayGrouped =   False
+      DoNotLoad       =   False
       Enabled         =   True
       EraseBackground =   True
       HasBackColor    =   False
@@ -1179,9 +1181,9 @@ End
 		  For Each oChild as DataFile.tbl_events In iLinkTheseToParent
 		    
 		    // Create a new link table item
-		    dim oLinkItem as New DataFile.tbl_events_link
-		    oLinkItem.ifkevents_parent = oCurrentEvent.ipkid
-		    oLinkItem.ifkevents_child = oChild.ipkid
+		    dim oLinkItem as New DataFile.tbl_internal_linking
+		    oLinkItem.ifk_parent = oCurrentEvent.ipkid
+		    oLinkItem.ifk_child = oChild.ipkid
 		    oLinkItem.Save
 		    
 		    If CreateNewOrUseExisting = "Create New" Then
@@ -1245,6 +1247,7 @@ End
 		  End If
 		  If oCurrentEvent.sstart_time = "" Then
 		    tcStart.TimeValue = Nil
+		    tcStart.Enabled = False
 		    chbStart.Value = False
 		  Else
 		    timeString = oCurrentEvent.sstart_time
@@ -1267,6 +1270,7 @@ End
 		  End If
 		  If oCurrentEvent.send_time = "" Then
 		    tcEnd.TimeValue = Nil
+		    tcEnd.Enabled = False
 		    chbEnd.Value = False
 		  Else
 		    timeString = oCurrentEvent.send_time
@@ -1289,6 +1293,7 @@ End
 		  End If
 		  If oCurrentEvent.sloadin_time = "" Then
 		    tcLoadin.TimeValue = Nil
+		    chbLoadIn.Enabled = False
 		    chbLoadIn.Value = False
 		  Else
 		    timeString = oCurrentEvent.sloadin_time
@@ -1310,6 +1315,7 @@ End
 		  End If
 		  If oCurrentEvent.sloadout_time = "" Then
 		    tcLoadout.TimeValue = Nil
+		    chbLoadOut.Enabled = False
 		    chbLoadOut.Value = False
 		  Else
 		    timeString = oCurrentEvent.sloadout_time
@@ -1356,8 +1362,80 @@ End
 	#tag EndMethod
 
 	#tag Method, Flags = &h0
+		Sub SaveEndTime()
+		  
+		  dim d1 as Date
+		  dim s1 as string
+		  
+		  If tcEnd.TimeValue = Nil Or chbEnd.Value = False Then
+		    s1 = ""
+		  Else 
+		    d1 = tcEnd.TimeValue
+		    s1 = d1.Hour.ToText + ":" + d1.Minute.ToText + ":" + d1.Second.ToText
+		  End If
+		  
+		  oCurrentEvent.send_time = s1
+		  SaveEvent
+		End Sub
+	#tag EndMethod
+
+	#tag Method, Flags = &h0
 		Sub SaveEvent()
 		  oCurrentEvent.Save
+		End Sub
+	#tag EndMethod
+
+	#tag Method, Flags = &h0
+		Sub SaveLoadinTime()
+		  
+		  dim d1 as Date
+		  dim s1 as string
+		  
+		  If tcLoadin.TimeValue = Nil Or chbLoadIn.Value = False Then
+		    s1 = ""
+		  Else 
+		    d1 = tcLoadin.TimeValue
+		    s1 = d1.Hour.ToText + ":" + d1.Minute.ToText + ":" + d1.Second.ToText
+		  End If
+		  
+		  oCurrentEvent.sloadin_time = s1
+		  SaveEvent
+		End Sub
+	#tag EndMethod
+
+	#tag Method, Flags = &h0
+		Sub SaveLoadoutTime()
+		  
+		  dim d1 as Date
+		  dim s1 as string
+		  
+		  If tcLoadout.TimeValue = Nil Or chbLoadOut.Value = False Then
+		    s1 = ""
+		  Else 
+		    d1 = tcLoadout.TimeValue
+		    s1 = d1.Hour.ToText + ":" + d1.Minute.ToText + ":" + d1.Second.ToText
+		  End If
+		  
+		  oCurrentEvent.sloadout_time = s1
+		  SaveEvent
+		End Sub
+	#tag EndMethod
+
+	#tag Method, Flags = &h0
+		Sub SaveStartTime()
+		  
+		  dim d1 as Date
+		  dim s1 as string
+		  
+		  If tcStart.TimeValue = Nil Or chbStart.Value = False Then
+		    s1 = ""
+		  Else 
+		    d1 = tcStart.TimeValue
+		    s1 = d1.Hour.ToText + ":" + d1.Minute.ToText + ":" + d1.Second.ToText
+		  End If
+		  
+		  oCurrentEvent.sstart_time = s1
+		  SaveEvent
 		End Sub
 	#tag EndMethod
 
@@ -1406,34 +1484,21 @@ End
 #tag Events tcStart
 	#tag Event
 		Sub LostFocus()
-		  
-		  dim d1 as Date
-		  dim s1 as string
-		  
-		  If me.TimeValue = Nil Then
-		    s1 = ""
-		  Else 
-		    d1 = me.TimeValue
-		    s1 = d1.Hour.ToText + ":" + d1.Minute.ToText + ":" + d1.Second.ToText
-		  End If
-		  
-		  oCurrentEvent.sstart_time = s1
-		  SaveEvent
+		  SaveStartTime
 		End Sub
 	#tag EndEvent
 #tag EndEvents
 #tag Events dcStart
 	#tag Event
 		Sub LostFocus()
-		  
 		  dim d1 as Date
 		  dim s1 as string
 		  
-		  If me.DateValue = Nil Then
-		    s1 = ""
-		  Else 
+		  If me.Checked Then
 		    d1 = me.DateValue
 		    s1 = d1.SQLDate
+		  Else 
+		    s1 = ""
 		  End If
 		  
 		  oCurrentEvent.sstart_date = s1
@@ -1444,34 +1509,21 @@ End
 #tag Events tcEnd
 	#tag Event
 		Sub LostFocus()
-		  
-		  dim d1 as Date
-		  dim s1 as string
-		  
-		  If me.TimeValue = Nil Then
-		    s1 = ""
-		  Else 
-		    d1 = me.TimeValue
-		    s1 = d1.Hour.ToText + ":" + d1.Minute.ToText + ":" + d1.Second.ToText
-		  End If
-		  
-		  oCurrentEvent.send_time = s1
-		  SaveEvent
+		  SaveEndTime
 		End Sub
 	#tag EndEvent
 #tag EndEvents
 #tag Events dcEnd
 	#tag Event
 		Sub LostFocus()
-		  
 		  dim d1 as Date
 		  dim s1 as string
 		  
-		  If me.DateValue = Nil Then
-		    s1 = ""
-		  Else 
+		  If me.Checked Then
 		    d1 = me.DateValue
 		    s1 = d1.SQLDate
+		  Else 
+		    s1 = ""
 		  End If
 		  
 		  oCurrentEvent.send_date = s1
@@ -1482,34 +1534,21 @@ End
 #tag Events tcLoadin
 	#tag Event
 		Sub LostFocus()
-		  
-		  dim d1 as Date
-		  dim s1 as string
-		  
-		  If me.TimeValue = Nil Then
-		    s1 = ""
-		  Else 
-		    d1 = me.TimeValue
-		    s1 = d1.Hour.ToText + ":" + d1.Minute.ToText + ":" + d1.Second.ToText
-		  End If
-		  
-		  oCurrentEvent.sloadin_time = s1
-		  SaveEvent
+		  SaveLoadinTime
 		End Sub
 	#tag EndEvent
 #tag EndEvents
 #tag Events dcLoadin
 	#tag Event
 		Sub LostFocus()
-		  
 		  dim d1 as Date
 		  dim s1 as string
 		  
-		  If me.DateValue = Nil Then
-		    s1 = ""
-		  Else 
+		  If me.Checked Then
 		    d1 = me.DateValue
 		    s1 = d1.SQLDate
+		  Else 
+		    s1 = ""
 		  End If
 		  
 		  oCurrentEvent.sloadin_date = s1
@@ -1520,34 +1559,21 @@ End
 #tag Events tcLoadout
 	#tag Event
 		Sub LostFocus()
-		  
-		  dim d1 as Date
-		  dim s1 as string
-		  
-		  If me.TimeValue = Nil Then
-		    s1 = ""
-		  Else 
-		    d1 = me.TimeValue
-		    s1 = d1.Hour.ToText + ":" + d1.Minute.ToText + ":" + d1.Second.ToText
-		  End If
-		  
-		  oCurrentEvent.sloadout_time = s1
-		  SaveEvent
+		  SaveLoadoutTime
 		End Sub
 	#tag EndEvent
 #tag EndEvents
 #tag Events dcLoadout
 	#tag Event
 		Sub LostFocus()
-		  
 		  dim d1 as Date
 		  dim s1 as string
 		  
-		  If me.DateValue = Nil Then
-		    s1 = ""
-		  Else 
+		  If me.Checked Then
 		    d1 = me.DateValue
 		    s1 = d1.SQLDate
+		  Else 
+		    s1 = ""
 		  End If
 		  
 		  oCurrentEvent.sloadout_date = s1
@@ -1606,12 +1632,16 @@ End
 		  dim hitItem as MenuItem
 		  hitItem = base.PopUp
 		  
-		  Select Case hitItem.Text
-		  Case "Create New"
-		    sNewOrExisting = "Create New"
-		  Case "Use Existing"
-		    sNewOrExisting = "Use Existing"
-		  End Select
+		  If hitItem <> Nil Then
+		    Select Case hitItem.Text
+		    Case "Create New"
+		      sNewOrExisting = "Create New"
+		    Case "Use Existing"
+		      sNewOrExisting = "Use Existing"
+		    End Select
+		  Else
+		    Return
+		  End If
 		  
 		  AddLinkedEvent(sNewOrExisting)
 		  
@@ -1639,6 +1669,8 @@ End
 		  dim theTimeControl as TimeControl = tcStart
 		  
 		  theTimeControl.Enabled = me.Value
+		  
+		  SaveStartTime
 		End Sub
 	#tag EndEvent
 #tag EndEvents
@@ -1648,6 +1680,8 @@ End
 		  dim theTimeControl as TimeControl = tcEnd
 		  
 		  theTimeControl.Enabled = me.Value
+		  
+		  SaveEndTime
 		End Sub
 	#tag EndEvent
 #tag EndEvents
@@ -1657,6 +1691,8 @@ End
 		  dim theTimeControl as TimeControl = tcLoadin
 		  
 		  theTimeControl.Enabled = me.Value
+		  
+		  SaveLoadinTime
 		End Sub
 	#tag EndEvent
 #tag EndEvents
@@ -1666,6 +1702,8 @@ End
 		  dim theTimeControl as TimeControl = tcLoadout
 		  
 		  theTimeControl.Enabled = me.Value
+		  
+		  SaveLoadoutTime
 		End Sub
 	#tag EndEvent
 #tag EndEvents

@@ -959,7 +959,7 @@ Begin ContainerControl contContactable
       Enabled         =   True
       EraseBackground =   True
       HasBackColor    =   False
-      Height          =   161
+      Height          =   144
       HelpTag         =   ""
       InitialParent   =   ""
       LastSearchValue =   ""
@@ -979,10 +979,151 @@ Begin ContainerControl contContactable
       Visible         =   True
       Width           =   569
    End
+   Begin PushButton pbAddChildEvent
+      AutoDeactivate  =   True
+      Bold            =   False
+      ButtonStyle     =   "0"
+      Cancel          =   False
+      Caption         =   "Add Child"
+      Default         =   False
+      Enabled         =   True
+      Height          =   22
+      HelpTag         =   ""
+      Index           =   -2147483648
+      InitialParent   =   ""
+      Italic          =   False
+      Left            =   132
+      LockBottom      =   True
+      LockedInPosition=   False
+      LockLeft        =   True
+      LockRight       =   False
+      LockTop         =   False
+      Scope           =   0
+      TabIndex        =   27
+      TabPanelIndex   =   0
+      TabStop         =   True
+      TextFont        =   "System"
+      TextSize        =   0.0
+      TextUnit        =   0
+      Top             =   492
+      Underline       =   False
+      Visible         =   True
+      Width           =   82
+   End
 End
 #tag EndWindow
 
 #tag WindowCode
+	#tag Method, Flags = &h0
+		Sub AddLinkedContactable(CreateNewOrUseExisting as string = "")
+		  dim sResult as String
+		  
+		  sResult = CreateNewOrUseExisting
+		  If CreateNewOrUseExisting = "" Then
+		    
+		    // Create a prompt asking the user if they want to use an existing inventory item or create a new one
+		    Dim d as New MessageDialog                  //declare the MessageDialog object
+		    Dim b as MessageDialogButton                //for handling the result
+		    d.icon=MessageDialog.GraphicCaution         //display warning icon
+		    d.ActionButton.Caption="Use Existing"
+		    d.CancelButton.Visible=True                 
+		    d.AlternateActionButton.Visible=True        //show the "Don't Save" button
+		    d.AlternateActionButton.Caption="Create New"
+		    d.Message="Do you want to use an existing contactable or create a new one?"
+		    d.Explanation= "Think about it hard, the pancakes may suffer."
+		    
+		    // Show the dialog window
+		    b=d.ShowModal
+		    
+		    
+		    Select Case b
+		    Case d.ActionButton
+		      //user pressed Use Existing
+		      sResult = "Use Existing"
+		    Case d.AlternateActionButton
+		      //user pressed  Create New
+		      sResult = "Create New"
+		    Case d.CancelButton
+		      //user pressed Cancel
+		      sResult = "Cancel"
+		    End Select
+		    
+		  End If
+		  
+		  dim oLinkTheseToParent() as DataFile.tbl_contactables
+		  
+		  // Check which button was clicked
+		  Select Case sResult
+		  Case "Use Existing"
+		    
+		    // Open up the inventory picker so the user can choose which item they want to link
+		    dim winPicker as New winContactablePicker
+		    winPicker.instContactableList.bDisplayGrouped = True
+		    winPicker.instContactableList.methLoadMe
+		    winPicker.ShowModal
+		    
+		    // Loop through each record selected
+		    For Each oRecord as DataFile.tbl_contactables In winPicker.oSelectedRecords()
+		      
+		      // append the item to the array of things to link to parent
+		      oLinkTheseToParent.Append(oRecord)
+		      
+		    Next
+		    
+		  Case "Create New"
+		    
+		    // Create a new record
+		    dim oNewRecord as New DataFile.tbl_contactables
+		    oNewRecord.sname_first = "-"
+		    oNewRecord.Save
+		    
+		    // Add this record to the linking list
+		    oLinkTheseToParent.Append(oNewRecord)
+		    
+		    // Open a new tab with this in it
+		    dim instContactable as New contContactable
+		    app.MainWindow.AddTab("New Contact",True)
+		    
+		    instContactable.EmbedWithinPanel(app.MainWindow.tbMainWindow, app.MainWindow.tbMainWindow.PanelCount - 1)
+		    
+		    instContactable.LoadMe(oNewRecord)
+		    
+		  Case "Cancel"
+		    Return
+		  End select
+		  
+		  
+		  
+		  // Create the linking records
+		  For Each oChild as DataFile.tbl_contactables In oLinkTheseToParent
+		    
+		    // Create a new link table item
+		    dim oLinkItem as New DataFile.tbl_internal_linking
+		    oLinkItem.ifk_parent = oCurrentRecord.ipkid
+		    oLinkItem.ifk_child = oChild.ipkid
+		    oLinkItem.Save
+		    
+		  Next
+		  
+		  
+		  
+		  
+		  
+		  
+		  
+		  
+		  
+		  
+		  
+		  
+		  
+		  
+		  
+		  
+		  
+		End Sub
+	#tag EndMethod
+
 	#tag Method, Flags = &h0
 		Sub LoadFields()
 		  
@@ -1186,6 +1327,52 @@ End
 		  oCurrentRecord.bhide = me.Value
 		  
 		  SaveRecord
+		End Sub
+	#tag EndEvent
+#tag EndEvents
+#tag Events pbAddChildEvent
+	#tag Event
+		Sub Action()
+		  dim sNewOrExisting as string
+		  
+		  // ===============================
+		  // Define menu extries
+		  // ===============================
+		  dim base as new MenuItem
+		  base.Append( new MenuItem( "Create New" ) )  '0
+		  dim MI1 as New MenuItem( "Use Existing" )
+		  MI1.Enabled = True
+		  base.Append( MI1 )  '1
+		  'dim MI2 as New MenuItem( "Package" )
+		  'MI2.Enabled = True
+		  'base.Append( new MenuItem( MI2 ) )  '2
+		  // ===============================
+		  // Set the enabled status
+		  // ===============================
+		  
+		  // ===============================
+		  // Carry out actions
+		  // ===============================
+		  dim hitItem as MenuItem
+		  hitItem = base.PopUp
+		  
+		  If hitItem <> Nil Then
+		    Select Case hitItem.Text
+		    Case "Create New"
+		      sNewOrExisting = "Create New"
+		    Case "Use Existing"
+		      sNewOrExisting = "Use Existing"
+		    End Select
+		  Else
+		    Return
+		  End If
+		  
+		  AddLinkedContactable(sNewOrExisting)
+		  
+		  contLinkedContactables.methRefresh
+		  
+		  
+		  
 		End Sub
 	#tag EndEvent
 #tag EndEvents
