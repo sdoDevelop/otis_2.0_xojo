@@ -136,6 +136,7 @@ Class=entLbAttributes;Logic/Custom Classes/entLbAttributes.xojo_code;&h4253F7FF;
 Class=tbl_internal_linking;Third Party Addons/ActiveRecord/DataFile/tbl_internal_linking.xojo_code;&h781CAFFF;&hB28FFF;false
 Window=winModalDialog;UI/Windows/winModalDialog.xojo_window;&h19613FFF;&h65BDA7FF;false
 Window=winContactablePicker;UI/Windows/winContactablePicker.xojo_window;&h192137FF;&h65BDA7FF;false
+Window=contEI;UI/Containers/contEI.xojo_window;&h36C327FF;&h77254FFF;false
 AppMenuBar=MainMenuBar
 MajorVersion=1
 MinorVersion=0
