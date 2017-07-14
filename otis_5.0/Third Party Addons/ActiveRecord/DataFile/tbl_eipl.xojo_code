@@ -162,6 +162,109 @@ Inherits DataFile.ActiveRecordBase
 		End Function
 	#tag EndMethod
 
+	#tag Method, Flags = &h0
+		Shared Function ListGrouped(sCriteria as string = "", sOrder as string = "", sGroupBy as String = "") As Dictionary
+		  dim jsMaster as New Dictionary
+		  dim oRecordList() as DataFile.tbl_eipl
+		  
+		  If sGroupBy = "" Then
+		    Return Nil
+		  End If
+		  
+		  // Lets get the complete list of records from the database
+		  oRecordList() = DataFile.tbl_eipl.List(sCriteria, sOrder)
+		  
+		  // now we need to loop through each one of the records and startp putting them in there place
+		  dim sGroupByList() as string = sGroupBy.split(", ")
+		  dim jsCurrent() as Dictionary
+		  dim idx_record as integer
+		  For Each oRecord as DataFile.tbl_eipl In oRecordList()
+		    
+		    jsCurrent.append( jsMaster)
+		    
+		    dim jsFieldValues as JSONItem = oRecord.GetMyFieldValues(True)
+		    
+		    
+		    For idx1 as integer = 0 To sGroupByList.Ubound
+		      
+		      dim sGroupField as string = sGroupByList(idx1)
+		      dim n3 as integer = jsCurrent.Ubound
+		      dim sGroupValue as String =  jsFieldValues.Value(sGroupField)
+		      
+		      // Check if this record fits into any existing groups
+		      dim sArray() as string
+		      for Each vKey as Variant In jsCurrent(n3).Keys
+		        sArray.Append( str( vKey ) )
+		      Next
+		      'If jsCurrent(n3).Keys.IndexOf( sGroupValue ) > -1 Then
+		      If sArray.IndexOf( sGroupValue ) > -1 THen
+		        ' there is a place for this record at this level
+		        
+		        ' now we check if the value of the current level group is a jsonitem, array, or s"none"
+		        If jsCurrent(n3).Value( sGroupValue ) IsA Dictionary Then
+		          ' we must dig depper into jsonitems
+		          
+		          jsCurrent.Append( jsCurrent(n3).Value( sGroupValue ) )
+		          Continue
+		          
+		        Elseif jsCurrent(n3).Value( sGroupValue ) IsA DataFile.tbl_eipl Then
+		          ' we can put the record here
+		          
+		        Else
+		          
+		          #Pragma BreakOnExceptions Off
+		          Try
+		            // pull the array of records from the value
+		            dim oRecords() as DataFile.tbl_eipl
+		            oRecords() = jsCurrent(n3).Value(sGroupValue)
+		            oRecords.Append(oRecord)
+		            jsCurrent(n3).Value(sGroupValue) = oRecords
+		            Continue
+		          Exception
+		          End Try
+		          #Pragma BreakOnExceptions Default
+		          
+		          'ElseIf jsCurrent(n3).Value( sGroupValue ) IsA String THen
+		          If jsCurrent(n3).Value( sGroupValue ) = "none" THen
+		            
+		            // We need to check if this is the last group by field
+		            If idx1 = sGroupByList.Ubound Then
+		              // this is the last of the group by fields so we can put an array with this record in the value
+		              dim oRecords() as DataFile.tbl_eipl
+		              oRecords.Append( oRecord )
+		              jsCurrent(n3).Value( sGroupValue ) = oRecords
+		            Else
+		              // We still need to group by deeper
+		              // we will continue on the loop so as to advance the level of deepness by one group creating field
+		              jsCurrent(n3).Value( sGroupValue ) = New Dictionary
+		              jsCurrent.Append( jsCurrent(n3).Value( sGroupValue ) )
+		              Continue
+		            End If
+		          End If
+		          
+		        End If
+		        
+		      Else
+		        ' There is no place created for this record at this level
+		        
+		        // we will create a new key for this unique value and mark it as s"none" 
+		        jsCurrent(n3).Value( sGroupValue ) = "none"
+		        
+		        // Now we will continue on with our looping with the index backtracked so we will try to categorize this record with this new key created
+		        idx1 = idx1 - 1
+		        Continue
+		        
+		      End If
+		    Next
+		    
+		    ReDim jsCurrent(-1)
+		    idx_record = idx_record + 1
+		  Next
+		  
+		  Return jsMaster
+		End Function
+	#tag EndMethod
+
 
 	#tag Property, Flags = &h0
 		idiscount_amount As Integer
@@ -196,6 +299,10 @@ Inherits DataFile.ActiveRecordBase
 	#tag EndProperty
 
 	#tag Property, Flags = &h0
+		ifkevents As Int64
+	#tag EndProperty
+
+	#tag Property, Flags = &h0
 		itax_total As Integer
 	#tag EndProperty
 
@@ -205,10 +312,6 @@ Inherits DataFile.ActiveRecordBase
 
 	#tag Property, Flags = &h0
 		seipl_type As String
-	#tag EndProperty
-
-	#tag Property, Flags = &h0
-		sfkevents As String
 	#tag EndProperty
 
 	#tag Property, Flags = &h0
@@ -258,6 +361,12 @@ Inherits DataFile.ActiveRecordBase
 			Type="Integer"
 		#tag EndViewProperty
 		#tag ViewProperty
+			Name="ifkevents"
+			Group="Behavior"
+			Type="String"
+			EditorType="MultiLineEditor"
+		#tag EndViewProperty
+		#tag ViewProperty
 			Name="Index"
 			Visible=true
 			Group="ID"
@@ -300,12 +409,6 @@ Inherits DataFile.ActiveRecordBase
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="seipl_type"
-			Group="Behavior"
-			Type="String"
-			EditorType="MultiLineEditor"
-		#tag EndViewProperty
-		#tag ViewProperty
-			Name="sfkevents"
 			Group="Behavior"
 			Type="String"
 			EditorType="MultiLineEditor"

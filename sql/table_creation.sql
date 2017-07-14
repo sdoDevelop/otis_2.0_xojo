@@ -161,7 +161,7 @@ Create Table tbl_events_link
         row_created                 text,
         row_modified                text,
         row_username                text,
-        fkevents                    text,
+        fkevents                    integer,
         eipl_number                 integer,
         due_date                    text,
         eipl_type                   text,

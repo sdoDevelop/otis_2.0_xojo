@@ -24,11 +24,109 @@ Begin ContainerControl contEI
    Transparent     =   True
    UseFocusRing    =   False
    Visible         =   True
-   Width           =   721
+   Width           =   901
+   Begin contInventory instInventoryList
+      AcceptFocus     =   True
+      AcceptTabs      =   True
+      AutoDeactivate  =   True
+      BackColor       =   &cFFFFFF00
+      Backdrop        =   0
+      Enabled         =   True
+      EraseBackground =   True
+      HasBackColor    =   False
+      Height          =   518
+      HelpTag         =   ""
+      InitialParent   =   ""
+      iStartingTop    =   0
+      Left            =   1
+      LockBottom      =   False
+      LockedInPosition=   False
+      LockLeft        =   True
+      LockRight       =   False
+      LockTop         =   True
+      Scope           =   0
+      TabIndex        =   0
+      TabPanelIndex   =   0
+      TabStop         =   True
+      Top             =   0
+      Transparent     =   True
+      UseFocusRing    =   False
+      Visible         =   True
+      Width           =   265
+   End
+   Begin contLineItems instLineItemList
+      AcceptFocus     =   True
+      AcceptTabs      =   True
+      AutoDeactivate  =   True
+      BackColor       =   &cFFFFFF00
+      Backdrop        =   0
+      Enabled         =   True
+      EraseBackground =   True
+      HasBackColor    =   False
+      Height          =   518
+      HelpTag         =   ""
+      InitialParent   =   ""
+      iStartingTop    =   0
+      Left            =   266
+      LockBottom      =   False
+      LockedInPosition=   False
+      LockLeft        =   True
+      LockRight       =   False
+      LockTop         =   True
+      Scope           =   0
+      TabIndex        =   1
+      TabPanelIndex   =   0
+      TabStop         =   True
+      Top             =   0
+      Transparent     =   True
+      UseFocusRing    =   False
+      Visible         =   True
+      Width           =   635
+   End
 End
 #tag EndWindow
 
 #tag WindowCode
+	#tag Method, Flags = &h0
+		Sub methLoadControls()
+		  
+		  
+		  instInventoryList.methLoadMe
+		  
+		  instLineItemList.oEIPLRecord = oCurrentRecord
+		  instLineItemList.methLoadMe
+		End Sub
+	#tag EndMethod
+
+	#tag Method, Flags = &h0
+		Sub methLoadMe(oRecord as DataFile.tbl_eipl)
+		  
+		  
+		  oCurrentRecord = oRecord
+		  
+		  methLoadControls
+		End Sub
+	#tag EndMethod
+
+	#tag Method, Flags = &h0
+		Sub methLoadMe(iPKID as Int64)
+		  
+		  
+		  If iPKID <> 0 Then
+		    oCurrentRecord = DataFile.tbl_eipl.FindByID(iPKID)
+		    
+		    methLoadMe(oCurrentRecord)
+		    
+		  End If
+		End Sub
+	#tag EndMethod
+
+
+	#tag Property, Flags = &h0
+		oCurrentRecord As DataFile.tbl_eipl
+	#tag EndProperty
+
+
 #tag EndWindowCode
 
 #tag ViewBehavior

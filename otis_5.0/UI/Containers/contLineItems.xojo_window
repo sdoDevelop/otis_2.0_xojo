@@ -1,5 +1,5 @@
 #tag Window
-Begin ContainerControl contInventory
+Begin ContainerControl contLineItems
    AcceptFocus     =   True
    AcceptTabs      =   True
    AutoDeactivate  =   True
@@ -37,7 +37,7 @@ Begin ContainerControl contInventory
       GridLinesColor  =   &c00000000
       HasBackColor    =   False
       HasHeading      =   True
-      Height          =   377
+      Height          =   412
       HelpTag         =   ""
       InitialParent   =   ""
       Left            =   0
@@ -50,42 +50,11 @@ Begin ContainerControl contInventory
       TabIndex        =   0
       TabPanelIndex   =   0
       TabStop         =   True
-      Top             =   62
+      Top             =   27
       Transparent     =   True
       UseFocusRing    =   False
       Visible         =   True
       Width           =   700
-   End
-   Begin PushButton bAddItem
-      AutoDeactivate  =   True
-      Bold            =   False
-      ButtonStyle     =   "0"
-      Cancel          =   False
-      Caption         =   "Add Item"
-      Default         =   False
-      Enabled         =   True
-      Height          =   24
-      HelpTag         =   ""
-      Index           =   -2147483648
-      InitialParent   =   ""
-      Italic          =   False
-      Left            =   80
-      LockBottom      =   False
-      LockedInPosition=   False
-      LockLeft        =   True
-      LockRight       =   False
-      LockTop         =   True
-      Scope           =   0
-      TabIndex        =   1
-      TabPanelIndex   =   0
-      TabStop         =   True
-      TextFont        =   "System"
-      TextSize        =   0.0
-      TextUnit        =   0
-      Top             =   0
-      Underline       =   False
-      Visible         =   True
-      Width           =   81
    End
    Begin PushButton bRefresh
       AutoDeactivate  =   True
@@ -146,38 +115,6 @@ Begin ContainerControl contInventory
       Visible         =   True
       Width           =   160
    End
-   Begin CheckBox chbShowHidden
-      AutoDeactivate  =   True
-      Bold            =   False
-      Caption         =   "Show Hidden"
-      DataField       =   ""
-      DataSource      =   ""
-      Enabled         =   True
-      Height          =   20
-      HelpTag         =   ""
-      Index           =   -2147483648
-      InitialParent   =   ""
-      Italic          =   False
-      Left            =   0
-      LockBottom      =   False
-      LockedInPosition=   False
-      LockLeft        =   False
-      LockRight       =   True
-      LockTop         =   True
-      Scope           =   0
-      State           =   0
-      TabIndex        =   9
-      TabPanelIndex   =   0
-      TabStop         =   True
-      TextFont        =   "System"
-      TextSize        =   0.0
-      TextUnit        =   0
-      Top             =   41
-      Underline       =   False
-      Value           =   False
-      Visible         =   True
-      Width           =   100
-   End
    Begin CheckBox chbShowItems
       AutoDeactivate  =   True
       Bold            =   False
@@ -190,7 +127,7 @@ Begin ContainerControl contInventory
       Index           =   -2147483648
       InitialParent   =   ""
       Italic          =   False
-      Left            =   0
+      Left            =   93
       LockBottom      =   False
       LockedInPosition=   False
       LockLeft        =   True
@@ -204,7 +141,7 @@ Begin ContainerControl contInventory
       TextFont        =   "System"
       TextSize        =   0.0
       TextUnit        =   0
-      Top             =   23
+      Top             =   2
       Underline       =   False
       Value           =   True
       Visible         =   True
@@ -222,7 +159,7 @@ Begin ContainerControl contInventory
       Index           =   -2147483648
       InitialParent   =   ""
       Italic          =   False
-      Left            =   81
+      Left            =   174
       LockBottom      =   False
       LockedInPosition=   False
       LockLeft        =   True
@@ -236,7 +173,7 @@ Begin ContainerControl contInventory
       TextFont        =   "System"
       TextSize        =   0.0
       TextUnit        =   0
-      Top             =   23
+      Top             =   2
       Underline       =   False
       Value           =   True
       Visible         =   True
@@ -254,7 +191,7 @@ Begin ContainerControl contInventory
       Index           =   -2147483648
       InitialParent   =   ""
       Italic          =   False
-      Left            =   163
+      Left            =   256
       LockBottom      =   False
       LockedInPosition=   False
       LockLeft        =   True
@@ -268,7 +205,7 @@ Begin ContainerControl contInventory
       TextFont        =   "System"
       TextSize        =   0.0
       TextUnit        =   0
-      Top             =   23
+      Top             =   2
       Underline       =   False
       Value           =   True
       Visible         =   True
@@ -285,33 +222,14 @@ End
 		End Function
 	#tag EndEvent
 
-	#tag Event
-		Sub Open()
-		  
-		  // Set the Starting Top variable so we know where the top is later for scrolling
-		  iStartingTop = me.Top
-		  
-		  // Set all the settings up for our listbox
-		  methListboxSettings
-		  
-		  evdefOpen
-		  
-		  
-		  If bPickerMode Then
-		    me.bAddItem.Enabled = False
-		    me.bAddItem.Visible = False
-		  End If
-		End Sub
-	#tag EndEvent
-
 
 	#tag Method, Flags = &h0
 		Sub methBuildRowTag(ByRef oRowTag as lbRowTag)
-		  dim otblRecord as DataFile.tbl_inventory  '!@! Table Dependent !@!
+		  dim otblRecord as DataFile.tbl_lineitems  '!@! Table Dependent !@!
 		  dim iPKID as Int64
 		  
 		  // Check  to see what kind of row this will be based on varying conditions
-		  If oRowTag.vtblRecord IsA DataFile.tbl_inventory Then  '!@! Table Dependent !@!
+		  If oRowTag.vtblRecord IsA DataFile.tbl_lineitems Then  '!@! Table Dependent !@!
 		    'there is a table record and it is our primary table
 		    
 		    // Put the table record into a variable
@@ -374,7 +292,7 @@ End
 		      For Each oLinkRecord as DataFile.tbl_internal_linking In arLinkArray
 		        
 		        // Get the child record
-		        dim oChild as DataFile.tbl_inventory = DataFile.tbl_inventory.FindByID( oLinkRecord.ifk_child )  '!@! Table Dependent !@!
+		        dim oChild as DataFile.tbl_lineitems = DataFile.tbl_lineitems.FindByID( oLinkRecord.ifk_child )  '!@! Table Dependent !@!
 		        If oChild <> Nil Then
 		          
 		          dim dictvKeys() as Variant
@@ -473,7 +391,7 @@ End
 	#tag EndMethod
 
 	#tag Method, Flags = &h0
-		Function methCreateRowTags(vRecords() as DataFile.tbl_inventory) As lbRowTag()
+		Function methCreateRowTags(vRecords() as DataFile.tbl_lineitems) As lbRowTag()
 		  '!@! Table Dependent In Parameters !@!
 		  
 		  // vRecords will either be 
@@ -492,7 +410,7 @@ End
 		  Case IsA DataFile.ActiveRecordBase
 		    
 		    // Loop through each record
-		    For Each oRecord as DataFile.tbl_inventory In vRecords  '!@! Table Dependent !@!
+		    For Each oRecord as DataFile.tbl_lineitems In vRecords  '!@! Table Dependent !@!
 		      
 		      // Set up some basic things for the rowtag that we know already
 		      dim oCurrentRowtag as New lbRowTag
@@ -649,7 +567,9 @@ End
 		  
 		  dim arsConditions() as String
 		  
-		  If sSearchValue <> "" Then arsConditions.Append( "item_name Like '%" + sSearchValue + "%'" )
+		  If oEIPLRecord <> Nil Then arsConditions.Append( "fkeipl = " + oEIPLRecord.ipkid.ToText )
+		  
+		  If sSearchValue <> "" Then arsConditions.Append( "li_name Like '%" + sSearchValue + "%'" )
 		  If sConditionpar <> "" Then arsConditions.Append( sConditionpar )
 		  
 		  // Add in filters for item type
@@ -664,7 +584,7 @@ End
 		    arsShowConditions.Append( "''" )
 		    sShowConditions = Join(arsShowConditions, ", ")
 		  End If
-		  If sShowConditions <> ""  Then sShowConditions = "( item_type In ( " + sShowConditions + " ) Or item_type Is Null ) "
+		  If sShowConditions <> ""  Then sShowConditions = "( li_type In ( " + sShowConditions + " ) Or li_type Is Null ) "
 		  If sShowConditions <> "" Then arsConditions.Append( sShowConditions )
 		  
 		  // Combine everthing together
@@ -672,15 +592,17 @@ End
 		  
 		  
 		  sOrder = sGroupByField
-		  dictGroupedItems = DataFile.tbl_inventory.ListGrouped(sCondition,sOrder,sGroupByField)  '!@! Table Dependent !@!
+		  dictGroupedItems = DataFile.tbl_lineitems.ListGrouped(sCondition,sOrder,sGroupByField)  '!@! Table Dependent !@!
 		  
 		  Return dictGroupedItems
 		End Function
 	#tag EndMethod
 
 	#tag Method, Flags = &h0
-		Function methGetRecordList_Groupedold(sGroupByField as string, sConditionpar as string) As Dictionary
-		  dim dictGroupedItems as Dictionary
+		Function methGetRecordList_UnGrouped(sOrderByFields as string, sConditionpar as string) As DataFile.tbl_lineitems()
+		  '!@! Table Dependent In Return Type !@!
+		  
+		  dim aroRecords() as DataFile.tbl_lineitems  '!@! Table Dependent !@!
 		  
 		  // Grab the search value
 		  dim sSearchValue as String
@@ -690,43 +612,15 @@ End
 		  dim sSearchCondition,sExcludeHiddenItemsCondition as String
 		  dim sCondition,sOrder as String
 		  
-		  // Set up the search condition
-		  If sSearchValue = "" Then
-		    sSearchCondition = ""
-		  Else
-		    sSearchCondition = "item_name Like '%" + sSearchValue + "%'"
-		  End If
+		  dim arsConditions() as String
 		  
-		  // Set up Hidden Condition
-		  dim HiddenValue as Boolean
-		  HiddenValue = chbShowHidden.Value
-		  If HiddenValue Then
-		    sExcludeHiddenItemsCondition = ""
-		  Else
-		    sExcludeHiddenItemsCondition = "(hide <> 1 Or hide Is Null)"
-		  End If
+		  If sSearchValue <> "" Then arsConditions.Append( "li_name Like '%" + sSearchValue + "%'" )
+		  If sConditionpar <> "" Then arsConditions.Append( sConditionpar )
 		  
-		  // Set up the condition
-		  If sSearchCondition <> "" Then
-		    sCondition = sSearchCondition
-		    If sExcludeHiddenItemsCondition <> "" Then
-		      sCondition = sCondition + " And "
-		    End If
-		  End If
-		  If  sExcludeHiddenItemsCondition <> "" Then
-		    sCondition = sCondition + sExcludeHiddenItemsCondition
-		    If sConditionpar <> "" Then
-		      sCondition = sCondition + " And " 
-		    End If
-		  End If 
-		  If sConditionpar <> "" Then
-		    sCondition = sCondition + sConditionpar
-		  End If
-		  
+		  // Add in filters for item type
 		  dim arsShowConditions() as string
 		  dim sShowConditions as string
 		  
-		  // Add in filters for item type
 		  If chbShowItems.Value Then arsShowConditions.Append( "'Item'" )
 		  If chbShowPackages.Value Then arsShowConditions.Append( "'Package'" )
 		  If chbShowLabor.Value Then arsShowConditions.Append( "'Labor'" )
@@ -735,68 +629,13 @@ End
 		    arsShowConditions.Append( "''" )
 		    sShowConditions = Join(arsShowConditions, ", ")
 		  End If
-		  If sShowConditions <> ""  Then sShowConditions = "( " + sShowConditions + " )"
+		  If sShowConditions <> ""  Then sShowConditions = "( li_type In ( " + sShowConditions + " ) Or li_type Is Null ) "
+		  If sShowConditions <> "" Then arsConditions.Append( sShowConditions )
 		  
-		  If sCondition <> "" And sShowConditions <> "" Then
-		    sCondition = sCondition + " And ( item_type In " + sShowConditions + " Or item_type Is Null )"
-		  End If
+		  // Combine everthing together
+		  If arsConditions.Ubound <> -1 Then sCondition = Join( arsConditions, " And " )
 		  
-		  Break
-		  sOrder = sGroupByField
-		  dictGroupedItems = DataFile.tbl_inventory.ListGrouped(sCondition,sOrder,sGroupByField)  '!@! Table Dependent !@!
-		  
-		  Return dictGroupedItems
-		End Function
-	#tag EndMethod
-
-	#tag Method, Flags = &h0
-		Function methGetRecordList_UnGrouped(sOrderByFields as string, sConditionpar as string) As DataFile.tbl_inventory()
-		  '!@! Table Dependent In Return Type !@!
-		  
-		  dim aroRecords() as DataFile.tbl_inventory  '!@! Table Dependent !@!
-		  
-		  // Grab the search value
-		  dim sSearchValue as String
-		  sSearchValue = scSearchField.Text
-		  
-		  // Get the inventory items from the database grouped by sGroupByField
-		  dim sSearchCondition,sExcludeHiddenItemsCondition as String
-		  dim sCondition,sOrder as String
-		  
-		  // Set up the search condition
-		  If sSearchValue = "" Then
-		    sSearchCondition = ""
-		  Else
-		    sSearchCondition = "item_name Like '%" + sSearchValue + "%'"
-		  End If
-		  
-		  // Set up Hidden Condition
-		  dim HiddenValue as Boolean
-		  HiddenValue = chbShowHidden.Value
-		  If HiddenValue Then
-		    sExcludeHiddenItemsCondition = ""
-		  Else
-		    sExcludeHiddenItemsCondition = "(hide <> 1 Or hide Is Null)"
-		  End If
-		  
-		  // Set up the condition
-		  If sSearchCondition <> "" Then
-		    sCondition = sSearchCondition
-		    If sExcludeHiddenItemsCondition <> "" Then
-		      sCondition = sCondition + " And "
-		    End If
-		  End If
-		  If  sExcludeHiddenItemsCondition <> "" Then
-		    sCondition = sCondition + sExcludeHiddenItemsCondition
-		    If sConditionpar <> "" Then
-		      sCondition = sCondition + " And " 
-		    End If
-		  End If 
-		  If sConditionpar <> "" Then
-		    sCondition = sCondition + sConditionpar
-		  End If
-		  
-		  aroRecords = DataFile.tbl_inventory.List(sCondition,sOrderByFields)  '!@! Table Dependent !@!
+		  aroRecords = DataFile.tbl_lineitems.List(sCondition,sOrderByFields)  '!@! Table Dependent !@!
 		  
 		  Return aroRecords
 		End Function
@@ -864,7 +703,7 @@ End
 		    dictCellTypes = New Dictionary
 		    
 		    // Set header names
-		    s1 = "Name,Manufacturer,Model,Department,Category,SubCat,Description,Qty,Price,Owner"
+		    s1 = "Name,Category,Description,Time,Rate,Qty,Price,Discount,Total,Tax"
 		    s2() = Split(s1,",")
 		    lbItems.Heading = s2()
 		    
@@ -886,7 +725,7 @@ End
 		    // GrandParent
 		    sRowType = "GrandParent"
 		    'field names
-		    s1 = "item_name,item_manufacturer,item_model,item_department,item_category,item_subcategory,item_description,item_quantity,item_rental_price_cost,item_owner"
+		    s1 = "li_name,li_category,li_description,li_time,li_rate,li_quantity,li_price,discount_amount,li_total,li_taxable"
 		    s2() = Split(s1,",")
 		    dictFieldNames.Value(sRowType) = s2
 		    
@@ -910,46 +749,46 @@ End
 		    // LinkedItem - Version
 		    sRowType = "Linked - version"
 		    'field names
-		    s1 = "item_name,item_manufacturer,item_model,item_department,item_category,item_subcategory,item_description,item_quantity,|SKIP|,item_owner"
+		    s1 = "li_name,li_category,li_description,li_time,li_rate,li_quantity,li_price,discount_amount,li_total,li_taxable"
 		    s2() = Split(s1,",")
 		    dictFieldNames.Value(sRowType) = s2
 		    
 		    'cell types
-		    dim iCellTypes4() as integer = Array(0,0,0,0,0,0,0,3,0,0)
+		    dim iCellTypes4() as integer = Array(0,0,0,0,0,0,0,0,0,0)
 		    dictCellTypes.Value(sRowType) = iCellTypes4
 		    
 		    
 		    // LinkedItem - Contained
 		    sRowType = "Linked - contained"
 		    'field names
-		    s1 = "item_name,item_manufacturer,item_model,item_department,item_category,item_subcategory,item_description,tbl_inventory_link.-.quantity,|SKIP|,item_owner"
+		    s1 = "li_name,li_category,li_description,li_time,li_rate,li_quantity,li_price,discount_amount,li_total,li_taxable"
 		    s2() = Split(s1,",")
 		    dictFieldNames.Value(sRowType) = s2
 		    
 		    'cell types
-		    dim iCellTypes5() as integer = Array(0,0,0,0,0,0,0,3,0,0)
+		    dim iCellTypes5() as integer = Array(0,0,0,0,0,0,0,0,0,0)
 		    dictCellTypes.Value(sRowType) = iCellTypes5
 		    
 		    // LinkedItem - Contained
 		    sRowType = "Linked - kit"
 		    'field names
-		    s1 = "item_name,item_manufacturer,item_model,item_department,item_category,item_subcategory,item_description,tbl_inventory_link.-.quantity,|SKIP|,item_owner"
+		    s1 = "li_name,li_category,li_description,li_time,li_rate,li_quantity,li_price,discount_amount,li_total,li_taxable"
 		    s2() = Split(s1,",")
 		    dictFieldNames.Value(sRowType) = s2
 		    
 		    'cell types
-		    dim iCellTypes6() as integer = Array(0,0,0,0,0,0,0,3,0,0)
+		    dim iCellTypes6() as integer = Array(0,0,0,0,0,0,0,0,0,0)
 		    dictCellTypes.Value(sRowType) = iCellTypes6
 		    
 		    // LinkedItem - Contained
 		    sRowType = "Linked - package"
 		    'field names
-		    s1 = "item_name,item_manufacturer,item_model,item_department,item_category,item_subcategory,item_description,tbl_inventory_link.-.quantity,|SKIP|,item_owner"
+		    s1 = "li_name,li_category,li_description,li_time,li_rate,li_quantity,li_price,discount_amount,li_total,li_taxable"
 		    s2() = Split(s1,",")
 		    dictFieldNames.Value(sRowType) = s2
 		    
 		    'cell types
-		    dim iCellTypes7() as integer = Array(0,0,0,0,0,0,0,3,0,0)
+		    dim iCellTypes7() as integer = Array(0,0,0,0,0,0,0,0,0,0)
 		    dictCellTypes.Value(sRowType) = iCellTypes7
 		    
 		  End If
@@ -978,11 +817,11 @@ End
 		  If Not IsGrouped Then
 		    
 		    // Get the records
-		    dim records() as DataFile.tbl_inventory = methGetRecordList_UnGrouped("item_department","")    '!@! Table Dependent !@!
+		    dim records() as DataFile.tbl_lineitems = methGetRecordList_UnGrouped("li_department","")    '!@! Table Dependent !@!
 		    
 		    // Build the rowtags
 		    dim theRowtags() as lbRowTag
-		    theRowtags = methCreateRowTags(records)
+		    'theRowtags = methCreateRowTags(records)
 		    
 		    methCreateTopLevelRows(theRowtags)
 		    
@@ -990,7 +829,7 @@ End
 		  ElseIf IsGrouped Then
 		    
 		    // Get the Records
-		    dim dictRecords as Dictionary = methGetRecordList_Grouped("item_department, item_manufacturer", "")    '!@! Table Dependent !@!
+		    dim dictRecords as Dictionary = methGetRecordList_Grouped("li_department", "")    '!@! Table Dependent !@!
 		    
 		    dim theRowtagsGrouped() as lbRowTag
 		    theRowtagsGrouped = methCreateRowTags_dict(dictRecords)
@@ -1003,19 +842,19 @@ End
 	#tag EndMethod
 
 	#tag Method, Flags = &h0
-		Sub methLoadMe_ExpandSingleRecord(oRecord as DataFile.tbl_inventory)
+		Sub methLoadMe_ExpandSingleRecord(oRecord as DataFile.tbl_lineitems)
 		  '!@! Table Dependent In Parameters !@!
 		  
 		  If oRecord <> Nil Then
 		    
 		    oParentRecord = oRecord
 		    
-		    dim aroRecords() as DataFile.tbl_inventory     '!@! Table Dependent !@!
+		    dim aroRecords() as DataFile.tbl_lineitems     '!@! Table Dependent !@!
 		    aroRecords.Append(oRecord)
 		    
 		    // Create rowtags based of the record we want to expand
 		    dim oRowTags() as lbRowTag
-		    oRowTags = methCreateRowTags(aroRecords)
+		    'oRowTags = methCreateRowTags(aroRecords)
 		    
 		    methCreateTopLevelRows(oRowTags(0).aroChildren)
 		    
@@ -1114,7 +953,11 @@ End
 	#tag EndProperty
 
 	#tag Property, Flags = &h0
-		oParentRecord As DataFile.tbl_inventory
+		oEIPLRecord As DataFile.tbl_eipl
+	#tag EndProperty
+
+	#tag Property, Flags = &h0
+		oParentRecord As DataFile.tbl_lineitems
 	#tag EndProperty
 
 
@@ -1137,51 +980,6 @@ End
 		Sub ExpandRow(Row as integer)
 		  
 		  methHandleExpandRow(row)
-		End Sub
-	#tag EndEvent
-	#tag Event
-		Sub DoubleClick()
-		  
-		  If evdefDoubleClick Then
-		    
-		    // the event was handled and we do not want to do anything else
-		    
-		  Else
-		    
-		    
-		    dim oRowTag as lbRowTag
-		    
-		    If me.ListIndex <> -1 Then
-		      
-		      oRowTag = me.RowTag(me.ListIndex)
-		      
-		      If oRowTag.vtblRecord <> Nil Then
-		        
-		        // Get the item name
-		        dim oRecord as DataFile.tbl_inventory    '!@! Table Dependent !@!
-		        oRecord = oRowTag.vtblRecord
-		        dim sTabName as string
-		        sTabName = oRecord.sitem_name    '!@! Table Dependent !@!
-		        
-		        If oRowTag.pkid <> 0 Then
-		          
-		          // load up a inventory item container
-		          dim conItem as New contInventoryItem    '!@! Table Dependent !@!
-		          dim oTabPanel as PagePanel = app.MainWindow.tbMainWindow
-		          
-		          app.MainWindow.AddTab(sTabName)
-		          
-		          conItem.EmbedWithinPanel(oTabPanel,oTabPanel.PanelCount - 1 )
-		          
-		          conItem.LoadItem(oRowTag.pkid)    '!@! Table Dependent !@!
-		        End If
-		        
-		      End If
-		      
-		    End If
-		    
-		    
-		  End If
 		End Sub
 	#tag EndEvent
 	#tag Event
@@ -1230,7 +1028,7 @@ End
 		    For Each oRowTag as lbRowTag in oRowTags
 		      
 		      // Get the table record out of the rowtag
-		      dim oRecord as DataFile.tbl_inventory
+		      dim oRecord as DataFile.tbl_lineitems
 		      If oRowTag.vtblRecord <> Nil Then
 		        oRecord = oRowTag.vtblRecord
 		      Else
@@ -1245,7 +1043,7 @@ End
 		      
 		      // Get the name of the item
 		      dim sName as string
-		      sName = oRecord.sitem_name
+		      sName = oRecord.sli_name
 		      
 		      dim bDelete as Boolean
 		      
@@ -1299,7 +1097,7 @@ End
 		    For Each oRowTag as lbRowTag in oRowTags
 		      
 		      // Get the table record out of the rowtag
-		      dim oRecord as DataFile.tbl_inventory
+		      dim oRecord as DataFile.tbl_lineitems
 		      If oRowTag.vtblRecord <> Nil Then
 		        oRecord = oRowTag.vtblRecord
 		      Else
@@ -1308,7 +1106,7 @@ End
 		      
 		      // Get the name of the item
 		      dim sName as string
-		      sName = oRecord.sitem_name
+		      sName = oRecord.sli_name
 		      
 		      dim bDelete as Boolean
 		      
@@ -1384,9 +1182,9 @@ End
 		    
 		    If oRowTag.vtblRecord <> Nil Then
 		      
-		      base.Append( New MenuItem("Open") )
-		      base.Append( New MenuItem("Maintenance Logs") )
-		      base.Append( New MenuItem(MenuItem.TextSeparator) )
+		      'base.Append( New MenuItem("Open") )
+		      'base.Append( New MenuItem("Maintenance Logs") )
+		      'base.Append( New MenuItem(MenuItem.TextSeparator) )
 		      
 		      If oRowTag.vLinkTable <> Nil Then
 		        base.Append( New MenuItem("Break Link") )
@@ -1406,27 +1204,6 @@ End
 		  
 		  Return methHandleMouseWheel(X,Y,DeltaX,DeltaY)
 		End Function
-	#tag EndEvent
-#tag EndEvents
-#tag Events bAddItem
-	#tag Event
-		Sub Action()
-		  '!@! Table Dependent !@!
-		  
-		  
-		  dim oNewItem as New DataFile.tbl_inventory
-		  oNewItem.sitem_name = "-"
-		  oNewItem.iitem_quantity = 0
-		  
-		  
-		  dim NewCont as New contInventoryItem
-		  
-		  app.MainWindow.AddTab("New Item")
-		  
-		  NewCont.EmbedWithinPanel(app.MainWindow.tbMainWindow, app.MainWindow.tbMainWindow.PanelCount - 1)
-		  
-		  NewCont.LoadItem(oNewItem)
-		End Sub
 	#tag EndEvent
 #tag EndEvents
 #tag Events bRefresh
@@ -1503,17 +1280,6 @@ End
 		  
 		  
 		  
-		End Sub
-	#tag EndEvent
-#tag EndEvents
-#tag Events chbShowHidden
-	#tag Event
-		Sub Action()
-		  
-		  dim oUIState as lbUIState
-		  oUIState = lbItems.GetUIState
-		  methLoadMe()
-		  lbItems.ResetUIState(oUIState)
 		End Sub
 	#tag EndEvent
 #tag EndEvents

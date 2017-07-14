@@ -24,7 +24,7 @@ Begin ContainerControl contEvent
    Transparent     =   True
    UseFocusRing    =   False
    Visible         =   True
-   Width           =   721
+   Width           =   901
    Begin Label labEventName
       AutoDeactivate  =   True
       Bold            =   False
@@ -731,6 +731,7 @@ Begin ContainerControl contEvent
       LockLeft        =   True
       LockRight       =   False
       LockTop         =   False
+      PickerMode      =   False
       Scope           =   0
       TabIndex        =   25
       TabPanelIndex   =   0
@@ -739,7 +740,7 @@ Begin ContainerControl contEvent
       Transparent     =   True
       UseFocusRing    =   False
       Visible         =   True
-      Width           =   599
+      Width           =   554
    End
    Begin Label labEventChildren
       AutoDeactivate  =   True
@@ -1084,15 +1085,16 @@ Begin ContainerControl contEvent
       Backdrop        =   0
       Enabled         =   True
       EraseBackground =   True
+      EventID         =   ""
       HasBackColor    =   False
       Height          =   133
       HelpTag         =   ""
       InitialParent   =   ""
       Left            =   412
-      LockBottom      =   True
+      LockBottom      =   False
       LockedInPosition=   False
       LockLeft        =   True
-      LockRight       =   True
+      LockRight       =   False
       LockTop         =   True
       Scope           =   0
       TabIndex        =   36
@@ -1102,7 +1104,7 @@ Begin ContainerControl contEvent
       Transparent     =   True
       UseFocusRing    =   False
       Visible         =   True
-      Width           =   289
+      Width           =   241
    End
    Begin PushButton pbAddRecord
       AutoDeactivate  =   True
@@ -1134,6 +1136,35 @@ Begin ContainerControl contEvent
       Underline       =   False
       Visible         =   True
       Width           =   80
+   End
+   Begin contEIPLs instEIPLs
+      AcceptFocus     =   True
+      AcceptTabs      =   True
+      AutoDeactivate  =   True
+      BackColor       =   &cFFFFFF00
+      Backdrop        =   0
+      Enabled         =   True
+      EraseBackground =   True
+      HasBackColor    =   False
+      Height          =   513
+      HelpTag         =   ""
+      InitialParent   =   ""
+      iStartingTop    =   0
+      Left            =   664
+      LockBottom      =   True
+      LockedInPosition=   False
+      LockLeft        =   False
+      LockRight       =   True
+      LockTop         =   True
+      Scope           =   0
+      TabIndex        =   38
+      TabPanelIndex   =   0
+      TabStop         =   True
+      Top             =   3
+      Transparent     =   True
+      UseFocusRing    =   False
+      Visible         =   True
+      Width           =   236
    End
 End
 #tag EndWindow
@@ -1506,6 +1537,9 @@ End
 		  instEventContactablesList.EventID = oEvent.ipkid
 		  instEventContactablesList.methLoadMe
 		  
+		  // EIPL List
+		  instEIPLs.oEventRecord = oEvent
+		  instEIPLs.methLoadMe
 		  
 		  
 		  
