@@ -2464,7 +2464,7 @@ Begin ContainerControl contInventoryItem
       Index           =   -2147483648
       InitialParent   =   ""
       Italic          =   False
-      Left            =   345
+      Left            =   693
       LockBottom      =   False
       LockedInPosition=   False
       LockLeft        =   True
@@ -2478,11 +2478,11 @@ Begin ContainerControl contInventoryItem
       TextFont        =   "System"
       TextSize        =   0.0
       TextUnit        =   0
-      Top             =   260
+      Top             =   263
       Underline       =   False
       Value           =   False
       Visible         =   False
-      Width           =   36
+      Width           =   25
    End
    Begin Label labItemStatus
       AutoDeactivate  =   True
@@ -2495,7 +2495,7 @@ Begin ContainerControl contInventoryItem
       Index           =   -2147483648
       InitialParent   =   ""
       Italic          =   False
-      Left            =   16
+      Left            =   373
       LockBottom      =   False
       LockedInPosition=   False
       LockLeft        =   True
@@ -2516,7 +2516,7 @@ Begin ContainerControl contInventoryItem
       Transparent     =   True
       Underline       =   False
       Visible         =   True
-      Width           =   100
+      Width           =   56
    End
    Begin PopupMenu pmItemStatus
       AutoDeactivate  =   True
@@ -2530,7 +2530,7 @@ Begin ContainerControl contInventoryItem
       InitialParent   =   ""
       InitialValue    =   ""
       Italic          =   False
-      Left            =   128
+      Left            =   441
       ListIndex       =   0
       LockBottom      =   False
       LockedInPosition=   False
@@ -2547,7 +2547,7 @@ Begin ContainerControl contInventoryItem
       Top             =   260
       Underline       =   False
       Visible         =   True
-      Width           =   213
+      Width           =   246
    End
    Begin PushButton pbCancelPush
       AutoDeactivate  =   True
@@ -2672,6 +2672,103 @@ Begin ContainerControl contInventoryItem
       Underline       =   False
       Visible         =   False
       Width           =   71
+   End
+   Begin Label labItemType
+      AutoDeactivate  =   True
+      Bold            =   False
+      DataField       =   ""
+      DataSource      =   ""
+      Enabled         =   True
+      Height          =   20
+      HelpTag         =   ""
+      Index           =   -2147483648
+      InitialParent   =   ""
+      Italic          =   False
+      Left            =   20
+      LockBottom      =   False
+      LockedInPosition=   False
+      LockLeft        =   True
+      LockRight       =   False
+      LockTop         =   True
+      Multiline       =   False
+      Scope           =   0
+      Selectable      =   False
+      TabIndex        =   86
+      TabPanelIndex   =   0
+      Text            =   "Item Type"
+      TextAlign       =   2
+      TextColor       =   &c00000000
+      TextFont        =   "System"
+      TextSize        =   0.0
+      TextUnit        =   0
+      Top             =   263
+      Transparent     =   True
+      Underline       =   False
+      Visible         =   True
+      Width           =   100
+   End
+   Begin PopupMenu pmItemType
+      AutoDeactivate  =   True
+      Bold            =   False
+      DataField       =   ""
+      DataSource      =   ""
+      Enabled         =   True
+      Height          =   22
+      HelpTag         =   ""
+      Index           =   -2147483648
+      InitialParent   =   ""
+      InitialValue    =   ""
+      Italic          =   False
+      Left            =   128
+      ListIndex       =   0
+      LockBottom      =   False
+      LockedInPosition=   False
+      LockLeft        =   True
+      LockRight       =   False
+      LockTop         =   True
+      Scope           =   0
+      TabIndex        =   87
+      TabPanelIndex   =   0
+      TabStop         =   True
+      TextFont        =   "System"
+      TextSize        =   0.0
+      TextUnit        =   0
+      Top             =   262
+      Underline       =   False
+      Visible         =   True
+      Width           =   213
+   End
+   Begin CheckBox chItemType_Push
+      AutoDeactivate  =   True
+      Bold            =   False
+      Caption         =   ""
+      DataField       =   ""
+      DataSource      =   ""
+      Enabled         =   False
+      Height          =   20
+      HelpTag         =   ""
+      Index           =   -2147483648
+      InitialParent   =   ""
+      Italic          =   False
+      Left            =   345
+      LockBottom      =   False
+      LockedInPosition=   False
+      LockLeft        =   True
+      LockRight       =   False
+      LockTop         =   True
+      Scope           =   0
+      State           =   0
+      TabIndex        =   88
+      TabPanelIndex   =   0
+      TabStop         =   True
+      TextFont        =   "System"
+      TextSize        =   0.0
+      TextUnit        =   0
+      Top             =   263
+      Underline       =   False
+      Value           =   False
+      Visible         =   False
+      Width           =   25
    End
 End
 #tag EndWindow
@@ -2873,6 +2970,7 @@ End
 		  chItemWeight_Push.Enabled = EnableOrDisable
 		  chItemWidth_Push.Enabled = EnableOrDisable
 		  chItemStatus_Push.Enabled = EnableOrDisable
+		  chItemType_Push.Enabled = EnableOrDisable
 		  
 		  pbResumePush.Enabled = EnableOrDisable
 		  pbCancelPush.Enabled = EnableOrDisable
@@ -2898,6 +2996,7 @@ End
 		  chItemWeight_Push.Visible = EnableOrDisable
 		  chItemWidth_Push.Visible = EnableOrDisable
 		  chItemStatus_Push.Visible = EnableOrDisable
+		  chItemType_Push.Visible = EnableOrDisable
 		  
 		  pbResumePush.Visible = EnableOrDisable
 		  pbCancelPush.Visible = EnableOrDisable
@@ -2932,6 +3031,7 @@ End
 		    chItemWeight_Push.Value = True
 		    chItemWidth_Push.Value = True
 		    chItemStatus_Push.Value = False
+		    chItemType_Push.Value = True
 		    Return
 		  Case "Select All"
 		    bValue = True
@@ -2955,6 +3055,7 @@ End
 		  chItemWeight_Push.Value = bValue
 		  chItemWidth_Push.Value = bValue
 		  chItemStatus_Push.Value = bValue
+		  chItemType_Push.Value = bValue
 		End Sub
 	#tag EndMethod
 
@@ -3002,6 +3103,14 @@ End
 		  For i1 as integer = 0 To pmItemStatus.ListCount - 1
 		    If pmItemStatus.List(i1) = sItemStatus Then
 		      pmItemStatus.ListIndex = i1
+		      exit
+		    End If
+		  Next
+		  // Item Type popup
+		  dim sItemType as string = oCurrentInventoryItem.sitem_type
+		  For i1 as integer = 0 To pmItemType.ListCount - 1
+		    If pmItemType.List(i1) = sItemType Then
+		      pmItemType.ListIndex = i1
 		      exit
 		    End If
 		  Next
@@ -3083,6 +3192,7 @@ End
 		    If chItemRentalPrice_Push.Value Then oItem.iitem_rental_price_cost = oParentItem.iitem_rental_price_cost
 		    If chItemSalePrice_Push.Value Then oItem.iitem_sale_price_cost = oParentItem.iitem_sale_price_cost
 		    If chItemStatus_Push.Value Then oItem.sitem_status = oParentItem.sitem_status
+		    If chItemType_Push.Value Then oItem.sitem_type = oParentItem.sitem_type
 		    oItem.Save
 		    
 		  Next
@@ -3717,6 +3827,33 @@ End
 		  
 		  
 		  InitCheckboxes
+		End Sub
+	#tag EndEvent
+#tag EndEvents
+#tag Events pmItemType
+	#tag Event
+		Sub Open()
+		  
+		  // Set up options allowed
+		  dim s1() as string
+		  
+		  s1() = ValueRef.ItemTypes.Split(",")
+		  
+		  For Each s2 as string In s1()
+		    me.AddRow(s2)
+		  Next
+		End Sub
+	#tag EndEvent
+	#tag Event
+		Sub Change()
+		  
+		  
+		  dim s1 as string
+		  
+		  s1 = me.Text
+		  
+		  oCurrentInventoryItem.sitem_type = s1
+		  SaveItem
 		End Sub
 	#tag EndEvent
 #tag EndEvents

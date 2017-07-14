@@ -484,6 +484,10 @@ Inherits DataFile.ActiveRecordBase
 	#tag EndProperty
 
 	#tag Property, Flags = &h0
+		sitem_type As String
+	#tag EndProperty
+
+	#tag Property, Flags = &h0
 		sitem_weight As String
 	#tag EndProperty
 

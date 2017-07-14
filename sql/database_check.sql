@@ -101,6 +101,7 @@ Select
     item_barcode                ,    
     item_rfid_code              ,
     item_serial_code            ,
+    item_type                   ,
     physical_item               ,
     hide                             
     From tbl_inventory

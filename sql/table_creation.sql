@@ -103,6 +103,7 @@ Create Table tbl_events_link
         item_barcode                text,
         item_rfid_code              text,
         item_serial_code            text,
+        item_type                   text,
         physical_item               boolean,
         hide                        boolean
         );

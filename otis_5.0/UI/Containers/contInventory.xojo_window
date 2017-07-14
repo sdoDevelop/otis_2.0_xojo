@@ -37,7 +37,7 @@ Begin ContainerControl contInventory
       GridLinesColor  =   &c00000000
       HasBackColor    =   False
       HasHeading      =   True
-      Height          =   415
+      Height          =   394
       HelpTag         =   ""
       InitialParent   =   ""
       Left            =   0
@@ -50,7 +50,7 @@ Begin ContainerControl contInventory
       TabIndex        =   0
       TabPanelIndex   =   0
       TabStop         =   True
-      Top             =   24
+      Top             =   45
       Transparent     =   True
       UseFocusRing    =   False
       Visible         =   True
@@ -177,6 +177,102 @@ Begin ContainerControl contInventory
       Value           =   False
       Visible         =   True
       Width           =   100
+   End
+   Begin CheckBox chbShowItems
+      AutoDeactivate  =   True
+      Bold            =   False
+      Caption         =   "Show Items"
+      DataField       =   ""
+      DataSource      =   ""
+      Enabled         =   True
+      Height          =   20
+      HelpTag         =   ""
+      Index           =   -2147483648
+      InitialParent   =   ""
+      Italic          =   False
+      Left            =   0
+      LockBottom      =   False
+      LockedInPosition=   False
+      LockLeft        =   True
+      LockRight       =   False
+      LockTop         =   True
+      Scope           =   0
+      State           =   1
+      TabIndex        =   10
+      TabPanelIndex   =   0
+      TabStop         =   True
+      TextFont        =   "System"
+      TextSize        =   0.0
+      TextUnit        =   0
+      Top             =   23
+      Underline       =   False
+      Value           =   True
+      Visible         =   True
+      Width           =   81
+   End
+   Begin CheckBox chbShowLabor
+      AutoDeactivate  =   True
+      Bold            =   False
+      Caption         =   "Show Labor"
+      DataField       =   ""
+      DataSource      =   ""
+      Enabled         =   True
+      Height          =   20
+      HelpTag         =   ""
+      Index           =   -2147483648
+      InitialParent   =   ""
+      Italic          =   False
+      Left            =   81
+      LockBottom      =   False
+      LockedInPosition=   False
+      LockLeft        =   True
+      LockRight       =   False
+      LockTop         =   True
+      Scope           =   0
+      State           =   1
+      TabIndex        =   11
+      TabPanelIndex   =   0
+      TabStop         =   True
+      TextFont        =   "System"
+      TextSize        =   0.0
+      TextUnit        =   0
+      Top             =   23
+      Underline       =   False
+      Value           =   True
+      Visible         =   True
+      Width           =   81
+   End
+   Begin CheckBox chbShowPackages
+      AutoDeactivate  =   True
+      Bold            =   False
+      Caption         =   "Show Packages"
+      DataField       =   ""
+      DataSource      =   ""
+      Enabled         =   True
+      Height          =   20
+      HelpTag         =   ""
+      Index           =   -2147483648
+      InitialParent   =   ""
+      Italic          =   False
+      Left            =   163
+      LockBottom      =   False
+      LockedInPosition=   False
+      LockLeft        =   True
+      LockRight       =   False
+      LockTop         =   True
+      Scope           =   0
+      State           =   1
+      TabIndex        =   12
+      TabPanelIndex   =   0
+      TabStop         =   True
+      TextFont        =   "System"
+      TextSize        =   0.0
+      TextUnit        =   0
+      Top             =   23
+      Underline       =   False
+      Value           =   True
+      Visible         =   True
+      Width           =   102
    End
 End
 #tag EndWindow
@@ -558,6 +654,26 @@ End
 		  If sConditionpar <> "" Then
 		    sCondition = sCondition + sConditionpar
 		  End If
+		  
+		  dim arsShowConditions() as string
+		  dim sShowConditions as string
+		  
+		  // Add in filters for item type
+		  If chbShowItems.Value Then arsShowConditions.Append( "'Item'" )
+		  If chbShowPackages.Value Then arsShowConditions.Append( "'Package'" )
+		  If chbShowLabor.Value Then arsShowConditions.Append( "'Labor'" )
+		  
+		  If arsShowConditions.Ubound <> -1 Then
+		    arsShowConditions.Append( "''" )
+		    sShowConditions = Join(arsShowConditions, ", ")
+		  End If
+		  If sShowConditions <> ""  Then sShowConditions = "( " + sShowConditions + " )"
+		  
+		  If sCondition <> "" And sShowConditions <> "" Then
+		    sCondition = sCondition + " And ( item_type In " + sShowConditions + " Or item_type Is Null )"
+		  End If
+		  
+		  
 		  sOrder = sGroupByField
 		  dictGroupedItems = DataFile.tbl_inventory.ListGrouped(sCondition,sOrder,sGroupByField)  '!@! Table Dependent !@!
 		  
