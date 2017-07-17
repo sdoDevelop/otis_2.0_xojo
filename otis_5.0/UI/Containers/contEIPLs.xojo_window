@@ -264,7 +264,7 @@ End
 		    // Check to see if this record has any children
 		    dim arLinkArray() as DataFile.tbl_internal_linking
 		    dim dictChildRecords as New Dictionary
-		    arLinkArray = DataFile.tbl_internal_linking.List( "fk_parent = " + otblRecord.ipkid.ToText )
+		    arLinkArray = DataFile.tbl_internal_linking.List( "fk_parent = " + otblRecord.ipkid.ToText + " And fk_table_name = 'tbl_eipl'" )
 		    
 		    // Loop through each link child
 		    If arLinkArray.Ubound <> -1 Then
@@ -768,7 +768,7 @@ End
 		    methLoadMe_ExpandSingleRecord(oParentRecord)
 		    Return
 		  End If
-		  Break
+		  
 		  //UnGrouped
 		  If Not IsGrouped Then
 		    
@@ -966,6 +966,8 @@ End
 		        // load up a inventory item container
 		        dim conItem as New contEI
 		        dim oTabPanel as PagePanel = app.MainWindow.tbMainWindow
+		        conItem.Width = oTabPanel.Width
+		        conItem.Height = oTabPanel.Height
 		        
 		        app.MainWindow.AddTab(sItemName)
 		        

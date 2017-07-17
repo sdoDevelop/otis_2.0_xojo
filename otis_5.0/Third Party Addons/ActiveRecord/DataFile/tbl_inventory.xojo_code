@@ -36,6 +36,26 @@ Inherits DataFile.ActiveRecordBase
 	#tag EndMethod
 
 	#tag Method, Flags = &h0
+		Function CopyToLI() As DataFile.tbl_lineitems
+		  
+		  // Create a new lineitem record for this inventory item
+		  dim oNewLI as New DataFile.tbl_lineitems
+		  oNewLI.ifkinventory = me.ipkid
+		  oNewLI.sli_name = me.sitem_name
+		  oNewLI.sli_manufacturer = me.sitem_manufacturer
+		  oNewLI.sli_model = me.sitem_model
+		  oNewLI.sli_department = me.sitem_department
+		  oNewLI.sli_category = me.sitem_category
+		  oNewLI.sli_subcategory = me.sitem_subcategory
+		  oNewLI.sli_description = me.sitem_description
+		  oNewLI.sli_type = me.sitem_type
+		  oNewLI.ili_price_cost = me.iitem_rental_price_cost
+		  
+		  Return oNewLI
+		End Function
+	#tag EndMethod
+
+	#tag Method, Flags = &h0
 		Function DeleteOK(Byref sError as string) As Boolean
 		  //Add your delete Validation here
 		  
@@ -656,6 +676,11 @@ Inherits DataFile.ActiveRecordBase
 			Group="Behavior"
 			Type="String"
 			EditorType="MultiLineEditor"
+		#tag EndViewProperty
+		#tag ViewProperty
+			Name="sitem_type"
+			Group="Behavior"
+			Type="String"
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="sitem_weight"

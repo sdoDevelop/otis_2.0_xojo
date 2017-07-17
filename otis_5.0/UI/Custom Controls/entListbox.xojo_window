@@ -568,11 +568,14 @@ End
 		    dim i2 as integer
 		    For Each oWantSelected as lbRowTag In oSelectedRows
 		      
+		      
 		      dim bSelected as Boolean
-		      If oRowTag.vColumnValues(0) = oWantSelected.vColumnValues(0) And oRowTag.iFolderLevel = oWantSelected.iFolderLevel Then
-		        bSelected = True
-		      ElseIf oRowTag.pkid <> 0 And oRowTag.pkid = oWantSelected.pkid And oRowTag.iFolderLevel = oWantSelected.iFolderLevel Then
-		        bSelected = True
+		      If oRowTag.vColumnValues.Ubound <> -1 Then
+		        If oRowTag.vColumnValues(0) = oWantSelected.vColumnValues(0) And oRowTag.iFolderLevel = oWantSelected.iFolderLevel Then
+		          bSelected = True
+		        ElseIf oRowTag.pkid <> 0 And oRowTag.pkid = oWantSelected.pkid And oRowTag.iFolderLevel = oWantSelected.iFolderLevel Then
+		          bSelected = True
+		        End If
 		      End If
 		      
 		      If bSelected Then

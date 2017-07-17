@@ -57,15 +57,15 @@ Select
     li_subcategory              ,
     li_description              , 
     li_type                     ,
-    li_price                    ,
+    li_price_cost               ,
     li_note                     , 
     li_rate                     ,
     discount_percent            ,
-    discount_amount             ,
-    li_total                    ,
+    discount_amount_cost        ,
+    li_total_cost               ,
     li_time                     ,
     li_taxable                  ,
-    li_taxtotal                 ,
+    li_taxtotal_cost            ,
     li_quantity                  ,
     ignore_price_discrepency    
     From tbl_lineitems
@@ -160,6 +160,7 @@ Select
     row_username                ,
     fkevents                    ,
     eipl_number                 ,
+    eipl_name                   ,
     due_date                    ,
     eipl_type                   ,
     eipl_balance                ,
@@ -170,6 +171,7 @@ Select
     discount_percent            ,
     shipping_method             ,
     tax_total                   ,
+    eipl_tax_rate               ,
     discount_total              
     From tbl_eipl
     ;

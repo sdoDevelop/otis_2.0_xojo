@@ -275,7 +275,7 @@ Inherits DataFile.ActiveRecordBase
 	#tag EndProperty
 
 	#tag Property, Flags = &h0
-		idiscount_amount As Integer
+		idiscount_amount_cost As Integer
 	#tag EndProperty
 
 	#tag Property, Flags = &h0
@@ -283,11 +283,19 @@ Inherits DataFile.ActiveRecordBase
 	#tag EndProperty
 
 	#tag Property, Flags = &h0
-		ili_price As Integer
+		ifkeipl As Int64
 	#tag EndProperty
 
 	#tag Property, Flags = &h0
-		ili_taxtotal As Integer
+		ifkinventory As Int64
+	#tag EndProperty
+
+	#tag Property, Flags = &h0
+		ili_price_cost As Integer
+	#tag EndProperty
+
+	#tag Property, Flags = &h0
+		ili_taxtotal_cost As Integer
 	#tag EndProperty
 
 	#tag Property, Flags = &h0
@@ -295,15 +303,7 @@ Inherits DataFile.ActiveRecordBase
 	#tag EndProperty
 
 	#tag Property, Flags = &h0
-		ili_total As Integer
-	#tag EndProperty
-
-	#tag Property, Flags = &h0
-		sfkeipl As String
-	#tag EndProperty
-
-	#tag Property, Flags = &h0
-		sfkinventory As String
+		ili_total_cost As Integer
 	#tag EndProperty
 
 	#tag Property, Flags = &h0
@@ -363,7 +363,7 @@ Inherits DataFile.ActiveRecordBase
 			Type="Boolean"
 		#tag EndViewProperty
 		#tag ViewProperty
-			Name="idiscount_amount"
+			Name="idiscount_amount_cost"
 			Group="Behavior"
 			Type="Integer"
 		#tag EndViewProperty
@@ -373,12 +373,24 @@ Inherits DataFile.ActiveRecordBase
 			Type="Integer"
 		#tag EndViewProperty
 		#tag ViewProperty
-			Name="ili_price"
+			Name="ifkeipl"
+			Group="Behavior"
+			Type="String"
+			EditorType="MultiLineEditor"
+		#tag EndViewProperty
+		#tag ViewProperty
+			Name="ifkinventory"
+			Group="Behavior"
+			Type="String"
+			EditorType="MultiLineEditor"
+		#tag EndViewProperty
+		#tag ViewProperty
+			Name="ili_price_cost"
 			Group="Behavior"
 			Type="Integer"
 		#tag EndViewProperty
 		#tag ViewProperty
-			Name="ili_taxtotal"
+			Name="ili_taxtotal_cost"
 			Group="Behavior"
 			Type="Integer"
 		#tag EndViewProperty
@@ -388,7 +400,7 @@ Inherits DataFile.ActiveRecordBase
 			Type="Integer"
 		#tag EndViewProperty
 		#tag ViewProperty
-			Name="ili_total"
+			Name="ili_total_cost"
 			Group="Behavior"
 			Type="Integer"
 		#tag EndViewProperty
@@ -421,18 +433,6 @@ Inherits DataFile.ActiveRecordBase
 			Visible=true
 			Group="ID"
 			Type="String"
-		#tag EndViewProperty
-		#tag ViewProperty
-			Name="sfkeipl"
-			Group="Behavior"
-			Type="String"
-			EditorType="MultiLineEditor"
-		#tag EndViewProperty
-		#tag ViewProperty
-			Name="sfkinventory"
-			Group="Behavior"
-			Type="String"
-			EditorType="MultiLineEditor"
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="sli_category"

@@ -311,6 +311,14 @@ Inherits DataFile.ActiveRecordBase
 	#tag EndProperty
 
 	#tag Property, Flags = &h0
+		seipl_name As String
+	#tag EndProperty
+
+	#tag Property, Flags = &h0
+		seipl_tax_rate As String
+	#tag EndProperty
+
+	#tag Property, Flags = &h0
 		seipl_type As String
 	#tag EndProperty
 
@@ -363,7 +371,7 @@ Inherits DataFile.ActiveRecordBase
 		#tag ViewProperty
 			Name="ifkevents"
 			Group="Behavior"
-			Type="String"
+			Type="Int64"
 			EditorType="MultiLineEditor"
 		#tag EndViewProperty
 		#tag ViewProperty

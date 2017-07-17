@@ -1,5 +1,5 @@
 #tag Window
-Begin ContainerControl contEventContactablesList
+Begin ContainerControl contEIPLContactablesList
    AcceptFocus     =   False
    AcceptTabs      =   True
    AutoDeactivate  =   True
@@ -9,7 +9,7 @@ Begin ContainerControl contEventContactablesList
    Enabled         =   True
    EraseBackground =   True
    HasBackColor    =   False
-   Height          =   224
+   Height          =   238
    HelpTag         =   ""
    InitialParent   =   ""
    Left            =   0
@@ -29,15 +29,15 @@ Begin ContainerControl contEventContactablesList
       AcceptFocus     =   False
       AcceptTabs      =   True
       AutoDeactivate  =   True
-      BackColor       =   &cFFFFFF00
+      BackColor       =   &cFFFF00FF
       Backdrop        =   0
-      CellBackColor   =   &cFFFFFF00
+      CellBackColor   =   &cFFFF00FF
       Enabled         =   True
       EraseBackground =   True
       GridLinesColor  =   &c00000000
       HasBackColor    =   False
       HasHeading      =   True
-      Height          =   224
+      Height          =   218
       HelpTag         =   ""
       InitialParent   =   ""
       Left            =   0
@@ -50,11 +50,42 @@ Begin ContainerControl contEventContactablesList
       TabIndex        =   0
       TabPanelIndex   =   0
       TabStop         =   True
-      Top             =   0
+      Top             =   20
       Transparent     =   True
       UseFocusRing    =   False
       Visible         =   True
       Width           =   338
+   End
+   Begin PushButton pbRefresh
+      AutoDeactivate  =   True
+      Bold            =   False
+      ButtonStyle     =   "0"
+      Cancel          =   False
+      Caption         =   "Refresh"
+      Default         =   False
+      Enabled         =   True
+      Height          =   22
+      HelpTag         =   ""
+      Index           =   -2147483648
+      InitialParent   =   ""
+      Italic          =   False
+      Left            =   0
+      LockBottom      =   False
+      LockedInPosition=   False
+      LockLeft        =   True
+      LockRight       =   False
+      LockTop         =   True
+      Scope           =   0
+      TabIndex        =   1
+      TabPanelIndex   =   0
+      TabStop         =   True
+      TextFont        =   "System"
+      TextSize        =   0.0
+      TextUnit        =   0
+      Top             =   0
+      Underline       =   False
+      Visible         =   True
+      Width           =   80
    End
 End
 #tag EndWindow
@@ -70,15 +101,16 @@ End
 		  dim rs1 as RecordSet
 		  dim sql1 as string
 		  
-		  sql1 = "Select c.pkid, c.name_first, c.name_last,c.type "_
+		  sql1 = "Select c.pkid, c.name_first, c.name_last,c.type, il.pkid as lipkid "_
 		  + "From tbl_contactables as c "_
 		  + "Inner Join tbl_internal_linking as il on ( c.pkid = il.fk_child ) "_
-		  + "Inner Join tbl_events as e on ( il.fk_parent = e.pkid ) "_
-		  + "Where e.pkid = " + EventID.ToText + ";"
+		  + "Inner Join tbl_eipl as e on ( il.fk_parent = e.pkid ) "_
+		  + "Where e.pkid = " + EIPLID.ToText + ";"
 		  
 		  rs1 = db1.SQLSelect(sql1)
 		  If db1.Error Then
-		    System.DebugLog( "Cant get contacts related to event: " + db1.ErrorMessage )
+		    Break
+		    System.DebugLog( "Cant get contacts related to EIPL: " + db1.ErrorMessage )
 		    Return
 		  End If
 		  
@@ -86,10 +118,13 @@ End
 		    
 		    For iRecordIndex as integer = 1 To rs1.RecordCount
 		      
-		      lbContactables.AddRow( rs1.Field("name_first").StringValue, rs1.Field("name_last").StringValue, rs1.Field("type").StringValue )
-		      
 		      dim oRowTag as New lbRowTag
 		      oRowTag.pkid = rs1.Field("pkid").Value
+		      oRowTag.vColumnValues = Array( rs1.Field("name_first").Value, rs1.Field("name_last").Value, rs1.Field("type").Value )
+		      If rs1.Field("lipkid").IntegerValue <> 0 Then oRowTag.vLinkTable = DataFile.tbl_internal_linking.FindByID( rs1.Field("lipkid").IntegerValue )
+		      If rs1.Field("pkid").IntegerValue <> 0 Then oRowTag.vtblRecord = DataFile.tbl_contactables.FindByID( rs1.Field("pkid").IntegerValue )
+		      
+		      lbContactables.AddRow( rs1.Field("name_first").StringValue, rs1.Field("name_last").StringValue, rs1.Field("type").StringValue )
 		      
 		      lbContactables.RowTag(lbContactables.LastIndex) = oRowTag
 		      
@@ -114,7 +149,7 @@ End
 
 
 	#tag Property, Flags = &h0
-		EventID As Int64
+		EIPLID As Int64
 	#tag EndProperty
 
 
@@ -150,6 +185,14 @@ End
 		    
 		  End If
 		End Sub
+	#tag EndEvent
+	#tag Event
+		Function entConstructContextualMenu(base as menuitem, x as integer, y as integer) As Boolean
+		  
+		  dim mi1 as New MenuItem("Break Link")
+		  mi1.Enabled = True
+		  base.Append( mi1 )
+		End Function
 	#tag EndEvent
 	#tag Event
 		Function entContextualMenuAction(hitItem as MenuItem) As Boolean
@@ -228,13 +271,12 @@ End
 		  End Select
 		End Function
 	#tag EndEvent
+#tag EndEvents
+#tag Events pbRefresh
 	#tag Event
-		Function entConstructContextualMenu(base as menuitem, x as integer, y as integer) As Boolean
-		  
-		  dim mi1 as New MenuItem("Break Link")
-		  mi1.Enabled = True
-		  base.Append( mi1 )
-		End Function
+		Sub Action()
+		  methRefresh
+		End Sub
 	#tag EndEvent
 #tag EndEvents
 #tag ViewBehavior
@@ -276,6 +318,11 @@ End
 		EditorType="Picture"
 	#tag EndViewProperty
 	#tag ViewProperty
+		Name="EIPLID"
+		Group="Behavior"
+		Type="Int64"
+	#tag EndViewProperty
+	#tag ViewProperty
 		Name="Enabled"
 		Visible=true
 		Group="Appearance"
@@ -290,11 +337,6 @@ End
 		InitialValue="True"
 		Type="Boolean"
 		EditorType="Boolean"
-	#tag EndViewProperty
-	#tag ViewProperty
-		Name="EventID"
-		Group="Behavior"
-		Type="Int64"
 	#tag EndViewProperty
 	#tag ViewProperty
 		Name="HasBackColor"

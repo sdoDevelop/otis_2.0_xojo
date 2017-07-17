@@ -222,6 +222,15 @@ End
 		End Function
 	#tag EndEvent
 
+	#tag Event
+		Sub Open()
+		  
+		  methListboxSettings
+		  
+		  evdefOpen
+		End Sub
+	#tag EndEvent
+
 
 	#tag Method, Flags = &h0
 		Sub methBuildRowTag(ByRef oRowTag as lbRowTag)
@@ -402,6 +411,9 @@ End
 		  dim oReturnRowtags() as lbRowTag 
 		  
 		  // Check if vRecords is grouped or not
+		  If vRecords.Ubound = -1 Then
+		    Return Nil
+		  End If
 		  
 		  Select Case vRecords(0)
 		  Case IsA Dictionary
@@ -725,7 +737,7 @@ End
 		    // GrandParent
 		    sRowType = "GrandParent"
 		    'field names
-		    s1 = "li_name,li_category,li_description,li_time,li_rate,li_quantity,li_price,discount_amount,li_total,li_taxable"
+		    s1 = "li_name,li_category,li_description,li_time,li_rate,li_quantity,li_price_cost,discount_amount_cost,li_total_cost,li_taxable"
 		    s2() = Split(s1,",")
 		    dictFieldNames.Value(sRowType) = s2
 		    
@@ -749,7 +761,7 @@ End
 		    // LinkedItem - Version
 		    sRowType = "Linked - version"
 		    'field names
-		    s1 = "li_name,li_category,li_description,li_time,li_rate,li_quantity,li_price,discount_amount,li_total,li_taxable"
+		    s1 = "li_name,li_category,li_description,li_time,li_rate,li_quantity,li_price_cost,discount_amount_cost,li_total_cost,li_taxable"
 		    s2() = Split(s1,",")
 		    dictFieldNames.Value(sRowType) = s2
 		    
@@ -761,7 +773,7 @@ End
 		    // LinkedItem - Contained
 		    sRowType = "Linked - contained"
 		    'field names
-		    s1 = "li_name,li_category,li_description,li_time,li_rate,li_quantity,li_price,discount_amount,li_total,li_taxable"
+		    s1 = "li_name,li_category,li_description,li_time,li_rate,li_quantity,li_price_cost,discount_amount_cost,li_total_cost,li_taxable"
 		    s2() = Split(s1,",")
 		    dictFieldNames.Value(sRowType) = s2
 		    
@@ -772,7 +784,7 @@ End
 		    // LinkedItem - Contained
 		    sRowType = "Linked - kit"
 		    'field names
-		    s1 = "li_name,li_category,li_description,li_time,li_rate,li_quantity,li_price,discount_amount,li_total,li_taxable"
+		    s1 = "li_name,li_category,li_description,li_time,li_rate,li_quantity,li_price_cost,discount_amount_cost,li_total_cost,li_taxable"
 		    s2() = Split(s1,",")
 		    dictFieldNames.Value(sRowType) = s2
 		    
@@ -783,7 +795,7 @@ End
 		    // LinkedItem - Contained
 		    sRowType = "Linked - package"
 		    'field names
-		    s1 = "li_name,li_category,li_description,li_time,li_rate,li_quantity,li_price,discount_amount,li_total,li_taxable"
+		    s1 = "li_name,li_category,li_description,li_time,li_rate,li_quantity,li_price_cost,discount_amount_cost,li_total_cost,li_taxable"
 		    s2() = Split(s1,",")
 		    dictFieldNames.Value(sRowType) = s2
 		    
@@ -817,11 +829,11 @@ End
 		  If Not IsGrouped Then
 		    
 		    // Get the records
-		    dim records() as DataFile.tbl_lineitems = methGetRecordList_UnGrouped("li_department","")    '!@! Table Dependent !@!
+		    dim records() as DataFile.tbl_lineitems = methGetRecordList_UnGrouped("li_department","fkeipl = " + oEIPLRecord.ipkid.ToText )    '!@! Table Dependent !@!
 		    
 		    // Build the rowtags
 		    dim theRowtags() as lbRowTag
-		    'theRowtags = methCreateRowTags(records)
+		    theRowtags = methCreateRowTags(records)
 		    
 		    methCreateTopLevelRows(theRowtags)
 		    
@@ -829,7 +841,7 @@ End
 		  ElseIf IsGrouped Then
 		    
 		    // Get the Records
-		    dim dictRecords as Dictionary = methGetRecordList_Grouped("li_department", "")    '!@! Table Dependent !@!
+		    dim dictRecords as Dictionary = methGetRecordList_Grouped("li_department", "fkeipl = " + oEIPLRecord.ipkid.ToText )    '!@! Table Dependent !@!
 		    
 		    dim theRowtagsGrouped() as lbRowTag
 		    theRowtagsGrouped = methCreateRowTags_dict(dictRecords)

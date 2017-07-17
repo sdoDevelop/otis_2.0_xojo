@@ -49,8 +49,8 @@ Create Table tbl_events_link
         row_created                 text,
         row_modified                text,
         row_username                text,
-        fkeipl                      text,
-        fkinventory                 text,
+        fkeipl                      integer,
+        fkinventory                 integer,
         li_name                     text,
         li_manufacturer             text,
         li_model                    text,
@@ -59,15 +59,15 @@ Create Table tbl_events_link
         li_subcategory              text,
         li_description              text, 
         li_type                     text,
-        li_price                    integer,
+        li_price_cost               integer,
         li_note                     text, 
         li_rate                     text,
         discount_percent            integer,
-        discount_amount             integer,
-        li_total                    integer,
+        discount_amount_cost        integer,
+        li_total_cost               integer,
         li_time                     integer,
         li_taxable                  boolean,
-        li_taxtotal                 integer,
+        li_taxtotal_cost            integer,
         li_quantity                 double precision,
         ignore_price_discrepency    boolean
         );
@@ -163,6 +163,7 @@ Create Table tbl_events_link
         row_username                text,
         fkevents                    integer,
         eipl_number                 integer,
+        eipl_name                   text,
         due_date                    text,
         eipl_type                   text,
         eipl_balance                integer,
@@ -173,6 +174,7 @@ Create Table tbl_events_link
         discount_percent            integer,
         shipping_method             text,
         tax_total                   integer,
+        eipl_tax_rate               text,
         discount_total              integer
         );
 

@@ -1,10 +1,14 @@
 #tag Module
 Protected Module ValueRef
+	#tag Constant, Name = EIPLTypes, Type = String, Dynamic = False, Default = \"", Scope = Public
+		#Tag Instance, Platform = Any, Language = Default, Definition  = \"Estimate\x2CInvoice\x2CPack List"
+	#tag EndConstant
+
 	#tag Constant, Name = ItemTypes, Type = String, Dynamic = False, Default = \"", Scope = Public
 		#Tag Instance, Platform = Any, Language = Default, Definition  = \"Item\x2CPackage\x2CLabor"
 	#tag EndConstant
 
-	#tag Constant, Name = Item_Status, Type = String, Dynamic = False, Default = \"", Scope = Protected
+	#tag Constant, Name = Item_Status, Type = String, Dynamic = False, Default = \"", Scope = Public
 		#Tag Instance, Platform = Any, Language = Default, Definition  = \"Ready\x2CIn Maintenance\x2CSold"
 	#tag EndConstant
 
