@@ -60,7 +60,7 @@ Select
     li_price_cost               ,
     li_note                     , 
     li_rate                     ,
-    discount_percent            ,
+    li_discount                 ,
     discount_amount_cost        ,
     li_total_cost               ,
     li_time                     ,

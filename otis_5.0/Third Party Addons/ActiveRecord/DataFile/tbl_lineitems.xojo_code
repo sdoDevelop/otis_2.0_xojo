@@ -279,10 +279,6 @@ Inherits DataFile.ActiveRecordBase
 	#tag EndProperty
 
 	#tag Property, Flags = &h0
-		idiscount_percent As Integer
-	#tag EndProperty
-
-	#tag Property, Flags = &h0
 		ifkeipl As Int64
 	#tag EndProperty
 
@@ -316,6 +312,10 @@ Inherits DataFile.ActiveRecordBase
 
 	#tag Property, Flags = &h0
 		sli_description As String
+	#tag EndProperty
+
+	#tag Property, Flags = &h0
+		sli_discount As string
 	#tag EndProperty
 
 	#tag Property, Flags = &h0
@@ -368,20 +368,15 @@ Inherits DataFile.ActiveRecordBase
 			Type="Integer"
 		#tag EndViewProperty
 		#tag ViewProperty
-			Name="idiscount_percent"
-			Group="Behavior"
-			Type="Integer"
-		#tag EndViewProperty
-		#tag ViewProperty
 			Name="ifkeipl"
 			Group="Behavior"
-			Type="String"
+			Type="Int64"
 			EditorType="MultiLineEditor"
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="ifkinventory"
 			Group="Behavior"
-			Type="String"
+			Type="Int64"
 			EditorType="MultiLineEditor"
 		#tag EndViewProperty
 		#tag ViewProperty
@@ -451,6 +446,11 @@ Inherits DataFile.ActiveRecordBase
 			Group="Behavior"
 			Type="String"
 			EditorType="MultiLineEditor"
+		#tag EndViewProperty
+		#tag ViewProperty
+			Name="sli_discount"
+			Group="Behavior"
+			Type="Integer"
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="sli_manufacturer"

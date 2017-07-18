@@ -44,7 +44,7 @@ Begin ContainerControl contEI
       TabIndex        =   2
       TabPanelIndex   =   0
       Top             =   22
-      Value           =   1
+      Value           =   0
       Visible         =   True
       Width           =   901
       Begin contLineItems instLineItemList
@@ -58,13 +58,13 @@ Begin ContainerControl contEI
          Enabled         =   True
          EraseBackground =   True
          HasBackColor    =   False
-         Height          =   493
+         Height          =   375
          HelpTag         =   ""
          InitialParent   =   "ppEIPLSwitcher"
          iStartingTop    =   0
          LastSearchValue =   ""
          Left            =   262
-         LockBottom      =   True
+         LockBottom      =   False
          LockedInPosition=   False
          LockLeft        =   True
          LockRight       =   True
@@ -73,7 +73,7 @@ Begin ContainerControl contEI
          TabIndex        =   0
          TabPanelIndex   =   1
          TabStop         =   True
-         Top             =   24
+         Top             =   22
          Transparent     =   True
          UseFocusRing    =   False
          Visible         =   True
@@ -117,6 +117,7 @@ Begin ContainerControl contEI
          AutoDeactivate  =   True
          BackColor       =   &cFFFFFF00
          Backdrop        =   0
+         EIPLID          =   ""
          Enabled         =   True
          EraseBackground =   True
          HasBackColor    =   False
@@ -465,6 +466,34 @@ Begin ContainerControl contEI
          Visible         =   True
          Width           =   200
       End
+      Begin contLIDetails instLIDetails
+         AcceptFocus     =   False
+         AcceptTabs      =   True
+         AutoDeactivate  =   True
+         BackColor       =   &cFFFFFF00
+         Backdrop        =   0
+         Enabled         =   True
+         EraseBackground =   True
+         HasBackColor    =   False
+         Height          =   120
+         HelpTag         =   ""
+         InitialParent   =   "ppEIPLSwitcher"
+         Left            =   262
+         LockBottom      =   False
+         LockedInPosition=   False
+         LockLeft        =   True
+         LockRight       =   True
+         LockTop         =   True
+         Scope           =   0
+         TabIndex        =   2
+         TabPanelIndex   =   1
+         TabStop         =   True
+         Top             =   398
+         Transparent     =   True
+         UseFocusRing    =   False
+         Visible         =   True
+         Width           =   639
+      End
    End
    Begin TabPanel tbEIPLSwitcher
       AutoDeactivate  =   True
@@ -493,7 +522,7 @@ Begin ContainerControl contEI
       TextUnit        =   0
       Top             =   0
       Underline       =   False
-      Value           =   1
+      Value           =   0
       Visible         =   True
       Width           =   901
    End
@@ -754,6 +783,27 @@ End
 		  me.bDisplayGrouped = True
 		  
 		End Sub
+	#tag EndEvent
+	#tag Event
+		Function evdefDoubleClick() As Boolean
+		  
+		  
+		  If instLineItemList.lbItems.ListIndex <> -1 Then
+		    
+		    dim oRowTag as lbRowTag = instLineItemList.lbItems.RowTag( instLineItemList.lbItems.ListIndex )
+		    
+		    dim oRecord as DataFile.tbl_lineitems
+		    If oRowTag.vtblRecord <> Nil Then
+		       oRecord = oRowTag.vtblRecord
+		      instLIDetails.LoadMe(oRecord)
+		    End If
+		    
+		  End If
+		  
+		  
+		  
+		  Return True
+		End Function
 	#tag EndEvent
 #tag EndEvents
 #tag Events instInventoryList

@@ -62,13 +62,13 @@ Create Table tbl_events_link
         li_price_cost               integer,
         li_note                     text, 
         li_rate                     text,
-        discount_percent            integer,
+        li_discount                 text,
         discount_amount_cost        integer,
         li_total_cost               integer,
         li_time                     integer,
         li_taxable                  boolean,
         li_taxtotal_cost            integer,
-        li_quantity                 double precision,
+        li_quantity                 text,
         ignore_price_discrepency    boolean
         );
 

@@ -127,6 +127,19 @@ Protected Module Methods
 	#tag EndMethod
 
 	#tag Method, Flags = &h1
+		Protected Function methStripNonDigits(sString as String) As String
+		  
+		  
+		  dim re as new RegEx
+		  re.SearchPattern = "\D"
+		  re.ReplacementPattern = ""
+		  re.Options.ReplaceAllMatches = True
+		  
+		  Return re.Replace(sString)
+		End Function
+	#tag EndMethod
+
+	#tag Method, Flags = &h1
 		Protected Sub UpdateItemQuantity(fkInventory as int64)
 		  // Figure out how many inventory expanded items there are related to our inventory item
 		  dim qty as integer

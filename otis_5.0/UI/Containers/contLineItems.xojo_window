@@ -1176,6 +1176,22 @@ End
 		    cont1.EmbedWithinPanel(app.MainWindow.tbMainWindow,app.MainWindow.tbMainWindow.PanelCount - 1)
 		    cont1.LoadUniversalInfo(oItem.ipkid)
 		    
+		  Case "Calculate Line Total"
+		    
+		    dim oRowTag as lbRowTag
+		    oRowTag = lbItems.RowTag(lbItems.ListIndex)
+		    
+		    If oRowTag.vtblRecord <> Nil Then
+		      If oRowTag.vtblRecord IsA DataFile.tbl_lineitems Then
+		        dim oLIRecord as DataFile.tbl_lineitems = oRowTag.vtblRecord
+		        
+		        dim iTotal as integer = CalculateLineItemPrices( oLIRecord, oEIPLRecord, "Total" )
+		        
+		        MsgBox(iTotal.ToText)
+		        
+		      End If
+		    End If
+		    
 		  End Select
 		  
 		  dim boo as Boolean
@@ -1206,6 +1222,9 @@ End
 		      
 		    End If
 		    
+		    base.Append( New MenuItem( MenuItem.TextSeparator ) )
+		    base.Append( New MenuItem( "Calculate Line Total" ) )
+		    
 		    dim boo as Boolean
 		    boo = evdefConstructContextualMenu(base, x, y)
 		  End If
@@ -1216,6 +1235,11 @@ End
 		  
 		  Return methHandleMouseWheel(X,Y,DeltaX,DeltaY)
 		End Function
+	#tag EndEvent
+	#tag Event
+		Sub DoubleClick()
+		  dim boo as Boolean = evdefDoubleClick
+		End Sub
 	#tag EndEvent
 #tag EndEvents
 #tag Events bRefresh
