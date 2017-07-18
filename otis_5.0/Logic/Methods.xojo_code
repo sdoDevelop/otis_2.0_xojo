@@ -127,11 +127,11 @@ Protected Module Methods
 	#tag EndMethod
 
 	#tag Method, Flags = &h1
-		Protected Function methStripNonDigits(sString as String) As String
+		Protected Function StripNonDigitsDecimals(sString as String) As String
 		  
 		  
 		  dim re as new RegEx
-		  re.SearchPattern = "\D"
+		  re.SearchPattern = "[^\d.]"
 		  re.ReplacementPattern = ""
 		  re.Options.ReplaceAllMatches = True
 		  
@@ -149,7 +149,7 @@ Protected Module Methods
 		  dim oItem as DataFile.tbl_inventory
 		  oItem = DataFile.tbl_inventory.FindByID(fkInventory)
 		  If oItem <> Nil Then 
-		    oItem.iitem_quantity = qty
+		    oItem.sitem_quantity = str(qty)
 		    oItem.Save
 		  End If
 		End Sub

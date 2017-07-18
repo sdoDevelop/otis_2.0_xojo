@@ -363,7 +363,7 @@ End
 		    // Check to see if this record has any children
 		    dim arLinkArray() as DataFile.tbl_internal_linking
 		    dim dictChildRecords as New Dictionary
-		    arLinkArray = DataFile.tbl_internal_linking.List( "fk_parent = " + otblRecord.ipkid.ToText )
+		    arLinkArray = DataFile.tbl_internal_linking.List( "fk_parent = " + otblRecord.ipkid.ToText + " And fk_table_name = 'tbl_inventory'" )
 		    
 		    // Loop through each link child
 		    If arLinkArray.Ubound <> -1 Then
@@ -666,6 +666,7 @@ End
 		  End If
 		  If sShowConditions <> ""  Then sShowConditions = "( item_type In ( " + sShowConditions + " ) Or item_type Is Null ) "
 		  If sShowConditions <> "" Then arsConditions.Append( sShowConditions )
+		  If chbShowHidden.Value = False Then arsConditions.Append("( hide != 1)")
 		  
 		  // Combine everthing together
 		  If arsConditions.Ubound <> -1 Then sCondition = Join( arsConditions, " And " )
@@ -886,7 +887,7 @@ End
 		    // GrandParent
 		    sRowType = "GrandParent"
 		    'field names
-		    s1 = "item_name,item_manufacturer,item_model,item_department,item_category,item_subcategory,item_description,item_quantity,item_rental_price_cost,item_owner"
+		    s1 = "item_name,item_manufacturer,item_model,item_department,item_category,item_subcategory,item_description,item_quantity,item_rental_price,item_owner"
 		    s2() = Split(s1,",")
 		    dictFieldNames.Value(sRowType) = s2
 		    
@@ -980,11 +981,13 @@ End
 		    // Get the records
 		    dim records() as DataFile.tbl_inventory = methGetRecordList_UnGrouped("item_department","")    '!@! Table Dependent !@!
 		    
-		    // Build the rowtags
-		    dim theRowtags() as lbRowTag
-		    theRowtags = methCreateRowTags(records)
-		    
-		    methCreateTopLevelRows(theRowtags)
+		    If records.Ubound <> -1 Then
+		      // Build the rowtags
+		      dim theRowtags() as lbRowTag
+		      theRowtags = methCreateRowTags(records)
+		      
+		      methCreateTopLevelRows(theRowtags)
+		    End If
 		    
 		    //Grouped
 		  ElseIf IsGrouped Then
@@ -992,10 +995,12 @@ End
 		    // Get the Records
 		    dim dictRecords as Dictionary = methGetRecordList_Grouped("item_department, item_manufacturer", "")    '!@! Table Dependent !@!
 		    
-		    dim theRowtagsGrouped() as lbRowTag
-		    theRowtagsGrouped = methCreateRowTags_dict(dictRecords)
-		    
-		    methCreateTopLevelRows(theRowtagsGrouped)
+		    if dictRecords.Count <> 0 Then
+		      dim theRowtagsGrouped() as lbRowTag
+		      theRowtagsGrouped = methCreateRowTags_dict(dictRecords)
+		      
+		      methCreateTopLevelRows(theRowtagsGrouped)
+		    End If
 		    
 		  End If
 		  
@@ -1416,7 +1421,7 @@ End
 		  
 		  dim oNewItem as New DataFile.tbl_inventory
 		  oNewItem.sitem_name = "-"
-		  oNewItem.iitem_quantity = 0
+		  oNewItem.sitem_quantity = "0"
 		  
 		  
 		  dim NewCont as New contInventoryItem

@@ -44,7 +44,7 @@ Begin ContainerControl contEI
       TabIndex        =   2
       TabPanelIndex   =   0
       Top             =   22
-      Value           =   0
+      Value           =   1
       Visible         =   True
       Width           =   901
       Begin contLineItems instLineItemList
@@ -494,6 +494,34 @@ Begin ContainerControl contEI
          Visible         =   True
          Width           =   639
       End
+      Begin contGroupDiscountList instGroupDiscountList
+         AcceptFocus     =   False
+         AcceptTabs      =   True
+         AutoDeactivate  =   True
+         BackColor       =   &cFFFFFF00
+         Backdrop        =   0
+         Enabled         =   True
+         EraseBackground =   True
+         HasBackColor    =   False
+         Height          =   181
+         HelpTag         =   ""
+         InitialParent   =   "ppEIPLSwitcher"
+         Left            =   332
+         LockBottom      =   True
+         LockedInPosition=   False
+         LockLeft        =   True
+         LockRight       =   False
+         LockTop         =   False
+         Scope           =   0
+         TabIndex        =   10
+         TabPanelIndex   =   2
+         TabStop         =   True
+         Top             =   296
+         Transparent     =   True
+         UseFocusRing    =   False
+         Visible         =   True
+         Width           =   293
+      End
    End
    Begin TabPanel tbEIPLSwitcher
       AutoDeactivate  =   True
@@ -522,7 +550,7 @@ Begin ContainerControl contEI
       TextUnit        =   0
       Top             =   0
       Underline       =   False
-      Value           =   0
+      Value           =   1
       Visible         =   True
       Width           =   901
    End
@@ -713,6 +741,8 @@ End
 		  instEIPLContactablesList.EIPLID = oCurrentRecord.ipkid
 		  instEIPLContactablesList.methLoadMe
 		  
+		  instGroupDiscountList.methLoadMe(oCurrentRecord)
+		  
 		  tfEIPLName.Text = oCurrentRecord.seipl_name
 		  tfEIPLTaxRate.Text = oCurrentRecord.seipl_tax_rate
 		  
@@ -794,7 +824,7 @@ End
 		    
 		    dim oRecord as DataFile.tbl_lineitems
 		    If oRowTag.vtblRecord <> Nil Then
-		       oRecord = oRowTag.vtblRecord
+		      oRecord = oRowTag.vtblRecord
 		      instLIDetails.LoadMe(oRecord)
 		    End If
 		    
@@ -846,7 +876,7 @@ End
 		  // GrandParent
 		  sRowType = "GrandParent"
 		  'field names
-		  s1 = "item_name,item_description,item_quantity,item_rental_price_cost"
+		  s1 = "item_name,item_description,item_quantity,item_rental_price"
 		  s2() = Split(s1,",")
 		  dictFieldNames.Value(sRowType) = s2
 		  
@@ -870,7 +900,7 @@ End
 		  // LinkedItem - Version
 		  sRowType = "Linked - version"
 		  'field names
-		  s1 = "item_name,item_description,item_quantity,item_rental_price_cost"
+		  s1 = "item_name,item_description,item_quantity,item_rental_price"
 		  s2() = Split(s1,",")
 		  dictFieldNames.Value(sRowType) = s2
 		  
@@ -882,7 +912,7 @@ End
 		  // LinkedItem - Contained
 		  sRowType = "Linked - contained"
 		  'field names
-		  s1 = "item_name,item_description,item_quantity,item_rental_price_cost"
+		  s1 = "item_name,item_description,item_quantity,item_rental_price"
 		  s2() = Split(s1,",")
 		  dictFieldNames.Value(sRowType) = s2
 		  
@@ -893,7 +923,7 @@ End
 		  // LinkedItem - Contained
 		  sRowType = "Linked - kit"
 		  'field names
-		  s1 = "item_name,item_description,item_quantity,item_rental_price_cost"
+		  s1 = "item_name,item_description,item_quantity,item_rental_price"
 		  s2() = Split(s1,",")
 		  dictFieldNames.Value(sRowType) = s2
 		  
@@ -904,7 +934,7 @@ End
 		  // LinkedItem - Contained
 		  sRowType = "Linked - package"
 		  'field names
-		  s1 = "item_name,item_description,item_quantity,item_rental_price_cost"
+		  s1 = "item_name,item_description,item_quantity,item_rental_price"
 		  s2() = Split(s1,",")
 		  dictFieldNames.Value(sRowType) = s2
 		  

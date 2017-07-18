@@ -24,7 +24,7 @@ Begin ContainerControl contLIDetails
    Transparent     =   True
    UseFocusRing    =   False
    Visible         =   True
-   Width           =   624
+   Width           =   672
    Begin Label labName
       AutoDeactivate  =   True
       Bold            =   False
@@ -937,7 +937,7 @@ Begin ContainerControl contLIDetails
       Index           =   -2147483648
       InitialParent   =   ""
       Italic          =   False
-      Left            =   530
+      Left            =   539
       LockBottom      =   False
       LockedInPosition=   False
       LockLeft        =   True
@@ -954,7 +954,41 @@ Begin ContainerControl contLIDetails
       TextFont        =   "System"
       TextSize        =   0.0
       TextUnit        =   0
-      Top             =   13
+      Top             =   8
+      Transparent     =   True
+      Underline       =   False
+      Visible         =   True
+      Width           =   62
+   End
+   Begin Label labTaxable
+      AutoDeactivate  =   True
+      Bold            =   False
+      DataField       =   ""
+      DataSource      =   ""
+      Enabled         =   True
+      Height          =   20
+      HelpTag         =   ""
+      Index           =   -2147483648
+      InitialParent   =   ""
+      Italic          =   False
+      Left            =   539
+      LockBottom      =   False
+      LockedInPosition=   False
+      LockLeft        =   True
+      LockRight       =   False
+      LockTop         =   True
+      Multiline       =   False
+      Scope           =   0
+      Selectable      =   False
+      TabIndex        =   26
+      TabPanelIndex   =   0
+      Text            =   "Taxable"
+      TextAlign       =   0
+      TextColor       =   &c00000000
+      TextFont        =   "System"
+      TextSize        =   0.0
+      TextUnit        =   0
+      Top             =   60
       Transparent     =   True
       Underline       =   False
       Visible         =   True
@@ -977,7 +1011,7 @@ Begin ContainerControl contLIDetails
       HelpTag         =   ""
       Index           =   -2147483648
       Italic          =   False
-      Left            =   530
+      Left            =   539
       LimitText       =   0
       LockBottom      =   False
       LockedInPosition=   False
@@ -996,11 +1030,43 @@ Begin ContainerControl contLIDetails
       TextFont        =   "System"
       TextSize        =   0.0
       TextUnit        =   0
-      Top             =   34
+      Top             =   33
       Underline       =   False
       UseFocusRing    =   True
       Visible         =   True
-      Width           =   89
+      Width           =   113
+   End
+   Begin checkbox chbTaxable
+      AutoDeactivate  =   True
+      Bold            =   False
+      Caption         =   ""
+      DataField       =   ""
+      DataSource      =   ""
+      Enabled         =   True
+      Height          =   22
+      HelpTag         =   ""
+      Index           =   -2147483648
+      InitialParent   =   ""
+      Italic          =   False
+      Left            =   539
+      LockBottom      =   False
+      LockedInPosition=   False
+      LockLeft        =   True
+      LockRight       =   False
+      LockTop         =   True
+      Scope           =   0
+      State           =   0
+      TabIndex        =   27
+      TabPanelIndex   =   0
+      TabStop         =   True
+      TextFont        =   "System"
+      TextSize        =   0.0
+      TextUnit        =   0
+      Top             =   85
+      Underline       =   False
+      Value           =   False
+      Visible         =   True
+      Width           =   113
    End
 End
 #tag EndWindow
@@ -1027,11 +1093,12 @@ End
 		  tfManufacturer.Text = oCurrentRecord.sli_manufacturer
 		  tfModel.Text = oCurrentRecord.sli_model
 		  tfName.Text = oCurrentRecord.sli_name
-		  tfPrice.Text = oCurrentRecord.ili_price_cost.ToText
+		  tfPrice.Text = oCurrentRecord.sli_price
 		  tfQuantity.Text = oCurrentRecord.sli_quantity
 		  tfRate.Text = oCurrentRecord.sli_rate
 		  tfSubCategory.Text = oCurrentRecord.sli_subcategory
-		  tfTime.Text = oCurrentRecord.ili_time.ToText
+		  tfTime.Text = oCurrentRecord.sli_time
+		  chbTaxable.Value = oCurrentRecord.bli_taxable
 		End Sub
 	#tag EndMethod
 
@@ -1138,7 +1205,7 @@ End
 	#tag Event
 		Sub LostFocus()
 		  
-		  oCurrentRecord.ili_time = val( me.Text )
+		  oCurrentRecord.sli_time = me.Text
 		  oCurrentRecord.Save
 		End Sub
 	#tag EndEvent
@@ -1165,7 +1232,7 @@ End
 	#tag Event
 		Sub LostFocus()
 		  
-		  oCurrentRecord.ili_price_cost = val( me.Text )
+		  oCurrentRecord.sli_price = me.Text
 		  oCurrentRecord.Save
 		End Sub
 	#tag EndEvent
@@ -1175,6 +1242,15 @@ End
 		Sub LostFocus()
 		  
 		  oCurrentRecord.sli_quantity = me.Text
+		  oCurrentRecord.Save
+		End Sub
+	#tag EndEvent
+#tag EndEvents
+#tag Events chbTaxable
+	#tag Event
+		Sub Action()
+		  
+		  oCurrentRecord.bli_taxable = me.Value
 		  oCurrentRecord.Save
 		End Sub
 	#tag EndEvent

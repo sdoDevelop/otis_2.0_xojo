@@ -298,7 +298,7 @@ End
 		    // Check to see if this record has any children
 		    dim arLinkArray() as DataFile.tbl_internal_linking
 		    dim dictChildRecords as New Dictionary
-		    arLinkArray = DataFile.tbl_internal_linking.List( "fk_parent = " + otblRecord.ipkid.ToText )
+		    arLinkArray = DataFile.tbl_internal_linking.List( "fk_parent = " + otblRecord.ipkid.ToText + " And fk_table_name = 'tbl_events'" )
 		    
 		    // Loop through each link child
 		    If arLinkArray.Ubound <> -1 Then
@@ -810,11 +810,16 @@ End
 		    // Get the records
 		    dim records() as DataFile.tbl_events = methGetRecordList_UnGrouped("start_date","")    '!@! Table Dependent !@!
 		    
-		    // Build the rowtags
-		    dim theRowtags() as lbRowTag
-		    theRowtags = methCreateRowTags(records)
-		    
-		    methCreateTopLevelRows(theRowtags)
+		    If records.Ubound <> -1 Then
+		      // Build the rowtags
+		      dim theRowtags() as lbRowTag
+		      theRowtags = methCreateRowTags(records)
+		      
+		      methCreateTopLevelRows(theRowtags)
+		      
+		    Else
+		      lbEvents.DeleteAllRows
+		    End If
 		    
 		    //Grouped
 		  ElseIf IsGrouped Then
@@ -822,10 +827,15 @@ End
 		    // Get the Records
 		    dim dictRecords as Dictionary = methGetRecordList_Grouped("start_date", "")    '!@! Table Dependent !@!
 		    
-		    dim theRowtagsGrouped() as lbRowTag
-		    theRowtagsGrouped = methCreateRowTags_dict(dictRecords)
-		    
-		    methCreateTopLevelRows(theRowtagsGrouped)
+		    If dictRecords.Count <> 0 Then
+		      dim theRowtagsGrouped() as lbRowTag
+		      theRowtagsGrouped = methCreateRowTags_dict(dictRecords)
+		      
+		      methCreateTopLevelRows(theRowtagsGrouped)
+		      
+		    Else
+		      lbEvents.DeleteAllRows
+		    End If
 		    
 		  End If
 		  

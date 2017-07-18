@@ -1,5 +1,5 @@
 #tag Class
-Protected Class tbl_eipl
+Protected Class tbl_group_discounts
 Inherits DataFile.ActiveRecordBase
 	#tag Method, Flags = &h0
 		Shared Function BaseSQL(bAsCount as Boolean = false) As String
@@ -12,7 +12,7 @@ Inherits DataFile.ActiveRecordBase
 		    ars.Append "count(*) as iCnt"
 		  end if
 		  
-		  ars.Append "From tbl_eipl"
+		  ars.Append "From tbl_group_discounts"
 		  
 		  Return ars.JoinSQL
 		End Function
@@ -33,11 +33,11 @@ Inherits DataFile.ActiveRecordBase
 	#tag EndMethod
 
 	#tag Method, Flags = &h0
-		Shared Function FindByID(id as Integer) As DataFile.tbl_eipl
+		Shared Function FindByID(id as Integer) As DataFile.tbl_group_discounts
 		  //Usage:
-		  //dim tbl_eipl as DataFile.tbl_eipl = DataFile.tbl_eipl.FindByID( id )
+		  //dim tbl_group_discounts as DataFile.tbl_group_discounts = DataFile.tbl_group_discounts.FindByID( id )
 		  dim s as string
-		  s = "Select * from tbl_eipl WHERE pkid = " + str(id)
+		  s = "Select * from tbl_group_discounts WHERE pkid = " + str(id)
 		  
 		  dim rs as RecordSet = DB.SQLSelect(s)
 		  
@@ -47,17 +47,17 @@ Inherits DataFile.ActiveRecordBase
 		  end
 		  if rs.RecordCount = 0 then return nil
 		  
-		  dim tbl_eipl as new DataFile.tbl_eipl
-		  tbl_eipl.ReadRecord(rs)
-		  return tbl_eipl
+		  dim tbl_group_discounts as new DataFile.tbl_group_discounts
+		  tbl_group_discounts.ReadRecord(rs)
+		  return tbl_group_discounts
 		  
 		End Function
 	#tag EndMethod
 
 	#tag Method, Flags = &h0
-		Shared Function List(stmt as PreparedSQLStatement) As DataFile.tbl_eipl()
+		Shared Function List(stmt as PreparedSQLStatement) As DataFile.tbl_group_discounts()
 		  //Note: You should use this method if your query contains user entered data. Using this method will help prevent SQL injection attacks
-		  dim aro() as DataFile.tbl_eipl
+		  dim aro() as DataFile.tbl_group_discounts
 		  
 		  dim rs as recordset = stmt.SQLSelect
 		  If DB.error then
@@ -67,7 +67,7 @@ Inherits DataFile.ActiveRecordBase
 		  end
 		  
 		  while rs.eof = false
-		    dim oRecord as new DataFile.tbl_eipl
+		    dim oRecord as new DataFile.tbl_group_discounts
 		    oRecord.ReadRecord(rs)
 		    aro.Append oRecord
 		    rs.MoveNext
@@ -78,14 +78,14 @@ Inherits DataFile.ActiveRecordBase
 	#tag EndMethod
 
 	#tag Method, Flags = &h0
-		Shared Function List(sCriteria as string = "", sOrder as string = "", iOffset as Integer = -1) As DataFile.tbl_eipl()
+		Shared Function List(sCriteria as string = "", sOrder as string = "", iOffset as Integer = -1) As DataFile.tbl_group_discounts()
 		  //Note: You should not use this method if your query contains user entered data.
 		  //Using this method with user entered data could expose you to SQL injection attacks.
-		  dim aro() as DataFile.tbl_eipl
+		  dim aro() as DataFile.tbl_group_discounts
 		  dim ars() as string
 		  
 		  
-		  ars.append DataFile.tbl_eipl.BaseSQL
+		  ars.append DataFile.tbl_group_discounts.BaseSQL
 		  if sCriteria.Trim <> "" then
 		    ars.append "WHERE " + sCriteria
 		  end if
@@ -109,7 +109,7 @@ Inherits DataFile.ActiveRecordBase
 		  end
 		  
 		  do until rs.EOF
-		    dim oRecord as new DataFile.tbl_eipl
+		    dim oRecord as new DataFile.tbl_group_discounts
 		    oRecord.ReadRecord(rs)
 		    
 		    aro.Append(oRecord)
@@ -145,7 +145,7 @@ Inherits DataFile.ActiveRecordBase
 		  dim ars() as string
 		  
 		  
-		  ars.append DataFile.tbl_eipl.BaseSQL(True)
+		  ars.append DataFile.tbl_group_discounts.BaseSQL(True)
 		  if sCriteria<>"" then
 		    ars.append "WHERE " + sCriteria
 		  end if
@@ -165,20 +165,20 @@ Inherits DataFile.ActiveRecordBase
 	#tag Method, Flags = &h0
 		Shared Function ListGrouped(sCriteria as string = "", sOrder as string = "", sGroupBy as String = "") As Dictionary
 		  dim jsMaster as New Dictionary
-		  dim oRecordList() as DataFile.tbl_eipl
+		  dim oRecordList() as DataFile.tbl_group_discounts
 		  
 		  If sGroupBy = "" Then
 		    Return Nil
 		  End If
 		  
 		  // Lets get the complete list of records from the database
-		  oRecordList() = DataFile.tbl_eipl.List(sCriteria, sOrder)
+		  oRecordList() = DataFile.tbl_group_discounts.List(sCriteria, sOrder)
 		  
 		  // now we need to loop through each one of the records and startp putting them in there place
 		  dim sGroupByList() as string = sGroupBy.split(", ")
 		  dim jsCurrent() as Dictionary
 		  dim idx_record as integer
-		  For Each oRecord as DataFile.tbl_eipl In oRecordList()
+		  For Each oRecord as DataFile.tbl_group_discounts In oRecordList()
 		    
 		    jsCurrent.append( jsMaster)
 		    
@@ -207,7 +207,7 @@ Inherits DataFile.ActiveRecordBase
 		          jsCurrent.Append( jsCurrent(n3).Value( sGroupValue ) )
 		          Continue
 		          
-		        Elseif jsCurrent(n3).Value( sGroupValue ) IsA DataFile.tbl_eipl Then
+		        Elseif jsCurrent(n3).Value( sGroupValue ) IsA DataFile.tbl_group_discounts Then
 		          ' we can put the record here
 		          
 		        Else
@@ -215,7 +215,7 @@ Inherits DataFile.ActiveRecordBase
 		          #Pragma BreakOnExceptions Off
 		          Try
 		            // pull the array of records from the value
-		            dim oRecords() as DataFile.tbl_eipl
+		            dim oRecords() as DataFile.tbl_group_discounts
 		            oRecords() = jsCurrent(n3).Value(sGroupValue)
 		            oRecords.Append(oRecord)
 		            jsCurrent(n3).Value(sGroupValue) = oRecords
@@ -230,7 +230,7 @@ Inherits DataFile.ActiveRecordBase
 		            // We need to check if this is the last group by field
 		            If idx1 = sGroupByList.Ubound Then
 		              // this is the last of the group by fields so we can put an array with this record in the value
-		              dim oRecords() as DataFile.tbl_eipl
+		              dim oRecords() as DataFile.tbl_group_discounts
 		              oRecords.Append( oRecord )
 		              jsCurrent(n3).Value( sGroupValue ) = oRecords
 		            Else
@@ -267,71 +267,21 @@ Inherits DataFile.ActiveRecordBase
 
 
 	#tag Property, Flags = &h0
-		ieipl_number As Integer
+		ifkeipl As Int64
 	#tag EndProperty
 
 	#tag Property, Flags = &h0
-		ifkevents As Int64
+		sgroup_discount As String
 	#tag EndProperty
 
 	#tag Property, Flags = &h0
-		sdiscount_amount As String
-	#tag EndProperty
-
-	#tag Property, Flags = &h0
-		sdue_date As String
-	#tag EndProperty
-
-	#tag Property, Flags = &h0
-		seipl_name As String
-	#tag EndProperty
-
-	#tag Property, Flags = &h0
-		seipl_tax_rate As String
-	#tag EndProperty
-
-	#tag Property, Flags = &h0
-		seipl_type As String
-	#tag EndProperty
-
-	#tag Property, Flags = &h0
-		sshipping_method As String
+		sgroup_name As String
 	#tag EndProperty
 
 
 	#tag ViewBehavior
 		#tag ViewProperty
-			Name="idiscount_percent"
-			Group="Behavior"
-			Type="Integer"
-		#tag EndViewProperty
-		#tag ViewProperty
-			Name="idiscount_total"
-			Group="Behavior"
-			Type="Integer"
-		#tag EndViewProperty
-		#tag ViewProperty
-			Name="ieipl_balance"
-			Group="Behavior"
-			Type="Integer"
-		#tag EndViewProperty
-		#tag ViewProperty
-			Name="ieipl_grand_total"
-			Group="Behavior"
-			Type="Integer"
-		#tag EndViewProperty
-		#tag ViewProperty
 			Name="ieipl_number"
-			Group="Behavior"
-			Type="Integer"
-		#tag EndViewProperty
-		#tag ViewProperty
-			Name="ieipl_subtotal"
-			Group="Behavior"
-			Type="Integer"
-		#tag EndViewProperty
-		#tag ViewProperty
-			Name="ieipl_total_paid"
 			Group="Behavior"
 			Type="Integer"
 		#tag EndViewProperty
@@ -354,11 +304,6 @@ Inherits DataFile.ActiveRecordBase
 			Type="Int64"
 		#tag EndViewProperty
 		#tag ViewProperty
-			Name="itax_total"
-			Group="Behavior"
-			Type="Integer"
-		#tag EndViewProperty
-		#tag ViewProperty
 			Name="LastInsertID"
 			Group="Behavior"
 			Type="Int64"
@@ -379,7 +324,8 @@ Inherits DataFile.ActiveRecordBase
 		#tag ViewProperty
 			Name="sdiscount_amount"
 			Group="Behavior"
-			Type="Integer"
+			Type="String"
+			EditorType="MultiLineEditor"
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="sdue_date"
@@ -391,11 +337,13 @@ Inherits DataFile.ActiveRecordBase
 			Name="seipl_name"
 			Group="Behavior"
 			Type="String"
+			EditorType="MultiLineEditor"
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="seipl_tax_rate"
 			Group="Behavior"
 			Type="String"
+			EditorType="MultiLineEditor"
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="seipl_type"

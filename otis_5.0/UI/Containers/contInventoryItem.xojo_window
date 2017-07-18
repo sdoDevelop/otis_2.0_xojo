@@ -824,6 +824,7 @@ Begin ContainerControl contInventoryItem
       BackColor       =   &c40004000
       Backdrop        =   0
       bDisplayGrouped =   False
+      bPickerMode     =   False
       Enabled         =   True
       EraseBackground =   True
       HasBackColor    =   False
@@ -2862,7 +2863,7 @@ End
 		        
 		        // Change the :
 		        '     quantity
-		        oItem.iitem_quantity = 1
+		        oItem.sitem_quantity = "1"
 		        '     physical item 
 		        oItem.bphysical_item = True
 		        '     hide
@@ -2884,10 +2885,11 @@ End
 		      dim oItem as New DataFile.tbl_inventory
 		      oItem.sitem_name = "New Item"
 		      oItem.sitem_department = oCurrentInventoryItem.sitem_department
-		      oItem.iitem_quantity = 1
+		      oItem.sitem_quantity = "1"
 		      oItem.sitem_owner = oCurrentInventoryItem.sitem_owner
 		      oItem.sitem_category = oCurrentInventoryItem.sitem_category
 		      oItem.sitem_subcategory = oCurrentInventoryItem.sitem_subcategory
+		      oItem.bhide = True
 		      oItem.Save
 		      
 		      // Append the item to the items to be linked
@@ -2911,7 +2913,8 @@ End
 		    oLinkItem.ifk_parent = oCurrentInventoryItem.ipkid
 		    oLinkItem.ifk_child = oChild.ipkid
 		    oLinkItem.slink_type = LinkType
-		    oLinkItem.iquantity = 1
+		    oLinkItem.squantity = "1"
+		    oLinkItem.sfk_table_name = "tbl_inventory"
 		    oLinkItem.Save
 		    
 		    If sResult = "Create New" And LinkType = "version" Then
@@ -3075,11 +3078,11 @@ End
 		  tfItemOwner.Text = oCurrentInventoryItem.sitem_owner
 		  
 		  // Prices 
-		  tfItemRentalPrice.Text = ConvertCentsString_To_DollarString( str( oCurrentInventoryItem.iitem_rental_price_cost ) )
-		  tfItemPurchasePrice.Text = ConvertCentsString_To_DollarString( str( oCurrentInventoryItem.iitem_purchase_price_cost ) )
-		  tfItemSalePrice.Text = ConvertCentsString_To_DollarString( str( oCurrentInventoryItem.iitem_sale_price_cost ) )
+		  tfItemRentalPrice.Text = oCurrentInventoryItem.sitem_rental_price
+		  tfItemPurchasePrice.Text = oCurrentInventoryItem.sitem_purchase_price
+		  tfItemSalePrice.Text = oCurrentInventoryItem.sitem_sale_price
 		  
-		  tfItemQuantity.Text = str( oCurrentInventoryItem.iitem_quantity )
+		  tfItemQuantity.Text = oCurrentInventoryItem.sitem_quantity
 		  tfItemSubCategory.Text = oCurrentInventoryItem.sitem_subcategory
 		  tfItemWeight.Text = oCurrentInventoryItem.sitem_weight
 		  tfItemHeight.Text = oCurrentInventoryItem.sitem_height
@@ -3121,7 +3124,7 @@ End
 		  dim  s1 as string
 		  dim n1 as integer
 		  
-		  n1 = 100 + oCurrentInventoryItem.iitem_quantity + 1
+		  n1 = 100 + val( oCurrentInventoryItem.sitem_quantity ) + 1
 		  s1 = n1.ToText
 		  tfNextPostfix.Text = s1
 		  
@@ -3188,9 +3191,9 @@ End
 		    If chItemHeight_Push.Value Then oItem.sitem_height = oParentItem.sitem_height
 		    If chItemDepth_Push.Value Then oItem.sitem_depth = oParentItem.sitem_depth
 		    If chItemWeight_Push.Value Then oItem.sitem_weight = oParentItem.sitem_weight
-		    If chItemPurchasePrice_Push.Value Then oItem.iitem_purchase_price_cost = oParentItem.iitem_purchase_price_cost
-		    If chItemRentalPrice_Push.Value Then oItem.iitem_rental_price_cost = oParentItem.iitem_rental_price_cost
-		    If chItemSalePrice_Push.Value Then oItem.iitem_sale_price_cost = oParentItem.iitem_sale_price_cost
+		    If chItemPurchasePrice_Push.Value Then oItem.sitem_purchase_price = oParentItem.sitem_purchase_price
+		    If chItemRentalPrice_Push.Value Then oItem.sitem_rental_price = oParentItem.sitem_rental_price
+		    If chItemSalePrice_Push.Value Then oItem.sitem_sale_price = oParentItem.sitem_sale_price
 		    If chItemStatus_Push.Value Then oItem.sitem_status = oParentItem.sitem_status
 		    If chItemType_Push.Value Then oItem.sitem_type = oParentItem.sitem_type
 		    oItem.Save
@@ -3331,13 +3334,13 @@ End
 		  
 		  dim s1 as string
 		  
-		  s1 = ConvertDollarString_To_CentsString( me.Text )
+		  s1 = me.Text
 		  
-		  oCurrentInventoryItem.iitem_rental_price_cost = val(s1)
+		  oCurrentInventoryItem.sitem_rental_price = s1
 		  SaveItem
 		  
 		  // Set the text field to the formatted value
-		  me.Text = ConvertCentsString_To_DollarString(s1)
+		  me.Text = s1
 		End Sub
 	#tag EndEvent
 #tag EndEvents
@@ -3733,13 +3736,13 @@ End
 		  
 		  dim s1 as string
 		  
-		  s1 = ConvertDollarString_To_CentsString( me.Text )
+		  s1 = me.Text
 		  
-		  oCurrentInventoryItem.iitem_purchase_price_cost = val(s1)
+		  oCurrentInventoryItem.sitem_purchase_price = s1
 		  SaveItem
 		  
 		  // Set the text field to the formatted value
-		  me.Text = ConvertCentsString_To_DollarString(s1)
+		  me.Text = s1
 		End Sub
 	#tag EndEvent
 #tag EndEvents
@@ -3749,13 +3752,13 @@ End
 		  
 		  dim s1 as string
 		  
-		  s1 = ConvertDollarString_To_CentsString( me.Text )
+		  s1 = me.Text
 		  
-		  oCurrentInventoryItem.iitem_rental_price_cost = val(s1)
+		  oCurrentInventoryItem.sitem_sale_price = s1
 		  SaveItem
 		  
 		  // Set the text field to the formatted value
-		  me.Text = ConvertCentsString_To_DollarString(s1)
+		  me.Text = s1
 		End Sub
 	#tag EndEvent
 #tag EndEvents

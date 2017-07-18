@@ -875,7 +875,7 @@ End
 		    dim d1 as date
 		    dcExitDate.DateValue = d1
 		  End If
-		  tfWorkCost.Text = ConvertCentsString_To_DollarString(oLog.iwork_cost.ToText)
+		  tfWorkCost.Text = oLog.swork_cost
 		  taWorkDescription.Text = oLog.swork_description
 		  taWorkComments.Text = oLog.swork_comments
 		End Sub
@@ -1134,13 +1134,13 @@ End
 		  
 		  dim s1 as string
 		  
-		  s1 = ConvertDollarString_To_CentsString(me.Text)
+		  s1 = me.Text
 		  
-		  oCurrentLog.iwork_cost = val(s1)
+		  oCurrentLog.swork_cost = s1
 		  SaveLog
 		  
 		  // Update the display
-		  me.Text = ConvertCentsString_To_DollarString(oCurrentLog.iwork_cost.ToText)
+		  me.Text = oCurrentLog.swork_cost.ToText
 		End Sub
 	#tag EndEvent
 #tag EndEvents

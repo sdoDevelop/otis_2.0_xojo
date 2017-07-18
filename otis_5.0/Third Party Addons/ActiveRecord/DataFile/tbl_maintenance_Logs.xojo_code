@@ -168,10 +168,6 @@ Inherits DataFile.ActiveRecordBase
 	#tag EndProperty
 
 	#tag Property, Flags = &h0
-		iwork_cost As Integer
-	#tag EndProperty
-
-	#tag Property, Flags = &h0
 		sdue_date As String
 	#tag EndProperty
 
@@ -185,6 +181,10 @@ Inherits DataFile.ActiveRecordBase
 
 	#tag Property, Flags = &h0
 		swork_comments As String
+	#tag EndProperty
+
+	#tag Property, Flags = &h0
+		swork_cost As String
 	#tag EndProperty
 
 	#tag Property, Flags = &h0
@@ -221,11 +221,6 @@ Inherits DataFile.ActiveRecordBase
 			Name="ipkid"
 			Group="Behavior"
 			Type="Int64"
-		#tag EndViewProperty
-		#tag ViewProperty
-			Name="iwork_cost"
-			Group="Behavior"
-			Type="Integer"
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="LastInsertID"
@@ -292,6 +287,11 @@ Inherits DataFile.ActiveRecordBase
 			Group="Behavior"
 			Type="String"
 			EditorType="MultiLineEditor"
+		#tag EndViewProperty
+		#tag ViewProperty
+			Name="swork_cost"
+			Group="Behavior"
+			Type="Integer"
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="swork_description"

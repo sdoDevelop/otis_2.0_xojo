@@ -49,7 +49,12 @@ Inherits DataFile.ActiveRecordBase
 		  oNewLI.sli_subcategory = me.sitem_subcategory
 		  oNewLI.sli_description = me.sitem_description
 		  oNewLI.sli_type = me.sitem_type
-		  oNewLI.ili_price_cost = me.iitem_rental_price_cost
+		  oNewLI.sli_price = me.sitem_rental_price
+		  
+		  oNewLI.sli_quantity = "1"
+		  oNewLI.sli_time = "1"
+		  oNewLI.sli_rate = "Daily"
+		  
 		  
 		  Return oNewLI
 		End Function
@@ -424,30 +429,6 @@ Inherits DataFile.ActiveRecordBase
 	#tag EndProperty
 
 	#tag Property, Flags = &h0
-		bshow_items As Boolean
-	#tag EndProperty
-
-	#tag Property, Flags = &h0
-		bshow_items_discreetly As Boolean
-	#tag EndProperty
-
-	#tag Property, Flags = &h0
-		iitem_purchase_price_cost As Integer
-	#tag EndProperty
-
-	#tag Property, Flags = &h0
-		iitem_quantity As Integer
-	#tag EndProperty
-
-	#tag Property, Flags = &h0
-		iitem_rental_price_cost As Integer
-	#tag EndProperty
-
-	#tag Property, Flags = &h0
-		iitem_sale_price_cost As Integer
-	#tag EndProperty
-
-	#tag Property, Flags = &h0
 		sitem_barcode As String
 	#tag EndProperty
 
@@ -488,7 +469,23 @@ Inherits DataFile.ActiveRecordBase
 	#tag EndProperty
 
 	#tag Property, Flags = &h0
+		sitem_purchase_price As String
+	#tag EndProperty
+
+	#tag Property, Flags = &h0
+		sitem_quantity As String
+	#tag EndProperty
+
+	#tag Property, Flags = &h0
+		sitem_rental_price As String
+	#tag EndProperty
+
+	#tag Property, Flags = &h0
 		sitem_rfid_code As String
+	#tag EndProperty
+
+	#tag Property, Flags = &h0
+		sitem_sale_price As String
 	#tag EndProperty
 
 	#tag Property, Flags = &h0
@@ -545,11 +542,6 @@ Inherits DataFile.ActiveRecordBase
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="iitem_purchase_price_cost"
-			Group="Behavior"
-			Type="Integer"
-		#tag EndViewProperty
-		#tag ViewProperty
-			Name="iitem_quantity"
 			Group="Behavior"
 			Type="Integer"
 		#tag EndViewProperty
@@ -654,6 +646,11 @@ Inherits DataFile.ActiveRecordBase
 			EditorType="MultiLineEditor"
 		#tag EndViewProperty
 		#tag ViewProperty
+			Name="sitem_quantity"
+			Group="Behavior"
+			Type="Integer"
+		#tag EndViewProperty
+		#tag ViewProperty
 			Name="sitem_rfid_code"
 			Group="Behavior"
 			Type="String"
@@ -681,6 +678,7 @@ Inherits DataFile.ActiveRecordBase
 			Name="sitem_type"
 			Group="Behavior"
 			Type="String"
+			EditorType="MultiLineEditor"
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="sitem_weight"

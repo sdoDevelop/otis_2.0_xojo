@@ -280,7 +280,7 @@ End
 		    // Check to see if this record has any children
 		    dim arLinkArray() as DataFile.tbl_internal_linking
 		    dim dictChildRecords as New Dictionary
-		    arLinkArray = DataFile.tbl_internal_linking.List( "fk_parent = " + otblRecord.ipkid.ToText )
+		    arLinkArray = DataFile.tbl_internal_linking.List( "fk_parent = " + otblRecord.ipkid.ToText + " And fk_table_name = 'tbl_contactables'" )
 		    
 		    // Loop through each link child
 		    If arLinkArray.Ubound <> -1 Then
@@ -793,34 +793,38 @@ End
 		    // Get the records
 		    dim records() as DataFile.tbl_contactables = methGetRecordList_UnGrouped("company","")    '!@! Table Dependent !@!
 		    
-		    // Build the rowtags
-		    dim theRowtags() as lbRowTag
-		    theRowtags = methCreateRowTags(records)
-		    
-		    // Check if we are filtering by a parent id
-		    If FilterByParentID And iFilterID <> 0 Then
+		    If records.Ubound <> -1 Then
+		      // Build the rowtags
+		      dim theRowtags() as lbRowTag
+		      theRowtags = methCreateRowTags(records)
 		      
-		      // Loop through each rowtag and check if it is linked to the parent
-		      For i1 as integer = theRowtags.Ubound DownTo 0
+		      // Check if we are filtering by a parent id
+		      If FilterByParentID And iFilterID <> 0 Then
 		        
-		        dim oRowTag as lbRowTag = theRowtags(i1)
-		        
-		        If oRowTag.vtblRecord <> Nil Then
+		        // Loop through each rowtag and check if it is linked to the parent
+		        For i1 as integer = theRowtags.Ubound DownTo 0
 		          
-		          dim iRecordCount as integer
-		          iRecordCount = DataFile.tbl_internal_linking.ListCount( "fk_parent = " + iFilterID.ToText + " And fk_child = " + oRowTag.pkid.ToText )
+		          dim oRowTag as lbRowTag = theRowtags(i1)
 		          
-		          If iRecordCount = 0 Then
-		            theRowtags.Remove(i1)
+		          If oRowTag.vtblRecord <> Nil Then
+		            
+		            dim iRecordCount as integer
+		            iRecordCount = DataFile.tbl_internal_linking.ListCount( "fk_parent = " + iFilterID.ToText + " And fk_child = " + oRowTag.pkid.ToText )
+		            
+		            If iRecordCount = 0 Then
+		              theRowtags.Remove(i1)
+		            End If
+		            
 		          End If
 		          
-		        End If
+		        Next
 		        
-		      Next
+		      Else
+		        lbContactables.DeleteAllRows
+		      End If
 		      
+		      methCreateTopLevelRows(theRowtags)
 		    End If
-		    
-		    methCreateTopLevelRows(theRowtags)
 		    
 		    //Grouped
 		  ElseIf IsGrouped Then
@@ -828,33 +832,38 @@ End
 		    // Get the Records
 		    dim dictRecords as Dictionary = methGetRecordList_Grouped("company", "")    '!@! Table Dependent !@!
 		    
-		    dim theRowtagsGrouped() as lbRowTag
-		    theRowtagsGrouped = methCreateRowTags_dict(dictRecords)
-		    
-		    // Check if we are filtering by a parent id
-		    If FilterByParentID And iFilterID <> 0 Then
+		    If dictRecords.Count <> 0 Then
+		      dim theRowtagsGrouped() as lbRowTag
+		      theRowtagsGrouped = methCreateRowTags_dict(dictRecords)
 		      
-		      // Loop through each rowtag and check if it is linked to the parent
-		      For i1 as integer = theRowtagsGrouped.Ubound DownTo 0
+		      // Check if we are filtering by a parent id
+		      If FilterByParentID And iFilterID <> 0 Then
 		        
-		        dim oRowTag as lbRowTag = theRowtagsGrouped(i1)
-		        
-		        If oRowTag.vtblRecord <> Nil Then
+		        // Loop through each rowtag and check if it is linked to the parent
+		        For i1 as integer = theRowtagsGrouped.Ubound DownTo 0
 		          
-		          dim iRecordCount as integer
-		          iRecordCount = DataFile.tbl_internal_linking.ListCount( "fk_parent = " + iFilterID.ToText + " And fk_child = " + oRowTag.pkid.ToText )
+		          dim oRowTag as lbRowTag = theRowtagsGrouped(i1)
 		          
-		          If iRecordCount = 0 Then
-		            theRowtagsGrouped.Remove(i1)
+		          If oRowTag.vtblRecord <> Nil Then
+		            
+		            dim iRecordCount as integer
+		            iRecordCount = DataFile.tbl_internal_linking.ListCount( "fk_parent = " + iFilterID.ToText + " And fk_child = " + oRowTag.pkid.ToText )
+		            
+		            If iRecordCount = 0 Then
+		              theRowtagsGrouped.Remove(i1)
+		            End If
+		            
 		          End If
 		          
-		        End If
+		        Next
 		        
-		      Next
+		      End If
 		      
+		      methCreateTopLevelRows(theRowtagsGrouped)
+		      
+		    Else
+		      lbContactables.DeleteAllRows
 		    End If
-		    
-		    methCreateTopLevelRows(theRowtagsGrouped)
 		    
 		  End If
 		  
@@ -1152,7 +1161,7 @@ End
 		      End If
 		    Next
 		    
-		  Case "Delete Item"
+		  Case "Delete"
 		    
 		    dim oRowTags() as lbRowTag
 		    oRowTags = lbItems.GetSelectedRows

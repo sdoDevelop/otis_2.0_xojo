@@ -775,11 +775,16 @@ End
 		    // Get the records
 		    dim records() as DataFile.tbl_eipl = methGetRecordList_UnGrouped("eipl_type","")    '!@! Table Dependent !@!
 		    
-		    // Build the rowtags
-		    dim theRowtags() as lbRowTag
-		    theRowtags = methCreateRowTags(records)
-		    
-		    methCreateTopLevelRows(theRowtags)
+		    If records.Ubound <> -1 Then
+		      // Build the rowtags
+		      dim theRowtags() as lbRowTag
+		      theRowtags = methCreateRowTags(records)
+		      
+		      methCreateTopLevelRows(theRowtags)
+		      
+		    Else
+		      lbEIPLs.DeleteAllRows
+		    End If
 		    
 		    //Grouped
 		  ElseIf IsGrouped Then
@@ -787,10 +792,14 @@ End
 		    // Get the Records
 		    dim dictRecords as Dictionary = methGetRecordList_Grouped("eipl_type", "")    '!@! Table Dependent !@!
 		    
-		    dim theRowtagsGrouped() as lbRowTag
-		    theRowtagsGrouped = methCreateRowTags_dict(dictRecords)
-		    
-		    methCreateTopLevelRows(theRowtagsGrouped)
+		    If dictRecords.Count <> 0 Then
+		      dim theRowtagsGrouped() as lbRowTag
+		      theRowtagsGrouped = methCreateRowTags_dict(dictRecords)
+		      
+		      methCreateTopLevelRows(theRowtagsGrouped)
+		    Else
+		      lbEIPLs.DeleteAllRows
+		    End If
 		    
 		  End If
 		  
@@ -1249,7 +1258,7 @@ End
 	#tag Event
 		Sub Action()
 		  '!@! Table Dependent !@!
-		  Break
+		  
 		  
 		  dim oNewItem as New DataFile.tbl_eipl
 		  oNewItem.Save

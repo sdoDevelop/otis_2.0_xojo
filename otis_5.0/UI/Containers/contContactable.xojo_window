@@ -961,6 +961,7 @@ Begin ContainerControl contContactable
       HasBackColor    =   False
       Height          =   144
       HelpTag         =   ""
+      iFilterID       =   ""
       InitialParent   =   ""
       LastSearchValue =   ""
       Left            =   132
@@ -969,6 +970,7 @@ Begin ContainerControl contContactable
       LockLeft        =   True
       LockRight       =   False
       LockTop         =   True
+      PickerMode      =   False
       Scope           =   0
       TabIndex        =   25
       TabPanelIndex   =   0
@@ -1101,6 +1103,7 @@ End
 		    dim oLinkItem as New DataFile.tbl_internal_linking
 		    oLinkItem.ifk_parent = oCurrentRecord.ipkid
 		    oLinkItem.ifk_child = oChild.ipkid
+		    oLinkItem.sfk_table_name = "tbl_contactables"
 		    oLinkItem.Save
 		    
 		  Next
@@ -1327,6 +1330,13 @@ End
 		  oCurrentRecord.bhide = me.Value
 		  
 		  SaveRecord
+		End Sub
+	#tag EndEvent
+#tag EndEvents
+#tag Events contLinkedContactables
+	#tag Event
+		Sub evdefOpen()
+		  me.PickerMode = True
 		End Sub
 	#tag EndEvent
 #tag EndEvents

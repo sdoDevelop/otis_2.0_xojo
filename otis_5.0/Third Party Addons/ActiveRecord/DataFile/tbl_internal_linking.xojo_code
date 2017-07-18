@@ -172,15 +172,15 @@ Inherits DataFile.ActiveRecordBase
 	#tag EndProperty
 
 	#tag Property, Flags = &h0
-		iquantity As Integer
-	#tag EndProperty
-
-	#tag Property, Flags = &h0
-		sfk_table_name As Integer
+		sfk_table_name As String
 	#tag EndProperty
 
 	#tag Property, Flags = &h0
 		slink_type As String
+	#tag EndProperty
+
+	#tag Property, Flags = &h0
+		squantity As String
 	#tag EndProperty
 
 
@@ -206,11 +206,6 @@ Inherits DataFile.ActiveRecordBase
 			Name="ipkid"
 			Group="Behavior"
 			Type="Int64"
-		#tag EndViewProperty
-		#tag ViewProperty
-			Name="iquantity"
-			Group="Behavior"
-			Type="Integer"
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="LastInsertID"
@@ -240,6 +235,11 @@ Inherits DataFile.ActiveRecordBase
 			Group="Behavior"
 			Type="String"
 			EditorType="MultiLineEditor"
+		#tag EndViewProperty
+		#tag ViewProperty
+			Name="squantity"
+			Group="Behavior"
+			Type="Integer"
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="srow_created"

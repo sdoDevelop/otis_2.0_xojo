@@ -1,5 +1,5 @@
 #tag Window
-Begin ContainerControl contEventContactablesList
+Begin ContainerControl contGroupDiscountList
    AcceptFocus     =   False
    AcceptTabs      =   True
    AutoDeactivate  =   True
@@ -9,14 +9,14 @@ Begin ContainerControl contEventContactablesList
    Enabled         =   True
    EraseBackground =   True
    HasBackColor    =   False
-   Height          =   224
+   Height          =   300
    HelpTag         =   ""
    InitialParent   =   ""
    Left            =   0
-   LockBottom      =   True
-   LockLeft        =   True
-   LockRight       =   True
-   LockTop         =   True
+   LockBottom      =   False
+   LockLeft        =   False
+   LockRight       =   False
+   LockTop         =   False
    TabIndex        =   0
    TabPanelIndex   =   0
    TabStop         =   True
@@ -24,8 +24,8 @@ Begin ContainerControl contEventContactablesList
    Transparent     =   True
    UseFocusRing    =   False
    Visible         =   True
-   Width           =   338
-   Begin entListbox lbContactables
+   Width           =   300
+   Begin entListbox lbDiscounts
       AcceptFocus     =   False
       AcceptTabs      =   True
       AutoDeactivate  =   True
@@ -37,7 +37,7 @@ Begin ContainerControl contEventContactablesList
       GridLinesColor  =   &c00000000
       HasBackColor    =   False
       HasHeading      =   True
-      Height          =   202
+      Height          =   278
       HelpTag         =   ""
       InitialParent   =   ""
       Left            =   0
@@ -54,7 +54,7 @@ Begin ContainerControl contEventContactablesList
       Transparent     =   True
       UseFocusRing    =   False
       Visible         =   True
-      Width           =   338
+      Width           =   300
    End
    Begin PushButton pbRefresh
       AutoDeactivate  =   True
@@ -87,49 +87,91 @@ Begin ContainerControl contEventContactablesList
       Visible         =   True
       Width           =   80
    End
+   Begin PushButton pbAddDiscount
+      AutoDeactivate  =   True
+      Bold            =   False
+      ButtonStyle     =   "0"
+      Cancel          =   False
+      Caption         =   "Add"
+      Default         =   False
+      Enabled         =   True
+      Height          =   22
+      HelpTag         =   ""
+      Index           =   -2147483648
+      InitialParent   =   ""
+      Italic          =   False
+      Left            =   80
+      LockBottom      =   False
+      LockedInPosition=   False
+      LockLeft        =   True
+      LockRight       =   False
+      LockTop         =   True
+      Scope           =   0
+      TabIndex        =   2
+      TabPanelIndex   =   0
+      TabStop         =   True
+      TextFont        =   "System"
+      TextSize        =   0.0
+      TextUnit        =   0
+      Top             =   0
+      Underline       =   False
+      Visible         =   True
+      Width           =   80
+   End
 End
 #tag EndWindow
 
 #tag WindowCode
 	#tag Method, Flags = &h0
-		Sub methLoadMe()
-		  dim db1 as SQLiteDatabase = app.db
-		  
-		  lbContactables.DeleteAllRows
-		  
-		  // First lets grab all of the records from the database that are related to this event
-		  dim rs1 as RecordSet
-		  dim sql1 as string
-		  
-		  sql1 = "Select c.pkid, c.name_first, c.name_last,c.type, il.pkid as lipkid "_
-		  + "From tbl_contactables as c "_
-		  + "Inner Join tbl_internal_linking as il on ( c.pkid = il.fk_child ) "_
-		  + "Inner Join tbl_events as e on ( il.fk_parent = e.pkid ) "_
-		  + "Where e.pkid = " + EventID.ToText + ";"
-		  
-		  rs1 = db1.SQLSelect(sql1)
-		  If db1.Error Then
-		    System.DebugLog( "Cant get contacts related to event: " + db1.ErrorMessage )
+		Sub methLoadMe(oRecord as DataFile.tbl_eipl)
+		  lbDiscounts.DeleteAllRows
+		  'Break
+		  If oRecord = Nil Then
+		    oCurrentEIPL = oRecord
 		    Return
+		  Else
+		    oCurrentEIPL = oRecord
 		  End If
 		  
-		  If rs1.RecordCount > 0 Then
+		  // Get the discount records from the database
+		  dim aroDiscounts() as DataFile.tbl_group_discounts = DataFile.tbl_group_discounts.List( "fkeipl = " + oCurrentEIPL.ipkid.ToText )
+		  
+		  // Check to make sure we actually got records
+		  If aroDiscounts.Ubound <> -1 Then
 		    
-		    For iRecordIndex as integer = 1 To rs1.RecordCount
+		    // Create a new rowtag for this each record
+		    For Each oDiscount as DataFile.tbl_group_discounts In aroDiscounts()
 		      
-		      lbContactables.AddRow( rs1.Field("name_first").StringValue, rs1.Field("name_last").StringValue, rs1.Field("type").StringValue )
+		      dim var1, var2 as Variant
+		      var1 = oDiscount.sgroup_name
+		      var2 = oDiscount.sgroup_discount
 		      
-		      dim oRowTag as New lbRowTag
-		      oRowTag.pkid = rs1.Field("pkid").Value
-		      oRowTag.vColumnValues = Array( rs1.Field("name_first").Value, rs1.Field("name_last").Value, rs1.Field("type").Value )
-		      If rs1.Field("lipkid").IntegerValue <> 0 Then oRowTag.vLinkTable = DataFile.tbl_internal_linking.FindByID( rs1.Field("lipkid").IntegerValue )
-		      If rs1.Field("pkid").IntegerValue <> 0 Then oRowTag.vtblRecord = DataFile.tbl_contactables.FindByID( rs1.Field("pkid").IntegerValue )
+		      dim oRowtag as New lbRowTag
+		      oRowtag.pkid = oDiscount.ipkid
+		      oRowtag.vColumnValues = Array( var1,var2 )
+		      oRowtag.vtblRecord = oDiscount
+		      oRowtag.sFieldNames = Array("group_name","group_discount")
 		      
-		      lbContactables.RowTag(lbContactables.LastIndex) = oRowTag
-		      
-		      rs1.MoveNext
+		      lbDiscounts.AddRow( var1,var2 )
+		      lbDiscounts.RowTag( lbDiscounts.LastIndex ) = oRowtag
 		      
 		    Next
+		    
+		  End If
+		End Sub
+	#tag EndMethod
+
+	#tag Method, Flags = &h0
+		Sub methLoadMe(iPKID as Int64)
+		  
+		  
+		  If iPKID <> 0 Then
+		    dim oRecord as DataFile.tbl_eipl = DataFile.tbl_eipl.FindByID(iPKID)
+		    
+		    If oRecord <> Nil Then
+		      oCurrentEIPL = oRecord
+		      methLoadMe(oRecord)
+		    End If
 		    
 		  End If
 		End Sub
@@ -139,136 +181,61 @@ End
 		Sub methRefresh()
 		  
 		  dim oUIState as lbUIState
-		  oUIState = lbContactables.GetUIState
-		  methLoadMe()
-		  lbContactables.ResetUIState(oUIState)
+		  oUIState = lbDiscounts.GetUIState
+		  methLoadMe(oCurrentEIPL)
+		  lbDiscounts.ResetUIState(oUIState)
 		  
 		End Sub
 	#tag EndMethod
 
 
 	#tag Property, Flags = &h0
-		EventID As Int64
+		oCurrentEIPL As DataFile.tbl_eipl
 	#tag EndProperty
 
 
 #tag EndWindowCode
 
-#tag Events lbContactables
+#tag Events lbDiscounts
 	#tag Event
 		Sub Open()
 		  
-		  // Lets set up our headers
-		  me.ColumnCount = 3
-		  me.Heading = Array("Name"," ","Type")
-		  
+		  me.ColumnCount = 2
+		  me.Heading = Array( "Group", "Discount" )
 		End Sub
 	#tag EndEvent
 	#tag Event
 		Sub DoubleClick()
-		  dim oRowTag as lbRowTag
 		  
-		  If lbContactables.ListIndex <> -1 Then
+		  
+		  If lbDiscounts.ListIndex <> -1 Then
 		    
-		    oRowTag = lbContactables.RowTag( lbContactables.ListIndex )
+		    dim oRowTag as lbRowTag = lbDiscounts.RowTag( lbDiscounts.ListIndex )
 		    
-		    // load up a inventory item container
-		    dim conInst as New contContactable
-		    dim oTabPanel as PagePanel = app.MainWindow.tbMainWindow
-		    
-		    app.MainWindow.AddTab( lbContactables.Cell(lbContactables.ListIndex,0) )
-		    
-		    conInst.EmbedWithinPanel(oTabPanel,oTabPanel.PanelCount - 1 )
-		    
-		    conInst.LoadMe(oRowTag.pkid)
-		    
+		    If oRowTag <> Nil Then
+		      
+		      If oRowTag.vtblRecord <> Nil THen
+		        
+		        dim oDiscount as DataFile.tbl_group_discounts = oRowTag.vtblRecord
+		        
+		        dim instDiscountDetails as New contDiscountDetails
+		        dim instFlWindow as New winFloatingWindow
+		        
+		        instFlWindow.Width = instDiscountDetails.Width
+		        instFlWindow.Height = instDiscountDetails.Height
+		        
+		        instDiscountDetails.oCurrentRecord = oDiscount
+		        instDiscountDetails.EmbedWithin(instFlWindow)
+		        instDiscountDetails.methLoadMe
+		        
+		        instFlWindow.Top = MouseY
+		        instFlWindow.Left = MouseX
+		        
+		      End If
+		      
+		    End If
 		  End If
 		End Sub
-	#tag EndEvent
-	#tag Event
-		Function entContextualMenuAction(hitItem as MenuItem) As Boolean
-		  
-		  
-		  Select Case hitItem.Text
-		  Case "Break Link"
-		    Break
-		    dim oRowTags() as lbRowTag
-		    oRowTags = lbContactables.GetSelectedRows
-		    
-		    // Goal is to delete all selected rows allowing the user an option to apply their choice of whether or not to delete an item to all items
-		    
-		    dim sYesOrNoToAll as String
-		    
-		    // Loop through each row
-		    For Each oRowTag as lbRowTag in oRowTags
-		      
-		      // Get the table record out of the rowtag
-		      dim oRecord as DataFile.tbl_contactables
-		      If oRowTag.vtblRecord <> Nil Then
-		        oRecord = oRowTag.vtblRecord
-		      Else
-		        Continue
-		      End If
-		      dim oLinkRecord as DataFile.tbl_internal_linking
-		      If oRowTag.vLinkTable <> Nil Then
-		        oLinkRecord = oRowTag.vLinkTable
-		      Else
-		        Continue
-		      End If
-		      
-		      // Get the name of the item
-		      dim sName as string
-		      sName = oRecord.sname_first.ToText
-		      
-		      dim bDelete as Boolean
-		      
-		      If sYesOrNoToAll = "" Then
-		        
-		        // Prepare the prompt window
-		        dim contDeletePromt as New contDeleteBreakPrompt
-		        dim winWindow as New winFloatingWindow
-		        winWindow.Width = contDeletePromt.Width
-		        winWindow.Height = contDeletePromt.Height
-		        
-		        contDeletePromt.EmbedWithin(winWindow)
-		        contDeletePromt.labMesgTop.Text = "Are you sure you want to break link to " + sName + "."
-		        contDeletePromt.labMesgBottom.Text = ""
-		        
-		        // Display the window to the user
-		        winWindow.ShowModal
-		        
-		        // Check the users response
-		        bDelete = contDeletePromt.UserResponse
-		        If contDeletePromt.propApplyToAll Then
-		          If bDelete Then
-		            sYesOrNoToAll = "Yes"
-		          Else
-		            sYesOrNoToAll = "No"
-		          End If
-		        End If
-		        
-		      ElseIf sYesOrNoToAll = "Yes" Then
-		        bDelete = True
-		      ElseIf sYesOrNoToAll = "No" Then
-		        bDelete = False
-		      End If
-		      
-		      // Carry out the users request
-		      If bDelete Then
-		        oLinkRecord.Delete
-		      End If
-		    Next
-		    
-		  End Select
-		End Function
-	#tag EndEvent
-	#tag Event
-		Function entConstructContextualMenu(base as menuitem, x as integer, y as integer) As Boolean
-		  
-		  dim mi1 as New MenuItem("Break Link")
-		  mi1.Enabled = True
-		  base.Append( mi1 )
-		End Function
 	#tag EndEvent
 #tag EndEvents
 #tag Events pbRefresh
@@ -276,6 +243,32 @@ End
 		Sub Action()
 		  methRefresh
 		  
+		End Sub
+	#tag EndEvent
+#tag EndEvents
+#tag Events pbAddDiscount
+	#tag Event
+		Sub Action()
+		  
+		  If oCurrentEIPL <> Nil Then
+		    dim oNewDiscount as New DataFile.tbl_group_discounts
+		    oNewDiscount.ifkeipl = oCurrentEIPL.ipkid
+		    oNewDiscount.Save
+		    
+		    dim instDiscountDetails as New contDiscountDetails
+		    dim instFlWindow as New winFloatingWindow
+		    
+		    instFlWindow.Width = instDiscountDetails.Width
+		    instFlWindow.Height = instDiscountDetails.Height
+		    
+		    instDiscountDetails.oCurrentRecord = oNewDiscount
+		    instDiscountDetails.EmbedWithin(instFlWindow)
+		    instDiscountDetails.methLoadMe
+		    
+		    instFlWindow.Top = MouseY
+		    instFlWindow.Left = MouseX
+		    
+		  End If
 		End Sub
 	#tag EndEvent
 #tag EndEvents
@@ -332,11 +325,6 @@ End
 		InitialValue="True"
 		Type="Boolean"
 		EditorType="Boolean"
-	#tag EndViewProperty
-	#tag ViewProperty
-		Name="EventID"
-		Group="Behavior"
-		Type="Int64"
 	#tag EndViewProperty
 	#tag ViewProperty
 		Name="HasBackColor"

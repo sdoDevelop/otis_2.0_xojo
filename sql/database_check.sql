@@ -1,4 +1,4 @@
-Select 
+Select
     pkid                ,
     row_created         ,
     row_modified        ,
@@ -14,22 +14,10 @@ Select
     loadout_date        ,
     event_details       ,
     account_manager     ,
-    hide
+    event_tags          ,
+    hide                
     From tbl_events
     ;
-
-Select
-        pkid               ,
-        row_created        ,
-        row_modified       ,
-        row_username       ,
-        fk_parent          ,
-        fk_child           ,
-        fk_table_name      ,
-        link_type          ,
-        quantity           
-        From tbl_internal_linking
-        ;
 
 Select
     pkid                ,
@@ -57,17 +45,12 @@ Select
     li_subcategory              ,
     li_description              , 
     li_type                     ,
-    li_price_cost               ,
-    li_note                     , 
+    li_price                    ,
     li_rate                     ,
     li_discount                 ,
-    discount_amount_cost        ,
-    li_total_cost               ,
     li_time                     ,
     li_taxable                  ,
-    li_taxtotal_cost            ,
-    li_quantity                  ,
-    ignore_price_discrepency    
+    li_quantity                 
     From tbl_lineitems
     ;
 
@@ -86,24 +69,22 @@ Select
     item_subcategory            ,
     item_description            ,
     item_status                 ,
-    show_items                  ,
-    show_items_discreetly       ,
     item_quantity               ,
-    item_purchase_price_cost    ,
-    item_rental_price_cost      ,
-    item_sale_price_cost        ,
+    item_purchase_price         ,
+    item_sale_price             ,
+    item_rental_price           ,
     item_owner                  ,
     item_taxable                ,
     item_weight                 ,
     item_height                 ,
     item_depth                  ,
     item_width                  ,
-    item_barcode                ,    
+    item_barcode                ,
     item_rfid_code              ,
     item_serial_code            ,
     item_type                   ,
     physical_item               ,
-    hide                             
+    hide                        
     From tbl_inventory
     ;
 
@@ -117,37 +98,24 @@ Select
     update_date                 ,
     firmware_version            ,
     update_comments             
-    From  tbl_firmware
-    ;
-
--- inventory_link
-Select 
-    pkid                        ,         
-    row_created                 ,
-    row_modified                ,
-    row_username                ,
-    fkinventory_parent          ,
-    fkinventory_child           ,
-    link_type                   ,
-    quantity                    
-    From tbl_inventory_link
+    From tbl_firmware
     ;
 
 -- Maintenance Logs
-Select 
-    pkid,                   
-    row_created,                 
-    row_modified,                
-    row_username,               
-    fkinventory,                
-    entry_date,                  
-    exit_date,                 
-    due_date,                  
-    work_cost,                  
-    work_summary,                
-    work_description,            
-    work_comments,           
-    work_type   ,
+Select
+    pkid                        ,
+    row_created                 ,
+    row_modified                ,
+    row_username                ,
+    fkinventory                 ,
+    entry_date                  ,
+    exit_date                   ,
+    due_date                    ,
+    work_cost                   ,
+    work_summary                ,
+    work_description            ,
+    work_comments               ,
+    work_type                   ,
     work_done_by                
     From tbl_maintenance_Logs
     ;
@@ -163,51 +131,14 @@ Select
     eipl_name                   ,
     due_date                    ,
     eipl_type                   ,
-    eipl_balance                ,
-    eipl_grand_total            ,
-    eipl_subtotal               ,
-    eipl_total_paid             ,
     discount_amount             ,
-    discount_percent            ,
     shipping_method             ,
-    tax_total                   ,
-    eipl_tax_rate               ,
-    discount_total              
+    eipl_tax_rate               
     From tbl_eipl
     ;
 
-
--- payments_
-Select  
-    pkid                        ,
-    row_created                 ,
-    row_modified                ,
-    row_username                ,
-    fkeipl                      ,
-    payment_date                ,
-    payment_memo                ,
-    payment_amount              ,
-    payment_type                
-    From tbl_payments
-    ;
-
-
--- contact_venue_data
-Select 
-    pkid                        ,
-    row_created                 ,
-    row_modified                ,
-    row_username                ,
-    fkcontacts                  ,
-    fkvenues                    ,
-    fkevents                    ,
-    fkeipl                      ,
-    cvd_primary                 
-    From tbl_contact_venue_data
-    ;
-
 -- contactables
-Select
+Select 
     pkid                        ,
     row_created                 ,
     row_modified                ,
@@ -228,17 +159,7 @@ Select
     From tbl_contactables
     ;
 
-Select
-    pkid                        ,
-    row_created                 ,
-    row_modified                ,
-    row_username                ,
-    fkcontactables_parent       ,
-    fkcontactables_child        
-    From tbl_contactables_link
-    ;
-
-Select
+Select 
     pkid                        ,
     row_created                 ,
     row_modified                ,
@@ -248,21 +169,30 @@ Select
     method_type                 ,
     method_location             ,
     primary_method              ,
-    hide
-    From tbl_contact_methods                     
+    hide                        
+    From tbl_contact_methods
     ;
 
--- tbl_departments
+Select
+    pkid                        ,
+    row_created                 ,
+    row_modified                ,
+    row_username                ,
+    fk_parent                   ,
+    fk_child                    ,
+    quantity                    ,
+    fk_table_name               ,
+    link_type                   
+    From tbl_internal_linking
+    ;
+
 Select
     pkid                        ,
     row_created                 ,
     row_modified                ,
     row_username                ,
     fkeipl                      ,
-    department                  ,
-    grand_total                 ,
-    discount_subtotal           ,
-    discount_percent            ,
-    discount_amount             
-    From tbl_departments
+    group_name                  ,
+    group_discount              
+    From tbl_group_discounts
     ;

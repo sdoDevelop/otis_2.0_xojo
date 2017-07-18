@@ -707,7 +707,7 @@ End
 		    dim sRowType as string
 		    
 		    // Set Column Count
-		    dim iColCount as integer = 10
+		    dim iColCount as integer = 9
 		    lbItems.ColumnCount = iColCount
 		    
 		    // Initialize dictionaries
@@ -715,7 +715,7 @@ End
 		    dictCellTypes = New Dictionary
 		    
 		    // Set header names
-		    s1 = "Name,Category,Description,Time,Rate,Qty,Price,Discount,Total,Tax"
+		    s1 = "Name,Category,Description,Time,Rate,Qty,Price,Discount,Tax"
 		    s2() = Split(s1,",")
 		    lbItems.Heading = s2()
 		    
@@ -737,7 +737,7 @@ End
 		    // GrandParent
 		    sRowType = "GrandParent"
 		    'field names
-		    s1 = "li_name,li_category,li_description,li_time,li_rate,li_quantity,li_price_cost,discount_amount_cost,li_total_cost,li_taxable"
+		    s1 = "li_name,li_category,li_description,li_time,li_rate,li_quantity,li_price,li_discount,li_taxable"
 		    s2() = Split(s1,",")
 		    dictFieldNames.Value(sRowType) = s2
 		    
@@ -761,46 +761,46 @@ End
 		    // LinkedItem - Version
 		    sRowType = "Linked - version"
 		    'field names
-		    s1 = "li_name,li_category,li_description,li_time,li_rate,li_quantity,li_price_cost,discount_amount_cost,li_total_cost,li_taxable"
+		    s1 = "li_name,li_category,li_description,li_time,li_rate,li_quantity,li_price,li_discount,li_taxable"
 		    s2() = Split(s1,",")
 		    dictFieldNames.Value(sRowType) = s2
 		    
 		    'cell types
-		    dim iCellTypes4() as integer = Array(0,0,0,0,0,0,0,0,0,0)
+		    dim iCellTypes4() as integer = Array(0,0,0,0,0,0,0,0,0)
 		    dictCellTypes.Value(sRowType) = iCellTypes4
 		    
 		    
 		    // LinkedItem - Contained
 		    sRowType = "Linked - contained"
 		    'field names
-		    s1 = "li_name,li_category,li_description,li_time,li_rate,li_quantity,li_price_cost,discount_amount_cost,li_total_cost,li_taxable"
+		    s1 = "li_name,li_category,li_description,li_time,li_rate,li_quantity,li_price,li_discount,li_taxable"
 		    s2() = Split(s1,",")
 		    dictFieldNames.Value(sRowType) = s2
 		    
 		    'cell types
-		    dim iCellTypes5() as integer = Array(0,0,0,0,0,0,0,0,0,0)
+		    dim iCellTypes5() as integer = Array(0,0,0,0,0,0,0,0,0)
 		    dictCellTypes.Value(sRowType) = iCellTypes5
 		    
 		    // LinkedItem - Contained
 		    sRowType = "Linked - kit"
 		    'field names
-		    s1 = "li_name,li_category,li_description,li_time,li_rate,li_quantity,li_price_cost,discount_amount_cost,li_total_cost,li_taxable"
+		    s1 = "li_name,li_category,li_description,li_time,li_rate,li_quantity,li_price,li_discount,li_taxable"
 		    s2() = Split(s1,",")
 		    dictFieldNames.Value(sRowType) = s2
 		    
 		    'cell types
-		    dim iCellTypes6() as integer = Array(0,0,0,0,0,0,0,0,0,0)
+		    dim iCellTypes6() as integer = Array(0,0,0,0,0,0,0,0,0)
 		    dictCellTypes.Value(sRowType) = iCellTypes6
 		    
 		    // LinkedItem - Contained
 		    sRowType = "Linked - package"
 		    'field names
-		    s1 = "li_name,li_category,li_description,li_time,li_rate,li_quantity,li_price_cost,discount_amount_cost,li_total_cost,li_taxable"
+		    s1 = "li_name,li_category,li_description,li_time,li_rate,li_quantity,li_price,li_discount,li_taxable"
 		    s2() = Split(s1,",")
 		    dictFieldNames.Value(sRowType) = s2
 		    
 		    'cell types
-		    dim iCellTypes7() as integer = Array(0,0,0,0,0,0,0,0,0,0)
+		    dim iCellTypes7() as integer = Array(0,0,0,0,0,0,0,0,0)
 		    dictCellTypes.Value(sRowType) = iCellTypes7
 		    
 		  End If
@@ -831,11 +831,13 @@ End
 		    // Get the records
 		    dim records() as DataFile.tbl_lineitems = methGetRecordList_UnGrouped("li_department","fkeipl = " + oEIPLRecord.ipkid.ToText )    '!@! Table Dependent !@!
 		    
-		    // Build the rowtags
-		    dim theRowtags() as lbRowTag
-		    theRowtags = methCreateRowTags(records)
-		    
-		    methCreateTopLevelRows(theRowtags)
+		    If records.Ubound <> -1 THen
+		      // Build the rowtags
+		      dim theRowtags() as lbRowTag
+		      theRowtags = methCreateRowTags(records)
+		      
+		      methCreateTopLevelRows(theRowtags)
+		    End If
 		    
 		    //Grouped
 		  ElseIf IsGrouped Then
@@ -843,10 +845,12 @@ End
 		    // Get the Records
 		    dim dictRecords as Dictionary = methGetRecordList_Grouped("li_department", "fkeipl = " + oEIPLRecord.ipkid.ToText )    '!@! Table Dependent !@!
 		    
-		    dim theRowtagsGrouped() as lbRowTag
-		    theRowtagsGrouped = methCreateRowTags_dict(dictRecords)
-		    
-		    methCreateTopLevelRows(theRowtagsGrouped)
+		    If dictRecords.Count <> 0 Then
+		      dim theRowtagsGrouped() as lbRowTag
+		      theRowtagsGrouped = methCreateRowTags_dict(dictRecords)
+		      
+		      methCreateTopLevelRows(theRowtagsGrouped)
+		    End If
 		    
 		  End If
 		  
@@ -1185,9 +1189,9 @@ End
 		      If oRowTag.vtblRecord IsA DataFile.tbl_lineitems Then
 		        dim oLIRecord as DataFile.tbl_lineitems = oRowTag.vtblRecord
 		        
-		        dim iTotal as integer = CalculateLineItemPrices( oLIRecord, oEIPLRecord, "Total" )
+		        dim sTotal as String = CalculateLineItemPrices( oLIRecord, oEIPLRecord, "Total" )
 		        
-		        MsgBox(iTotal.ToText)
+		        MsgBox(sTotal)
 		        
 		      End If
 		    End If

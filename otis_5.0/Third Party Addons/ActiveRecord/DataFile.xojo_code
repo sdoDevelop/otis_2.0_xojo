@@ -54,19 +54,15 @@ Protected Module DataFile
 		Private Sub Register(db as SQLiteDatabase)
 		  // Tables
 		  BKS_ActiveRecord.Table( db, "tbl_contactables", GetTypeInfo( tbl_contactables ) )
-		  BKS_ActiveRecord.Table( db, "tbl_contactables_link", GetTypeInfo( tbl_contactables_link ) )
-		  BKS_ActiveRecord.Table( db, "tbl_contact_venue_data", GetTypeInfo( tbl_contact_venue_data ) )
-		  BKS_ActiveRecord.Table( db, "tbl_departments", GetTypeInfo( tbl_departments ) )
 		  BKS_ActiveRecord.Table( db, "tbl_eipl", GetTypeInfo( tbl_eipl ) )
 		  BKS_ActiveRecord.Table( db, "tbl_events", GetTypeInfo( tbl_events ) )
-		  BKS_ActiveRecord.Table( db, "tbl_events_link", GetTypeInfo( tbl_events_link ) )
 		  BKS_ActiveRecord.Table( db, "tbl_firmware", GetTypeInfo( tbl_firmware ) )
 		  BKS_ActiveRecord.Table( db, "tbl_inventory", GetTypeInfo( tbl_inventory ) )
-		  BKS_ActiveRecord.Table( db, "tbl_inventory_link", GetTypeInfo( tbl_inventory_link ) )
 		  BKS_ActiveRecord.Table( db, "tbl_lineitems", GetTypeInfo( tbl_lineitems ) )
 		  BKS_ActiveRecord.Table( db, "tbl_maintenance_Logs", GetTypeInfo( tbl_maintenance_Logs ) )
-		  BKS_ActiveRecord.Table( db, "tbl_payments", GetTypeInfo( tbl_payments ) )
 		  BKS_ActiveRecord.Table( db, "tbl_contact_methods", GetTypeInfo( tbl_contact_methods ) )
+		  BKS_ActiveRecord.Table( db, "tbl_internal_linking", GetTypeInfo( tbl_internal_linking ) )
+		  BKS_ActiveRecord.Table( db, "tbl_group_discounts", GetTypeInfo( tbl_group_discounts ) )
 		  
 		End Sub
 	#tag EndMethod

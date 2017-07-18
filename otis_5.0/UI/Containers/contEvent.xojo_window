@@ -1143,6 +1143,8 @@ Begin ContainerControl contEvent
       AutoDeactivate  =   True
       BackColor       =   &cFFFFFF00
       Backdrop        =   0
+      bDisplayGrouped =   False
+      bPickerMode     =   False
       Enabled         =   True
       EraseBackground =   True
       HasBackColor    =   False
@@ -1150,12 +1152,14 @@ Begin ContainerControl contEvent
       HelpTag         =   ""
       InitialParent   =   ""
       iStartingTop    =   0
+      LastSearchValue =   ""
       Left            =   664
       LockBottom      =   True
       LockedInPosition=   False
       LockLeft        =   False
       LockRight       =   True
       LockTop         =   True
+      PickerMode      =   False
       Scope           =   0
       TabIndex        =   38
       TabPanelIndex   =   0
@@ -1257,6 +1261,7 @@ End
 		    dim oLinkItem as New DataFile.tbl_internal_linking
 		    oLinkItem.ifk_parent = oCurrentEvent.ipkid
 		    oLinkItem.ifk_child = oChild.ipkid
+		    oLinkItem.sfk_table_name = ""
 		    oLinkItem.Save
 		    
 		  Next
@@ -1337,6 +1342,21 @@ End
 		      // append the item to the array of things to link to parent
 		      iLinkTheseToParent.Append(oEvent)
 		      
+		      // FInd all the link records that are related to the current event that are not events
+		      dim aroLinkedRecords() as DataFile.tbl_internal_linking
+		      aroLinkedRecords() = DataFile.tbl_internal_linking.List(" fk_parent = " + oCurrentEvent.ipkid.ToText + " And fk_table_name != 'tbl_events'" )
+		      
+		      If aroLinkedRecords.Ubound <> -1 Then
+		        For Each oLinkedRecord as DataFile.tbl_internal_linking In aroLinkedRecords()
+		          dim oNewLink as New DataFile.tbl_internal_linking 
+		          oNewLink.ifk_parent = oEvent.ipkid
+		          oNewLink.ifk_child = oLinkedRecord.ifk_child
+		          oNewLink.sfk_table_name = oLinkedRecord.sfk_table_name
+		          oNewLink.slink_type = oLinkedRecord.slink_type
+		          oNewLink.Save
+		        Next
+		      End If
+		      
 		    Next
 		    
 		  Case "Create New"
@@ -1362,7 +1382,20 @@ End
 		      
 		      iLinkTheseToParent.Append(oEvent)
 		      
+		      // FInd all the link records that are related to the current event that are not events
+		      dim aroLinkedRecords() as DataFile.tbl_internal_linking
+		      aroLinkedRecords() = DataFile.tbl_internal_linking.List(" fk_parent = " + oCurrentEvent.ipkid.ToText + " And fk_table_name != 'tbl_events'" )
 		      
+		      If aroLinkedRecords.Ubound <> -1 Then
+		        For Each oLinkedRecord as DataFile.tbl_internal_linking In aroLinkedRecords()
+		          dim oNewLink as New DataFile.tbl_internal_linking 
+		          oNewLink.ifk_parent = oEvent.ipkid
+		          oNewLink.ifk_child = oLinkedRecord.ifk_child
+		          oNewLink.sfk_table_name = oLinkedRecord.sfk_table_name
+		          oNewLink.slink_type = oLinkedRecord.slink_type
+		          oNewLink.Save
+		        Next
+		      End If
 		      
 		    End If
 		    
@@ -1377,6 +1410,7 @@ End
 		  
 		  
 		  
+		  
 		  // Create the linking records
 		  For Each oChild as DataFile.tbl_events In iLinkTheseToParent
 		    
@@ -1384,6 +1418,7 @@ End
 		    dim oLinkItem as New DataFile.tbl_internal_linking
 		    oLinkItem.ifk_parent = oCurrentEvent.ipkid
 		    oLinkItem.ifk_child = oChild.ipkid
+		    oLinkItem.sfk_table_name = "tbl_events"
 		    oLinkItem.Save
 		    
 		    If CreateNewOrUseExisting = "Create New" Then
@@ -1493,7 +1528,7 @@ End
 		  End If
 		  If oCurrentEvent.sloadin_time = "" Then
 		    tcLoadin.TimeValue = Nil
-		    chbLoadIn.Enabled = False
+		    tcLoadIn.Enabled = False
 		    chbLoadIn.Value = False
 		  Else
 		    timeString = oCurrentEvent.sloadin_time
@@ -1515,7 +1550,7 @@ End
 		  End If
 		  If oCurrentEvent.sloadout_time = "" Then
 		    tcLoadout.TimeValue = Nil
-		    chbLoadOut.Enabled = False
+		    tcLoadOut.Enabled = False
 		    chbLoadOut.Value = False
 		  Else
 		    timeString = oCurrentEvent.sloadout_time
