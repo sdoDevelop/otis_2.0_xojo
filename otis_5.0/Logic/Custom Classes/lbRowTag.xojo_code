@@ -71,6 +71,10 @@ Protected Class lbRowTag
 	#tag EndProperty
 
 	#tag Property, Flags = &h0
+		sGroupDataStructure As String
+	#tag EndProperty
+
+	#tag Property, Flags = &h0
 		#tag Note
 			GroupFolder
 			GrandParent
@@ -86,6 +90,10 @@ Protected Class lbRowTag
 
 	#tag Property, Flags = &h0
 		vColumnValues() As Variant
+	#tag EndProperty
+
+	#tag Property, Flags = &h0
+		vGroupingData As Variant
 	#tag EndProperty
 
 	#tag Property, Flags = &h0

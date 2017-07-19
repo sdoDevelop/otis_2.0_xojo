@@ -262,11 +262,14 @@ End
 		      oRowTag.iCellTypes = dictCellTypes.Value(oRowTag.sRowType)
 		    End If
 		    
+		    // Get the field names and values as a json item from the database record
+		    dim jsFieldValues as JSONItem = otblRecord.GetMyFieldValues(True)
+		    // Add the total of this row to the field value json item
+		    dim dictReturn as Dictionary = modPriceCalculations.CalculateLineItemPrices( otblRecord, oEIPLRecord )
+		    jsFieldValues.Value("CalcTotal") = str( dictReturn.Value( "Total" ), "\$###,###,###,###.00" )
+		    
 		    // Populate the Column values for this row
 		    For Each sFieldName as String In oRowTag.sFieldNames
-		      
-		      // Get the field names and values as a json item from the database record
-		      dim jsFieldValues as JSONItem = otblRecord.GetMyFieldValues(True)
 		      dim sKeys() as string = jsFieldValues.Names
 		      
 		      // Check to make sure that the field we are looking for really exists
@@ -448,7 +451,7 @@ End
 	#tag EndMethod
 
 	#tag Method, Flags = &h0
-		Function methCreateRowTags_dict(dictRecords as Dictionary, iFolderLevel as integer = 0) As lbRowTag()
+		Function methCreateRowTags_dict(dictRecords as Dictionary, iFolderLevel as integer = 0, sGroupStructure as String) As lbRowTag()
 		  // vRecords will either be 
 		  // an array of ActiveRecordBase objects
 		  //      or
@@ -465,39 +468,78 @@ End
 		    
 		    // Loop through all of the groups
 		    For Each vGroupName as Variant In dictRecords.Keys
-		      
+		      dim sInnerGroupStructure as string
 		      If dictRecords.Value(vGroupName) IsA Dictionary Then
 		        // we need to go deeper with the grouping before we can create the item rowtags
-		        
+		        If sGroupStructure <> "" Then
+		          sInnerGroupStructure = sGroupStructure + "." + str( vGroupName )
+		        Else
+		          sInnerGroupStructure = str( vGroupName )
+		        End If
 		        // relaunch this method to dig deeper into the grouping
 		        dim aroChildRowTags() as lbRowTag
-		        aroChildRowTags = methCreateRowTags_dict(dictRecords.Value(vGroupName), iFolderLevel + 1)
+		        aroChildRowTags = methCreateRowTags_dict(dictRecords.Value(vGroupName), iFolderLevel + 1, sInnerGroupStructure)
 		        
 		        dim oGroupRowtag as New lbRowTag
+		        oGroupRowtag.vGroupingData = dictRecords.Value(vGroupName)
+		        oGroupRowtag.sGroupDataStructure = sInnerGroupStructure
+		        
+		        // Calculate Group totals
+		        dim dictReturn as Dictionary
+		        If oGroupRowTag.vGroupingData IsA Dictionary Then
+		          dictReturn = CalculateGroupofGroupTotal( oGroupRowTag.vGroupingData, oEIPLRecord, oGroupRowTag.sGroupDataStructure )
+		        Else
+		          dictReturn = CalculateGroupTotal( oGroupRowTag.vGroupingData, oEIPLRecord, oGroupRowTag.sGroupDataStructure )
+		        End If
+		        
+		        dim vTotalString as Variant = "Total: " + str( dictReturn.Value("Total"), "\$###,###,###,###.00")
+		        
 		        oGroupRowtag.aroChildren() = aroChildRowTags
 		        oGroupRowtag.iCellTypes = dictCellTypes.Value("GroupFolder")
 		        oGroupRowtag.iFolderLevel = iFolderLevel
 		        oGroupRowtag.isFolder = True
 		        oGroupRowtag.sFieldNames = dictFieldNames.Value("GroupFolder")
 		        oGroupRowtag.sRowType = "GroupFolder"
-		        oGroupRowtag.vColumnValues = Array( vGroupName )
+		        oGroupRowtag.vColumnValues = Array( vGroupName, vTotalString )
+		        
 		        
 		        aroGroupRowtags.Append(oGroupRowtag)
 		        
 		      Else
+		        
+		        If sGroupStructure <> "" Then
+		          sInnerGroupStructure = sGroupStructure + "." + str( vGroupName )
+		        Else
+		          sInnerGroupStructure = str( vGroupName )
+		        End If
+		        
 		        // Create the rowtags for this groups children
 		        dim aroChildRowTags() as lbRowTag
 		        aroChildRowTags() = methCreateRowTags(dictRecords.Value(vGroupName))
 		        
 		        // Create a New Rowtag for the Group
 		        dim oGroupRowtag as New lbRowTag
+		        
+		        // Calculate Group totals
+		        dim dictReturn as Dictionary
+		        oGroupRowtag.vGroupingData = dictRecords.Value(vGroupName)
+		        oGroupRowtag.sGroupDataStructure = sInnerGroupStructure
+		        
+		        If oGroupRowTag.vGroupingData IsA Dictionary Then
+		          dictReturn = CalculateGroupofGroupTotal( oGroupRowTag.vGroupingData, oEIPLRecord, oGroupRowTag.sGroupDataStructure )
+		        Else
+		          dictReturn = CalculateGroupTotal( oGroupRowTag.vGroupingData, oEIPLRecord, oGroupRowTag.sGroupDataStructure )
+		        End If
+		        
+		        dim vTotalString as Variant = "Total: " + str( dictReturn.Value("Total"), "\$###,###,###,###.00")
+		        
 		        oGroupRowtag.aroChildren() = aroChildRowTags()
 		        oGroupRowtag.iCellTypes = dictCellTypes.Value("GroupFolder")
 		        oGroupRowtag.iFolderLevel = iFolderLevel
 		        oGroupRowtag.isFolder = True
 		        oGroupRowtag.sFieldNames = dictFieldNames.Value("GroupFolder")
 		        oGroupRowtag.sRowType = "GroupFolder"
-		        oGroupRowtag.vColumnValues = Array( vGroupname )
+		        oGroupRowtag.vColumnValues = Array( vGroupname, vTotalString )
 		        
 		        aroGroupRowtags.Append(oGroupRowtag)
 		      End If
@@ -707,7 +749,7 @@ End
 		    dim sRowType as string
 		    
 		    // Set Column Count
-		    dim iColCount as integer = 9
+		    dim iColCount as integer = 10
 		    lbItems.ColumnCount = iColCount
 		    
 		    // Initialize dictionaries
@@ -715,7 +757,7 @@ End
 		    dictCellTypes = New Dictionary
 		    
 		    // Set header names
-		    s1 = "Name,Category,Description,Time,Rate,Qty,Price,Discount,Tax"
+		    s1 = "Name,Category,Description,Time,Rate,Qty,Price,Discount,Total,Tax"
 		    s2() = Split(s1,",")
 		    lbItems.Heading = s2()
 		    
@@ -737,7 +779,7 @@ End
 		    // GrandParent
 		    sRowType = "GrandParent"
 		    'field names
-		    s1 = "li_name,li_category,li_description,li_time,li_rate,li_quantity,li_price,li_discount,li_taxable"
+		    s1 = "li_name,li_category,li_description,li_time,li_rate,li_quantity,li_price,li_discount,CalcTotal,li_taxable"
 		    s2() = Split(s1,",")
 		    dictFieldNames.Value(sRowType) = s2
 		    
@@ -761,46 +803,46 @@ End
 		    // LinkedItem - Version
 		    sRowType = "Linked - version"
 		    'field names
-		    s1 = "li_name,li_category,li_description,li_time,li_rate,li_quantity,li_price,li_discount,li_taxable"
+		    s1 = "li_name,li_category,li_description,li_time,li_rate,li_quantity,li_price,li_discount,CalcTotal,li_taxable"
 		    s2() = Split(s1,",")
 		    dictFieldNames.Value(sRowType) = s2
 		    
 		    'cell types
-		    dim iCellTypes4() as integer = Array(0,0,0,0,0,0,0,0,0)
+		    dim iCellTypes4() as integer = Array(0,0,0,0,0,0,0,0,0,0)
 		    dictCellTypes.Value(sRowType) = iCellTypes4
 		    
 		    
 		    // LinkedItem - Contained
 		    sRowType = "Linked - contained"
 		    'field names
-		    s1 = "li_name,li_category,li_description,li_time,li_rate,li_quantity,li_price,li_discount,li_taxable"
+		    s1 = "li_name,li_category,li_description,li_time,li_rate,li_quantity,li_price,li_discount,CalcTotal,li_taxable"
 		    s2() = Split(s1,",")
 		    dictFieldNames.Value(sRowType) = s2
 		    
 		    'cell types
-		    dim iCellTypes5() as integer = Array(0,0,0,0,0,0,0,0,0)
+		    dim iCellTypes5() as integer = Array(0,0,0,0,0,0,0,0,0,0)
 		    dictCellTypes.Value(sRowType) = iCellTypes5
 		    
 		    // LinkedItem - Contained
 		    sRowType = "Linked - kit"
 		    'field names
-		    s1 = "li_name,li_category,li_description,li_time,li_rate,li_quantity,li_price,li_discount,li_taxable"
+		    s1 = "li_name,li_category,li_description,li_time,li_rate,li_quantity,li_price,li_discount,CalcTotal,li_taxable"
 		    s2() = Split(s1,",")
 		    dictFieldNames.Value(sRowType) = s2
 		    
 		    'cell types
-		    dim iCellTypes6() as integer = Array(0,0,0,0,0,0,0,0,0)
+		    dim iCellTypes6() as integer = Array(0,0,0,0,0,0,0,0,0,0)
 		    dictCellTypes.Value(sRowType) = iCellTypes6
 		    
 		    // LinkedItem - Contained
 		    sRowType = "Linked - package"
 		    'field names
-		    s1 = "li_name,li_category,li_description,li_time,li_rate,li_quantity,li_price,li_discount,li_taxable"
+		    s1 = "li_name,li_category,li_description,li_time,li_rate,li_quantity,li_price,li_discount,CalcTotal,li_taxable"
 		    s2() = Split(s1,",")
 		    dictFieldNames.Value(sRowType) = s2
 		    
 		    'cell types
-		    dim iCellTypes7() as integer = Array(0,0,0,0,0,0,0,0,0)
+		    dim iCellTypes7() as integer = Array(0,0,0,0,0,0,0,0,0,0)
 		    dictCellTypes.Value(sRowType) = iCellTypes7
 		    
 		  End If
@@ -829,7 +871,7 @@ End
 		  If Not IsGrouped Then
 		    
 		    // Get the records
-		    dim records() as DataFile.tbl_lineitems = methGetRecordList_UnGrouped("li_department","fkeipl = " + oEIPLRecord.ipkid.ToText )    '!@! Table Dependent !@!
+		    dim records() as DataFile.tbl_lineitems = methGetRecordList_UnGrouped("li_department, li_manufacturer","fkeipl = " + oEIPLRecord.ipkid.ToText )    '!@! Table Dependent !@!
 		    
 		    If records.Ubound <> -1 THen
 		      // Build the rowtags
@@ -843,11 +885,11 @@ End
 		  ElseIf IsGrouped Then
 		    
 		    // Get the Records
-		    dim dictRecords as Dictionary = methGetRecordList_Grouped("li_department", "fkeipl = " + oEIPLRecord.ipkid.ToText )    '!@! Table Dependent !@!
+		    dim dictRecords as Dictionary = methGetRecordList_Grouped("li_department, li_manufacturer", "fkeipl = " + oEIPLRecord.ipkid.ToText )    '!@! Table Dependent !@!
 		    
 		    If dictRecords.Count <> 0 Then
 		      dim theRowtagsGrouped() as lbRowTag
-		      theRowtagsGrouped = methCreateRowTags_dict(dictRecords)
+		      theRowtagsGrouped = methCreateRowTags_dict(dictRecords, 0, "")
 		      
 		      methCreateTopLevelRows(theRowtagsGrouped)
 		    End If
@@ -1189,12 +1231,26 @@ End
 		      If oRowTag.vtblRecord IsA DataFile.tbl_lineitems Then
 		        dim oLIRecord as DataFile.tbl_lineitems = oRowTag.vtblRecord
 		        
-		        dim sTotal as String = CalculateLineItemPrices( oLIRecord, oEIPLRecord, "Total" )
+		        dim dictReturn as Dictionary = CalculateLineItemPrices( oLIRecord, oEIPLRecord )
 		        
-		        MsgBox(sTotal)
+		        MsgBox( str( dictReturn.Value("Total" ) ) )
 		        
 		      End If
 		    End If
+		    
+		  Case "Calculate Group Total"
+		    
+		    dim oRowTag as lbRowTag
+		    oRowTag = lbItems.RowTag(lbItems.ListIndex)
+		    
+		    dim dictReturn as Dictionary
+		    If oRowTag.vGroupingData IsA Dictionary Then
+		      dictReturn = CalculateGroupofGroupTotal( oRowTag.vGroupingData, oEIPLRecord, oRowTag.sGroupDataStructure )
+		    Else
+		      dictReturn = CalculateGroupTotal( oRowTag.vGroupingData, oEIPLRecord, oRowTag.sGroupDataStructure )
+		    End If
+		    
+		    MsgBox( str(dictReturn.Value("Total")) )
 		    
 		  End Select
 		  
@@ -1228,6 +1284,10 @@ End
 		    
 		    base.Append( New MenuItem( MenuItem.TextSeparator ) )
 		    base.Append( New MenuItem( "Calculate Line Total" ) )
+		    
+		    base.Append( New MenuItem( "Calculate Group Total" ) )
+		    
+		    base.Append( New MenuItem( oRowTag.sGroupDataStructure ) )
 		    
 		    dim boo as Boolean
 		    boo = evdefConstructContextualMenu(base, x, y)

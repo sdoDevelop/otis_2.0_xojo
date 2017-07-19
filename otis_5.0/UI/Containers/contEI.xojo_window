@@ -44,7 +44,7 @@ Begin ContainerControl contEI
       TabIndex        =   2
       TabPanelIndex   =   0
       Top             =   22
-      Value           =   1
+      Value           =   0
       Visible         =   True
       Width           =   901
       Begin contLineItems instLineItemList

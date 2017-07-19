@@ -1,55 +1,195 @@
 #tag Module
 Protected Module modPriceCalculations
 	#tag Method, Flags = &h0
-		Function CalculateGroupTotal(aroLIRecords() as DataFile.tbl_lineitems, oEIPlRecord as DataFile.tbl_eipl, sGroupName as String) As String
-		  dim iRunningSum as Double
+		Function CalculateGroupofGroupTotal(dictGroups as Dictionary, oEIPLRecord as DataFile.tbl_eipl, sGroupStructure as string) As Dictionary
+		  dim iPreDiscount, iAfterDiscount, iTotal, iDiscountSum as currency
 		  
-		  For Each oLIRecord as DataFile.tbl_lineitems In aroLIRecords
+		  
+		  // Loop through each group in the dictionary
+		  For Each vKey as Variant In dictGroups.Keys
+		    dim sInnerGroupStructure as string
 		    
-		    iRunningSum = iRunningSum + val( CalculateLineItemPrices( oLIRecord, oEIPlRecord, "Total" ) )
+		    If dictGroups.Value( vKey ) IsA Dictionary then
+		      // This value is a group of more groups so we 
+		      'increase the group struccture 
+		      If sGroupStructure <> "" Then
+		        sInnerGroupStructure = sGroupStructure + "." + str( vKey )
+		      Else
+		        sInnerGroupStructure = str( vKey )
+		      End If
+		      
+		      'recipricate this method to dig deeper into groups
+		      dim retDictionary as Dictionary
+		      retDictionary = CalculateGroupofGroupTotal( dictGroups.Value( vKey ), oEIPLRecord, sInnerGroupStructure )
+		      
+		      // Add up totals
+		      iPreDiscount = iPreDiscount + retDictionary.Value("Total")
+		      iDiscountSum = iDiscountSum + retDictionary.Value("DiscountSum")
+		      
+		    Else
+		      // THis value is an array of records
+		      
+		      'increase the group struccture 
+		      If sGroupStructure <> "" Then
+		        sInnerGroupStructure = sGroupStructure + "." + str( vKey )
+		      Else
+		        sInnerGroupStructure = str( vKey )
+		      End If
+		      
+		      // Send this group to CalculateGroupTotal
+		      dim retDictionary as Dictionary
+		      retDictionary = CalculateGroupTotal( dictGroups.Value( vKey ), oEIPLRecord, sInnerGroupStructure )
+		      
+		      // Add up totals
+		      iPreDiscount = iPreDiscount + retDictionary.Value("Total")
+		      iDiscountSum = iDiscountSum + retDictionary.Value("DiscountSum")
+		      
+		    End If
+		    
 		    
 		  Next
 		  
-		  dim iSubTotal as Double
+		  // Now we can determine discounts
+		  iAfterDiscount = iPreDiscount
 		  
-		  iSubTotal = iRunningSum
+		  'grab discounts relating to this group structure and eipl
+		  dim aroDiscounts() as DataFile.tbl_group_discounts
+		  aroDiscounts = DataFile.tbl_group_discounts.List( " fkeipl = " + oEIPLRecord.ipkid.ToText + " And group_name = '" + sGroupStructure + "'" )
 		  
-		  // Get all the discounts for this eipl from the database that match the group name
-		  dim aroDiscounts() as DataFile.tbl_group_discounts = DataFile.tbl_group_discounts.List( "fkeipl = " + oEIPlRecord.ipkid.ToText + " And group_name = '" + sGroupName + "'" )
-		  
-		  If aroDiscounts.Ubound <> -1 Then
+		  For Each oDiscount as DataFile.tbl_group_discounts In aroDiscounts()
 		    
-		    For Each oDiscount as DataFile.tbl_group_discounts In aroDiscounts()
-		      
-		      dim sDiscount as String = oDiscount.sgroup_discount
-		      dim iDiscount as Double = val( Methods.StripNonDigitsDecimals(sDiscount) )
-		      
-		      If InStr(sDiscount, "%" ) > 0 Then
-		        ' discount is a percent
-		        iSubTotal = iSubTotal - ( ( iDiscount / 100) * iSubTotal )
-		      ElseIf InStr(sDiscount, "$" ) > 0 Then
-		        ' discount is a dollar ammount
-		        iSubTotal = iSubTotal - iDiscount
-		      End If
-		      
-		    Next
+		    // Put the group discount into a number variable
+		    dim iDiscount as Double = val( Methods.StripNonDigitsDecimals( oDiscount.sgroup_discount ) )
 		    
-		  End If
+		    If InStr( oDiscount.sgroup_discount, "%" ) > 0 Then
+		      // the discount is a percent
+		      iAfterDiscount = iAfterDiscount - ( ( iDiscount / 100 ) * iAfterDiscount )
+		    Else 
+		      // the discount is a dollar sum
+		      iAfterDiscount = iAfterDiscount - iDiscount
+		    End If
+		    
+		  Next
 		  
-		  Return iSubTotal.ToText
+		  iDiscountSum = iDiscountSum + ( iAfterDiscount - iPreDiscount )
+		  
+		  iAfterDiscount = round(iAfterDiscount*100)/100
+		  iPreDiscount = round(iPreDiscount*100)/100
+		  iDiscountSum = round(iDiscountSum*100)/100
+		  
+		  dim retDictionary as New Dictionary
+		  retDictionary.Value( "Total" ) = iAfterDiscount
+		  retDictionary.Value( "PreDiscount" ) = iPreDiscount
+		  retDictionary.Value( "DiscountSum" ) = iDiscountSum
+		  
+		  Return retDictionary
+		  
+		  
+		  
+		  
+		  
+		  
+		  
+		  
+		  
+		  
+		  
+		  
+		  
+		  
+		  
+		  
+		  
+		  
 		  
 		  
 		End Function
 	#tag EndMethod
 
 	#tag Method, Flags = &h0
-		Function CalculateLineItemPrices(oLIRecord as Datafile.tbl_lineitems, oEIRecord as datafile.tbl_eipl ,sPart as String) As String
-		  dim d1 as Double
+		Function CalculateGroupTotal(aroLIRecords() as DataFile.tbl_lineitems, oEIPlRecord as DataFile.tbl_eipl, sGroupName as String) As Dictionary
+		  dim iPreDiscount, iAfterDiscount, iDiscountSum as Currency
+		  
+		  // Loop through each Line item record
+		  For Each oLIRecord as DataFile.tbl_lineitems In aroLIRecords()
+		    dim retDictionary as Dictionary
+		    retDictionary = CalculateLineItemPrices( oLIRecord, oEIPlRecord )
+		    iPreDiscount = iPreDiscount + retDictionary.Value("Total")
+		    iDiscountSum = iDiscountSum + retDictionary.Value("DiscountSum")
+		  Next
+		  
+		  // Now we can apply the discounts that are related to this particular group
+		  
+		  // Get any discount records relating to this group and eipl
+		  dim aroDiscountRecords() as DataFile.tbl_group_discounts
+		  aroDiscountRecords() = DataFile.tbl_group_discounts.List( "fkeipl = " + oEIPlRecord.ipkid.ToText + " And group_name = '" + sGroupName + "'" )
+		  
+		  iAfterDiscount = iPreDiscount
+		  
+		  For Each oDiscount as DataFile.tbl_group_discounts In aroDiscountRecords()
+		    
+		    // Put the group discount into a number variable
+		    dim iDiscount as double = val( Methods.StripNonDigitsDecimals( oDiscount.sgroup_discount ) )
+		    
+		    If InStr( oDiscount.sgroup_discount, "%" ) > 0 Then
+		      // the discount is a percent
+		      iAfterDiscount = iAfterDiscount - ( ( iDiscount / 100 ) * iAfterDiscount )
+		    Else 
+		      // the discount is a dollar sum
+		      iAfterDiscount = iAfterDiscount - iDiscount
+		    End If
+		    
+		  Next
+		  
+		  iDiscountSum = iDiscountSum + ( iAfterDiscount - iPreDiscount )
+		  
+		  iAfterDiscount = round(iAfterDiscount*100)/100
+		  iPreDiscount = round(iPreDiscount*100)/100
+		  iDiscountSum = round(iDiscountSum*100)/100
+		  
+		  dim retDictionary as New Dictionary
+		  retDictionary.Value("Total") = iAfterDiscount
+		  retDictionary.Value("PreDiscount") = iPreDiscount
+		  retDictionary.Value("DiscountSum") = iDiscountSum
+		  
+		  Return retDictionary
+		  
+		  
+		  
+		  
+		  
+		  
+		  
+		  
+		  
+		  
+		  
+		  
+		  
+		  
+		  
+		  
+		  
+		  
+		  
+		  
+		  
+		  
+		  
+		  
+		  
+		End Function
+	#tag EndMethod
+
+	#tag Method, Flags = &h0
+		Function CalculateLineItemPrices(oLIRecord as Datafile.tbl_lineitems, oEIRecord as datafile.tbl_eipl) As Dictionary
+		  dim d1 as Currency
 		  
 		  '_________________|---------SubTotal----------|-----------------After DIscount--------|
 		  // Calculation is: ( (Price * Quantity * Time) If %: * (discount/100) If $: - discount ) * ( Tax / 100 ) = Total
 		  
-		  dim iPrice, iQuantity, iTime, iDiscount, iTax, iSubTotal, iAfterDiscount, iTotal as Double
+		  dim iPrice, iQuantity, iTime, iTax, iSubTotal, iAfterDiscount, iTotal, iDiscountSum as Currency
+		  dim iDiscount as Double
 		  
 		  iPrice = val( Methods.StripNonDigitsDecimals( oLIRecord.sli_price ) )
 		  iQuantity = val( Methods.StripNonDigitsDecimals( oLIRecord.sli_quantity ) )
@@ -72,6 +212,8 @@ Protected Module modPriceCalculations
 		    iAfterDiscount = iSubTotal - iDiscount
 		  End If
 		  
+		  iDiscountSum = iAfterDiscount - iSubTotal
+		  
 		  // Calculate total
 		  If oLIRecord.bli_taxable Then
 		    If iTax <> 0 Then
@@ -83,16 +225,36 @@ Protected Module modPriceCalculations
 		    iTotal = iAfterDiscount
 		  End If
 		  
+		  // round things
+		  iSubTotal = round(iSubTotal*100)/100
+		  iAfterDiscount = round(iAfterDiscount*100)/100
+		  iTotal = round( iTotal*100)/100
+		  iDiscountSum = round(iDiscountSum*100)/100
 		  
 		  
-		  Select Case sPart
-		  Case "SubTotal"
-		    Return iSubTotal.ToText
-		  Case "After Discount"
-		    Return iAfterDiscount.ToText
-		  Case "Total"
-		    Return iTotal.ToText
-		  End Select
+		  dim retDictionary as New Dictionary
+		  retDictionary.Value("SubTotal") = iSubTotal
+		  retDictionary.Value("AfterDiscount") = iAfterDiscount
+		  retDictionary.Value("Total") = iTotal
+		  retDictionary.Value("DiscountSum") = iDiscountSum
+		  
+		  Return retDictionary
+		  
+		  
+		  
+		  
+		  
+		  
+		  
+		  
+		  
+		  
+		  
+		  
+		  
+		  
+		  
+		  
 		  
 		  
 		End Function
