@@ -1232,8 +1232,9 @@ End
 	#tag Event
 		Sub LostFocus()
 		  
-		  oCurrentRecord.sli_price = me.Text
+		  oCurrentRecord.sli_price = Methods.StripNonDigitsDecimals( me.Text )
 		  oCurrentRecord.Save
+		  me.Text = str( oCurrentRecord.sli_price, modFieldFormatting.tbl_lineitems.li_price )
 		End Sub
 	#tag EndEvent
 #tag EndEvents
