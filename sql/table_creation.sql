@@ -186,6 +186,17 @@ CREATE TABLE tbl_internal_linking
     link_type                   text
     );
 
+CREATE TABLE tbl_contactable_linking
+    (
+    pkid                        integer Primary Key,
+    row_created                 text,
+    row_modified                text,
+    row_username                text,
+    fk_parent                   integer,
+    fk_child                    integer,
+    parent_table                text
+    );
+
 CREATE TABLE tbl_group_discounts
     (
     pkid                        integer Primary Key,

@@ -3078,9 +3078,9 @@ End
 		  tfItemOwner.Text = oCurrentInventoryItem.sitem_owner
 		  
 		  // Prices 
-		  tfItemRentalPrice.Text = oCurrentInventoryItem.sitem_rental_price
-		  tfItemPurchasePrice.Text = oCurrentInventoryItem.sitem_purchase_price
-		  tfItemSalePrice.Text = oCurrentInventoryItem.sitem_sale_price
+		  tfItemRentalPrice.Text = str( oCurrentInventoryItem.sitem_rental_price, modFieldFormatting.tbl_inventory.item_rental_price )
+		  tfItemPurchasePrice.Text = str( oCurrentInventoryItem.sitem_purchase_price, modFieldFormatting.tbl_inventory.item_purchase_price )
+		  tfItemSalePrice.Text = str( oCurrentInventoryItem.sitem_sale_price, modFieldFormatting.tbl_inventory.item_sale_price )
 		  
 		  tfItemQuantity.Text = oCurrentInventoryItem.sitem_quantity
 		  tfItemSubCategory.Text = oCurrentInventoryItem.sitem_subcategory
@@ -3334,13 +3334,13 @@ End
 		  
 		  dim s1 as string
 		  
-		  s1 = me.Text
+		  s1 = Methods.StripNonDigitsDecimals( me.Text )
 		  
 		  oCurrentInventoryItem.sitem_rental_price = s1
 		  SaveItem
 		  
 		  // Set the text field to the formatted value
-		  me.Text = s1
+		  me.Text = str( s1, modFieldFormatting.tbl_inventory.item_rental_price )
 		End Sub
 	#tag EndEvent
 #tag EndEvents
@@ -3736,13 +3736,13 @@ End
 		  
 		  dim s1 as string
 		  
-		  s1 = me.Text
+		  s1 = methods.StripNonDigitsDecimals( me.Text )
 		  
 		  oCurrentInventoryItem.sitem_purchase_price = s1
 		  SaveItem
 		  
 		  // Set the text field to the formatted value
-		  me.Text = s1
+		  me.Text = str( s1, modFieldFormatting.tbl_inventory.item_purchase_price )
 		End Sub
 	#tag EndEvent
 #tag EndEvents
@@ -3752,13 +3752,13 @@ End
 		  
 		  dim s1 as string
 		  
-		  s1 = me.Text
+		  s1 = Methods.StripNonDigitsDecimals( me.Text )
 		  
 		  oCurrentInventoryItem.sitem_sale_price = s1
 		  SaveItem
 		  
 		  // Set the text field to the formatted value
-		  me.Text = s1
+		  me.Text = str( s1, modFieldFormatting.tbl_inventory.item_sale_price )
 		End Sub
 	#tag EndEvent
 #tag EndEvents

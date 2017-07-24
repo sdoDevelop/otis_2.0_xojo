@@ -1089,16 +1089,24 @@ End
 		  tfCategory.Text = oCurrentRecord.sli_category
 		  tfDepartment.Text = oCurrentRecord.sli_department
 		  tfDescription.Text = oCurrentRecord.sli_description
-		  tfDiscount.Text = oCurrentRecord.sli_discount
 		  tfManufacturer.Text = oCurrentRecord.sli_manufacturer
 		  tfModel.Text = oCurrentRecord.sli_model
 		  tfName.Text = oCurrentRecord.sli_name
-		  tfPrice.Text = oCurrentRecord.sli_price
+		  tfPrice.Text = str( oCurrentRecord.sli_price, modFieldFormatting.tbl_eipl.eipl_tax_rate )
 		  tfQuantity.Text = oCurrentRecord.sli_quantity
 		  tfRate.Text = oCurrentRecord.sli_rate
 		  tfSubCategory.Text = oCurrentRecord.sli_subcategory
 		  tfTime.Text = oCurrentRecord.sli_time
 		  chbTaxable.Value = oCurrentRecord.bli_taxable
+		  
+		  dim s2 as string
+		  s2 = oCurrentRecord.sli_discount
+		  If InStr( s2, "%" ) > 0 Then
+		    tfDiscount.Text = str( s2 )
+		  Else
+		    tfDiscount.Text = str( s2, modFieldFormatting.tbl_lineitems.li_discount )
+		  End If
+		  
 		End Sub
 	#tag EndMethod
 
@@ -1222,9 +1230,27 @@ End
 #tag Events tfDiscount
 	#tag Event
 		Sub LostFocus()
+		  dim s1 as string
+		  
+		  // pull string from field
+		  s1 = me.Text
+		  // format the string
+		  If InStr( s1, "%" ) > 0 Then
+		    s1 = s1
+		  Else
+		    s1 = Methods.StripNonDigitsDecimals( s1 )
+		  End If
 		  
 		  oCurrentRecord.sli_discount = me.Text
 		  oCurrentRecord.Save
+		  
+		  dim s2 as string
+		  s2 = oCurrentRecord.sli_discount
+		  If InStr( s2, "%" ) > 0 Then
+		    me.Text = str( s2 )
+		  Else
+		    me.Text = str( s2, modFieldFormatting.tbl_lineitems.li_discount )
+		  End If
 		End Sub
 	#tag EndEvent
 #tag EndEvents

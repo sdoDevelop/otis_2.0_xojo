@@ -1,5 +1,44 @@
 #tag Module
 Protected Module Methods
+	#tag Method, Flags = &h1
+		Protected Sub AddEIPLtoNumberGetList(EIPLPKID as Int64)
+		  dim FileContents as string
+		  
+		  dim rd1 as New ResourceDirectories
+		  dim f1 as FolderItem = rd1.eipl_numbers_to_get_file.FilePath
+		  
+		  If f1 <> Nil Then
+		    If f1.Exists Then
+		      
+		      dim tis1 as TextInputStream
+		      Try
+		        tis1 = TextInputStream.Open(f1)
+		        FileContents = tis1.ReadAll
+		      Catch e as IOException
+		        dim s as string
+		      End Try
+		      
+		    End If
+		  End If
+		  
+		  dim NumberArray() as string = FileContents.Split(",")
+		  
+		  NumberArray.Append(EIPLPKID.ToText)
+		  FileContents = Join( NumberArray, "," )
+		  
+		  If f1 <> Nil Then
+		    Try
+		      Dim tos1 as TextOutputStream = TextOutputStream.Create(f1)
+		      tos1.Write( FileContents )
+		      tos1 = Nil
+		    Catch e as IOException
+		      dim s as string
+		    End Try
+		    
+		  End If
+		End Sub
+	#tag EndMethod
+
 	#tag Method, Flags = &h0
 		Function ConvertCentsString_To_DollarString(sCentsString as String) As String
 		  dim s1 as string
@@ -49,6 +88,52 @@ Protected Module Methods
 		    // No container by this name
 		  End Select
 		End Function
+	#tag EndMethod
+
+	#tag Method, Flags = &h1
+		Protected Sub CreateNumbersForOfflineEIPLs()
+		  dim oEIPLS() as DataFile.tbl_eipl
+		  
+		  dim FileContents as string
+		  
+		  dim rd1 as New ResourceDirectories
+		  dim f1 as FolderItem = rd1.eipl_numbers_to_get_file.FilePath
+		  
+		  If f1 <> Nil Then
+		    If f1.Exists Then
+		      
+		      dim tis1 as TextInputStream
+		      Try
+		        tis1 = TextInputStream.Open(f1)
+		        FileContents = tis1.ReadAll
+		      Catch e as IOException
+		        dim s as string
+		      End Try
+		      
+		    End If
+		  End If
+		  
+		  dim NumberArray() as string = FileContents.Split(",")
+		  
+		  If NumberArray.Ubound <> -1 Then
+		    For Each sPKID as string In NumberArray()
+		      dim iPKID as Int64 = val( sPKID )
+		      
+		      dim oEIPL as DataFile.tbl_eipl = DataFile.tbl_eipl.FindByID(iPKID)
+		      
+		      If oEIPL <> Nil Then
+		        dim iNewNumber as Integer = GetNextEIPLNumber(0)
+		        If iNewNumber <> 0 Then
+		          oEIPL.ieipl_number = iNewNumber
+		          oEIPL.Save
+		        End If
+		      End If
+		    Next
+		    
+		    OSM.RunSync
+		    
+		  End If
+		End Sub
 	#tag EndMethod
 
 	#tag Method, Flags = &h0
@@ -117,6 +202,43 @@ Protected Module Methods
 		  NewPKID = val( clientID.ToText + n1.ToText )
 		  
 		  Return NewPKID
+		End Function
+	#tag EndMethod
+
+	#tag Method, Flags = &h1
+		Protected Function GetNextEIPLNumber(EIPLPkid as Int64) As Integer
+		  dim db1 as PostgreSQLDatabase = app.RegDB
+		  dim EIPLNumber as integer
+		  
+		  
+		  If db1 <> Nil And Login.State = "Online" Then
+		    // we are online
+		    
+		    dim sql1 as string = "Select nextval('utility.seq_eipl_numbers');"
+		    dim rs1 as RecordSet = db1.SQLSelect(sql1)
+		    If db1.Error Then
+		      System.DebugLog( "Could not get next eipl_number from server: " + db1.ErrorMessage )
+		      If EIPLPkid <> 0 Then
+		        AddEIPLtoNumberGetList(EIPLPkid)
+		        Return 0
+		      End If
+		    End If
+		    
+		    If rs1.RecordCount <> 0 Then
+		      EIPLNumber = rs1.Field( "nextval" ).IntegerValue
+		      Return EIPLNumber
+		    End If
+		    
+		  Else
+		    // we are offline
+		    
+		    If EIPLPkid <> 0 Then
+		      AddEIPLtoNumberGetList(EIPLPkid)
+		      
+		      Return 0
+		    End If
+		    
+		  End If
 		End Function
 	#tag EndMethod
 

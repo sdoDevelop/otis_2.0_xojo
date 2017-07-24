@@ -1,6 +1,17 @@
 #tag Class
 Protected Class tbl_eipl
 Inherits DataFile.ActiveRecordBase
+	#tag Event
+		Sub PreCreate()
+		  
+		  dim iNewEIPLNumber as integer
+		  
+		  iNewEIPLNumber = Methods.GetNextEIPLNumber(me.ipkid)
+		  me.ieipl_number = iNewEIPLNumber
+		End Sub
+	#tag EndEvent
+
+
 	#tag Method, Flags = &h0
 		Shared Function BaseSQL(bAsCount as Boolean = false) As String
 		  dim ars() as string
@@ -301,37 +312,7 @@ Inherits DataFile.ActiveRecordBase
 
 	#tag ViewBehavior
 		#tag ViewProperty
-			Name="idiscount_percent"
-			Group="Behavior"
-			Type="Integer"
-		#tag EndViewProperty
-		#tag ViewProperty
-			Name="idiscount_total"
-			Group="Behavior"
-			Type="Integer"
-		#tag EndViewProperty
-		#tag ViewProperty
-			Name="ieipl_balance"
-			Group="Behavior"
-			Type="Integer"
-		#tag EndViewProperty
-		#tag ViewProperty
-			Name="ieipl_grand_total"
-			Group="Behavior"
-			Type="Integer"
-		#tag EndViewProperty
-		#tag ViewProperty
 			Name="ieipl_number"
-			Group="Behavior"
-			Type="Integer"
-		#tag EndViewProperty
-		#tag ViewProperty
-			Name="ieipl_subtotal"
-			Group="Behavior"
-			Type="Integer"
-		#tag EndViewProperty
-		#tag ViewProperty
-			Name="ieipl_total_paid"
 			Group="Behavior"
 			Type="Integer"
 		#tag EndViewProperty
@@ -354,11 +335,6 @@ Inherits DataFile.ActiveRecordBase
 			Type="Int64"
 		#tag EndViewProperty
 		#tag ViewProperty
-			Name="itax_total"
-			Group="Behavior"
-			Type="Integer"
-		#tag EndViewProperty
-		#tag ViewProperty
 			Name="LastInsertID"
 			Group="Behavior"
 			Type="Int64"
@@ -379,7 +355,8 @@ Inherits DataFile.ActiveRecordBase
 		#tag ViewProperty
 			Name="sdiscount_amount"
 			Group="Behavior"
-			Type="Integer"
+			Type="String"
+			EditorType="MultiLineEditor"
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="sdue_date"
@@ -391,11 +368,13 @@ Inherits DataFile.ActiveRecordBase
 			Name="seipl_name"
 			Group="Behavior"
 			Type="String"
+			EditorType="MultiLineEditor"
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="seipl_tax_rate"
 			Group="Behavior"
 			Type="String"
+			EditorType="MultiLineEditor"
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="seipl_type"

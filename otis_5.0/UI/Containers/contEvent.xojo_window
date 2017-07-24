@@ -1258,10 +1258,10 @@ End
 		  For Each oChild as DataFile.tbl_contactables In oLinkTheseToParent
 		    
 		    // Create a new link table item
-		    dim oLinkItem as New DataFile.tbl_internal_linking
+		    dim oLinkItem as New DataFile.tbl_contactable_linking
 		    oLinkItem.ifk_parent = oCurrentEvent.ipkid
 		    oLinkItem.ifk_child = oChild.ipkid
-		    oLinkItem.sfk_table_name = ""
+		    oLinkItem.sparent_table = "tbl_events"
 		    oLinkItem.Save
 		    
 		  Next

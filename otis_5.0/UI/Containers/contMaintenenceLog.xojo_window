@@ -875,7 +875,7 @@ End
 		    dim d1 as date
 		    dcExitDate.DateValue = d1
 		  End If
-		  tfWorkCost.Text = oLog.swork_cost
+		  tfWorkCost.Text = str( oLog.swork_cost, modFieldFormatting.tbl_maintenance_logs.work_cost )
 		  taWorkDescription.Text = oLog.swork_description
 		  taWorkComments.Text = oLog.swork_comments
 		End Sub
@@ -1134,13 +1134,13 @@ End
 		  
 		  dim s1 as string
 		  
-		  s1 = me.Text
+		  s1 = Methods.StripNonDigitsDecimals( me.Text )
 		  
 		  oCurrentLog.swork_cost = s1
 		  SaveLog
 		  
 		  // Update the display
-		  me.Text = oCurrentLog.swork_cost.ToText
+		  me.Text = str( oCurrentLog.swork_cost.ToText, modFieldFormatting.tbl_maintenance_logs.work_cost )
 		End Sub
 	#tag EndEvent
 #tag EndEvents

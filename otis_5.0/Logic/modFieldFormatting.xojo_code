@@ -15,6 +15,30 @@ Protected Module modFieldFormatting
 		    Select Case sFieldName
 		    Case "li_price"
 		      Return tbl_lineitems.li_price
+		    Case "li_discount"
+		      Return tbl_lineitems.li_discount
+		    End Select
+		    
+		  Case "tbl_inventory"
+		    Select Case sFieldName
+		    Case "item_purchase_price"
+		      Return tbl_inventory.item_purchase_price
+		    Case "item_rental_price"
+		      Return tbl_inventory.item_rental_price
+		    Case "item_sale_price"
+		      Return tbl_inventory.item_sale_price
+		    End Select
+		    
+		  Case "tbl_maintenance_logs"
+		    Select Case sFieldName
+		    Case "work_cost"
+		      Return tbl_maintenance_logs.work_cost
+		    End Select
+		    
+		  Case "tbl_eipl"
+		    Select Case sFieldName
+		    Case "eipl_tax_rate"
+		      Return tbl_eipl.eipl_tax_rate
 		    End Select
 		    
 		    

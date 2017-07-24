@@ -44,7 +44,7 @@ Begin ContainerControl contEI
       TabIndex        =   2
       TabPanelIndex   =   0
       Top             =   22
-      Value           =   0
+      Value           =   1
       Visible         =   True
       Width           =   901
       Begin contLineItems instLineItemList
@@ -522,6 +522,74 @@ Begin ContainerControl contEI
          Visible         =   True
          Width           =   293
       End
+      Begin Label labContactablesList
+         AutoDeactivate  =   True
+         Bold            =   False
+         DataField       =   ""
+         DataSource      =   ""
+         Enabled         =   True
+         Height          =   20
+         HelpTag         =   ""
+         Index           =   -2147483648
+         InitialParent   =   "ppEIPLSwitcher"
+         Italic          =   False
+         Left            =   20
+         LockBottom      =   False
+         LockedInPosition=   False
+         LockLeft        =   True
+         LockRight       =   False
+         LockTop         =   True
+         Multiline       =   False
+         Scope           =   0
+         Selectable      =   False
+         TabIndex        =   11
+         TabPanelIndex   =   2
+         Text            =   "Contactables"
+         TextAlign       =   0
+         TextColor       =   &c00000000
+         TextFont        =   "System"
+         TextSize        =   0.0
+         TextUnit        =   0
+         Top             =   276
+         Transparent     =   True
+         Underline       =   False
+         Visible         =   True
+         Width           =   100
+      End
+      Begin Label labDiscounts
+         AutoDeactivate  =   True
+         Bold            =   False
+         DataField       =   ""
+         DataSource      =   ""
+         Enabled         =   True
+         Height          =   20
+         HelpTag         =   ""
+         Index           =   -2147483648
+         InitialParent   =   "ppEIPLSwitcher"
+         Italic          =   False
+         Left            =   332
+         LockBottom      =   False
+         LockedInPosition=   False
+         LockLeft        =   True
+         LockRight       =   False
+         LockTop         =   True
+         Multiline       =   False
+         Scope           =   0
+         Selectable      =   False
+         TabIndex        =   12
+         TabPanelIndex   =   2
+         Text            =   "Discounts"
+         TextAlign       =   0
+         TextColor       =   &c00000000
+         TextFont        =   "System"
+         TextSize        =   0.0
+         TextUnit        =   0
+         Top             =   276
+         Transparent     =   True
+         Underline       =   False
+         Visible         =   True
+         Width           =   100
+      End
    End
    Begin TabPanel tbEIPLSwitcher
       AutoDeactivate  =   True
@@ -642,9 +710,10 @@ End
 		  For Each oChild as DataFile.tbl_contactables In oLinkTheseToParent
 		    
 		    // Create a new link table item
-		    dim oLinkItem as New DataFile.tbl_internal_linking
+		    dim oLinkItem as New DataFile.tbl_contactable_linking
 		    oLinkItem.ifk_parent = oCurrentRecord.ipkid
 		    oLinkItem.ifk_child = oChild.ipkid
+		    oLinkItem.sparent_table = "tbl_eipl"
 		    oLinkItem.Save
 		    
 		  Next
@@ -744,7 +813,7 @@ End
 		  instGroupDiscountList.methLoadMe(oCurrentRecord)
 		  
 		  tfEIPLName.Text = oCurrentRecord.seipl_name
-		  tfEIPLTaxRate.Text = oCurrentRecord.seipl_tax_rate
+		  tfEIPLTaxRate.Text = str( oCurrentRecord.seipl_tax_rate, modFieldFormatting.tbl_eipl.eipl_tax_rate )
 		  
 		  dim sType as string = oCurrentRecord.seipl_type
 		  For i1 as integer = 0 To pmEIPLType.ListCount - 1
@@ -1069,8 +1138,10 @@ End
 	#tag Event
 		Sub LostFocus()
 		  
-		  oCurrentRecord.seipl_tax_rate = me.Text
+		  oCurrentRecord.seipl_tax_rate = Methods.StripNonDigitsDecimals( me.Text )
 		  oCurrentRecord.Save
+		  
+		  me.Text = str( oCurrentRecord.seipl_tax_rate, modFieldFormatting.tbl_eipl.eipl_tax_rate )
 		End Sub
 	#tag EndEvent
 #tag EndEvents

@@ -1196,6 +1196,102 @@ End
 		End Sub
 	#tag EndMethod
 
+	#tag Method, Flags = &h0
+		Sub SetUIForType()
+		  
+		  Select Case pmType.Text
+		  Case "Contact"
+		    
+		    labType.Enabled = True
+		    pmType.Enabled = True
+		    labType.Text = "Type"
+		    
+		    labNameFirst.Enabled = True
+		    tfNameFirst.Visible = True
+		    labNameFirst.Text = "First Name"
+		    
+		    labNameLast.Enabled = True
+		    tfNameLast.Visible = True
+		    labNameLast.Text = "Last Name"
+		    
+		    labJobTitle.Enabled = True
+		    tfJobTitle.Visible = True
+		    labJobTitle.Text = "Job Title"
+		    
+		    labCompany.Enabled = True
+		    tfCompany.Visible = True
+		    labCompany.Text = "Company"
+		    
+		  Case "Business"
+		    
+		    labType.Enabled = True
+		    pmType.Enabled = True
+		    labType.Text = "Type"
+		    
+		    labNameFirst.Enabled = True
+		    tfNameFirst.Visible = True
+		    labNameFirst.Text = "Name"
+		    
+		    labNameLast.Enabled = False
+		    tfNameLast.Visible = False
+		    labNameLast.Text = ""
+		    
+		    labJobTitle.Enabled = False
+		    tfJobTitle.Visible = False
+		    labJobTitle.Text = ""
+		    
+		    labCompany.Enabled = False
+		    tfCompany.Visible = False
+		    labCompany.Text = ""
+		    
+		  Case "Venue"
+		    
+		    labType.Enabled = True
+		    pmType.Enabled = True
+		    labType.Text = "Type"
+		    
+		    labNameFirst.Enabled = True
+		    tfNameFirst.Visible = True
+		    labNameFirst.Text = "Name"
+		    
+		    labNameLast.Enabled = False
+		    tfNameLast.Visible = False
+		    labNameLast.Text = ""
+		    
+		    labJobTitle.Enabled = False
+		    tfJobTitle.Visible = False
+		    labJobTitle.Text = ""
+		    
+		    labCompany.Enabled = False
+		    tfCompany.Visible = False
+		    labCompany.Text = ""
+		    
+		  Case "Stage"
+		    
+		    labType.Enabled = True
+		    pmType.Enabled = True
+		    labType.Text = "Type"
+		    
+		    labNameFirst.Enabled = True
+		    tfNameFirst.Visible = True
+		    labNameFirst.Text = "Name"
+		    
+		    labNameLast.Enabled = False
+		    tfNameLast.Visible = False
+		    labNameLast.Text = ""
+		    
+		    labJobTitle.Enabled = False
+		    tfJobTitle.Visible = False
+		    labJobTitle.Text = ""
+		    
+		    labCompany.Enabled = False
+		    tfCompany.Visible = False
+		    labCompany.Text = ""
+		    
+		  End Select
+		End Sub
+	#tag EndMethod
+
 
 	#tag Property, Flags = &h0
 		oCurrentRecord As DataFile.tbl_contactables
@@ -1220,6 +1316,8 @@ End
 		  oCurrentRecord.stype = me.Text
 		  
 		  SaveRecord
+		  
+		  SetUIForType
 		End Sub
 	#tag EndEvent
 #tag EndEvents

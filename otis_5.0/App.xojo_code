@@ -137,6 +137,8 @@ Inherits Application
 		  If Login.Go Then
 		    ' We have successfully logged into the regestration server
 		    
+		    Login.State = "Online"
+		    
 		    // Now we check if we need to acquire a client id
 		    If GetNewClientIDPlease Then
 		      
@@ -203,7 +205,7 @@ Inherits Application
 		      
 		      If msgboxResult = 6 Then
 		        'Yes
-		        
+		        Login.State = "Offline"
 		      ElseIf msgboxResult = 7 Then
 		        'No
 		        Quit
@@ -220,6 +222,9 @@ Inherits Application
 		  if db = nil then
 		    quit
 		  end if
+		  
+		  // Lets check if any eipls need numbers from being created offline
+		  Methods.CreateNumbersForOfflineEIPLs
 		  
 		  'Load preferences
 		  Preferences.Load

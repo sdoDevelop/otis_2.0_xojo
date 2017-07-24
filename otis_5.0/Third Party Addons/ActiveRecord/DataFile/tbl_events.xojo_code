@@ -19,6 +19,45 @@ Inherits DataFile.ActiveRecordBase
 
 
 	#tag Method, Flags = &h0
+		Function AddEIPL(sEIPLType as String) As DataFile.tbl_eipl
+		  '!@! Table Dependent !@!
+		  
+		  // Create the new eipl
+		  dim oNewItem as New DataFile.tbl_eipl
+		  oNewItem.Save
+		  oNewItem.ifkevents = me.ipkid
+		  oNewItem.seipl_type = sEIPLType
+		  oNewItem.Save
+		  
+		  
+		  // Now we must grab any contactables on the event and link them to the eipl as well
+		  dim oLinkRecords() as DataFile.tbl_contactable_linking = DataFile.tbl_contactable_linking.List("fk_parent = " + me.ipkid.ToText )
+		  
+		  // Loop through all of the link records
+		  For Each oRecod as DataFile.tbl_contactable_linking In oLinkRecords()
+		    
+		    If oRecod.ifk_child <> 0 Then
+		      
+		      dim oChildRecord as DataFile.tbl_contactables = DataFile.tbl_contactables.FindByID( oRecod.ifk_child )
+		      If oChildRecord <> Nil Then
+		        // the child record exists
+		        // chreate a link to the new eipl
+		        dim oNewLink as new DataFile.tbl_contactable_linking
+		        oNewLink.ifk_parent = oNewItem.ipkid
+		        oNewLink.ifk_child = oRecod.ifk_child
+		        oNewLink.sparent_table = "tbl_eipl"
+		        oNewLink.Save
+		      End If
+		      
+		    End If
+		    
+		  Next
+		  
+		  Return oNewItem
+		End Function
+	#tag EndMethod
+
+	#tag Method, Flags = &h0
 		Shared Function BaseSQL(bAsCount as Boolean = false) As String
 		  dim ars() as string
 		  

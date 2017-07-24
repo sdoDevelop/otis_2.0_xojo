@@ -349,9 +349,9 @@ End
 		        dim sUnFormattedValue as String = jsFieldValues.value(sFieldName)
 		        dim sFormattedValue as String
 		        If sFieldName.InStr(".") = 0 Then
-		          sFormattedValue = FormatValue_ForDisplay(sTableName + "." + sFieldName, sUnFormattedValue)
+		          sFormattedValue = str( sUnFormattedValue, modFieldFormatting.GetFormattingString(sTableName + "." + sFieldName))
 		        Else
-		          sFormattedValue = FormatValue_ForDisplay(sFieldName, sUnFormattedValue)
+		          sFormattedValue = str(sUnFormattedValue, modFieldFormatting.GetFormattingString(sFieldName) )
 		        End If
 		        
 		        // append this value to the rowtag array

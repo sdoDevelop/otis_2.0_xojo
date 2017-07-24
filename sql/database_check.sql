@@ -191,6 +191,17 @@ Select
     row_created                 ,
     row_modified                ,
     row_username                ,
+    fk_parent                   ,
+    fk_child                    ,
+    parent_table                
+    From tbl_contactable_linking
+    ;
+
+Select
+    pkid                        ,
+    row_created                 ,
+    row_modified                ,
+    row_username                ,
     fkeipl                      ,
     group_name                  ,
     group_discount              

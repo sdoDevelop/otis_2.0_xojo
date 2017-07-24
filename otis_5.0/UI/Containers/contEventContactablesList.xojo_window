@@ -103,7 +103,7 @@ End
 		  
 		  sql1 = "Select c.pkid, c.name_first, c.name_last,c.type, il.pkid as lipkid "_
 		  + "From tbl_contactables as c "_
-		  + "Inner Join tbl_internal_linking as il on ( c.pkid = il.fk_child ) "_
+		  + "Inner Join tbl_contactable_linking as il on ( c.pkid = il.fk_child ) "_
 		  + "Inner Join tbl_events as e on ( il.fk_parent = e.pkid ) "_
 		  + "Where e.pkid = " + EventID.ToText + ";"
 		  
@@ -122,7 +122,7 @@ End
 		      dim oRowTag as New lbRowTag
 		      oRowTag.pkid = rs1.Field("pkid").Value
 		      oRowTag.vColumnValues = Array( rs1.Field("name_first").Value, rs1.Field("name_last").Value, rs1.Field("type").Value )
-		      If rs1.Field("lipkid").IntegerValue <> 0 Then oRowTag.vLinkTable = DataFile.tbl_internal_linking.FindByID( rs1.Field("lipkid").IntegerValue )
+		      If rs1.Field("lipkid").IntegerValue <> 0 Then oRowTag.vLinkTable = DataFile.tbl_contactable_linking.FindByID( rs1.Field("lipkid").IntegerValue )
 		      If rs1.Field("pkid").IntegerValue <> 0 Then oRowTag.vtblRecord = DataFile.tbl_contactables.FindByID( rs1.Field("pkid").IntegerValue )
 		      
 		      lbContactables.RowTag(lbContactables.LastIndex) = oRowTag

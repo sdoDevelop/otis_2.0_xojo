@@ -48,6 +48,10 @@ Protected Class ResourceDirectories
 		  user_db_file = RC
 		  
 		  RC = New ResourceClass
+		  RC.FilePath = info_folder.FilePath.Child("eipl_numbers_to_get")
+		  eipl_numbers_to_get_file = RC
+		  
+		  RC = New ResourceClass
 		  RC.FilePath = db_folder.FilePath.Child("utility_db.sqlite")
 		  utility_db_file = RC
 		  
@@ -81,6 +85,10 @@ Protected Class ResourceDirectories
 
 	#tag Property, Flags = &h0
 		db_folder As ResourceClass
+	#tag EndProperty
+
+	#tag Property, Flags = &h0
+		eipl_numbers_to_get_file As ResourceClass
 	#tag EndProperty
 
 	#tag Property, Flags = &h0

@@ -207,7 +207,7 @@ Protected Module modPriceCalculations
 		  ElseIf InStr( oLIRecord.sli_discount, "%") > 0 Then
 		    // the discount is a percent
 		    iAfterDiscount = iSubTotal - ( ( iDiscount / 100 ) * iSubTotal )
-		  Elseif InStr( oLIRecord.sli_discount, "$" ) > 0 Then
+		  Else
 		    // the discount is an amount
 		    iAfterDiscount = iSubTotal - iDiscount
 		  End If

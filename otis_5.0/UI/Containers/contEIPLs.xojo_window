@@ -1260,20 +1260,17 @@ End
 		  '!@! Table Dependent !@!
 		  
 		  
-		  dim oNewItem as New DataFile.tbl_eipl
-		  oNewItem.Save
-		  oNewItem.ifkevents = oEventRecord.ipkid
-		  oNewItem.ieipl_number = oNewItem.ipkid
-		  oNewItem.seipl_type = "Estimate"
-		  oNewItem.Save
+		  dim oNewItem as DataFile.tbl_eipl = oEventRecord.AddEIPL("Estimate")
 		  
-		  dim NewCont as New contEI
-		  
-		  app.MainWindow.AddTab("New EIPL")
-		  
-		  NewCont.EmbedWithinPanel(app.MainWindow.tbMainWindow, app.MainWindow.tbMainWindow.PanelCount - 1)
-		  
-		  NewCont.methLoadMe(oNewItem)
+		  If oNewItem <> Nil Then
+		    dim NewCont as New contEI
+		    
+		    app.MainWindow.AddTab("New EIPL")
+		    
+		    NewCont.EmbedWithinPanel(app.MainWindow.tbMainWindow, app.MainWindow.tbMainWindow.PanelCount - 1)
+		    
+		    NewCont.methLoadMe(oNewItem)
+		  End If
 		End Sub
 	#tag EndEvent
 #tag EndEvents

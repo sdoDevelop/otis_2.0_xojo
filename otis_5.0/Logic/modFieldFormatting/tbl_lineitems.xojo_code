@@ -1,5 +1,9 @@
 #tag Module
 Protected Module tbl_lineitems
+	#tag Constant, Name = li_discount, Type = String, Dynamic = False, Default = \"", Scope = Protected
+		#Tag Instance, Platform = Any, Language = Default, Definition  = \"\\$###\x2C###\x2C###\x2C###.00"
+	#tag EndConstant
+
 	#tag Constant, Name = li_price, Type = String, Dynamic = False, Default = \"", Scope = Protected
 		#Tag Instance, Platform = Any, Language = Default, Definition  = \"\\$###\x2C###\x2C###\x2C###.00"
 	#tag EndConstant
