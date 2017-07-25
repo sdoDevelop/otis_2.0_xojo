@@ -162,6 +162,14 @@ Inherits Application
 		    'need to do full sync conditions
 		    'If we have reinitialized
 		    Dim FullSyncPlease as Boolean
+		    Select Case InitializationModule.CheckSyncStateOfData
+		    Case -1
+		      FullSyncPlease = True
+		    Case 0
+		      
+		    Case 1
+		      
+		    End Select
 		    If ReInitializePlease Then
 		      FullSyncPlease = True
 		    End If
@@ -192,6 +200,8 @@ Inherits Application
 		    
 		  Else
 		    'Login to reg server not succesful
+		    Break
+		    If app.bUserAuthenticationFailed Then Quit
 		    
 		    // Check if we have a valid client id to work offline with
 		    If GetNewClientIDPlease Then
@@ -267,6 +277,10 @@ Inherits Application
 		End Sub
 	#tag EndMethod
 
+
+	#tag Property, Flags = &h0
+		bUserAuthenticationFailed As Boolean
+	#tag EndProperty
 
 	#tag Property, Flags = &h0
 		db As SQLiteDatabase

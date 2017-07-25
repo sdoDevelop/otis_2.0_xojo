@@ -75,9 +75,8 @@ Begin Window winMain_1TabPanel
       Scope           =   0
       TabIndex        =   2
       TabPanelIndex   =   0
-      TabStop         =   True
-      Top             =   27
-      Value           =   0
+      Top             =   26
+      Value           =   2
       Visible         =   True
       Width           =   770
       Begin contEventList contEventList1
@@ -91,12 +90,11 @@ Begin Window winMain_1TabPanel
          Enabled         =   True
          EraseBackground =   True
          HasBackColor    =   False
-         Height          =   435
+         Height          =   431
          HelpTag         =   ""
-         Index           =   -2147483648
          InitialParent   =   "tbMainWindow"
          LastSearchValue =   ""
-         Left            =   0
+         Left            =   2
          LockBottom      =   True
          LockedInPosition=   False
          LockLeft        =   True
@@ -111,7 +109,7 @@ Begin Window winMain_1TabPanel
          Transparent     =   True
          UseFocusRing    =   False
          Visible         =   True
-         Width           =   770
+         Width           =   766
       End
       Begin contInventory contInventory1
          AcceptFocus     =   True
@@ -124,13 +122,12 @@ Begin Window winMain_1TabPanel
          Enabled         =   True
          EraseBackground =   True
          HasBackColor    =   False
-         Height          =   434
+         Height          =   430
          HelpTag         =   ""
-         Index           =   -2147483648
          InitialParent   =   "tbMainWindow"
          iStartingTop    =   0
          LastSearchValue =   ""
-         Left            =   1
+         Left            =   3
          LockBottom      =   True
          LockedInPosition=   False
          LockLeft        =   True
@@ -140,11 +137,11 @@ Begin Window winMain_1TabPanel
          TabIndex        =   0
          TabPanelIndex   =   2
          TabStop         =   True
-         Top             =   28
+         Top             =   29
          Transparent     =   True
          UseFocusRing    =   False
          Visible         =   True
-         Width           =   769
+         Width           =   765
       End
       Begin contContactableList contContactableList1
          AcceptFocus     =   False
@@ -157,13 +154,12 @@ Begin Window winMain_1TabPanel
          Enabled         =   True
          EraseBackground =   True
          HasBackColor    =   False
-         Height          =   431
+         Height          =   428
          HelpTag         =   ""
          iFilterID       =   ""
-         Index           =   -2147483648
          InitialParent   =   "tbMainWindow"
          LastSearchValue =   ""
-         Left            =   2
+         Left            =   3
          LockBottom      =   True
          LockedInPosition=   False
          LockLeft        =   True
@@ -178,7 +174,7 @@ Begin Window winMain_1TabPanel
          Transparent     =   True
          UseFocusRing    =   False
          Visible         =   True
-         Width           =   766
+         Width           =   764
       End
    End
    Begin entPushButton pbCloseTab

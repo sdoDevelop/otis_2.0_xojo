@@ -7,7 +7,7 @@ Protected Class ResourceDirectories
 		  
 		  
 		  RC = New ResourceClass
-		  RC.FilePath = SpecialFolder.ApplicationData.Child("otis")
+		  RC.FilePath = SpecialFolder.ApplicationData.Child("otis_5.0")
 		  If Not RC.Exists Then
 		    RC.FilePath.CreateAsFolder
 		  End If

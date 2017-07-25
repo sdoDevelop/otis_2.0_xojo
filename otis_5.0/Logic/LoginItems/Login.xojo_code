@@ -35,10 +35,15 @@ Protected Module Login
 		  
 		  
 		  Dim oAbort as Boolean
-		  Dim lw1 as New window_login
+		  Dim bAuthenticationFailed as Boolean
+		  'Dim lw1 as New window_login
 		  While Not oAbort
 		    
+		    Dim lw1 as New window_login
+		    
 		    If OpenLoginWindow Then
+		      If bAuthenticationFailed Then lw1.authentication_failed = True
+		      bAuthenticationFailed = False
 		      lw1.username = oUsername
 		      lw1.password = oPassword
 		      lw1.SetFields
@@ -46,6 +51,7 @@ Protected Module Login
 		      
 		      If lw1.aborted Then
 		        'user aborted login process
+		        app.bUserAuthenticationFailed = True
 		        Return False
 		      Else
 		        'user did not abort login process
@@ -61,7 +67,7 @@ Protected Module Login
 		    If oUsername = "" Or oPassword = "" Then
 		      ' no username or password specified
 		      OpenLoginWindow = True
-		      lw1.authentication_failed = True
+		      bAuthenticationFailed = True
 		      Continue
 		    Else
 		      'username and password have been specified
@@ -98,14 +104,14 @@ Protected Module Login
 		          
 		        ElseIf InStr( oErrorMessage, "password authentication failed" ) > 0 Then
 		          ' 1 | FATAL: password authentication failed for user "..."
-		          lw1.authentication_failed = True
+		          bAuthenticationFailed = True
 		          OpenLoginWindow = True
 		          Continue
 		          
 		        Else
 		          'Not sure what happened
 		          Dim err as New RuntimeException
-		          err.Message = "Something strange happened don't have an error catch for this connection error"
+		          err.Message = "Something strange happened, don't have an error catch for this connection error"
 		          ErrManage("Login.Go",Err.Message)
 		          Return False
 		        End If
@@ -113,7 +119,7 @@ Protected Module Login
 		        
 		      Else
 		        // We have connected
-		        oAbort = True
+		        'oAbort = True
 		        Exit
 		      End If
 		      
@@ -123,8 +129,14 @@ Protected Module Login
 		    
 		  Wend
 		  
+		  // Abort login if user authentication has failed
+		  If bAuthenticationFailed Or oAbort Then 
+		    App.bUserAuthenticationFailed = True
+		    Return False
+		  End If
+		  
 		  // Close the login window
-		  lw1.close
+		  'lw1.close  ## already closed by ok cancel buttons
 		  
 		  // Check if we need to save any information
 		  Dim ProcedeWithSaving as Boolean

@@ -193,6 +193,103 @@ Protected Module InitializationModule
 		End Function
 	#tag EndMethod
 
+	#tag Method, Flags = &h1
+		Protected Function CheckSyncStateOfData() As Integer
+		  // -1 = no records AH!
+		  // 0 = things seem right
+		  // 1 = out of sync
+		  
+		  dim db1 as PostgreSQLDatabase = app.RegDB
+		  dim localdb as New SQLiteDatabase
+		  dim rd1 as New ResourceDirectories
+		  dim returnInteger as integer
+		  
+		  localdb.DatabaseFile = rd1.otis_data_file.FilePath
+		  If Not localdb.Connect Then
+		    // Could not connect to otis data databse... probably not there
+		    Return -1
+		  End If
+		  
+		  If db1 <> Nil Then
+		    
+		    dim jsDatabaseInfo as New JSONItem
+		    
+		    // Lets get some database info from the remotedb
+		    dim rs2 as RecordSet = db1.SQLSelect("Select * From get_table_count_modifieddate() as database_info;")
+		    If db1.Error Then
+		      // uh oh we got an error
+		      System.DebugLog("Could not get table count modified date from remote db")
+		      Break
+		    End If
+		    If rs2 <> Nil Then
+		      jsDatabaseInfo.Load(rs2.Field("database_info").Value)
+		      
+		      For Each sTableName as String In jsDatabaseInfo.Names
+		        
+		        dim localDBInfo as RecordSet
+		        localDBInfo = localdb.SQLSelect("Select count(pkid) as count, max(row_modified) as max From " + sTableName + ";")
+		        If localdb.Error Then
+		          // Problem uh oh
+		          Return -1
+		        End If
+		        
+		        dim iLocalTableCount as integer = localDBInfo.Field("count").IntegerValue
+		        dim sLocalTableModified as string = localDBInfo.Field("max").StringValue
+		        dim dtLocalTableModified as new Date
+		        If sLocalTableModified <> "" Then dtLocalTableModified.SQLDateTime = sLocalTableModified
+		        
+		        // pull the json info about this table out of the database info
+		        dim jsTableInfo as New JSONItem 
+		        jsTableInfo = jsDatabaseInfo.Value(sTableName)
+		        dim iRemoteTableCount as integer = jsTableInfo.Value("RecordCount").IntegerValue
+		        dim sRemoteTableModified as String = jsTableInfo.Value("ModifiedDate").StringValue
+		        dim dtRemoteTableModified as New Date
+		        If sRemoteTableModified <> "" Then dtRemoteTableModified.SQLDateTime = sRemoteTableModified
+		        
+		        If dtLocalTableModified = dtRemoteTableModified And iLocalTableCount = iRemoteTableCount Then
+		          // things are right
+		        Else
+		          If iLocalTableCount > 0 Then
+		            returnInteger = 1
+		            Return 1
+		          Else
+		            returnInteger = -1
+		            Return -1
+		          End If
+		          
+		        End If
+		        
+		      Next
+		    End If
+		    
+		  Else
+		    // No remote return 
+		    // check if there are any records in database
+		    
+		    dim iRunningRecordCount as integer
+		    
+		    dim sTables() as string = Array( "tbl_inventory", "tbl_eipl", "tbl_events", "tbl_contactables")
+		    For Each sTable as string In sTables()
+		      dim sql1 as string
+		      sql1 = "Select count(pkid) From " + sTable + ";"
+		      dim rs1 as RecordSet = localdb.SQLSelect(sql1)
+		      If localdb.Error Then
+		        // there has been an error, assume the table is not created properly 
+		        Return -1
+		      End If
+		      iRunningRecordCount = iRunningRecordCount + rs1.Field("count").IntegerValue
+		    Next
+		    
+		    If iRunningRecordCount = 0 Then
+		      Return -1
+		    Else
+		      Return 0
+		    End If
+		    
+		  End If
+		End Function
+	#tag EndMethod
+
 	#tag Method, Flags = &h21
 		Private Sub CreateDatabase()
 		  Dim rd1 as New ResourceDirectories

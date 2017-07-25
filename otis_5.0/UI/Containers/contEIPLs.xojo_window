@@ -39,6 +39,7 @@ Begin ContainerControl contEIPLs
       HasHeading      =   True
       Height          =   389
       HelpTag         =   ""
+      Index           =   -2147483648
       InitialParent   =   ""
       Left            =   4
       LockBottom      =   True
@@ -550,7 +551,7 @@ End
 		  
 		  dim arsConditions() as String
 		  
-		  If oEventRecord <> Nil Then arsConditions.Append( "fkeipl = " + oEventRecord.ipkid.ToText )
+		  If oEventRecord <> Nil Then arsConditions.Append( "fkevents = " + oEventRecord.ipkid.ToText )
 		  
 		  If sSearchValue <> "" Then arsConditions.Append( "eipl_number Like '%" + sSearchValue + "%'" )
 		  If sConditionpar <> "" Then arsConditions.Append( sConditionpar )
@@ -582,6 +583,8 @@ End
 		  dim sCondition,sOrder as String
 		  
 		  dim arsConditions() as String
+		  
+		  If oEventRecord <> Nil Then arsConditions.Append( "fkevents = " + oEventRecord.ipkid.ToText )
 		  
 		  If sSearchValue <> "" Then arsConditions.Append( "li_name Like '%" + sSearchValue + "%'" )
 		  If sConditionpar <> "" Then arsConditions.Append( sConditionpar )

@@ -43,9 +43,8 @@ Begin ContainerControl contEI
       Scope           =   0
       TabIndex        =   2
       TabPanelIndex   =   0
-      TabStop         =   True
       Top             =   22
-      Value           =   1
+      Value           =   0
       Visible         =   True
       Width           =   901
       Begin contLineItems instLineItemList
@@ -59,9 +58,8 @@ Begin ContainerControl contEI
          Enabled         =   True
          EraseBackground =   True
          HasBackColor    =   False
-         Height          =   375
+         Height          =   355
          HelpTag         =   ""
-         Index           =   -2147483648
          InitialParent   =   "ppEIPLSwitcher"
          iStartingTop    =   0
          LastSearchValue =   ""
@@ -75,7 +73,7 @@ Begin ContainerControl contEI
          TabIndex        =   0
          TabPanelIndex   =   1
          TabStop         =   True
-         Top             =   22
+         Top             =   42
          Transparent     =   True
          UseFocusRing    =   False
          Visible         =   True
@@ -92,9 +90,8 @@ Begin ContainerControl contEI
          Enabled         =   True
          EraseBackground =   True
          HasBackColor    =   False
-         Height          =   493
+         Height          =   475
          HelpTag         =   ""
-         Index           =   -2147483648
          InitialParent   =   "ppEIPLSwitcher"
          iStartingTop    =   0
          LastSearchValue =   ""
@@ -108,7 +105,7 @@ Begin ContainerControl contEI
          TabIndex        =   1
          TabPanelIndex   =   1
          TabStop         =   True
-         Top             =   24
+         Top             =   42
          Transparent     =   True
          UseFocusRing    =   False
          Visible         =   True
@@ -126,14 +123,13 @@ Begin ContainerControl contEI
          HasBackColor    =   False
          Height          =   181
          HelpTag         =   ""
-         Index           =   -2147483648
          InitialParent   =   "ppEIPLSwitcher"
          Left            =   20
-         LockBottom      =   False
+         LockBottom      =   True
          LockedInPosition=   False
          LockLeft        =   True
          LockRight       =   False
-         LockTop         =   True
+         LockTop         =   False
          Scope           =   0
          TabIndex        =   0
          TabPanelIndex   =   2
@@ -158,11 +154,11 @@ Begin ContainerControl contEI
          InitialParent   =   "ppEIPLSwitcher"
          Italic          =   False
          Left            =   20
-         LockBottom      =   False
+         LockBottom      =   True
          LockedInPosition=   False
          LockLeft        =   True
          LockRight       =   False
-         LockTop         =   True
+         LockTop         =   False
          Scope           =   0
          TabIndex        =   1
          TabPanelIndex   =   2
@@ -240,7 +236,6 @@ Begin ContainerControl contEI
          Selectable      =   False
          TabIndex        =   3
          TabPanelIndex   =   2
-         TabStop         =   True
          Text            =   "EIPL Name"
          TextAlign       =   2
          TextColor       =   &c00000000
@@ -275,7 +270,6 @@ Begin ContainerControl contEI
          Selectable      =   False
          TabIndex        =   4
          TabPanelIndex   =   2
-         TabStop         =   True
          Text            =   "EIPL Type"
          TextAlign       =   2
          TextColor       =   &c00000000
@@ -341,7 +335,6 @@ Begin ContainerControl contEI
          Selectable      =   False
          TabIndex        =   6
          TabPanelIndex   =   2
-         TabStop         =   True
          Text            =   "Due Date"
          TextAlign       =   2
          TextColor       =   &c00000000
@@ -418,7 +411,6 @@ Begin ContainerControl contEI
          Selectable      =   False
          TabIndex        =   8
          TabPanelIndex   =   2
-         TabStop         =   True
          Text            =   "Tax Rate"
          TextAlign       =   2
          TextColor       =   &c00000000
@@ -485,7 +477,6 @@ Begin ContainerControl contEI
          HasBackColor    =   False
          Height          =   120
          HelpTag         =   ""
-         Index           =   -2147483648
          InitialParent   =   "ppEIPLSwitcher"
          Left            =   262
          LockBottom      =   False
@@ -514,7 +505,6 @@ Begin ContainerControl contEI
          HasBackColor    =   False
          Height          =   181
          HelpTag         =   ""
-         Index           =   -2147483648
          InitialParent   =   "ppEIPLSwitcher"
          Left            =   332
          LockBottom      =   True
@@ -544,17 +534,16 @@ Begin ContainerControl contEI
          InitialParent   =   "ppEIPLSwitcher"
          Italic          =   False
          Left            =   20
-         LockBottom      =   False
+         LockBottom      =   True
          LockedInPosition=   False
          LockLeft        =   True
          LockRight       =   False
-         LockTop         =   True
+         LockTop         =   False
          Multiline       =   False
          Scope           =   0
          Selectable      =   False
          TabIndex        =   11
          TabPanelIndex   =   2
-         TabStop         =   True
          Text            =   "Contactables"
          TextAlign       =   0
          TextColor       =   &c00000000
@@ -589,7 +578,6 @@ Begin ContainerControl contEI
          Selectable      =   False
          TabIndex        =   12
          TabPanelIndex   =   2
-         TabStop         =   True
          Text            =   "Discounts"
          TextAlign       =   0
          TextColor       =   &c00000000
@@ -601,6 +589,40 @@ Begin ContainerControl contEI
          Underline       =   False
          Visible         =   True
          Width           =   100
+      End
+      Begin Label labEIPLNumber
+         AutoDeactivate  =   True
+         Bold            =   False
+         DataField       =   ""
+         DataSource      =   ""
+         Enabled         =   True
+         Height          =   20
+         HelpTag         =   ""
+         Index           =   -2147483648
+         InitialParent   =   "ppEIPLSwitcher"
+         Italic          =   False
+         Left            =   4
+         LockBottom      =   False
+         LockedInPosition=   False
+         LockLeft        =   True
+         LockRight       =   False
+         LockTop         =   True
+         Multiline       =   False
+         Scope           =   0
+         Selectable      =   False
+         TabIndex        =   3
+         TabPanelIndex   =   1
+         Text            =   "EIPL Number"
+         TextAlign       =   0
+         TextColor       =   &c00000000
+         TextFont        =   "System"
+         TextSize        =   0.0
+         TextUnit        =   0
+         Top             =   24
+         Transparent     =   True
+         Underline       =   False
+         Visible         =   True
+         Width           =   158
       End
    End
    Begin TabPanel tbEIPLSwitcher
@@ -813,6 +835,7 @@ End
 	#tag Method, Flags = &h0
 		Sub methLoadControls()
 		  
+		  labEIPLNumber.Text = "EIPL #: " + oCurrentRecord.ieipl_number.ToText
 		  
 		  instInventoryList.methLoadMe
 		  
