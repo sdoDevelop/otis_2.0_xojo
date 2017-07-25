@@ -47,6 +47,7 @@ Begin ContainerControl contDeleteBreakPrompt
       Selectable      =   False
       TabIndex        =   0
       TabPanelIndex   =   0
+      TabStop         =   True
       Text            =   "Penguins"
       TextAlign       =   1
       TextColor       =   &c00000000
@@ -81,6 +82,7 @@ Begin ContainerControl contDeleteBreakPrompt
       Selectable      =   False
       TabIndex        =   1
       TabPanelIndex   =   0
+      TabStop         =   True
       Text            =   "Respect Them"
       TextAlign       =   1
       TextColor       =   &c00000000
@@ -125,7 +127,7 @@ Begin ContainerControl contDeleteBreakPrompt
       Visible         =   True
       Width           =   100
    End
-   Begin PushButton pbOK
+   Begin entPushButton pbOK
       AutoDeactivate  =   True
       Bold            =   False
       ButtonStyle     =   "0"
@@ -156,7 +158,7 @@ Begin ContainerControl contDeleteBreakPrompt
       Visible         =   True
       Width           =   80
    End
-   Begin PushButton pbCancel
+   Begin entPushButton pbCancel
       AutoDeactivate  =   True
       Bold            =   False
       ButtonStyle     =   "0"
@@ -396,6 +398,11 @@ End
 		InitialValue="False"
 		Type="Boolean"
 		EditorType="Boolean"
+	#tag EndViewProperty
+	#tag ViewProperty
+		Name="UserResponse"
+		Group="Behavior"
+		Type="Boolean"
 	#tag EndViewProperty
 	#tag ViewProperty
 		Name="Visible"

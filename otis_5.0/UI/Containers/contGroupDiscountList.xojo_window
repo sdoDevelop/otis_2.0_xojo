@@ -37,10 +37,10 @@ Begin ContainerControl contGroupDiscountList
       GridLinesColor  =   &c00000000
       HasBackColor    =   False
       HasHeading      =   True
-      Height          =   278
+      Height          =   273
       HelpTag         =   ""
       InitialParent   =   ""
-      Left            =   0
+      Left            =   4
       LockBottom      =   True
       LockedInPosition=   False
       LockLeft        =   True
@@ -50,13 +50,13 @@ Begin ContainerControl contGroupDiscountList
       TabIndex        =   0
       TabPanelIndex   =   0
       TabStop         =   True
-      Top             =   22
+      Top             =   25
       Transparent     =   True
       UseFocusRing    =   False
       Visible         =   True
-      Width           =   300
+      Width           =   294
    End
-   Begin PushButton pbRefresh
+   Begin entPushButton pbRefresh
       AutoDeactivate  =   True
       Bold            =   False
       ButtonStyle     =   "0"
@@ -69,7 +69,7 @@ Begin ContainerControl contGroupDiscountList
       Index           =   -2147483648
       InitialParent   =   ""
       Italic          =   False
-      Left            =   0
+      Left            =   3
       LockBottom      =   False
       LockedInPosition=   False
       LockLeft        =   True
@@ -82,12 +82,12 @@ Begin ContainerControl contGroupDiscountList
       TextFont        =   "System"
       TextSize        =   0.0
       TextUnit        =   0
-      Top             =   0
+      Top             =   3
       Underline       =   False
       Visible         =   True
       Width           =   80
    End
-   Begin PushButton pbAddDiscount
+   Begin entPushButton pbAddDiscount
       AutoDeactivate  =   True
       Bold            =   False
       ButtonStyle     =   "0"
@@ -100,7 +100,7 @@ Begin ContainerControl contGroupDiscountList
       Index           =   -2147483648
       InitialParent   =   ""
       Italic          =   False
-      Left            =   80
+      Left            =   83
       LockBottom      =   False
       LockedInPosition=   False
       LockLeft        =   True
@@ -113,7 +113,7 @@ Begin ContainerControl contGroupDiscountList
       TextFont        =   "System"
       TextSize        =   0.0
       TextUnit        =   0
-      Top             =   0
+      Top             =   3
       Underline       =   False
       Visible         =   True
       Width           =   80

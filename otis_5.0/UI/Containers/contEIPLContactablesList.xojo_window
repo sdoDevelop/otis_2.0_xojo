@@ -37,10 +37,10 @@ Begin ContainerControl contEIPLContactablesList
       GridLinesColor  =   &c00000000
       HasBackColor    =   False
       HasHeading      =   True
-      Height          =   218
+      Height          =   209
       HelpTag         =   ""
       InitialParent   =   ""
-      Left            =   0
+      Left            =   4
       LockBottom      =   True
       LockedInPosition=   False
       LockLeft        =   True
@@ -50,13 +50,13 @@ Begin ContainerControl contEIPLContactablesList
       TabIndex        =   0
       TabPanelIndex   =   0
       TabStop         =   True
-      Top             =   20
+      Top             =   27
       Transparent     =   True
       UseFocusRing    =   False
       Visible         =   True
-      Width           =   338
+      Width           =   331
    End
-   Begin PushButton pbRefresh
+   Begin entPushButton pbRefresh
       AutoDeactivate  =   True
       Bold            =   False
       ButtonStyle     =   "0"
@@ -69,7 +69,7 @@ Begin ContainerControl contEIPLContactablesList
       Index           =   -2147483648
       InitialParent   =   ""
       Italic          =   False
-      Left            =   0
+      Left            =   3
       LockBottom      =   False
       LockedInPosition=   False
       LockLeft        =   True
@@ -82,7 +82,7 @@ Begin ContainerControl contEIPLContactablesList
       TextFont        =   "System"
       TextSize        =   0.0
       TextUnit        =   0
-      Top             =   0
+      Top             =   3
       Underline       =   False
       Visible         =   True
       Width           =   80

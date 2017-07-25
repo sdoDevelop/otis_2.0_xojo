@@ -9,7 +9,7 @@ Begin ContainerControl contFirmwareLatest
    Enabled         =   True
    EraseBackground =   True
    HasBackColor    =   False
-   Height          =   52
+   Height          =   55
    HelpTag         =   ""
    InitialParent   =   ""
    Left            =   0
@@ -24,7 +24,7 @@ Begin ContainerControl contFirmwareLatest
    Transparent     =   True
    UseFocusRing    =   False
    Visible         =   True
-   Width           =   198
+   Width           =   202
    Begin DateControl dcUpdateDate
       AutoDeactivate  =   True
       Checked         =   False
@@ -46,8 +46,8 @@ Begin ContainerControl contFirmwareLatest
       LinuxTextUnit   =   0
       LockBottom      =   False
       LockedInPosition=   False
-      LockLeft        =   False
-      LockRight       =   True
+      LockLeft        =   True
+      LockRight       =   False
       LockTop         =   True
       MacFontBold     =   False
       MacTextFont     =   "System"
@@ -58,7 +58,7 @@ Begin ContainerControl contFirmwareLatest
       TabIndex        =   0
       TabPanelIndex   =   0
       TabStop         =   True
-      Top             =   0
+      Top             =   3
       Visible         =   True
       Width           =   115
       WinFontBold     =   False
@@ -78,7 +78,7 @@ Begin ContainerControl contFirmwareLatest
       Index           =   -2147483648
       InitialParent   =   ""
       Italic          =   False
-      Left            =   -14
+      Left            =   -10
       LockBottom      =   False
       LockedInPosition=   False
       LockLeft        =   False
@@ -95,7 +95,7 @@ Begin ContainerControl contFirmwareLatest
       TextFont        =   "System"
       TextSize        =   0.0
       TextUnit        =   0
-      Top             =   0
+      Top             =   3
       Transparent     =   True
       Underline       =   False
       Visible         =   True
@@ -112,7 +112,7 @@ Begin ContainerControl contFirmwareLatest
       Index           =   -2147483648
       InitialParent   =   ""
       Italic          =   False
-      Left            =   -14
+      Left            =   -10
       LockBottom      =   False
       LockedInPosition=   False
       LockLeft        =   False
@@ -129,13 +129,13 @@ Begin ContainerControl contFirmwareLatest
       TextFont        =   "System"
       TextSize        =   0.0
       TextUnit        =   0
-      Top             =   26
+      Top             =   29
       Transparent     =   True
       Underline       =   False
       Visible         =   True
       Width           =   85
    End
-   Begin TextField tfVersion
+   Begin entTextField tfVersion
       AcceptTabs      =   False
       Alignment       =   0
       AutoDeactivate  =   True
@@ -156,8 +156,8 @@ Begin ContainerControl contFirmwareLatest
       LimitText       =   0
       LockBottom      =   False
       LockedInPosition=   False
-      LockLeft        =   False
-      LockRight       =   True
+      LockLeft        =   True
+      LockRight       =   False
       LockTop         =   True
       Mask            =   ""
       Password        =   False
@@ -171,7 +171,7 @@ Begin ContainerControl contFirmwareLatest
       TextFont        =   "System"
       TextSize        =   0.0
       TextUnit        =   0
-      Top             =   25
+      Top             =   28
       Underline       =   False
       UseFocusRing    =   True
       Visible         =   True

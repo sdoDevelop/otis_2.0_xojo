@@ -24,7 +24,7 @@ Begin ContainerControl contContactMethodList
    Transparent     =   True
    UseFocusRing    =   False
    Visible         =   True
-   Width           =   356
+   Width           =   360
    Begin entListbox lbMethods
       AcceptFocus     =   False
       AcceptTabs      =   True
@@ -37,10 +37,10 @@ Begin ContainerControl contContactMethodList
       GridLinesColor  =   &c00000000
       HasBackColor    =   False
       HasHeading      =   True
-      Height          =   179
+      Height          =   171
       HelpTag         =   ""
       InitialParent   =   ""
-      Left            =   0
+      Left            =   3
       LockBottom      =   True
       LockedInPosition=   False
       LockLeft        =   True
@@ -50,11 +50,11 @@ Begin ContainerControl contContactMethodList
       TabIndex        =   0
       TabPanelIndex   =   0
       TabStop         =   True
-      Top             =   21
+      Top             =   27
       Transparent     =   True
       UseFocusRing    =   False
       Visible         =   True
-      Width           =   356
+      Width           =   355
    End
    Begin SearchControl scSearchField
       AutoDeactivate  =   True
@@ -65,7 +65,7 @@ Begin ContainerControl contContactMethodList
       HelpTag         =   ""
       Index           =   -2147483648
       InitialParent   =   ""
-      Left            =   209
+      Left            =   211
       LockBottom      =   False
       LockedInPosition=   False
       LockLeft        =   False
@@ -80,14 +80,14 @@ Begin ContainerControl contContactMethodList
       TabPanelIndex   =   0
       TabStop         =   True
       Text            =   ""
-      Top             =   0
+      Top             =   3
       Visible         =   True
       Width           =   147
    End
    Begin CheckBox chbShowHidden
       AutoDeactivate  =   True
       Bold            =   False
-      Caption         =   "Show Hidden"
+      Caption         =   "Hidden"
       DataField       =   ""
       DataSource      =   ""
       Enabled         =   True
@@ -96,7 +96,7 @@ Begin ContainerControl contContactMethodList
       Index           =   -2147483648
       InitialParent   =   ""
       Italic          =   False
-      Left            =   118
+      Left            =   142
       LockBottom      =   False
       LockedInPosition=   False
       LockLeft        =   False
@@ -110,13 +110,13 @@ Begin ContainerControl contContactMethodList
       TextFont        =   "System"
       TextSize        =   0.0
       TextUnit        =   0
-      Top             =   0
+      Top             =   3
       Underline       =   False
       Value           =   False
       Visible         =   True
-      Width           =   90
+      Width           =   68
    End
-   Begin PushButton bRefresh
+   Begin entPushButton bRefresh
       AutoDeactivate  =   True
       Bold            =   False
       ButtonStyle     =   "0"
@@ -129,7 +129,7 @@ Begin ContainerControl contContactMethodList
       Index           =   -2147483648
       InitialParent   =   ""
       Italic          =   False
-      Left            =   0
+      Left            =   3
       LockBottom      =   False
       LockedInPosition=   False
       LockLeft        =   True
@@ -142,12 +142,12 @@ Begin ContainerControl contContactMethodList
       TextFont        =   "System"
       TextSize        =   0.0
       TextUnit        =   0
-      Top             =   -2
+      Top             =   1
       Underline       =   False
       Visible         =   True
-      Width           =   55
+      Width           =   58
    End
-   Begin PushButton bAddItem
+   Begin entPushButton bAddItem
       AutoDeactivate  =   True
       Bold            =   False
       ButtonStyle     =   "0"
@@ -160,7 +160,7 @@ Begin ContainerControl contContactMethodList
       Index           =   -2147483648
       InitialParent   =   ""
       Italic          =   False
-      Left            =   53
+      Left            =   63
       LockBottom      =   False
       LockedInPosition=   False
       LockLeft        =   True
@@ -173,10 +173,10 @@ Begin ContainerControl contContactMethodList
       TextFont        =   "System"
       TextSize        =   0.0
       TextUnit        =   0
-      Top             =   -2
+      Top             =   1
       Underline       =   False
       Visible         =   True
-      Width           =   53
+      Width           =   60
    End
 End
 #tag EndWindow

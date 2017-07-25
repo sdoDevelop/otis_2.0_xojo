@@ -37,10 +37,10 @@ Begin ContainerControl contInventory
       GridLinesColor  =   &c00000000
       HasBackColor    =   False
       HasHeading      =   True
-      Height          =   377
+      Height          =   372
       HelpTag         =   ""
       InitialParent   =   ""
-      Left            =   0
+      Left            =   4
       LockBottom      =   True
       LockedInPosition=   False
       LockLeft        =   True
@@ -50,13 +50,13 @@ Begin ContainerControl contInventory
       TabIndex        =   0
       TabPanelIndex   =   0
       TabStop         =   True
-      Top             =   62
+      Top             =   65
       Transparent     =   True
       UseFocusRing    =   False
       Visible         =   True
-      Width           =   700
+      Width           =   693
    End
-   Begin PushButton bAddItem
+   Begin entPushButton bAddItem
       AutoDeactivate  =   True
       Bold            =   False
       ButtonStyle     =   "0"
@@ -69,7 +69,7 @@ Begin ContainerControl contInventory
       Index           =   -2147483648
       InitialParent   =   ""
       Italic          =   False
-      Left            =   80
+      Left            =   83
       LockBottom      =   False
       LockedInPosition=   False
       LockLeft        =   True
@@ -82,12 +82,12 @@ Begin ContainerControl contInventory
       TextFont        =   "System"
       TextSize        =   0.0
       TextUnit        =   0
-      Top             =   0
+      Top             =   3
       Underline       =   False
       Visible         =   True
       Width           =   81
    End
-   Begin PushButton bRefresh
+   Begin entPushButton bRefresh
       AutoDeactivate  =   True
       Bold            =   False
       ButtonStyle     =   "0"
@@ -100,7 +100,7 @@ Begin ContainerControl contInventory
       Index           =   -2147483648
       InitialParent   =   ""
       Italic          =   False
-      Left            =   0
+      Left            =   3
       LockBottom      =   False
       LockedInPosition=   False
       LockLeft        =   True
@@ -113,7 +113,7 @@ Begin ContainerControl contInventory
       TextFont        =   "System"
       TextSize        =   0.0
       TextUnit        =   0
-      Top             =   0
+      Top             =   3
       Underline       =   False
       Visible         =   True
       Width           =   81
@@ -127,7 +127,7 @@ Begin ContainerControl contInventory
       HelpTag         =   ""
       Index           =   -2147483648
       InitialParent   =   ""
-      Left            =   540
+      Left            =   537
       LockBottom      =   False
       LockedInPosition=   False
       LockLeft        =   False
@@ -142,7 +142,7 @@ Begin ContainerControl contInventory
       TabPanelIndex   =   0
       TabStop         =   True
       Text            =   ""
-      Top             =   2
+      Top             =   5
       Visible         =   True
       Width           =   160
    End
@@ -158,11 +158,11 @@ Begin ContainerControl contInventory
       Index           =   -2147483648
       InitialParent   =   ""
       Italic          =   False
-      Left            =   0
+      Left            =   3
       LockBottom      =   False
       LockedInPosition=   False
-      LockLeft        =   False
-      LockRight       =   True
+      LockLeft        =   True
+      LockRight       =   False
       LockTop         =   True
       Scope           =   0
       State           =   0
@@ -172,7 +172,7 @@ Begin ContainerControl contInventory
       TextFont        =   "System"
       TextSize        =   0.0
       TextUnit        =   0
-      Top             =   41
+      Top             =   44
       Underline       =   False
       Value           =   False
       Visible         =   True
@@ -190,7 +190,7 @@ Begin ContainerControl contInventory
       Index           =   -2147483648
       InitialParent   =   ""
       Italic          =   False
-      Left            =   0
+      Left            =   3
       LockBottom      =   False
       LockedInPosition=   False
       LockLeft        =   True
@@ -204,7 +204,7 @@ Begin ContainerControl contInventory
       TextFont        =   "System"
       TextSize        =   0.0
       TextUnit        =   0
-      Top             =   23
+      Top             =   26
       Underline       =   False
       Value           =   True
       Visible         =   True
@@ -222,7 +222,7 @@ Begin ContainerControl contInventory
       Index           =   -2147483648
       InitialParent   =   ""
       Italic          =   False
-      Left            =   81
+      Left            =   84
       LockBottom      =   False
       LockedInPosition=   False
       LockLeft        =   True
@@ -236,7 +236,7 @@ Begin ContainerControl contInventory
       TextFont        =   "System"
       TextSize        =   0.0
       TextUnit        =   0
-      Top             =   23
+      Top             =   26
       Underline       =   False
       Value           =   True
       Visible         =   True
@@ -254,7 +254,7 @@ Begin ContainerControl contInventory
       Index           =   -2147483648
       InitialParent   =   ""
       Italic          =   False
-      Left            =   163
+      Left            =   166
       LockBottom      =   False
       LockedInPosition=   False
       LockLeft        =   True
@@ -268,7 +268,7 @@ Begin ContainerControl contInventory
       TextFont        =   "System"
       TextSize        =   0.0
       TextUnit        =   0
-      Top             =   23
+      Top             =   26
       Underline       =   False
       Value           =   True
       Visible         =   True

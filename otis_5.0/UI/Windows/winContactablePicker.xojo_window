@@ -32,18 +32,24 @@ Begin Window winContactablePicker
       AutoDeactivate  =   True
       BackColor       =   &cFFFFFF00
       Backdrop        =   0
+      bDisplayGrouped =   False
+      DoNotLoad       =   False
       Enabled         =   True
       EraseBackground =   True
       HasBackColor    =   False
       Height          =   378
       HelpTag         =   ""
+      iFilterID       =   ""
+      Index           =   -2147483648
       InitialParent   =   ""
+      LastSearchValue =   ""
       Left            =   0
       LockBottom      =   True
       LockedInPosition=   False
       LockLeft        =   True
       LockRight       =   True
       LockTop         =   True
+      PickerMode      =   False
       Scope           =   0
       TabIndex        =   0
       TabPanelIndex   =   0
@@ -54,7 +60,7 @@ Begin Window winContactablePicker
       Visible         =   True
       Width           =   366
    End
-   Begin PushButton pbOK
+   Begin entPushButton pbOK
       AutoDeactivate  =   True
       Bold            =   False
       ButtonStyle     =   "0"
@@ -85,7 +91,7 @@ Begin Window winContactablePicker
       Visible         =   True
       Width           =   80
    End
-   Begin PushButton pbCancel
+   Begin entPushButton pbCancel
       AutoDeactivate  =   True
       Bold            =   False
       ButtonStyle     =   "0"
@@ -358,11 +364,6 @@ End
 		Group="ID"
 		Type="String"
 		EditorType="String"
-	#tag EndViewProperty
-	#tag ViewProperty
-		Name="oSelectedRecords()"
-		Group="Behavior"
-		Type="Integer"
 	#tag EndViewProperty
 	#tag ViewProperty
 		Name="Placement"

@@ -124,7 +124,7 @@ Begin ContainerControl contContactable
       Visible         =   True
       Width           =   100
    End
-   Begin TextField tfNameFirst
+   Begin entTextField tfNameFirst
       AcceptTabs      =   False
       Alignment       =   0
       AutoDeactivate  =   True
@@ -201,7 +201,7 @@ Begin ContainerControl contContactable
       Visible         =   True
       Width           =   100
    End
-   Begin TextField tfNameLast
+   Begin entTextField tfNameLast
       AcceptTabs      =   False
       Alignment       =   0
       AutoDeactivate  =   True
@@ -277,7 +277,7 @@ Begin ContainerControl contContactable
       Visible         =   True
       Width           =   100
    End
-   Begin TextField tfJobTitle
+   Begin entTextField tfJobTitle
       AcceptTabs      =   False
       Alignment       =   0
       AutoDeactivate  =   True
@@ -353,7 +353,7 @@ Begin ContainerControl contContactable
       Visible         =   True
       Width           =   100
    End
-   Begin TextField tfCompany
+   Begin entTextField tfCompany
       AcceptTabs      =   False
       Alignment       =   0
       AutoDeactivate  =   True
@@ -531,7 +531,7 @@ Begin ContainerControl contContactable
       Visible         =   True
       Width           =   100
    End
-   Begin TextField tfAddressCity
+   Begin entTextField tfAddressCity
       AcceptTabs      =   False
       Alignment       =   0
       AutoDeactivate  =   True
@@ -573,7 +573,7 @@ Begin ContainerControl contContactable
       Visible         =   True
       Width           =   165
    End
-   Begin TextField tfAddressLine1
+   Begin entTextField tfAddressLine1
       AcceptTabs      =   False
       Alignment       =   0
       AutoDeactivate  =   True
@@ -615,7 +615,7 @@ Begin ContainerControl contContactable
       Visible         =   True
       Width           =   165
    End
-   Begin TextField tfAddressState
+   Begin entTextField tfAddressState
       AcceptTabs      =   False
       Alignment       =   0
       AutoDeactivate  =   True
@@ -657,7 +657,7 @@ Begin ContainerControl contContactable
       Visible         =   True
       Width           =   165
    End
-   Begin TextField tfAddressLine2
+   Begin entTextField tfAddressLine2
       AcceptTabs      =   False
       Alignment       =   0
       AutoDeactivate  =   True
@@ -767,7 +767,7 @@ Begin ContainerControl contContactable
       Visible         =   True
       Width           =   100
    End
-   Begin TextField tfAddressZip
+   Begin entTextField tfAddressZip
       AcceptTabs      =   False
       Alignment       =   0
       AutoDeactivate  =   True
@@ -809,7 +809,7 @@ Begin ContainerControl contContactable
       Visible         =   True
       Width           =   165
    End
-   Begin TextField tfAdressCountry
+   Begin entTextField tfAdressCountry
       AcceptTabs      =   False
       Alignment       =   0
       AutoDeactivate  =   True
@@ -862,7 +862,7 @@ Begin ContainerControl contContactable
       Index           =   -2147483648
       InitialParent   =   ""
       Italic          =   False
-      Left            =   0
+      Left            =   3
       LockBottom      =   False
       LockedInPosition=   False
       LockLeft        =   True
@@ -879,7 +879,7 @@ Begin ContainerControl contContactable
       TextFont        =   "System"
       TextSize        =   0.0
       TextUnit        =   0
-      Top             =   4
+      Top             =   6
       Transparent     =   True
       Underline       =   False
       Visible         =   True
@@ -897,7 +897,7 @@ Begin ContainerControl contContactable
       Index           =   -2147483648
       InitialParent   =   ""
       Italic          =   False
-      Left            =   52
+      Left            =   55
       LockBottom      =   False
       LockedInPosition=   False
       LockLeft        =   True
@@ -911,7 +911,7 @@ Begin ContainerControl contContactable
       TextFont        =   "System"
       TextSize        =   0.0
       TextUnit        =   0
-      Top             =   3
+      Top             =   5
       Underline       =   False
       Value           =   False
       Visible         =   True
@@ -981,7 +981,7 @@ Begin ContainerControl contContactable
       Visible         =   True
       Width           =   569
    End
-   Begin PushButton pbAddChildEvent
+   Begin entPushButton pbAddChildEvent
       AutoDeactivate  =   True
       Bold            =   False
       ButtonStyle     =   "0"
@@ -1007,7 +1007,7 @@ Begin ContainerControl contContactable
       TextFont        =   "System"
       TextSize        =   0.0
       TextUnit        =   0
-      Top             =   492
+      Top             =   490
       Underline       =   False
       Visible         =   True
       Width           =   82

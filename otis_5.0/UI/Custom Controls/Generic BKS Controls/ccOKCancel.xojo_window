@@ -25,7 +25,7 @@ Begin ContainerControl ccOKCancel
    UseFocusRing    =   False
    Visible         =   True
    Width           =   172
-   Begin pushbutton pbLeft
+   Begin entPushButton pbLeft
       AutoDeactivate  =   True
       Bold            =   False
       ButtonStyle     =   "0"
@@ -56,7 +56,7 @@ Begin ContainerControl ccOKCancel
       Visible         =   True
       Width           =   80
    End
-   Begin pushbutton pbRight
+   Begin entPushButton pbRight
       AutoDeactivate  =   True
       Bold            =   False
       ButtonStyle     =   "0"

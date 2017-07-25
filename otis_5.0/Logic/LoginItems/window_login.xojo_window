@@ -166,7 +166,6 @@ Begin Window window_login
       Selectable      =   False
       TabIndex        =   8
       TabPanelIndex   =   0
-      TabStop         =   True
       Text            =   "Authentication Failed"
       TextAlign       =   0
       TextColor       =   &cE30A0A00
@@ -201,7 +200,6 @@ Begin Window window_login
       Selectable      =   False
       TabIndex        =   9
       TabPanelIndex   =   0
-      TabStop         =   True
       Text            =   "Password"
       TextAlign       =   0
       TextColor       =   &c00000000
@@ -236,7 +234,6 @@ Begin Window window_login
       Selectable      =   False
       TabIndex        =   10
       TabPanelIndex   =   0
-      TabStop         =   True
       Text            =   "Username"
       TextAlign       =   0
       TextColor       =   &c00000000
@@ -249,7 +246,7 @@ Begin Window window_login
       Visible         =   True
       Width           =   74
    End
-   Begin PushButton pushbutton_cancel
+   Begin entPushButton pushbutton_cancel
       AutoDeactivate  =   True
       Bold            =   False
       ButtonStyle     =   "0"
@@ -280,7 +277,7 @@ Begin Window window_login
       Visible         =   True
       Width           =   80
    End
-   Begin PushButton pushbutton_ok
+   Begin entPushButton pushbutton_ok
       AutoDeactivate  =   True
       Bold            =   False
       ButtonStyle     =   "0"
@@ -311,7 +308,7 @@ Begin Window window_login
       Visible         =   True
       Width           =   80
    End
-   Begin TextField textfield_password
+   Begin entTextField tf_password
       AcceptTabs      =   False
       Alignment       =   0
       AutoDeactivate  =   True
@@ -353,7 +350,7 @@ Begin Window window_login
       Visible         =   True
       Width           =   249
    End
-   Begin TextField textfield_username
+   Begin entTextField tf_username
       AcceptTabs      =   False
       Alignment       =   0
       AutoDeactivate  =   True
@@ -407,8 +404,8 @@ End
 
 	#tag Event
 		Sub Close()
-		  username = textfield_username.Text
-		  password = textfield_password.Text
+		  username = tf_username.Text
+		  password = tf_password.Text
 		  save_username = checkbox_save_username.Value
 		  save_password = checkbox_save_password.Value
 		  auto_login = checkbox_auto_login.Value
@@ -454,8 +451,8 @@ End
 
 	#tag Method, Flags = &h0
 		Sub my_open()
-		  textfield_username.Text = username
-		  textfield_password.Text = password
+		  tf_username.Text = username
+		  tf_password.Text = password
 		  If authentication_failed Then
 		    me.label_authentication_failed.Visible = True
 		  Else
@@ -480,8 +477,8 @@ End
 	#tag Method, Flags = &h0
 		Sub SetFields()
 		  
-		  textfield_username.Text = username
-		  textfield_password.Text = password
+		  tf_username.Text = username
+		  tf_password.Text = password
 		  If authentication_failed Then
 		    me.label_authentication_failed.Visible = True
 		  Else

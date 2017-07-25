@@ -93,7 +93,7 @@ Begin ContainerControl contInventoryItem
       Visible         =   True
       Width           =   100
    End
-   Begin TextField tfItemName
+   Begin entTextField tfItemName
       AcceptTabs      =   False
       Alignment       =   0
       AutoDeactivate  =   True
@@ -135,7 +135,7 @@ Begin ContainerControl contInventoryItem
       Visible         =   True
       Width           =   213
    End
-   Begin TextField tfItemManufacturer
+   Begin entTextField tfItemManufacturer
       AcceptTabs      =   False
       Alignment       =   0
       AutoDeactivate  =   True
@@ -211,7 +211,7 @@ Begin ContainerControl contInventoryItem
       Visible         =   True
       Width           =   100
    End
-   Begin TextField tfItemModel
+   Begin entTextField tfItemModel
       AcceptTabs      =   False
       Alignment       =   0
       AutoDeactivate  =   True
@@ -287,7 +287,7 @@ Begin ContainerControl contInventoryItem
       Visible         =   True
       Width           =   100
    End
-   Begin TextField tfItemDepartment
+   Begin entTextField tfItemDepartment
       AcceptTabs      =   False
       Alignment       =   0
       AutoDeactivate  =   True
@@ -363,7 +363,7 @@ Begin ContainerControl contInventoryItem
       Visible         =   True
       Width           =   100
    End
-   Begin TextField tfItemCategory
+   Begin entTextField tfItemCategory
       AcceptTabs      =   False
       Alignment       =   0
       AutoDeactivate  =   True
@@ -439,7 +439,7 @@ Begin ContainerControl contInventoryItem
       Visible         =   True
       Width           =   100
    End
-   Begin TextField tfItemSubCategory
+   Begin entTextField tfItemSubCategory
       AcceptTabs      =   False
       Alignment       =   0
       AutoDeactivate  =   True
@@ -515,7 +515,7 @@ Begin ContainerControl contInventoryItem
       Visible         =   True
       Width           =   100
    End
-   Begin TextField tfItemDescription
+   Begin entTextField tfItemDescription
       AcceptTabs      =   False
       Alignment       =   0
       AutoDeactivate  =   True
@@ -557,7 +557,7 @@ Begin ContainerControl contInventoryItem
       Visible         =   True
       Width           =   213
    End
-   Begin TextField tfItemOwner
+   Begin entTextField tfItemOwner
       AcceptTabs      =   False
       Alignment       =   0
       AutoDeactivate  =   True
@@ -633,7 +633,7 @@ Begin ContainerControl contInventoryItem
       Visible         =   True
       Width           =   100
    End
-   Begin TextField tfItemQuantity
+   Begin entTextField tfItemQuantity
       AcceptTabs      =   False
       Alignment       =   0
       AutoDeactivate  =   True
@@ -709,7 +709,7 @@ Begin ContainerControl contInventoryItem
       Visible         =   True
       Width           =   100
    End
-   Begin TextField tfItemRentalPrice
+   Begin entTextField tfItemRentalPrice
       AcceptTabs      =   False
       Alignment       =   0
       AutoDeactivate  =   True
@@ -881,7 +881,7 @@ Begin ContainerControl contInventoryItem
       Visible         =   True
       Width           =   86
    End
-   Begin PushButton pbIncreaseQuantity
+   Begin entPushButton pbIncreaseQuantity
       AutoDeactivate  =   True
       Bold            =   False
       ButtonStyle     =   "0"
@@ -980,7 +980,7 @@ Begin ContainerControl contInventoryItem
       Visible         =   True
       Width           =   43
    End
-   Begin TextField tfItemWeight
+   Begin entTextField tfItemWeight
       AcceptTabs      =   False
       Alignment       =   0
       AutoDeactivate  =   True
@@ -1056,7 +1056,7 @@ Begin ContainerControl contInventoryItem
       Visible         =   True
       Width           =   43
    End
-   Begin TextField tfItemHeight
+   Begin entTextField tfItemHeight
       AcceptTabs      =   False
       Alignment       =   0
       AutoDeactivate  =   True
@@ -1132,7 +1132,7 @@ Begin ContainerControl contInventoryItem
       Visible         =   True
       Width           =   43
    End
-   Begin TextField tfItemWidth
+   Begin entTextField tfItemWidth
       AcceptTabs      =   False
       Alignment       =   0
       AutoDeactivate  =   True
@@ -1208,7 +1208,7 @@ Begin ContainerControl contInventoryItem
       Visible         =   True
       Width           =   43
    End
-   Begin TextField tfItemDepth
+   Begin entTextField tfItemDepth
       AcceptTabs      =   False
       Alignment       =   0
       AutoDeactivate  =   True
@@ -1250,7 +1250,7 @@ Begin ContainerControl contInventoryItem
       Visible         =   True
       Width           =   247
    End
-   Begin PushButton pbAddContainedItem
+   Begin entPushButton pbAddContainedItem
       AutoDeactivate  =   True
       Bold            =   False
       ButtonStyle     =   "0"
@@ -1347,7 +1347,7 @@ Begin ContainerControl contInventoryItem
       Visible         =   True
       Width           =   59
    End
-   Begin TextField tfItemSerialCode
+   Begin entTextField tfItemSerialCode
       AcceptTabs      =   False
       Alignment       =   0
       AutoDeactivate  =   True
@@ -1389,7 +1389,7 @@ Begin ContainerControl contInventoryItem
       Visible         =   True
       Width           =   247
    End
-   Begin TextField tfItemBarcode
+   Begin entTextField tfItemBarcode
       AcceptTabs      =   False
       Alignment       =   0
       AutoDeactivate  =   True
@@ -1431,7 +1431,7 @@ Begin ContainerControl contInventoryItem
       Visible         =   False
       Width           =   247
    End
-   Begin TextField tfItemRFIDCode
+   Begin entTextField tfItemRFIDCode
       AcceptTabs      =   False
       Alignment       =   0
       AutoDeactivate  =   True
@@ -1638,7 +1638,7 @@ Begin ContainerControl contInventoryItem
       Visible         =   True
       Width           =   100
    End
-   Begin TextField tfNextPostfix
+   Begin entTextField tfNextPostfix
       AcceptTabs      =   False
       Alignment       =   0
       AutoDeactivate  =   True
@@ -1714,7 +1714,7 @@ Begin ContainerControl contInventoryItem
       Visible         =   True
       Width           =   47
    End
-   Begin TextField tfIncreaseBy
+   Begin entTextField tfIncreaseBy
       AcceptTabs      =   False
       Alignment       =   0
       AutoDeactivate  =   True
@@ -2172,7 +2172,7 @@ Begin ContainerControl contInventoryItem
       Visible         =   False
       Width           =   16
    End
-   Begin PushButton pbResumePush
+   Begin entPushButton pbResumePush
       AutoDeactivate  =   True
       Bold            =   False
       ButtonStyle     =   "0"
@@ -2203,7 +2203,7 @@ Begin ContainerControl contInventoryItem
       Visible         =   False
       Width           =   84
    End
-   Begin TextField tfItemPurchasePrice
+   Begin entTextField tfItemPurchasePrice
       AcceptTabs      =   False
       Alignment       =   0
       AutoDeactivate  =   True
@@ -2311,7 +2311,7 @@ Begin ContainerControl contInventoryItem
       Visible         =   True
       Width           =   100
    End
-   Begin TextField tfItemSalePrice
+   Begin entTextField tfItemSalePrice
       AcceptTabs      =   False
       Alignment       =   0
       AutoDeactivate  =   True
@@ -2550,7 +2550,7 @@ Begin ContainerControl contInventoryItem
       Visible         =   True
       Width           =   246
    End
-   Begin PushButton pbCancelPush
+   Begin entPushButton pbCancelPush
       AutoDeactivate  =   True
       Bold            =   False
       ButtonStyle     =   "0"
@@ -2581,7 +2581,7 @@ Begin ContainerControl contInventoryItem
       Visible         =   False
       Width           =   84
    End
-   Begin PushButton pbSelectAll_Push
+   Begin entPushButton pbSelectAll_Push
       AutoDeactivate  =   True
       Bold            =   False
       ButtonStyle     =   "0"
@@ -2612,7 +2612,7 @@ Begin ContainerControl contInventoryItem
       Visible         =   False
       Width           =   69
    End
-   Begin PushButton pbDeselectAll_Push
+   Begin entPushButton pbDeselectAll_Push
       AutoDeactivate  =   True
       Bold            =   False
       ButtonStyle     =   "0"
@@ -2643,7 +2643,7 @@ Begin ContainerControl contInventoryItem
       Visible         =   False
       Width           =   71
    End
-   Begin PushButton pbSelctDefault_Push
+   Begin entPushButton pbSelctDefault_Push
       AutoDeactivate  =   True
       Bold            =   False
       ButtonStyle     =   "0"

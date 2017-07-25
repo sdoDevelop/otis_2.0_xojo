@@ -25,7 +25,7 @@ Begin ContainerControl contDiscountDetails
    UseFocusRing    =   False
    Visible         =   True
    Width           =   296
-   Begin TextField tfGroupName
+   Begin entTextField tfGroupName
       AcceptTabs      =   False
       Alignment       =   0
       AutoDeactivate  =   True
@@ -89,6 +89,7 @@ Begin ContainerControl contDiscountDetails
       Selectable      =   False
       TabIndex        =   1
       TabPanelIndex   =   0
+      TabStop         =   True
       Text            =   "Group Name"
       TextAlign       =   0
       TextColor       =   &c00000000
@@ -123,6 +124,7 @@ Begin ContainerControl contDiscountDetails
       Selectable      =   False
       TabIndex        =   2
       TabPanelIndex   =   0
+      TabStop         =   True
       Text            =   "Discount"
       TextAlign       =   0
       TextColor       =   &c00000000
@@ -135,7 +137,7 @@ Begin ContainerControl contDiscountDetails
       Visible         =   True
       Width           =   77
    End
-   Begin TextField tfGroupDiscount
+   Begin entTextField tfGroupDiscount
       AcceptTabs      =   False
       Alignment       =   0
       AutoDeactivate  =   True
@@ -177,7 +179,7 @@ Begin ContainerControl contDiscountDetails
       Visible         =   True
       Width           =   167
    End
-   Begin PushButton pbOK
+   Begin entPushButton pbOK
       AutoDeactivate  =   True
       Bold            =   False
       ButtonStyle     =   "0"

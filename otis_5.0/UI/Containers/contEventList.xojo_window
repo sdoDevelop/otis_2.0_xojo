@@ -37,10 +37,10 @@ Begin ContainerControl contEventList
       GridLinesColor  =   &c00000000
       HasBackColor    =   False
       HasHeading      =   True
-      Height          =   279
+      Height          =   268
       HelpTag         =   ""
       InitialParent   =   ""
-      Left            =   0
+      Left            =   3
       LockBottom      =   True
       LockedInPosition=   False
       LockLeft        =   True
@@ -50,11 +50,11 @@ Begin ContainerControl contEventList
       TabIndex        =   0
       TabPanelIndex   =   0
       TabStop         =   True
-      Top             =   21
+      Top             =   29
       Transparent     =   True
       UseFocusRing    =   False
       Visible         =   True
-      Width           =   498
+      Width           =   492
    End
    Begin SearchControl scSearchField
       AutoDeactivate  =   True
@@ -65,7 +65,7 @@ Begin ContainerControl contEventList
       HelpTag         =   ""
       Index           =   -2147483648
       InitialParent   =   ""
-      Left            =   363
+      Left            =   360
       LockBottom      =   False
       LockedInPosition=   False
       LockLeft        =   False
@@ -80,11 +80,11 @@ Begin ContainerControl contEventList
       TabPanelIndex   =   0
       TabStop         =   True
       Text            =   ""
-      Top             =   0
+      Top             =   3
       Visible         =   True
       Width           =   135
    End
-   Begin PushButton pbRefresh
+   Begin entPushButton pbRefresh
       AutoDeactivate  =   True
       Bold            =   False
       ButtonStyle     =   "0"
@@ -92,12 +92,12 @@ Begin ContainerControl contEventList
       Caption         =   "Refresh"
       Default         =   True
       Enabled         =   True
-      Height          =   22
+      Height          =   24
       HelpTag         =   ""
       Index           =   -2147483648
       InitialParent   =   ""
       Italic          =   False
-      Left            =   0
+      Left            =   3
       LockBottom      =   False
       LockedInPosition=   False
       LockLeft        =   True
@@ -110,12 +110,12 @@ Begin ContainerControl contEventList
       TextFont        =   "System"
       TextSize        =   0.0
       TextUnit        =   0
-      Top             =   0
+      Top             =   3
       Underline       =   False
       Visible         =   True
       Width           =   75
    End
-   Begin PushButton pbAddEvent
+   Begin entPushButton pbAddEvent
       AutoDeactivate  =   True
       Bold            =   False
       ButtonStyle     =   "0"
@@ -123,12 +123,12 @@ Begin ContainerControl contEventList
       Caption         =   "AddEvent"
       Default         =   False
       Enabled         =   True
-      Height          =   22
+      Height          =   24
       HelpTag         =   ""
       Index           =   -2147483648
       InitialParent   =   ""
       Italic          =   False
-      Left            =   134
+      Left            =   140
       LockBottom      =   False
       LockedInPosition=   False
       LockLeft        =   True
@@ -141,25 +141,25 @@ Begin ContainerControl contEventList
       TextFont        =   "System"
       TextSize        =   0.0
       TextUnit        =   0
-      Top             =   0
+      Top             =   3
       Underline       =   False
       Visible         =   True
       Width           =   75
    End
-   Begin PushButton pbSortBy
+   Begin entPushButton pbSortBy
       AutoDeactivate  =   True
       Bold            =   False
       ButtonStyle     =   "0"
-      Cancel          =   True
+      Cancel          =   False
       Caption         =   "Sort By"
       Default         =   False
       Enabled         =   True
-      Height          =   22
+      Height          =   24
       HelpTag         =   ""
       Index           =   -2147483648
       InitialParent   =   ""
       Italic          =   False
-      Left            =   75
+      Left            =   78
       LockBottom      =   False
       LockedInPosition=   False
       LockLeft        =   True
@@ -172,10 +172,10 @@ Begin ContainerControl contEventList
       TextFont        =   "System"
       TextSize        =   0.0
       TextUnit        =   0
-      Top             =   0
+      Top             =   3
       Underline       =   False
       Visible         =   True
-      Width           =   59
+      Width           =   62
    End
    Begin CheckBox chbShowHidden
       AutoDeactivate  =   True
@@ -189,7 +189,7 @@ Begin ContainerControl contEventList
       Index           =   -2147483648
       InitialParent   =   ""
       Italic          =   False
-      Left            =   264
+      Left            =   260
       LockBottom      =   False
       LockedInPosition=   False
       LockLeft        =   False
@@ -203,7 +203,7 @@ Begin ContainerControl contEventList
       TextFont        =   "System"
       TextSize        =   0.0
       TextUnit        =   0
-      Top             =   1
+      Top             =   4
       Underline       =   False
       Value           =   False
       Visible         =   True

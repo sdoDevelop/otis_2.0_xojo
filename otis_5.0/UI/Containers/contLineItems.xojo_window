@@ -37,10 +37,10 @@ Begin ContainerControl contLineItems
       GridLinesColor  =   &c00000000
       HasBackColor    =   False
       HasHeading      =   True
-      Height          =   412
+      Height          =   408
       HelpTag         =   ""
       InitialParent   =   ""
-      Left            =   0
+      Left            =   3
       LockBottom      =   True
       LockedInPosition=   False
       LockLeft        =   True
@@ -50,13 +50,13 @@ Begin ContainerControl contLineItems
       TabIndex        =   0
       TabPanelIndex   =   0
       TabStop         =   True
-      Top             =   27
+      Top             =   29
       Transparent     =   True
       UseFocusRing    =   False
       Visible         =   True
-      Width           =   700
+      Width           =   695
    End
-   Begin PushButton bRefresh
+   Begin entPushButton bRefresh
       AutoDeactivate  =   True
       Bold            =   False
       ButtonStyle     =   "0"
@@ -69,7 +69,7 @@ Begin ContainerControl contLineItems
       Index           =   -2147483648
       InitialParent   =   ""
       Italic          =   False
-      Left            =   0
+      Left            =   2
       LockBottom      =   False
       LockedInPosition=   False
       LockLeft        =   True
@@ -82,7 +82,7 @@ Begin ContainerControl contLineItems
       TextFont        =   "System"
       TextSize        =   0.0
       TextUnit        =   0
-      Top             =   0
+      Top             =   2
       Underline       =   False
       Visible         =   True
       Width           =   81
@@ -111,9 +111,9 @@ Begin ContainerControl contLineItems
       TabPanelIndex   =   0
       TabStop         =   True
       Text            =   ""
-      Top             =   2
+      Top             =   4
       Visible         =   True
-      Width           =   160
+      Width           =   157
    End
    Begin CheckBox chbShowItems
       AutoDeactivate  =   True
@@ -127,7 +127,7 @@ Begin ContainerControl contLineItems
       Index           =   -2147483648
       InitialParent   =   ""
       Italic          =   False
-      Left            =   93
+      Left            =   95
       LockBottom      =   False
       LockedInPosition=   False
       LockLeft        =   True
@@ -141,7 +141,7 @@ Begin ContainerControl contLineItems
       TextFont        =   "System"
       TextSize        =   0.0
       TextUnit        =   0
-      Top             =   2
+      Top             =   4
       Underline       =   False
       Value           =   True
       Visible         =   True
@@ -159,7 +159,7 @@ Begin ContainerControl contLineItems
       Index           =   -2147483648
       InitialParent   =   ""
       Italic          =   False
-      Left            =   174
+      Left            =   176
       LockBottom      =   False
       LockedInPosition=   False
       LockLeft        =   True
@@ -173,7 +173,7 @@ Begin ContainerControl contLineItems
       TextFont        =   "System"
       TextSize        =   0.0
       TextUnit        =   0
-      Top             =   2
+      Top             =   4
       Underline       =   False
       Value           =   True
       Visible         =   True
@@ -191,7 +191,7 @@ Begin ContainerControl contLineItems
       Index           =   -2147483648
       InitialParent   =   ""
       Italic          =   False
-      Left            =   256
+      Left            =   258
       LockBottom      =   False
       LockedInPosition=   False
       LockLeft        =   True
@@ -205,7 +205,7 @@ Begin ContainerControl contLineItems
       TextFont        =   "System"
       TextSize        =   0.0
       TextUnit        =   0
-      Top             =   2
+      Top             =   4
       Underline       =   False
       Value           =   True
       Visible         =   True

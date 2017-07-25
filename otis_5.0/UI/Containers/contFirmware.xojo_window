@@ -37,10 +37,10 @@ Begin ContainerControl contFirmware
       GridLinesColor  =   &c00000000
       HasBackColor    =   False
       HasHeading      =   True
-      Height          =   220
+      Height          =   214
       HelpTag         =   ""
       InitialParent   =   ""
-      Left            =   0
+      Left            =   4
       LockBottom      =   True
       LockedInPosition=   False
       LockLeft        =   True
@@ -50,13 +50,13 @@ Begin ContainerControl contFirmware
       TabIndex        =   1
       TabPanelIndex   =   0
       TabStop         =   True
-      Top             =   30
+      Top             =   33
       Transparent     =   True
       UseFocusRing    =   False
       Visible         =   True
-      Width           =   217
+      Width           =   210
    End
-   Begin PushButton pbAddLog
+   Begin entPushButton pbAddLog
       AutoDeactivate  =   True
       Bold            =   False
       ButtonStyle     =   "0"
@@ -69,7 +69,7 @@ Begin ContainerControl contFirmware
       Index           =   -2147483648
       InitialParent   =   ""
       Italic          =   False
-      Left            =   0
+      Left            =   3
       LockBottom      =   False
       LockedInPosition=   False
       LockLeft        =   True
@@ -82,12 +82,12 @@ Begin ContainerControl contFirmware
       TextFont        =   "System"
       TextSize        =   0.0
       TextUnit        =   0
-      Top             =   0
+      Top             =   3
       Underline       =   False
       Visible         =   True
       Width           =   38
    End
-   Begin PushButton pbRefresh
+   Begin entPushButton pbRefresh
       AutoDeactivate  =   True
       Bold            =   False
       ButtonStyle     =   "0"
@@ -100,7 +100,7 @@ Begin ContainerControl contFirmware
       Index           =   -2147483648
       InitialParent   =   ""
       Italic          =   False
-      Left            =   37
+      Left            =   40
       LockBottom      =   False
       LockedInPosition=   False
       LockLeft        =   True
@@ -113,7 +113,7 @@ Begin ContainerControl contFirmware
       TextFont        =   "System"
       TextSize        =   0.0
       TextUnit        =   0
-      Top             =   0
+      Top             =   3
       Underline       =   False
       Visible         =   True
       Width           =   34
@@ -330,7 +330,7 @@ Begin ContainerControl contFirmware
       Visible         =   True
       Width           =   83
    End
-   Begin TextField tfFirmwareVersion
+   Begin entTextField tfFirmwareVersion
       AcceptTabs      =   False
       Alignment       =   0
       AutoDeactivate  =   True

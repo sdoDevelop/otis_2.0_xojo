@@ -37,10 +37,10 @@ Begin ContainerControl contMaintenenceLog
       GridLinesColor  =   &c00000000
       HasBackColor    =   False
       HasHeading      =   True
-      Height          =   392
+      Height          =   386
       HelpTag         =   ""
       InitialParent   =   ""
-      Left            =   0
+      Left            =   4
       LockBottom      =   True
       LockedInPosition=   False
       LockLeft        =   True
@@ -50,13 +50,13 @@ Begin ContainerControl contMaintenenceLog
       TabIndex        =   1
       TabPanelIndex   =   0
       TabStop         =   True
-      Top             =   30
+      Top             =   33
       Transparent     =   True
       UseFocusRing    =   False
       Visible         =   True
       Width           =   159
    End
-   Begin TextField tfWorkSummary
+   Begin entTextField tfWorkSummary
       AcceptTabs      =   False
       Alignment       =   0
       AutoDeactivate  =   True
@@ -73,7 +73,7 @@ Begin ContainerControl contMaintenenceLog
       HelpTag         =   ""
       Index           =   -2147483648
       Italic          =   False
-      Left            =   261
+      Left            =   264
       LimitText       =   0
       LockBottom      =   False
       LockedInPosition=   False
@@ -92,7 +92,7 @@ Begin ContainerControl contMaintenenceLog
       TextFont        =   "System"
       TextSize        =   0.0
       TextUnit        =   0
-      Top             =   75
+      Top             =   78
       Underline       =   False
       UseFocusRing    =   True
       Visible         =   True
@@ -109,7 +109,7 @@ Begin ContainerControl contMaintenenceLog
       Index           =   -2147483648
       InitialParent   =   ""
       Italic          =   False
-      Left            =   178
+      Left            =   181
       LockBottom      =   False
       LockedInPosition=   False
       LockLeft        =   True
@@ -126,13 +126,13 @@ Begin ContainerControl contMaintenenceLog
       TextFont        =   "System"
       TextSize        =   0.0
       TextUnit        =   0
-      Top             =   76
+      Top             =   79
       Transparent     =   True
       Underline       =   False
       Visible         =   True
       Width           =   74
    End
-   Begin PushButton pbAddLog
+   Begin entPushButton pbAddLog
       AutoDeactivate  =   True
       Bold            =   False
       ButtonStyle     =   "0"
@@ -145,7 +145,7 @@ Begin ContainerControl contMaintenenceLog
       Index           =   -2147483648
       InitialParent   =   ""
       Italic          =   False
-      Left            =   0
+      Left            =   3
       LockBottom      =   False
       LockedInPosition=   False
       LockLeft        =   True
@@ -158,12 +158,12 @@ Begin ContainerControl contMaintenenceLog
       TextFont        =   "System"
       TextSize        =   0.0
       TextUnit        =   0
-      Top             =   0
+      Top             =   3
       Underline       =   False
       Visible         =   True
       Width           =   38
    End
-   Begin PushButton pbRefresh
+   Begin entPushButton pbRefresh
       AutoDeactivate  =   True
       Bold            =   False
       ButtonStyle     =   "0"
@@ -176,7 +176,7 @@ Begin ContainerControl contMaintenenceLog
       Index           =   -2147483648
       InitialParent   =   ""
       Italic          =   False
-      Left            =   37
+      Left            =   40
       LockBottom      =   False
       LockedInPosition=   False
       LockLeft        =   True
@@ -189,7 +189,7 @@ Begin ContainerControl contMaintenenceLog
       TextFont        =   "System"
       TextSize        =   0.0
       TextUnit        =   0
-      Top             =   0
+      Top             =   3
       Underline       =   False
       Visible         =   True
       Width           =   34
@@ -205,7 +205,7 @@ Begin ContainerControl contMaintenenceLog
       Index           =   -2147483648
       InitialParent   =   ""
       Italic          =   False
-      Left            =   171
+      Left            =   174
       LockBottom      =   False
       LockedInPosition=   False
       LockLeft        =   True
@@ -222,7 +222,7 @@ Begin ContainerControl contMaintenenceLog
       TextFont        =   "System"
       TextSize        =   0.0
       TextUnit        =   0
-      Top             =   136
+      Top             =   139
       Transparent     =   True
       Underline       =   False
       Visible         =   True
@@ -241,7 +241,7 @@ Begin ContainerControl contMaintenenceLog
       HelpTag         =   ""
       Index           =   -2147483648
       InitialParent   =   ""
-      Left            =   267
+      Left            =   270
       LinuxDropDownMode=   True
       LinuxFontBold   =   False
       LinuxTextFont   =   "System"
@@ -261,7 +261,7 @@ Begin ContainerControl contMaintenenceLog
       TabIndex        =   8
       TabPanelIndex   =   0
       TabStop         =   True
-      Top             =   166
+      Top             =   169
       Visible         =   True
       Width           =   115
       WinFontBold     =   False
@@ -281,7 +281,7 @@ Begin ContainerControl contMaintenenceLog
       Index           =   -2147483648
       InitialParent   =   ""
       Italic          =   False
-      Left            =   171
+      Left            =   174
       LockBottom      =   False
       LockedInPosition=   False
       LockLeft        =   True
@@ -298,7 +298,7 @@ Begin ContainerControl contMaintenenceLog
       TextFont        =   "System"
       TextSize        =   0.0
       TextUnit        =   0
-      Top             =   166
+      Top             =   169
       Transparent     =   True
       Underline       =   False
       Visible         =   True
@@ -321,7 +321,7 @@ Begin ContainerControl contMaintenenceLog
       HideSelection   =   True
       Index           =   -2147483648
       Italic          =   False
-      Left            =   258
+      Left            =   261
       LimitText       =   0
       LineHeight      =   0.0
       LineSpacing     =   1.0
@@ -345,7 +345,7 @@ Begin ContainerControl contMaintenenceLog
       TextFont        =   "System"
       TextSize        =   0.0
       TextUnit        =   0
-      Top             =   226
+      Top             =   229
       Underline       =   False
       UseFocusRing    =   True
       Visible         =   True
@@ -362,7 +362,7 @@ Begin ContainerControl contMaintenenceLog
       Index           =   -2147483648
       InitialParent   =   ""
       Italic          =   False
-      Left            =   171
+      Left            =   174
       LockBottom      =   False
       LockedInPosition=   False
       LockLeft        =   True
@@ -379,7 +379,7 @@ Begin ContainerControl contMaintenenceLog
       TextFont        =   "System"
       TextSize        =   0.0
       TextUnit        =   0
-      Top             =   227
+      Top             =   230
       Transparent     =   True
       Underline       =   False
       Visible         =   True
@@ -397,7 +397,7 @@ Begin ContainerControl contMaintenenceLog
       InitialParent   =   ""
       InitialValue    =   ""
       Italic          =   False
-      Left            =   261
+      Left            =   264
       ListIndex       =   0
       LockBottom      =   False
       LockedInPosition=   False
@@ -411,7 +411,7 @@ Begin ContainerControl contMaintenenceLog
       TextFont        =   "System"
       TextSize        =   0.0
       TextUnit        =   0
-      Top             =   103
+      Top             =   106
       Underline       =   False
       Visible         =   True
       Width           =   136
@@ -427,7 +427,7 @@ Begin ContainerControl contMaintenenceLog
       Index           =   -2147483648
       InitialParent   =   ""
       Italic          =   False
-      Left            =   174
+      Left            =   177
       LockBottom      =   False
       LockedInPosition=   False
       LockLeft        =   True
@@ -444,7 +444,7 @@ Begin ContainerControl contMaintenenceLog
       TextFont        =   "System"
       TextSize        =   0.0
       TextUnit        =   0
-      Top             =   104
+      Top             =   107
       Transparent     =   True
       Underline       =   False
       Visible         =   True
@@ -463,7 +463,7 @@ Begin ContainerControl contMaintenenceLog
       HelpTag         =   ""
       Index           =   -2147483648
       InitialParent   =   ""
-      Left            =   267
+      Left            =   270
       LinuxDropDownMode=   True
       LinuxFontBold   =   False
       LinuxTextFont   =   "System"
@@ -483,7 +483,7 @@ Begin ContainerControl contMaintenenceLog
       TabIndex        =   6
       TabPanelIndex   =   0
       TabStop         =   True
-      Top             =   136
+      Top             =   139
       Visible         =   True
       Width           =   115
       WinFontBold     =   False
@@ -503,7 +503,7 @@ Begin ContainerControl contMaintenenceLog
       Index           =   -2147483648
       InitialParent   =   ""
       Italic          =   False
-      Left            =   171
+      Left            =   174
       LockBottom      =   False
       LockedInPosition=   False
       LockLeft        =   True
@@ -520,7 +520,7 @@ Begin ContainerControl contMaintenenceLog
       TextFont        =   "System"
       TextSize        =   20.0
       TextUnit        =   0
-      Top             =   10
+      Top             =   13
       Transparent     =   True
       Underline       =   False
       Visible         =   True
@@ -537,7 +537,7 @@ Begin ContainerControl contMaintenenceLog
       Index           =   -2147483648
       InitialParent   =   ""
       Italic          =   False
-      Left            =   171
+      Left            =   174
       LockBottom      =   False
       LockedInPosition=   False
       LockLeft        =   True
@@ -554,7 +554,7 @@ Begin ContainerControl contMaintenenceLog
       TextFont        =   "System"
       TextSize        =   0.0
       TextUnit        =   0
-      Top             =   38
+      Top             =   41
       Transparent     =   True
       Underline       =   False
       Visible         =   True
@@ -571,7 +571,7 @@ Begin ContainerControl contMaintenenceLog
       Index           =   -2147483648
       InitialParent   =   ""
       Italic          =   False
-      Left            =   218
+      Left            =   221
       LockBottom      =   False
       LockedInPosition=   False
       LockLeft        =   True
@@ -588,7 +588,7 @@ Begin ContainerControl contMaintenenceLog
       TextFont        =   "System"
       TextSize        =   0.0
       TextUnit        =   0
-      Top             =   38
+      Top             =   41
       Transparent     =   True
       Underline       =   False
       Visible         =   True
@@ -605,7 +605,7 @@ Begin ContainerControl contMaintenenceLog
       Index           =   -2147483648
       InitialParent   =   ""
       Italic          =   False
-      Left            =   175
+      Left            =   178
       LockBottom      =   False
       LockedInPosition=   False
       LockLeft        =   True
@@ -622,13 +622,13 @@ Begin ContainerControl contMaintenenceLog
       TextFont        =   "System"
       TextSize        =   0.0
       TextUnit        =   0
-      Top             =   196
+      Top             =   199
       Transparent     =   True
       Underline       =   False
       Visible         =   True
       Width           =   74
    End
-   Begin TextField tfWorkCost
+   Begin entTextField tfWorkCost
       AcceptTabs      =   False
       Alignment       =   0
       AutoDeactivate  =   True
@@ -646,7 +646,7 @@ Begin ContainerControl contMaintenenceLog
       Index           =   -2147483648
       InitialParent   =   ""
       Italic          =   False
-      Left            =   258
+      Left            =   261
       LimitText       =   0
       LockBottom      =   False
       LockedInPosition=   False
@@ -665,7 +665,7 @@ Begin ContainerControl contMaintenenceLog
       TextFont        =   "System"
       TextSize        =   0.0
       TextUnit        =   0
-      Top             =   195
+      Top             =   198
       Underline       =   False
       UseFocusRing    =   True
       Visible         =   True
@@ -682,7 +682,7 @@ Begin ContainerControl contMaintenenceLog
       Index           =   -2147483648
       InitialParent   =   ""
       Italic          =   False
-      Left            =   171
+      Left            =   174
       LockBottom      =   False
       LockedInPosition=   False
       LockLeft        =   True
@@ -699,7 +699,7 @@ Begin ContainerControl contMaintenenceLog
       TextFont        =   "System"
       TextSize        =   0.0
       TextUnit        =   0
-      Top             =   319
+      Top             =   322
       Transparent     =   True
       Underline       =   False
       Visible         =   True
@@ -722,7 +722,7 @@ Begin ContainerControl contMaintenenceLog
       HideSelection   =   True
       Index           =   -2147483648
       Italic          =   False
-      Left            =   258
+      Left            =   261
       LimitText       =   0
       LineHeight      =   0.0
       LineSpacing     =   1.0
@@ -746,7 +746,7 @@ Begin ContainerControl contMaintenenceLog
       TextFont        =   "System"
       TextSize        =   0.0
       TextUnit        =   0
-      Top             =   318
+      Top             =   321
       Underline       =   False
       UseFocusRing    =   True
       Visible         =   True

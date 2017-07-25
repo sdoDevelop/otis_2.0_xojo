@@ -37,10 +37,10 @@ Begin ContainerControl contEIPLs
       GridLinesColor  =   &c00000000
       HasBackColor    =   False
       HasHeading      =   True
-      Height          =   393
+      Height          =   389
       HelpTag         =   ""
       InitialParent   =   ""
-      Left            =   0
+      Left            =   4
       LockBottom      =   True
       LockedInPosition=   False
       LockLeft        =   True
@@ -50,13 +50,13 @@ Begin ContainerControl contEIPLs
       TabIndex        =   0
       TabPanelIndex   =   0
       TabStop         =   True
-      Top             =   46
+      Top             =   48
       Transparent     =   True
       UseFocusRing    =   False
       Visible         =   True
-      Width           =   236
+      Width           =   230
    End
-   Begin PushButton bRefresh
+   Begin entPushButton bRefresh
       AutoDeactivate  =   True
       Bold            =   False
       ButtonStyle     =   "0"
@@ -69,7 +69,7 @@ Begin ContainerControl contEIPLs
       Index           =   -2147483648
       InitialParent   =   ""
       Italic          =   False
-      Left            =   0
+      Left            =   2
       LockBottom      =   False
       LockedInPosition=   False
       LockLeft        =   True
@@ -82,7 +82,7 @@ Begin ContainerControl contEIPLs
       TextFont        =   "System"
       TextSize        =   0.0
       TextUnit        =   0
-      Top             =   0
+      Top             =   2
       Underline       =   False
       Visible         =   True
       Width           =   54
@@ -96,7 +96,7 @@ Begin ContainerControl contEIPLs
       HelpTag         =   ""
       Index           =   -2147483648
       InitialParent   =   ""
-      Left            =   118
+      Left            =   120
       LockBottom      =   False
       LockedInPosition=   False
       LockLeft        =   False
@@ -111,11 +111,11 @@ Begin ContainerControl contEIPLs
       TabPanelIndex   =   0
       TabStop         =   True
       Text            =   ""
-      Top             =   2
+      Top             =   4
       Visible         =   True
-      Width           =   118
+      Width           =   113
    End
-   Begin PushButton bAddItem
+   Begin entPushButton bAddItem
       AutoDeactivate  =   True
       Bold            =   False
       ButtonStyle     =   "0"
@@ -128,7 +128,7 @@ Begin ContainerControl contEIPLs
       Index           =   -2147483648
       InitialParent   =   ""
       Italic          =   False
-      Left            =   54
+      Left            =   56
       LockBottom      =   False
       LockedInPosition=   False
       LockLeft        =   True
@@ -141,7 +141,7 @@ Begin ContainerControl contEIPLs
       TextFont        =   "System"
       TextSize        =   0.0
       TextUnit        =   0
-      Top             =   0
+      Top             =   2
       Underline       =   False
       Visible         =   True
       Width           =   61
@@ -158,7 +158,7 @@ Begin ContainerControl contEIPLs
       Index           =   -2147483648
       InitialParent   =   ""
       Italic          =   False
-      Left            =   6
+      Left            =   8
       LockBottom      =   False
       LockedInPosition=   False
       LockLeft        =   False
@@ -172,7 +172,7 @@ Begin ContainerControl contEIPLs
       TextFont        =   "System"
       TextSize        =   0.0
       TextUnit        =   0
-      Top             =   24
+      Top             =   26
       Underline       =   False
       Value           =   False
       Visible         =   True

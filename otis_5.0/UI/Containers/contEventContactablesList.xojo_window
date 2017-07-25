@@ -37,10 +37,10 @@ Begin ContainerControl contEventContactablesList
       GridLinesColor  =   &c00000000
       HasBackColor    =   False
       HasHeading      =   True
-      Height          =   202
+      Height          =   193
       HelpTag         =   ""
       InitialParent   =   ""
-      Left            =   0
+      Left            =   3
       LockBottom      =   True
       LockedInPosition=   False
       LockLeft        =   True
@@ -50,13 +50,13 @@ Begin ContainerControl contEventContactablesList
       TabIndex        =   0
       TabPanelIndex   =   0
       TabStop         =   True
-      Top             =   22
+      Top             =   29
       Transparent     =   True
       UseFocusRing    =   False
       Visible         =   True
-      Width           =   338
+      Width           =   333
    End
-   Begin PushButton pbRefresh
+   Begin entPushButton pbRefresh
       AutoDeactivate  =   True
       Bold            =   False
       ButtonStyle     =   "0"
@@ -64,12 +64,12 @@ Begin ContainerControl contEventContactablesList
       Caption         =   "Refresh"
       Default         =   False
       Enabled         =   True
-      Height          =   22
+      Height          =   24
       HelpTag         =   ""
       Index           =   -2147483648
       InitialParent   =   ""
       Italic          =   False
-      Left            =   0
+      Left            =   2
       LockBottom      =   False
       LockedInPosition=   False
       LockLeft        =   True
@@ -82,7 +82,7 @@ Begin ContainerControl contEventContactablesList
       TextFont        =   "System"
       TextSize        =   0.0
       TextUnit        =   0
-      Top             =   0
+      Top             =   3
       Underline       =   False
       Visible         =   True
       Width           =   80

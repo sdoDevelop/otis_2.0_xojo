@@ -26,7 +26,7 @@ Begin Window winMain_1TabPanel
    Title           =   "Untitled"
    Visible         =   False
    Width           =   770
-   Begin PushButton bRunSync
+   Begin entPushButton bRunSync
       AutoDeactivate  =   True
       Bold            =   False
       ButtonStyle     =   "0"
@@ -34,7 +34,7 @@ Begin Window winMain_1TabPanel
       Caption         =   "RunSync"
       Default         =   False
       Enabled         =   True
-      Height          =   22
+      Height          =   25
       HelpTag         =   ""
       Index           =   -2147483648
       InitialParent   =   ""
@@ -60,7 +60,7 @@ Begin Window winMain_1TabPanel
    Begin PagePanel tbMainWindow
       AutoDeactivate  =   True
       Enabled         =   True
-      Height          =   437
+      Height          =   435
       HelpTag         =   ""
       Index           =   -2147483648
       InitialParent   =   ""
@@ -75,8 +75,9 @@ Begin Window winMain_1TabPanel
       Scope           =   0
       TabIndex        =   2
       TabPanelIndex   =   0
-      Top             =   24
-      Value           =   2
+      TabStop         =   True
+      Top             =   27
+      Value           =   0
       Visible         =   True
       Width           =   770
       Begin contEventList contEventList1
@@ -85,11 +86,14 @@ Begin Window winMain_1TabPanel
          AutoDeactivate  =   True
          BackColor       =   &cFF00FFFF
          Backdrop        =   0
+         bDisplayGrouped =   False
+         DoNotLoad       =   False
          Enabled         =   True
          EraseBackground =   True
          HasBackColor    =   False
-         Height          =   437
+         Height          =   435
          HelpTag         =   ""
+         Index           =   -2147483648
          InitialParent   =   "tbMainWindow"
          LastSearchValue =   ""
          Left            =   0
@@ -98,11 +102,12 @@ Begin Window winMain_1TabPanel
          LockLeft        =   True
          LockRight       =   True
          LockTop         =   True
+         PickerMode      =   False
          Scope           =   0
          TabIndex        =   0
          TabPanelIndex   =   1
          TabStop         =   True
-         Top             =   24
+         Top             =   27
          Transparent     =   True
          UseFocusRing    =   False
          Visible         =   True
@@ -114,13 +119,17 @@ Begin Window winMain_1TabPanel
          AutoDeactivate  =   True
          BackColor       =   &cFFFFFF00
          Backdrop        =   0
+         bDisplayGrouped =   False
+         bPickerMode     =   False
          Enabled         =   True
          EraseBackground =   True
          HasBackColor    =   False
-         Height          =   436
+         Height          =   434
          HelpTag         =   ""
+         Index           =   -2147483648
          InitialParent   =   "tbMainWindow"
          iStartingTop    =   0
+         LastSearchValue =   ""
          Left            =   1
          LockBottom      =   True
          LockedInPosition=   False
@@ -131,7 +140,7 @@ Begin Window winMain_1TabPanel
          TabIndex        =   0
          TabPanelIndex   =   2
          TabStop         =   True
-         Top             =   25
+         Top             =   28
          Transparent     =   True
          UseFocusRing    =   False
          Visible         =   True
@@ -143,30 +152,36 @@ Begin Window winMain_1TabPanel
          AutoDeactivate  =   True
          BackColor       =   &cFFFFFF00
          Backdrop        =   0
+         bDisplayGrouped =   False
+         DoNotLoad       =   False
          Enabled         =   True
          EraseBackground =   True
          HasBackColor    =   False
-         Height          =   433
+         Height          =   431
          HelpTag         =   ""
+         iFilterID       =   ""
+         Index           =   -2147483648
          InitialParent   =   "tbMainWindow"
+         LastSearchValue =   ""
          Left            =   2
          LockBottom      =   True
          LockedInPosition=   False
          LockLeft        =   True
          LockRight       =   True
          LockTop         =   True
+         PickerMode      =   False
          Scope           =   0
          TabIndex        =   0
          TabPanelIndex   =   3
          TabStop         =   True
-         Top             =   26
+         Top             =   29
          Transparent     =   True
          UseFocusRing    =   False
          Visible         =   True
          Width           =   766
       End
    End
-   Begin PushButton pbCloseTab
+   Begin entPushButton pbCloseTab
       AutoDeactivate  =   True
       Bold            =   False
       ButtonStyle     =   "0"
@@ -174,7 +189,7 @@ Begin Window winMain_1TabPanel
       Caption         =   "Close Tab"
       Default         =   False
       Enabled         =   True
-      Height          =   22
+      Height          =   25
       HelpTag         =   ""
       Index           =   -2147483648
       InitialParent   =   ""

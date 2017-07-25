@@ -229,7 +229,7 @@ Begin WindowMenuWindow winAbout
          Width           =   216
       End
    End
-   Begin PushButton btnClose
+   Begin entPushButton btnClose
       AutoDeactivate  =   True
       Bold            =   False
       ButtonStyle     =   "0"

@@ -43,6 +43,7 @@ Begin ContainerControl contEI
       Scope           =   0
       TabIndex        =   2
       TabPanelIndex   =   0
+      TabStop         =   True
       Top             =   22
       Value           =   1
       Visible         =   True
@@ -60,6 +61,7 @@ Begin ContainerControl contEI
          HasBackColor    =   False
          Height          =   375
          HelpTag         =   ""
+         Index           =   -2147483648
          InitialParent   =   "ppEIPLSwitcher"
          iStartingTop    =   0
          LastSearchValue =   ""
@@ -92,6 +94,7 @@ Begin ContainerControl contEI
          HasBackColor    =   False
          Height          =   493
          HelpTag         =   ""
+         Index           =   -2147483648
          InitialParent   =   "ppEIPLSwitcher"
          iStartingTop    =   0
          LastSearchValue =   ""
@@ -123,6 +126,7 @@ Begin ContainerControl contEI
          HasBackColor    =   False
          Height          =   181
          HelpTag         =   ""
+         Index           =   -2147483648
          InitialParent   =   "ppEIPLSwitcher"
          Left            =   20
          LockBottom      =   False
@@ -140,7 +144,7 @@ Begin ContainerControl contEI
          Visible         =   True
          Width           =   292
       End
-      Begin PushButton pbAddRecord
+      Begin entPushButton pbAddRecord
          AutoDeactivate  =   True
          Bold            =   False
          ButtonStyle     =   "0"
@@ -171,7 +175,7 @@ Begin ContainerControl contEI
          Visible         =   True
          Width           =   80
       End
-      Begin TextField tfEIPLName
+      Begin entTextField tfEIPLName
          AcceptTabs      =   False
          Alignment       =   0
          AutoDeactivate  =   True
@@ -236,6 +240,7 @@ Begin ContainerControl contEI
          Selectable      =   False
          TabIndex        =   3
          TabPanelIndex   =   2
+         TabStop         =   True
          Text            =   "EIPL Name"
          TextAlign       =   2
          TextColor       =   &c00000000
@@ -270,6 +275,7 @@ Begin ContainerControl contEI
          Selectable      =   False
          TabIndex        =   4
          TabPanelIndex   =   2
+         TabStop         =   True
          Text            =   "EIPL Type"
          TextAlign       =   2
          TextColor       =   &c00000000
@@ -335,6 +341,7 @@ Begin ContainerControl contEI
          Selectable      =   False
          TabIndex        =   6
          TabPanelIndex   =   2
+         TabStop         =   True
          Text            =   "Due Date"
          TextAlign       =   2
          TextColor       =   &c00000000
@@ -411,6 +418,7 @@ Begin ContainerControl contEI
          Selectable      =   False
          TabIndex        =   8
          TabPanelIndex   =   2
+         TabStop         =   True
          Text            =   "Tax Rate"
          TextAlign       =   2
          TextColor       =   &c00000000
@@ -423,7 +431,7 @@ Begin ContainerControl contEI
          Visible         =   True
          Width           =   80
       End
-      Begin TextField tfEIPLTaxRate
+      Begin entTextField tfEIPLTaxRate
          AcceptTabs      =   False
          Alignment       =   0
          AutoDeactivate  =   True
@@ -477,6 +485,7 @@ Begin ContainerControl contEI
          HasBackColor    =   False
          Height          =   120
          HelpTag         =   ""
+         Index           =   -2147483648
          InitialParent   =   "ppEIPLSwitcher"
          Left            =   262
          LockBottom      =   False
@@ -505,6 +514,7 @@ Begin ContainerControl contEI
          HasBackColor    =   False
          Height          =   181
          HelpTag         =   ""
+         Index           =   -2147483648
          InitialParent   =   "ppEIPLSwitcher"
          Left            =   332
          LockBottom      =   True
@@ -544,6 +554,7 @@ Begin ContainerControl contEI
          Selectable      =   False
          TabIndex        =   11
          TabPanelIndex   =   2
+         TabStop         =   True
          Text            =   "Contactables"
          TextAlign       =   0
          TextColor       =   &c00000000
@@ -578,6 +589,7 @@ Begin ContainerControl contEI
          Selectable      =   False
          TabIndex        =   12
          TabPanelIndex   =   2
+         TabStop         =   True
          Text            =   "Discounts"
          TextAlign       =   0
          TextColor       =   &c00000000

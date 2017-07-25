@@ -47,6 +47,7 @@ Begin ContainerControl contLIDetails
       Selectable      =   False
       TabIndex        =   0
       TabPanelIndex   =   0
+      TabStop         =   True
       Text            =   "Name"
       TextAlign       =   0
       TextColor       =   &c00000000
@@ -59,7 +60,7 @@ Begin ContainerControl contLIDetails
       Visible         =   True
       Width           =   62
    End
-   Begin TextField tfName
+   Begin entTextField tfName
       AcceptTabs      =   False
       Alignment       =   0
       AutoDeactivate  =   True
@@ -123,6 +124,7 @@ Begin ContainerControl contLIDetails
       Selectable      =   False
       TabIndex        =   2
       TabPanelIndex   =   0
+      TabStop         =   True
       Text            =   "Manu."
       TextAlign       =   0
       TextColor       =   &c00000000
@@ -135,7 +137,7 @@ Begin ContainerControl contLIDetails
       Visible         =   True
       Width           =   62
    End
-   Begin TextField tfManufacturer
+   Begin entTextField tfManufacturer
       AcceptTabs      =   False
       Alignment       =   0
       AutoDeactivate  =   True
@@ -199,6 +201,7 @@ Begin ContainerControl contLIDetails
       Selectable      =   False
       TabIndex        =   4
       TabPanelIndex   =   0
+      TabStop         =   True
       Text            =   "Depart."
       TextAlign       =   0
       TextColor       =   &c00000000
@@ -233,6 +236,7 @@ Begin ContainerControl contLIDetails
       Selectable      =   False
       TabIndex        =   5
       TabPanelIndex   =   0
+      TabStop         =   True
       Text            =   "Model"
       TextAlign       =   0
       TextColor       =   &c00000000
@@ -245,7 +249,7 @@ Begin ContainerControl contLIDetails
       Visible         =   True
       Width           =   62
    End
-   Begin TextField tfDepartment
+   Begin entTextField tfDepartment
       AcceptTabs      =   False
       Alignment       =   0
       AutoDeactivate  =   True
@@ -287,7 +291,7 @@ Begin ContainerControl contLIDetails
       Visible         =   True
       Width           =   129
    End
-   Begin TextField tfModel
+   Begin entTextField tfModel
       AcceptTabs      =   False
       Alignment       =   0
       AutoDeactivate  =   True
@@ -351,6 +355,7 @@ Begin ContainerControl contLIDetails
       Selectable      =   False
       TabIndex        =   8
       TabPanelIndex   =   0
+      TabStop         =   True
       Text            =   "Type"
       TextAlign       =   0
       TextColor       =   &c00000000
@@ -385,6 +390,7 @@ Begin ContainerControl contLIDetails
       Selectable      =   False
       TabIndex        =   9
       TabPanelIndex   =   0
+      TabStop         =   True
       Text            =   "SubCat."
       TextAlign       =   0
       TextColor       =   &c00000000
@@ -419,6 +425,7 @@ Begin ContainerControl contLIDetails
       Selectable      =   False
       TabIndex        =   10
       TabPanelIndex   =   0
+      TabStop         =   True
       Text            =   "Descrip."
       TextAlign       =   0
       TextColor       =   &c00000000
@@ -453,6 +460,7 @@ Begin ContainerControl contLIDetails
       Selectable      =   False
       TabIndex        =   11
       TabPanelIndex   =   0
+      TabStop         =   True
       Text            =   "Category"
       TextAlign       =   0
       TextColor       =   &c00000000
@@ -496,7 +504,7 @@ Begin ContainerControl contLIDetails
       Visible         =   True
       Width           =   129
    End
-   Begin TextField tfSubCategory
+   Begin entTextField tfSubCategory
       AcceptTabs      =   False
       Alignment       =   0
       AutoDeactivate  =   True
@@ -538,7 +546,7 @@ Begin ContainerControl contLIDetails
       Visible         =   True
       Width           =   129
    End
-   Begin TextField tfDescription
+   Begin entTextField tfDescription
       AcceptTabs      =   False
       Alignment       =   0
       AutoDeactivate  =   True
@@ -580,7 +588,7 @@ Begin ContainerControl contLIDetails
       Visible         =   True
       Width           =   129
    End
-   Begin TextField tfCategory
+   Begin entTextField tfCategory
       AcceptTabs      =   False
       Alignment       =   0
       AutoDeactivate  =   True
@@ -644,6 +652,7 @@ Begin ContainerControl contLIDetails
       Selectable      =   False
       TabIndex        =   16
       TabPanelIndex   =   0
+      TabStop         =   True
       Text            =   "Time"
       TextAlign       =   0
       TextColor       =   &c00000000
@@ -678,6 +687,7 @@ Begin ContainerControl contLIDetails
       Selectable      =   False
       TabIndex        =   17
       TabPanelIndex   =   0
+      TabStop         =   True
       Text            =   "Rate"
       TextAlign       =   0
       TextColor       =   &c00000000
@@ -712,6 +722,7 @@ Begin ContainerControl contLIDetails
       Selectable      =   False
       TabIndex        =   18
       TabPanelIndex   =   0
+      TabStop         =   True
       Text            =   "Discount"
       TextAlign       =   0
       TextColor       =   &c00000000
@@ -746,6 +757,7 @@ Begin ContainerControl contLIDetails
       Selectable      =   False
       TabIndex        =   19
       TabPanelIndex   =   0
+      TabStop         =   True
       Text            =   "Price"
       TextAlign       =   0
       TextColor       =   &c00000000
@@ -758,7 +770,7 @@ Begin ContainerControl contLIDetails
       Visible         =   True
       Width           =   62
    End
-   Begin TextField tfTime
+   Begin entTextField tfTime
       AcceptTabs      =   False
       Alignment       =   0
       AutoDeactivate  =   True
@@ -800,7 +812,7 @@ Begin ContainerControl contLIDetails
       Visible         =   True
       Width           =   89
    End
-   Begin TextField tfRate
+   Begin entTextField tfRate
       AcceptTabs      =   False
       Alignment       =   0
       AutoDeactivate  =   True
@@ -842,7 +854,7 @@ Begin ContainerControl contLIDetails
       Visible         =   True
       Width           =   89
    End
-   Begin TextField tfDiscount
+   Begin entTextField tfDiscount
       AcceptTabs      =   False
       Alignment       =   0
       AutoDeactivate  =   True
@@ -884,7 +896,7 @@ Begin ContainerControl contLIDetails
       Visible         =   True
       Width           =   89
    End
-   Begin TextField tfPrice
+   Begin entTextField tfPrice
       AcceptTabs      =   False
       Alignment       =   0
       AutoDeactivate  =   True
@@ -948,6 +960,7 @@ Begin ContainerControl contLIDetails
       Selectable      =   False
       TabIndex        =   24
       TabPanelIndex   =   0
+      TabStop         =   True
       Text            =   "Quantity"
       TextAlign       =   0
       TextColor       =   &c00000000
@@ -982,6 +995,7 @@ Begin ContainerControl contLIDetails
       Selectable      =   False
       TabIndex        =   26
       TabPanelIndex   =   0
+      TabStop         =   True
       Text            =   "Taxable"
       TextAlign       =   0
       TextColor       =   &c00000000
@@ -994,7 +1008,7 @@ Begin ContainerControl contLIDetails
       Visible         =   True
       Width           =   62
    End
-   Begin TextField tfQuantity
+   Begin entTextField tfQuantity
       AcceptTabs      =   False
       Alignment       =   0
       AutoDeactivate  =   True

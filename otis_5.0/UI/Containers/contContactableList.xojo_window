@@ -25,7 +25,7 @@ Begin ContainerControl contContactableList
    UseFocusRing    =   False
    Visible         =   True
    Width           =   536
-   Begin PushButton pbAddItem
+   Begin entPushButton pbAddItem
       AutoDeactivate  =   True
       Bold            =   False
       ButtonStyle     =   "0"
@@ -38,7 +38,7 @@ Begin ContainerControl contContactableList
       Index           =   -2147483648
       InitialParent   =   ""
       Italic          =   False
-      Left            =   80
+      Left            =   82
       LockBottom      =   False
       LockedInPosition=   False
       LockLeft        =   True
@@ -51,12 +51,12 @@ Begin ContainerControl contContactableList
       TextFont        =   "System"
       TextSize        =   0.0
       TextUnit        =   0
-      Top             =   0
+      Top             =   2
       Underline       =   False
       Visible         =   True
       Width           =   81
    End
-   Begin PushButton bRefresh
+   Begin entPushButton bRefresh
       AutoDeactivate  =   True
       Bold            =   False
       ButtonStyle     =   "0"
@@ -69,7 +69,7 @@ Begin ContainerControl contContactableList
       Index           =   -2147483648
       InitialParent   =   ""
       Italic          =   False
-      Left            =   0
+      Left            =   2
       LockBottom      =   False
       LockedInPosition=   False
       LockLeft        =   True
@@ -82,7 +82,7 @@ Begin ContainerControl contContactableList
       TextFont        =   "System"
       TextSize        =   0.0
       TextUnit        =   0
-      Top             =   0
+      Top             =   2
       Underline       =   False
       Visible         =   True
       Width           =   81
@@ -99,10 +99,10 @@ Begin ContainerControl contContactableList
       GridLinesColor  =   &c00000000
       HasBackColor    =   False
       HasHeading      =   True
-      Height          =   315
+      Height          =   303
       HelpTag         =   ""
       InitialParent   =   ""
-      Left            =   0
+      Left            =   3
       LockBottom      =   True
       LockedInPosition=   False
       LockLeft        =   True
@@ -112,11 +112,11 @@ Begin ContainerControl contContactableList
       TabIndex        =   2
       TabPanelIndex   =   0
       TabStop         =   True
-      Top             =   23
+      Top             =   30
       Transparent     =   True
       UseFocusRing    =   False
       Visible         =   True
-      Width           =   536
+      Width           =   531
    End
    Begin SearchControl scSearchField
       AutoDeactivate  =   True
@@ -127,7 +127,7 @@ Begin ContainerControl contContactableList
       HelpTag         =   ""
       Index           =   -2147483648
       InitialParent   =   ""
-      Left            =   389
+      Left            =   391
       LockBottom      =   False
       LockedInPosition=   False
       LockLeft        =   False
@@ -142,9 +142,9 @@ Begin ContainerControl contContactableList
       TabPanelIndex   =   0
       TabStop         =   True
       Text            =   ""
-      Top             =   0
+      Top             =   2
       Visible         =   True
-      Width           =   147
+      Width           =   142
    End
    Begin CheckBox chbShowHidden
       AutoDeactivate  =   True
@@ -158,7 +158,7 @@ Begin ContainerControl contContactableList
       Index           =   -2147483648
       InitialParent   =   ""
       Italic          =   False
-      Left            =   295
+      Left            =   289
       LockBottom      =   False
       LockedInPosition=   False
       LockLeft        =   False
@@ -172,11 +172,11 @@ Begin ContainerControl contContactableList
       TextFont        =   "System"
       TextSize        =   0.0
       TextUnit        =   0
-      Top             =   1
+      Top             =   4
       Underline       =   False
       Value           =   False
       Visible         =   True
-      Width           =   90
+      Width           =   100
    End
 End
 #tag EndWindow

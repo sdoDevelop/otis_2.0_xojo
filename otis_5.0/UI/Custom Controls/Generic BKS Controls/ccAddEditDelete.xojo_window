@@ -25,7 +25,7 @@ Begin ContainerControl ccAddEditDelete
    UseFocusRing    =   False
    Visible         =   True
    Width           =   300
-   Begin PushButton btnAdd
+   Begin entPushButton btnAdd
       AutoDeactivate  =   True
       Bold            =   False
       ButtonStyle     =   "0"
@@ -56,7 +56,7 @@ Begin ContainerControl ccAddEditDelete
       Visible         =   True
       Width           =   80
    End
-   Begin PushButton btnEdit
+   Begin entPushButton btnEdit
       AutoDeactivate  =   True
       Bold            =   False
       ButtonStyle     =   "0"
@@ -87,7 +87,7 @@ Begin ContainerControl ccAddEditDelete
       Visible         =   True
       Width           =   80
    End
-   Begin PushButton btnDelete
+   Begin entPushButton btnDelete
       AutoDeactivate  =   True
       Bold            =   False
       ButtonStyle     =   "0"
