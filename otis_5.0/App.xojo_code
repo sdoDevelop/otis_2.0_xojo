@@ -113,7 +113,7 @@ Inherits Application
 		  End If
 		  
 		  
-		  // Check Databases
+		  // Check Databases for structural integrity
 		  If Not InitializationModule.CheckDatabases Then
 		    ReInitializePlease = True
 		  End If
@@ -124,11 +124,10 @@ Inherits Application
 		    GetNewClientIDPlease = True
 		  End If
 		  
-		  
-		  
 		  // Check if we need to ReInitialize
 		  If ReInitializePlease Then
 		    GetNewClientIDPlease = True
+		    // Simply initializes structure
 		    InitializationModule.InitialSetup
 		  End If
 		  
@@ -152,8 +151,6 @@ Inherits Application
 		        ErrManage("App.Initialize",err.Message)
 		        Raise err
 		      End If
-		      
-		      
 		    Else
 		      'New client id not needed
 		    End If
@@ -162,16 +159,13 @@ Inherits Application
 		    'need to do full sync conditions
 		    'If we have reinitialized
 		    Dim FullSyncPlease as Boolean
-		    Select Case InitializationModule.CheckSyncStateOfData
-		    Case -1
-		      FullSyncPlease = True
-		    Case 0
-		      
-		    Case 1
-		      
-		    End Select
 		    If ReInitializePlease Then
 		      FullSyncPlease = True
+		    Else
+		      // we must now check if there is any data in the local database
+		      If Not InitializationModule.CheckForLocalData Then
+		        FullSyncPlease = True
+		      End If
 		    End If
 		    
 		    // Push data to server possibly
@@ -181,43 +175,55 @@ Inherits Application
 		      Try
 		        OSM.RunSync()
 		      Catch err as RuntimeException
-		        ErrManage("App.Initialize","Could not Push...  " + err.Message )
+		        ErrManage("App.Initialize","Could not Push...:  " + err.Message )
 		        break
 		      End Try
 		      
 		    Else
 		      ' run a full sync
-		      // Next Step Here!!!!
 		      Try
 		        osm.RunFullSync
 		      Catch err as RuntimeException
 		        ErrManage("App.Initialize","Could not do full sync | " + err.Message )
 		        break
 		        RD1.otis_data_file.FilePath.Delete
+		        MsgBox("Error while trying to sync data from the server. App must quit")
+		        Quit
 		      End Try
 		      
 		    End If
 		    
 		  Else
 		    'Login to reg server not succesful
-		    Break
+		    
 		    If app.bUserAuthenticationFailed Then Quit
 		    
 		    // Check if we have a valid client id to work offline with
 		    If GetNewClientIDPlease Then
 		      'No valid client id
+		      MsgBox("Could not connect to server, and no valid client id is present, or there is no local data. We must quit.")
+		      Quit
 		    Else
 		      'valid client id
 		      
-		      // Ask the user if they want to work offline
-		      Dim msgboxResult as integer
-		      msgboxResult = MsgBox( "Could not log into server. Would you like to work offline?",4 )
-		      
-		      If msgboxResult = 6 Then
-		        'Yes
-		        Login.State = "Offline"
-		      ElseIf msgboxResult = 7 Then
-		        'No
+		      // Check to see if there is any local data
+		      If InitializationModule.CheckForLocalData Then
+		        // There is local data
+		        // Ask the user if they want to work offline
+		        Dim msgboxResult as integer
+		        msgboxResult = MsgBox( "Could not log into server. Would you like to work offline?",4 )
+		        
+		        If msgboxResult = 6 Then
+		          'Yes
+		          Login.State = "Offline"
+		        ElseIf msgboxResult = 7 Then
+		          'No
+		          Quit
+		        End If
+		        
+		      Else
+		        // THere is no local data
+		        MsgBox("There is no local data present, must quit")
 		        Quit
 		      End If
 		    End If
@@ -227,7 +233,7 @@ Inherits Application
 		  // Set Color Scheme
 		  UiColors.DefaultScheme
 		  
-		  ///////////////////////////
+		  // Open the database file
 		  db = DataFile.OpenDB
 		  if db = nil then
 		    quit
@@ -243,7 +249,6 @@ Inherits Application
 		  '#Pragma Error "Replace your initialization code"
 		  'At this point everything should be Initialized and ready to go.
 		  'Show your main window
-		  'Example:
 		  App.MainWindow =  new winMain_1TabPanel
 		  app.MainWindow.show
 		  
@@ -324,6 +329,11 @@ Inherits Application
 
 
 	#tag ViewBehavior
+		#tag ViewProperty
+			Name="bUserAuthenticationFailed"
+			Group="Behavior"
+			Type="Boolean"
+		#tag EndViewProperty
 		#tag ViewProperty
 			Name="GMTOffset"
 			Group="Behavior"

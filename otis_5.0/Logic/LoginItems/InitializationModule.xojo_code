@@ -155,6 +155,60 @@ Protected Module InitializationModule
 	#tag EndMethod
 
 	#tag Method, Flags = &h1
+		Protected Function CheckForLocalData() As Boolean
+		  // Returns: 
+		  //      True if there is data locally
+		  //      False if there is no data locally
+		  
+		  dim rd1 as New ResourceDirectories
+		  
+		  // Connect to local database
+		  dim dbLocal as New SQLiteDatabase
+		  dbLocal.DatabaseFile = rd1.otis_data_file.FilePath
+		  If Not dbLocal.Connect Then
+		    // Could not connect to local database
+		    Return False
+		  End If
+		  
+		  // Get all of the tables in the local database
+		  dim sql as string = "Select * From sqlite_master Where type='table';"
+		  dim rs as RecordSet = dbLocal.SQLSelect( sql )
+		  If dbLocal.error Then
+		    // Could not get table names
+		    ErrManage( "InitializationModule.CheckForLocalData", "Could not get table names: " + dbLocal.ErrorMessage )
+		    Return False
+		  End If
+		  
+		  // Loop through each table counting all the records
+		  dim iRunningRecordCount as integer
+		  For i1 as integer = 1 To rs.RecordCount
+		    // Get the table name
+		    dim sTableName as string = rs.Field("tbl_name").StringValue
+		    
+		    // Get the record count in this table
+		    dim iRecordCount as integer
+		    sql = "Select count(pkid) as RecordCount From " + sTableName + ";"
+		    rs = New RecordSet
+		    rs = dbLocal.SQLSelect( sql )
+		    If dbLocal.Error Then
+		      // Could not get record count from table, assume it is 0
+		      iRecordCount = 0
+		    End If
+		     iRecordCount = rs.Field("RecordCount").IntegerValue
+		    
+		    // Add the table recordcount to the running count
+		    iRunningRecordCount = iRunningRecordCount + iRecordCount
+		  Next
+		  
+		  // If the record count is above 0 we do have data
+		  Return True
+		  
+		  
+		  
+		End Function
+	#tag EndMethod
+
+	#tag Method, Flags = &h1
 		Protected Function CheckInitializedFile() As Boolean
 		  // Returns True if initialized file says true
 		  // Returns False if Initialized file says false or doesn't exist
@@ -194,7 +248,7 @@ Protected Module InitializationModule
 	#tag EndMethod
 
 	#tag Method, Flags = &h1
-		Protected Function CheckSyncStateOfData() As Integer
+		Protected Function CheckSyncStateOfDataDecrept() As Integer
 		  // -1 = no records AH!
 		  // 0 = things seem right
 		  // 1 = out of sync
@@ -435,11 +489,6 @@ Protected Module InitializationModule
 		  
 		  // Create the databases
 		  CreateDatabases
-		  
-		  
-		  
-		  
-		  
 		  
 		  // Create the initialized file
 		  Dim rd1 as New ResourceDirectories
