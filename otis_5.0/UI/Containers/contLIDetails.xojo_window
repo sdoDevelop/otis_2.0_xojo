@@ -1092,7 +1092,7 @@ End
 		  tfManufacturer.Text = oCurrentRecord.sli_manufacturer
 		  tfModel.Text = oCurrentRecord.sli_model
 		  tfName.Text = oCurrentRecord.sli_name
-		  tfPrice.Text = str( oCurrentRecord.sli_price, modFieldFormatting.tbl_eipl.eipl_tax_rate )
+		  tfPrice.Text = str( oCurrentRecord.sli_price, modFieldFormatting.tbl_lineitems.li_price )
 		  tfQuantity.Text = oCurrentRecord.sli_quantity
 		  tfRate.Text = oCurrentRecord.sli_rate
 		  tfSubCategory.Text = oCurrentRecord.sli_subcategory

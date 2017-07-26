@@ -211,6 +211,40 @@ Begin ContainerControl contLineItems
       Visible         =   True
       Width           =   102
    End
+   Begin Label labEIPLTotal
+      AutoDeactivate  =   True
+      Bold            =   False
+      DataField       =   ""
+      DataSource      =   ""
+      Enabled         =   True
+      Height          =   20
+      HelpTag         =   ""
+      Index           =   -2147483648
+      InitialParent   =   ""
+      Italic          =   False
+      Left            =   379
+      LockBottom      =   False
+      LockedInPosition=   False
+      LockLeft        =   True
+      LockRight       =   False
+      LockTop         =   True
+      Multiline       =   False
+      Scope           =   0
+      Selectable      =   False
+      TabIndex        =   13
+      TabPanelIndex   =   0
+      Text            =   "EIPL Total:"
+      TextAlign       =   0
+      TextColor       =   &c00000000
+      TextFont        =   "System"
+      TextSize        =   0.0
+      TextUnit        =   0
+      Top             =   4
+      Transparent     =   True
+      Underline       =   False
+      Visible         =   True
+      Width           =   141
+   End
 End
 #tag EndWindow
 
@@ -266,7 +300,7 @@ End
 		    dim jsFieldValues as JSONItem = otblRecord.GetMyFieldValues(True)
 		    // Add the total of this row to the field value json item
 		    dim dictReturn as Dictionary = modPriceCalculations.CalculateLineItemPrices( otblRecord, oEIPLRecord )
-		    jsFieldValues.Value("CalcTotal") = str( dictReturn.Value( "Total" ), "\$###,###,###,###.00" )
+		    jsFieldValues.Value("CalcTotal") = str( dictReturn.Value( "AfterDiscount" ), "\$###,###,###,###.00" )
 		    
 		    // Populate the Column values for this row
 		    For Each sFieldName as String In oRowTag.sFieldNames
@@ -873,6 +907,10 @@ End
 		    // Get the records
 		    dim records() as DataFile.tbl_lineitems = methGetRecordList_UnGrouped("li_department, li_manufacturer","fkeipl = " + oEIPLRecord.ipkid.ToText )    '!@! Table Dependent !@!
 		    
+		    // Lets calculate the eipl total
+		    dim retDict as Dictionary = modPriceCalculations.CalculateEIPLTotal(records(),oEIPLRecord)
+		    labEIPLTotal.Text = "Total: " + str( retDict.Value("Total"), "\$###,###,###,###.00" )
+		    
 		    If records.Ubound <> -1 THen
 		      // Build the rowtags
 		      dim theRowtags() as lbRowTag
@@ -886,6 +924,10 @@ End
 		    
 		    // Get the Records
 		    dim dictRecords as Dictionary = methGetRecordList_Grouped("li_department, li_manufacturer", "fkeipl = " + oEIPLRecord.ipkid.ToText )    '!@! Table Dependent !@!
+		    
+		    // Lets calculate the eipl total
+		    dim retDict as Dictionary = modPriceCalculations.CalculateEIPLTotal(dictRecords,oEIPLRecord)
+		    labEIPLTotal.Text = "Total: " + str( retDict.Value("Total"), "\$###,###,###,###.00" )
 		    
 		    If dictRecords.Count <> 0 Then
 		      dim theRowtagsGrouped() as lbRowTag

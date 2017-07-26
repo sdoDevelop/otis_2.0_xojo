@@ -286,7 +286,7 @@ Inherits DataFile.ActiveRecordBase
 	#tag EndProperty
 
 	#tag Property, Flags = &h0
-		sdiscount_amount As String
+		sdiscount As String
 	#tag EndProperty
 
 	#tag Property, Flags = &h0
@@ -353,7 +353,7 @@ Inherits DataFile.ActiveRecordBase
 			Type="String"
 		#tag EndViewProperty
 		#tag ViewProperty
-			Name="sdiscount_amount"
+			Name="sdiscount"
 			Group="Behavior"
 			Type="String"
 			EditorType="MultiLineEditor"

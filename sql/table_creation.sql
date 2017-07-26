@@ -132,7 +132,7 @@ Create Table tbl_eipl
     eipl_name                   text,
     due_date                    text,
     eipl_type                   text,
-    discount_amount             text,
+    discount                    text,
     shipping_method             text,
     eipl_tax_rate               text
     );

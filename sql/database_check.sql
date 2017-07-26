@@ -131,7 +131,7 @@ Select
     eipl_name                   ,
     due_date                    ,
     eipl_type                   ,
-    discount_amount             ,
+    discount                    ,
     shipping_method             ,
     eipl_tax_rate               
     From tbl_eipl
