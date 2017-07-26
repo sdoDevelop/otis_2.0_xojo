@@ -9,6 +9,7 @@ Inherits Application
 		  catch
 		    'do nothing
 		  end try
+		  app.UpdateInitiater = Nil
 		End Sub
 	#tag EndEvent
 
@@ -59,6 +60,18 @@ Inherits Application
 
 
 	#tag Method, Flags = &h0
+		Sub CheckForUpdates()
+		  dim rd1 as New ResourceDirectories
+		  
+		  dim instKaju as New Kaju.UpdateChecker( rd1.kaju_folder.FilePath )
+		  instKaju.ServerPublicRSAKey = "30820120300D06092A864886F70D01010105000382010D00308201080282010100CCBC0370666662B013162A06AF3C73F1154DAE4E9D714A1C77CD8E0C91FAE040D0BE5319467CB5CDA4AA4539D35D48C98CE946539EEBFCF1F8B7E08CEE7C5A886B8933F3EB499B21F2A7A0DC4765C1CB3EA7DB0BEC68FFA294545D180C21ABF3AC9881B00ED2EC31F518C4C096A2A1CF05B17324B00AAAFC70D8887D62C9BB8019C7AB3E47352BC2945CBA634811DC77AFE347B60F611FB910C0BD68876F3BD47E00F8389A4767E69A0D5480DBA42606CD9ED3AD23EBCDC21B8CA3782D8B94FD209BCC0D9FB6D858C294F6A2F6C5234C5F7C23473A801B61F3A176B2B5795A3B33520DAE4EDDFD5F18031FA27C8839A9E4A25C104BDE6E25E8D0FFE949FA1361020111"
+		  instKaju.UpdateURL = "http://104.238.132.54/kaju/otis_5.0/Otis5.0_UpdateInformation.json"
+		  
+		  instKaju.Execute
+		End Sub
+	#tag EndMethod
+
+	#tag Method, Flags = &h0
 		Sub CheckVersions()
 		  #if not DebugBuild then Return
 		  
@@ -93,6 +106,7 @@ Inherits Application
 		Sub Initialize()
 		  RegisterThirdPartyPlugins 'Register third party plugins (if needed)
 		  CheckVersions 'Checks Xojo and third plug-in versions (In the debugger only)
+		  CheckForUpdates
 		  
 		  //Set timezone
 		  dim d1 as new date 
@@ -305,6 +319,10 @@ Inherits Application
 
 	#tag Property, Flags = &h0
 		sUserName As String
+	#tag EndProperty
+
+	#tag Property, Flags = &h0
+		UpdateInitiater As Kaju.UpdateInitiater
 	#tag EndProperty
 
 

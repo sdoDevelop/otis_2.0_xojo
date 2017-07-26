@@ -13,6 +13,14 @@ Protected Class ResourceDirectories
 		  End If
 		  app_folder = RC
 		  
+		  'RC = kaju_folder
+		  RC = New ResourceClass
+		  RC.FilePath = app_folder.FilePath.Child("kaju")
+		  If Not RC.Exists Then
+		    RC.FilePath.CreateAsFolder
+		  End If
+		  kaju_folder = RC
+		  
 		  'RC = db_folder
 		  RC = New ResourceClass
 		  RC.FilePath = app_folder.FilePath.Child("db")
@@ -101,6 +109,10 @@ Protected Class ResourceDirectories
 
 	#tag Property, Flags = &h0
 		initialized_file As ResourceClass
+	#tag EndProperty
+
+	#tag Property, Flags = &h0
+		kaju_folder As ResourceClass
 	#tag EndProperty
 
 	#tag Property, Flags = &h0
