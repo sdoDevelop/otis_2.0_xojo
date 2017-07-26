@@ -217,7 +217,7 @@ Protected Module Methods
 		    dim sql1 as string = "Select nextval('utility.seq_eipl_numbers');"
 		    dim rs1 as RecordSet = db1.SQLSelect(sql1)
 		    If db1.Error Then
-		      System.DebugLog( "Could not get next eipl_number from server: " + db1.ErrorMessage )
+		      ErrManage("Methods.GetNextEIPLNumber", "Could not get next eipl_number from server: " + db1.ErrorMessage )
 		      If EIPLPkid <> 0 Then
 		        AddEIPLtoNumberGetList(EIPLPkid)
 		        Return 0

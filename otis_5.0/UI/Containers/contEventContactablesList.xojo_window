@@ -39,6 +39,7 @@ Begin ContainerControl contEventContactablesList
       HasHeading      =   True
       Height          =   193
       HelpTag         =   ""
+      Index           =   -2147483648
       InitialParent   =   ""
       Left            =   3
       LockBottom      =   True
@@ -109,7 +110,7 @@ End
 		  
 		  rs1 = db1.SQLSelect(sql1)
 		  If db1.Error Then
-		    System.DebugLog( "Cant get contacts related to event: " + db1.ErrorMessage )
+		    ErrManage("contEventContactablesList.methLoadMe", "Cant get contacts related to event: " + db1.ErrorMessage )
 		    Return
 		  End If
 		  

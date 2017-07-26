@@ -39,6 +39,7 @@ Begin ContainerControl contEIPLContactablesList
       HasHeading      =   True
       Height          =   209
       HelpTag         =   ""
+      Index           =   -2147483648
       InitialParent   =   ""
       Left            =   4
       LockBottom      =   True
@@ -110,7 +111,7 @@ End
 		  rs1 = db1.SQLSelect(sql1)
 		  If db1.Error Then
 		    Break
-		    System.DebugLog( "Cant get contacts related to EIPL: " + db1.ErrorMessage )
+		    ErrManage("contEIPLContactablesList.methLoadMe", "Cant get contacts related to EIPL: " + db1.ErrorMessage )
 		    Return
 		  End If
 		  

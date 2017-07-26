@@ -272,7 +272,7 @@ Protected Module InitializationModule
 		    dim rs2 as RecordSet = db1.SQLSelect("Select * From get_table_count_modifieddate() as database_info;")
 		    If db1.Error Then
 		      // uh oh we got an error
-		      System.DebugLog("Could not get table count modified date from remote db")
+		      ErrManage("InitializationModule.CheckSyncStateOfData","Could not get table count modified date from remote db")
 		      Break
 		    End If
 		    If rs2 <> Nil Then

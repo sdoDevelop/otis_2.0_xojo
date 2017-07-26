@@ -2,7 +2,38 @@
 Protected Module ErrorManagement
 	#tag Method, Flags = &h0
 		Sub ErrManage(sFacility as string, sMessage as string)
+		  dim rd1 as New ResourceDirectories
+		  dim CurrentDate as New date
 		  
+		  // Assemble the error message
+		  dim sErrorMessage as String
+		  sErrorMessage = "{" + CurrentDate.SQLDateTime + "} [ " + sFacility + " ] - " + sMessage + EndOfLine
+		  
+		  // Get the error log filepath
+		  dim fiErrorFile as FolderItem = rd1.error_log_file.FilePath
+		  
+		  // Open up a text output stream
+		  If fiErrorFile <> Nil Then
+		    If fiErrorFile.Exists Then
+		      Try
+		        dim tos as TextOutputStream = TextOutputStream.Append( fiErrorFile )
+		        tos.Write( sErrorMessage )
+		        tos.Close
+		      Catch err as IOException
+		        // well we are already in our error log...what else can we do
+		      End Try
+		      
+		    Else
+		      Try
+		        dim tos as TextOutputStream = TextOutputStream.Create( fiErrorFile )
+		        tos.Write( sErrorMessage )
+		        tos.Close
+		      Catch err as IOException
+		        // well we are already in our error log...what else can we do
+		      End Try
+		      
+		    End If
+		  End If
 		End Sub
 	#tag EndMethod
 
