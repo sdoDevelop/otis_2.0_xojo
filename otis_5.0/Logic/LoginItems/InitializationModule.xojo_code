@@ -536,11 +536,11 @@ Protected Module InitializationModule
 	#tag EndConstant
 
 	#tag Constant, Name = UtilityDBCheckScript, Type = String, Dynamic = False, Default = \"", Scope = Private
-		#Tag Instance, Platform = Any, Language = Default, Definition  = \"Select\r    \tpkid\r    \tFrom tbl_incrementing\r    \t;"
+		#Tag Instance, Platform = Any, Language = Default, Definition  = \"Select\r\n    \tpkid\r\n    \tFrom tbl_incrementing\r\n    \t;\r\n\r\nSelect\r\n\tpkid\t\t\t\t\t\t\t\x2C\r\n\tid_number\t \t\t\t\t\t\r\n\tFrom tbl_ids\r\n\t;"
 	#tag EndConstant
 
 	#tag Constant, Name = UtilityDBCreationScript, Type = String, Dynamic = False, Default = \"", Scope = Private
-		#Tag Instance, Platform = Any, Language = Default, Definition  = \"CREATE TABLE tbl_incrementing\r        (\r        pkid                        integer Primary Key\r        );"
+		#Tag Instance, Platform = Any, Language = Default, Definition  = \"CREATE TABLE tbl_incrementing\r\n        (\r\n        pkid                        integer Primary Key\r\n        );\r\n\r\nCREATE TABLE tbl_ids\r\n\t(\r\n\tpkid\t\t\t\t\t\t\tinteger Primary Key\x2C\r\n\tid_number\t \t\t\t\t\tinteger\r\n\t);"
 	#tag EndConstant
 
 

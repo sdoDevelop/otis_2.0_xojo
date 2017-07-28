@@ -40,6 +40,31 @@ Protected Module Methods
 	#tag EndMethod
 
 	#tag Method, Flags = &h0
+		Function CheckNumberAvailableIDs() As integer
+		  
+		  dim db as New SQLiteDatabase
+		  dim rd as New ResourceDirectories
+		  
+		  db.DatabaseFile = rd.utility_db_file.FilePath
+		  If db.Connect Then
+		    dim sql as string = "Select count(pkid) as id_count From tbl_ids;"
+		    dim rs as RecordSet = db.SQLSelect(sql)
+		    If db.Error Then
+		      ErrManage("Methods.CheckNumberAvailableIDs", "Could not get count of available ids: " + db.ErrorMessage)
+		      Return 0
+		    End If
+		    
+		    If rs <> Nil Then
+		      dim IDCount as integer = rs.Field("id_count").IntegerValue
+		      Return IDCount
+		    End If
+		  End If
+		  
+		  Return 0
+		End Function
+	#tag EndMethod
+
+	#tag Method, Flags = &h0
 		Function ConvertCentsString_To_DollarString(sCentsString as String) As String
 		  dim s1 as string
 		  
@@ -162,7 +187,105 @@ Protected Module Methods
 	#tag EndMethod
 
 	#tag Method, Flags = &h1
+		Protected Function GetNewIDBlock() As Boolean
+		  
+		  dim regDB as PostgreSQLDatabase = App.RegDB
+		  dim localDB as New SQLiteDatabase 
+		  dim rd as New ResourceDirectories
+		  
+		  If regDB <> Nil Then
+		    
+		    
+		    
+		    dim sql as string = "Select * From client_reg.fnc_get_id_block($1);"
+		    dim ps as PostgreSQLPreparedStatement = regDB.Prepare(sql)
+		    ps.Bind(0,App.sUserName)
+		    dim rs as RecordSet = ps.SQLSelect
+		    If regdb.Error Then
+		      ErrManage("Methods.GetNewIDBlock", "Could not get a new id block: " + regDB.ErrorMessage )
+		      Return False
+		    End If
+		    
+		    dim sIDString, sIDs() as string
+		    sIDString = rs.Field("fnc_get_id_block").StringValue
+		    sIDs() = sIDString.Split(",")
+		    
+		    If sIDs.Ubound > -1 THen
+		      localDB.DatabaseFile = rd.utility_db_file.FilePath
+		      If localdb.Connect Then
+		        For Each sID as String In sIDs()
+		          
+		          dim iID as int64 = val(sID)
+		          dim sql1 as string = "Insert Into tbl_ids (id_number) Values(" + iID.ToText + ");"
+		          localDB.SQLExecute(sql1)
+		          If localDB.Error Then
+		            ErrManage("Methods.GetNewIDBlock", "Could not insert id into table: " + localdb.ErrorMessage)
+		            Return False
+		          End If
+		          
+		        Next
+		      End If
+		    End If
+		  End If
+		  
+		  Return True
+		  
+		  
+		  
+		  
+		  
+		  
+		  
+		  
+		  
+		  
+		  
+		  
+		  
+		  
+		End Function
+	#tag EndMethod
+
+	#tag Method, Flags = &h1
 		Protected Function GetNewPKID() As Int64
+		  
+		  dim rd as New ResourceDirectories
+		  dim db as New SQLiteDatabase
+		  
+		  db.DatabaseFile = rd.utility_db_file.FilePath
+		  If db.Connect Then
+		    
+		    dim i1 as integer = CheckNumberAvailableIDs
+		    If i1 < 5 Then
+		      If Not GetNewIDBlock Then
+		        
+		      End If
+		    End If
+		    
+		    dim sql as string = "Select min(id_number), pkid From tbl_ids;"
+		    dim rs as RecordSet = db.SQLSelect(sql)
+		    If db.Error Then
+		      ErrManage( "Methods.GetNewPKID", "Could not get new pkid from database: " + db.ErrorMessage)
+		      Return -1
+		    End If
+		    
+		    dim sql3 as string = "Delete From tbl_ids Where pkid = " + rs.Field("pkid").IntegerValue.ToText + ";"
+		    db.SQLExecute(sql3)
+		    If db.Error Then
+		      ErrManage( "Methods.GetNewPKID", "Could not delete id record from database: " + db.ErrorMessage )
+		      Return -1
+		    End If
+		    
+		    Return rs.Field("id_number").Int64Value
+		    
+		  End If
+		  
+		  Return -1
+		End Function
+	#tag EndMethod
+
+	#tag Method, Flags = &h1
+		Protected Function GetNewPKIDold() As Int64
 		  Dim d1 as new date
 		  Dim clientID as integer
 		  Dim theTicks as integer

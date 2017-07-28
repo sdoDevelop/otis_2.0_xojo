@@ -155,6 +155,24 @@
         "URL":"http:\/\/104.238.132.54\/kaju\/otis_5.0\/win\/v1.0.16a0\/Otis_5.0.zip",
         "ExecutableName":"Otis_5.0.exe"
       }
+    },
+    {
+      "AppName":"Otis_5.0",
+      "ImageURL":"",
+      "MinimumRequiredVersion":"",
+      "ReleaseNotes":"<b>v1.1.1a0<\/b>\rNew Features\r<ul>\r<li>Payments have been added to EIPLS<\/li>\r<li>Can now delete discounts<\/li>\r<\/ul>\r",
+      "RequiresPayment":false,
+      "UseTransparency":true,
+      "Version":"1.1.1a0",
+      "MacBinary":{
+        "Hash":"7323C3A59C74E256B5AD68072A294E88",
+        "URL":"http:\/\/104.238.132.54\/kaju\/otis_5.0\/osx\/v1.1.1a0\/Otis_5.0.zip"
+      },
+      "WindowsBinary":{
+        "Hash":"82C17372A6BEEEE2EB43F95A006B6826",
+        "URL":"http:\/\/104.238.132.54\/kaju\/otis_5.0\/win\/v1.1.1a0\/Otis_5.0.zip",
+        "ExecutableName":"Otis_5.0.exe"
+      }
     }
   ]
 }

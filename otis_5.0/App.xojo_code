@@ -253,6 +253,14 @@ Inherits Application
 		    quit
 		  end if
 		  
+		  // Check the amount of pkids that we have available
+		  
+		  If CheckNumberAvailableIDs < 50 Then
+		    If Methods.GetNewIDBlock Then
+		      
+		    End If
+		  End If
+		  
 		  // Lets check if any eipls need numbers from being created offline
 		  Methods.CreateNumbersForOfflineEIPLs
 		  
