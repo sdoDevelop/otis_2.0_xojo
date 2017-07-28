@@ -1249,7 +1249,7 @@ End
 		  If InStr( s2, "%" ) > 0 Then
 		    me.Text = str( s2 )
 		  Else
-		    me.Text = str( s2, modFieldFormatting.tbl_lineitems.li_discount )
+		    me.Text = str( s2, modFieldFormatting.tbl_eipl.discount )
 		  End If
 		End Sub
 	#tag EndEvent

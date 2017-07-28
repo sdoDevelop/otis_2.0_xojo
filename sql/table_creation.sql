@@ -207,3 +207,16 @@ CREATE TABLE tbl_group_discounts
     group_name                  text,
     group_discount              text
     );
+
+CREATE TABLE tbl_payments
+    (
+    pkid                        integer Primary Key,
+    row_created                 text,
+    row_modified                text,
+    row_username                text,
+    fkeipl                      integer,
+    payment_amount              text,
+    payment_date                text,
+    payment_type                text,
+    payment_memo                text
+    );

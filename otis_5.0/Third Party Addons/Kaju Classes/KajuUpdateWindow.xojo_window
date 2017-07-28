@@ -5,7 +5,7 @@ Begin Window KajuUpdateWindow
    CloseButton     =   False
    Compatibility   =   ""
    Composite       =   True
-   Frame           =   0
+   Frame           =   7
    FullScreen      =   False
    FullScreenButton=   False
    HasBackColor    =   False
@@ -162,7 +162,6 @@ Begin Window KajuUpdateWindow
       Selectable      =   False
       TabIndex        =   5
       TabPanelIndex   =   0
-      TabStop         =   True
       Text            =   "Untitled"
       TextAlign       =   0
       TextColor       =   &c00000000
@@ -197,7 +196,6 @@ Begin Window KajuUpdateWindow
       Selectable      =   False
       TabIndex        =   6
       TabPanelIndex   =   0
-      TabStop         =   True
       Text            =   "Untitled"
       TextAlign       =   0
       TextColor       =   &c00000000
@@ -232,7 +230,6 @@ Begin Window KajuUpdateWindow
       Selectable      =   False
       TabIndex        =   7
       TabPanelIndex   =   0
-      TabStop         =   True
       Text            =   "#KajuLocale.kReleaseNotesLabel"
       TextAlign       =   0
       TextColor       =   &c00000000
@@ -267,7 +264,6 @@ Begin Window KajuUpdateWindow
       Selectable      =   False
       TabIndex        =   8
       TabPanelIndex   =   0
-      TabStop         =   True
       Text            =   "#KajuLocale.kDownloadingMessage"
       TextAlign       =   0
       TextColor       =   &c00000000
@@ -297,7 +293,6 @@ Begin Window KajuUpdateWindow
       Scope           =   2
       TabIndex        =   8
       TabPanelIndex   =   0
-      TabStop         =   True
       Top             =   555
       Value           =   0
       Visible         =   False
@@ -308,30 +303,24 @@ Begin Window KajuUpdateWindow
       CertificatePassword=   ""
       CertificateRejectionFile=   
       ConnectionType  =   2
-      Enabled         =   True
       ForceSecure     =   False
       Index           =   -2147483648
       InitialParent   =   ""
       LockedInPosition=   False
       Scope           =   2
       Secure          =   False
-      TabIndex        =   9
       TabPanelIndex   =   0
-      TabStop         =   True
    End
    Begin Kaju.ZipShell shZipper
       Arguments       =   ""
       Backend         =   ""
       Canonical       =   False
-      Enabled         =   True
       Index           =   -2147483648
       InitialParent   =   ""
       LockedInPosition=   False
       Mode            =   1
       Scope           =   2
-      TabIndex        =   10
       TabPanelIndex   =   0
-      TabStop         =   True
       TimeOut         =   0
    End
    Begin HTMLViewer hvNewWindow
@@ -377,7 +366,6 @@ Begin Window KajuUpdateWindow
       Selectable      =   False
       TabIndex        =   10
       TabPanelIndex   =   0
-      TabStop         =   True
       Text            =   "#KajuLocale.kVersionsLabel"
       TextAlign       =   0
       TextColor       =   &c00000000
@@ -422,7 +410,6 @@ Begin Window KajuUpdateWindow
       Width           =   101
    End
    Begin Timer tmrTimeout
-      Enabled         =   True
       Index           =   -2147483648
       InitialParent   =   ""
       LockedInPosition=   False

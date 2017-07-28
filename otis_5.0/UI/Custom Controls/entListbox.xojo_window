@@ -105,6 +105,18 @@ End
 	#tag EndMethod
 
 	#tag Method, Flags = &h0
+		Sub AddRow(Items() as Variant)
+		  dim sItems() as string
+		  
+		  For Each vItem as Variant In Items()
+		    sItems.Append( str( vItem ) )
+		  Next
+		  
+		  oListbox.AddRow(sItems)
+		End Sub
+	#tag EndMethod
+
+	#tag Method, Flags = &h0
 		Function Cell(row as integer, column as integer) As String
 		  
 		  

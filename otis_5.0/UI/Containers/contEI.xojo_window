@@ -44,7 +44,7 @@ Begin ContainerControl contEI
       TabIndex        =   2
       TabPanelIndex   =   0
       Top             =   22
-      Value           =   0
+      Value           =   1
       Visible         =   True
       Width           =   901
       Begin contLineItems instLineItemList
@@ -124,17 +124,17 @@ Begin ContainerControl contEI
          Height          =   181
          HelpTag         =   ""
          InitialParent   =   "ppEIPLSwitcher"
-         Left            =   20
-         LockBottom      =   True
+         Left            =   343
+         LockBottom      =   False
          LockedInPosition=   False
          LockLeft        =   True
          LockRight       =   False
-         LockTop         =   False
+         LockTop         =   True
          Scope           =   0
          TabIndex        =   0
          TabPanelIndex   =   2
          TabStop         =   True
-         Top             =   296
+         Top             =   61
          Transparent     =   True
          UseFocusRing    =   False
          Visible         =   True
@@ -153,12 +153,12 @@ Begin ContainerControl contEI
          Index           =   -2147483648
          InitialParent   =   "ppEIPLSwitcher"
          Italic          =   False
-         Left            =   20
-         LockBottom      =   True
+         Left            =   343
+         LockBottom      =   False
          LockedInPosition=   False
          LockLeft        =   True
          LockRight       =   False
-         LockTop         =   False
+         LockTop         =   True
          Scope           =   0
          TabIndex        =   1
          TabPanelIndex   =   2
@@ -166,7 +166,7 @@ Begin ContainerControl contEI
          TextFont        =   "System"
          TextSize        =   0.0
          TextUnit        =   0
-         Top             =   476
+         Top             =   241
          Underline       =   False
          Visible         =   True
          Width           =   80
@@ -506,7 +506,7 @@ Begin ContainerControl contEI
          Height          =   181
          HelpTag         =   ""
          InitialParent   =   "ppEIPLSwitcher"
-         Left            =   332
+         Left            =   343
          LockBottom      =   True
          LockedInPosition=   False
          LockLeft        =   True
@@ -516,45 +516,11 @@ Begin ContainerControl contEI
          TabIndex        =   10
          TabPanelIndex   =   2
          TabStop         =   True
-         Top             =   296
+         Top             =   297
          Transparent     =   True
          UseFocusRing    =   False
          Visible         =   True
          Width           =   293
-      End
-      Begin Label labContactablesList
-         AutoDeactivate  =   True
-         Bold            =   False
-         DataField       =   ""
-         DataSource      =   ""
-         Enabled         =   True
-         Height          =   20
-         HelpTag         =   ""
-         Index           =   -2147483648
-         InitialParent   =   "ppEIPLSwitcher"
-         Italic          =   False
-         Left            =   20
-         LockBottom      =   True
-         LockedInPosition=   False
-         LockLeft        =   True
-         LockRight       =   False
-         LockTop         =   False
-         Multiline       =   False
-         Scope           =   0
-         Selectable      =   False
-         TabIndex        =   11
-         TabPanelIndex   =   2
-         Text            =   "Contactables"
-         TextAlign       =   0
-         TextColor       =   &c00000000
-         TextFont        =   "System"
-         TextSize        =   0.0
-         TextUnit        =   0
-         Top             =   276
-         Transparent     =   True
-         Underline       =   False
-         Visible         =   True
-         Width           =   100
       End
       Begin Label labDiscounts
          AutoDeactivate  =   True
@@ -567,12 +533,12 @@ Begin ContainerControl contEI
          Index           =   -2147483648
          InitialParent   =   "ppEIPLSwitcher"
          Italic          =   False
-         Left            =   332
-         LockBottom      =   False
+         Left            =   343
+         LockBottom      =   True
          LockedInPosition=   False
          LockLeft        =   True
          LockRight       =   False
-         LockTop         =   True
+         LockTop         =   False
          Multiline       =   False
          Scope           =   0
          Selectable      =   False
@@ -584,7 +550,7 @@ Begin ContainerControl contEI
          TextFont        =   "System"
          TextSize        =   0.0
          TextUnit        =   0
-         Top             =   276
+         Top             =   277
          Transparent     =   True
          Underline       =   False
          Visible         =   True
@@ -623,6 +589,179 @@ Begin ContainerControl contEI
          Underline       =   False
          Visible         =   True
          Width           =   158
+      End
+      Begin Label labEIPLDiscount
+         AutoDeactivate  =   True
+         Bold            =   False
+         DataField       =   ""
+         DataSource      =   ""
+         Enabled         =   True
+         Height          =   20
+         HelpTag         =   ""
+         Index           =   -2147483648
+         InitialParent   =   "ppEIPLSwitcher"
+         Italic          =   False
+         Left            =   20
+         LockBottom      =   False
+         LockedInPosition=   False
+         LockLeft        =   True
+         LockRight       =   False
+         LockTop         =   True
+         Multiline       =   False
+         Scope           =   0
+         Selectable      =   False
+         TabIndex        =   13
+         TabPanelIndex   =   2
+         Text            =   "EIPL Discount"
+         TextAlign       =   2
+         TextColor       =   &c00000000
+         TextFont        =   "System"
+         TextSize        =   0.0
+         TextUnit        =   0
+         Top             =   145
+         Transparent     =   True
+         Underline       =   False
+         Visible         =   True
+         Width           =   80
+      End
+      Begin entTextField tfEIPLDiscount
+         AcceptTabs      =   False
+         Alignment       =   0
+         AutoDeactivate  =   True
+         AutomaticallyCheckSpelling=   False
+         BackColor       =   &cFFFFFF00
+         Bold            =   False
+         Border          =   True
+         CueText         =   ""
+         DataField       =   ""
+         DataSource      =   ""
+         Enabled         =   True
+         Format          =   ""
+         Height          =   22
+         HelpTag         =   ""
+         Index           =   -2147483648
+         InitialParent   =   "ppEIPLSwitcher"
+         Italic          =   False
+         Left            =   112
+         LimitText       =   0
+         LockBottom      =   False
+         LockedInPosition=   False
+         LockLeft        =   True
+         LockRight       =   False
+         LockTop         =   True
+         Mask            =   ""
+         Password        =   False
+         ReadOnly        =   False
+         Scope           =   0
+         TabIndex        =   14
+         TabPanelIndex   =   2
+         TabStop         =   True
+         Text            =   ""
+         TextColor       =   &c00000000
+         TextFont        =   "System"
+         TextSize        =   0.0
+         TextUnit        =   0
+         Top             =   144
+         Underline       =   False
+         UseFocusRing    =   True
+         Visible         =   True
+         Width           =   200
+      End
+      Begin contPaymentList instPaymentList
+         AcceptFocus     =   False
+         AcceptTabs      =   True
+         AutoDeactivate  =   True
+         BackColor       =   &cFFFFFF00
+         Backdrop        =   0
+         Enabled         =   True
+         EraseBackground =   True
+         HasBackColor    =   False
+         Height          =   179
+         HelpTag         =   ""
+         InitialParent   =   "ppEIPLSwitcher"
+         Left            =   20
+         LockBottom      =   True
+         LockedInPosition=   False
+         LockLeft        =   True
+         LockRight       =   False
+         LockTop         =   False
+         Scope           =   0
+         TabIndex        =   15
+         TabPanelIndex   =   2
+         TabStop         =   True
+         Top             =   297
+         Transparent     =   True
+         UseFocusRing    =   False
+         Visible         =   True
+         Width           =   292
+      End
+      Begin Label labContactablesList
+         AutoDeactivate  =   True
+         Bold            =   False
+         DataField       =   ""
+         DataSource      =   ""
+         Enabled         =   True
+         Height          =   20
+         HelpTag         =   ""
+         Index           =   -2147483648
+         InitialParent   =   "ppEIPLSwitcher"
+         Italic          =   False
+         Left            =   343
+         LockBottom      =   False
+         LockedInPosition=   False
+         LockLeft        =   True
+         LockRight       =   False
+         LockTop         =   True
+         Multiline       =   False
+         Scope           =   0
+         Selectable      =   False
+         TabIndex        =   16
+         TabPanelIndex   =   2
+         Text            =   "Contactables"
+         TextAlign       =   0
+         TextColor       =   &c00000000
+         TextFont        =   "System"
+         TextSize        =   0.0
+         TextUnit        =   0
+         Top             =   42
+         Transparent     =   True
+         Underline       =   False
+         Visible         =   True
+         Width           =   100
+      End
+      Begin Label labPayments
+         AutoDeactivate  =   True
+         Bold            =   False
+         DataField       =   ""
+         DataSource      =   ""
+         Enabled         =   True
+         Height          =   20
+         HelpTag         =   ""
+         Index           =   -2147483648
+         InitialParent   =   "ppEIPLSwitcher"
+         Italic          =   False
+         Left            =   20
+         LockBottom      =   True
+         LockedInPosition=   False
+         LockLeft        =   True
+         LockRight       =   False
+         LockTop         =   False
+         Multiline       =   False
+         Scope           =   0
+         Selectable      =   False
+         TabIndex        =   17
+         TabPanelIndex   =   2
+         Text            =   "Payments"
+         TextAlign       =   0
+         TextColor       =   &c00000000
+         TextFont        =   "System"
+         TextSize        =   0.0
+         TextUnit        =   0
+         Top             =   277
+         Transparent     =   True
+         Underline       =   False
+         Visible         =   True
+         Width           =   100
       End
    End
    Begin TabPanel tbEIPLSwitcher
@@ -845,6 +984,9 @@ End
 		  instEIPLContactablesList.EIPLID = oCurrentRecord.ipkid
 		  instEIPLContactablesList.methLoadMe
 		  
+		  instPaymentList.oEIPLRecord = oCurrentRecord
+		  instPaymentList.methLoadMe
+		  
 		  instGroupDiscountList.methLoadMe(oCurrentRecord)
 		  
 		  tfEIPLName.Text = oCurrentRecord.seipl_name
@@ -857,6 +999,14 @@ End
 		      exit
 		    End If
 		  Next
+		  
+		  dim s2 as string
+		  s2 = oCurrentRecord.sdiscount
+		  If InStr( s2, "%" ) > 0 Then
+		    tfEIPLDiscount.text = str( s2 )
+		  Else
+		    tfEIPLDiscount.text = str( s2, modFieldFormatting.tbl_eipl.discount )
+		  End If
 		  
 		  // Dates Times
 		  dim dt1 as New Date
@@ -1177,6 +1327,28 @@ End
 		  oCurrentRecord.Save
 		  
 		  me.Text = str( oCurrentRecord.seipl_tax_rate, modFieldFormatting.tbl_eipl.eipl_tax_rate )
+		End Sub
+	#tag EndEvent
+#tag EndEvents
+#tag Events tfEIPLDiscount
+	#tag Event
+		Sub LostFocus()
+		  dim s1 as string
+		  If InStr( me.Text, "%" ) > 0 Then
+		    s1 = me.Text
+		  Else
+		    s1 = Methods.StripNonDigitsDecimals( me.Text )
+		  End If
+		  oCurrentRecord.sdiscount = s1
+		  oCurrentRecord.Save
+		  
+		  dim s2 as string
+		  s2 = oCurrentRecord.sdiscount
+		  If InStr( s2, "%" ) > 0 Then
+		    me.Text = str( s2 )
+		  Else
+		    me.Text = str( s2, modFieldFormatting.tbl_eipl.discount )
+		  End If
 		End Sub
 	#tag EndEvent
 #tag EndEvents

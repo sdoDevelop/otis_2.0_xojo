@@ -1,4 +1,4 @@
-KAJU 2A6A730705A2169A9C92093ABB8395B0BFBD314001D8F188B0863595855974A18D319513CA4FFC1ADB302C1A232D3547FEF79DEE206D72F14BEE6B1BE7A82F4A4B0797A256D56D43B4E59AE554FA98F3669E392A41C6FC27F6FD837C04A3825DB555F81B611D93A290E2F7A485287381A80C9EE53081950B1FA7DCACA10BE6C0C409B7A33462835539233E4DE3CBF75FC268FD50141FF293B5136DBEC47486B89424FC89464E60B3107E07D89551BC9A392B6062FEFD4EAC0C890DA375FF174407E105087B88A84D8EC31252F046B92786B79C828A0EB2629E1F39514AA876B497CF910A169580F7ADAD148B84C3875AA83F5436D75EBB1AE8B8E98C25B20082
+KAJU B61D0440BF26596DAE006D74E1359EE739978D03B5F76BBF8B25C1E39152F6B9DF16C46CA61BF33E3C988E8FE71DA651C77995EC4F0347EBBC025743C303F5F630ADDDFF02383624546BB38D733E926ADD0423B34510EBE197912FC84A5311399109FD5F3A5F99658F629BC0EA4CD233B1DF6822614E8EA0EF3C13B7A32CF78D742900E3050A3790542BEFB1CA7FCF7A09B9DB8567882C3DB0F4C2FA341BBE9D62F32AB1B5DBC6478F2F5CC6AAD3D91411B4DF2D060A420A53A8556E4EB4DA5240472F7234ACB821CDE2DFCDCFDCA7BF98AA490FC1B0A524A1D3E9EB713135C66CF5C00D88024F426FFB209A7FB3769E158E76B09BFAF4BBB21F871AB9AD04AB
 [
   {
     "AppName":"Otis_5.0",
@@ -24,6 +24,133 @@ KAJU 2A6A730705A2169A9C92093ABB8395B0BFBD314001D8F188B0863595855974A18D319513CA4
     "MacBinary":{
       "Hash":"5F32D5824331D5AA1153AA0FFC39C446",
       "URL":"http://104.238.132.54/kaju/otis_5.0/osx/v1.0.7a0/Otis_5.0.zip"
+    }
+  },
+  {
+    "AppName":"Otis_5.0",
+    "ImageURL":"",
+    "MinimumRequiredVersion":"",
+    "ReleaseNotes":"THis is a test",
+    "RequiresPayment":false,
+    "UseTransparency":true,
+    "Version":"1.0.8a0",
+    "MacBinary":{
+      "Hash":"B0B720DDDA1809541BB19B0774CDE7F5",
+      "URL":"http://104.238.132.54/kaju/otis_5.0/osx/v1.0.8a0/Otis_5.0.zip"
+    }
+  },
+  {
+    "AppName":"Otis_5.0",
+    "ImageURL":"",
+    "MinimumRequiredVersion":"",
+    "ReleaseNotes":"THis is a test",
+    "RequiresPayment":false,
+    "UseTransparency":true,
+    "Version":"1.0.9a0",
+    "MacBinary":{
+      "Hash":"5CC1FA49A6A7253ABD56958A572290D2",
+      "URL":"http://104.238.132.54/kaju/otis_5.0/osx/v1.0.9a0/Otis_5.0.zip"
+    }
+  },
+  {
+    "AppName":"Otis_5.0",
+    "ImageURL":"",
+    "MinimumRequiredVersion":"",
+    "ReleaseNotes":"THis is a test",
+    "RequiresPayment":false,
+    "UseTransparency":true,
+    "Version":"1.0.10a0",
+    "MacBinary":{
+      "Hash":"669C4AE6E2827F04CD4316436B672E86",
+      "URL":"http://104.238.132.54/kaju/otis_5.0/osx/v1.0.10a0/Otis_5.0.zip"
+    }
+  },
+  {
+    "AppName":"Otis_5.0",
+    "ImageURL":"",
+    "MinimumRequiredVersion":"",
+    "ReleaseNotes":"THis is a test",
+    "RequiresPayment":false,
+    "UseTransparency":true,
+    "Version":"1.0.11a0",
+    "MacBinary":{
+      "Hash":"DFD29F464CEDCE6CA1C35D2C21F8DB41",
+      "URL":"http://104.238.132.54/kaju/otis_5.0/osx/v1.0.11a0/Otis_5.0.zip"
+    }
+  },
+  {
+    "AppName":"Otis_5.0",
+    "ImageURL":"",
+    "MinimumRequiredVersion":"",
+    "ReleaseNotes":"THis is a test",
+    "RequiresPayment":false,
+    "UseTransparency":true,
+    "Version":"1.0.12a0",
+    "MacBinary":{
+      "Hash":"5C99961B146C609901C5F4D465E35CD2",
+      "URL":"http://104.238.132.54/kaju/otis_5.0/osx/v1.0.12a0/Otis_5.0.zip"
+    }
+  },
+  {
+    "AppName":"Otis_5.0",
+    "ImageURL":"",
+    "MinimumRequiredVersion":"",
+    "ReleaseNotes":"THis is a test",
+    "RequiresPayment":false,
+    "UseTransparency":true,
+    "Version":"1.0.13a0",
+    "MacBinary":{
+      "Hash":"41360F156BF6C8EC808B7A01E06848EA",
+      "URL":"http://104.238.132.54/kaju/otis_5.0/osx/v1.0.13a0/Otis_5.0.zip"
+    }
+  },
+  {
+    "AppName":"Otis_5.0",
+    "ImageURL":"",
+    "MinimumRequiredVersion":"",
+    "ReleaseNotes":"THis is a test",
+    "RequiresPayment":false,
+    "UseTransparency":true,
+    "Version":"1.0.14a0",
+    "MacBinary":{
+      "Hash":"8BE39F172BD9A361FEC81829A31223D1",
+      "URL":"http://104.238.132.54/kaju/otis_5.0/osx/v1.0.14a0/Otis_5.0.zip"
+    }
+  },
+  {
+    "AppName":"Otis_5.0",
+    "ImageURL":"",
+    "MinimumRequiredVersion":"",
+    "ReleaseNotes":"THis is a test",
+    "RequiresPayment":false,
+    "UseTransparency":true,
+    "Version":"1.0.15a0",
+    "MacBinary":{
+      "Hash":"7F7173BAC9DDF72BC45591A57077A7D2",
+      "URL":"http://104.238.132.54/kaju/otis_5.0/osx/v1.0.15a0/Otis_5.0.zip"
+    },
+    "WindowsBinary":{
+      "Hash":"A09EC8CE96E4715F42BAD6D69CC24C71",
+      "URL":"http://104.238.132.54/kaju/otis_5.0/win/v1.0.15a0/Otis_5.0.zip",
+      "ExecutableName":"Otis_5.0.exe"
+    }
+  },
+  {
+    "AppName":"Otis_5.0",
+    "ImageURL":"",
+    "MinimumRequiredVersion":"",
+    "ReleaseNotes":"THis is a test",
+    "RequiresPayment":false,
+    "UseTransparency":true,
+    "Version":"1.0.16a0",
+    "MacBinary":{
+      "Hash":"350445D06D9E0006F0094D25B19BA2ED",
+      "URL":"http://104.238.132.54/kaju/otis_5.0/osx/v1.0.16a0/Otis_5.0.zip"
+    },
+    "WindowsBinary":{
+      "Hash":"EC9E452446D1E8523A652A69FEE95ADB",
+      "URL":"http://104.238.132.54/kaju/otis_5.0/win/v1.0.16a0/Otis_5.0.zip",
+      "ExecutableName":"Otis_5.0.exe"
     }
   }
 ]

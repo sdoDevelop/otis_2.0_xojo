@@ -37,7 +37,7 @@ Begin ContainerControl contLineItems
       GridLinesColor  =   &c00000000
       HasBackColor    =   False
       HasHeading      =   True
-      Height          =   408
+      Height          =   388
       HelpTag         =   ""
       InitialParent   =   ""
       Left            =   3
@@ -50,7 +50,7 @@ Begin ContainerControl contLineItems
       TabIndex        =   0
       TabPanelIndex   =   0
       TabStop         =   True
-      Top             =   29
+      Top             =   49
       Transparent     =   True
       UseFocusRing    =   False
       Visible         =   True
@@ -222,7 +222,7 @@ Begin ContainerControl contLineItems
       Index           =   -2147483648
       InitialParent   =   ""
       Italic          =   False
-      Left            =   379
+      Left            =   399
       LockBottom      =   False
       LockedInPosition=   False
       LockLeft        =   True
@@ -239,11 +239,147 @@ Begin ContainerControl contLineItems
       TextFont        =   "System"
       TextSize        =   0.0
       TextUnit        =   0
-      Top             =   4
+      Top             =   27
       Transparent     =   True
       Underline       =   False
       Visible         =   True
-      Width           =   141
+      Width           =   129
+   End
+   Begin Label labEIPLSubTotal
+      AutoDeactivate  =   True
+      Bold            =   False
+      DataField       =   ""
+      DataSource      =   ""
+      Enabled         =   True
+      Height          =   20
+      HelpTag         =   ""
+      Index           =   -2147483648
+      InitialParent   =   ""
+      Italic          =   False
+      Left            =   8
+      LockBottom      =   False
+      LockedInPosition=   False
+      LockLeft        =   True
+      LockRight       =   False
+      LockTop         =   True
+      Multiline       =   False
+      Scope           =   0
+      Selectable      =   False
+      TabIndex        =   14
+      TabPanelIndex   =   0
+      Text            =   "SubTotal: "
+      TextAlign       =   0
+      TextColor       =   &c00000000
+      TextFont        =   "System"
+      TextSize        =   0.0
+      TextUnit        =   0
+      Top             =   27
+      Transparent     =   True
+      Underline       =   False
+      Visible         =   True
+      Width           =   129
+   End
+   Begin Label labEIPLDiscountSum
+      AutoDeactivate  =   True
+      Bold            =   False
+      DataField       =   ""
+      DataSource      =   ""
+      Enabled         =   True
+      Height          =   20
+      HelpTag         =   ""
+      Index           =   -2147483648
+      InitialParent   =   ""
+      Italic          =   False
+      Left            =   141
+      LockBottom      =   False
+      LockedInPosition=   False
+      LockLeft        =   True
+      LockRight       =   False
+      LockTop         =   True
+      Multiline       =   False
+      Scope           =   0
+      Selectable      =   False
+      TabIndex        =   15
+      TabPanelIndex   =   0
+      Text            =   "Disc Sum: "
+      TextAlign       =   0
+      TextColor       =   &c00000000
+      TextFont        =   "System"
+      TextSize        =   0.0
+      TextUnit        =   0
+      Top             =   27
+      Transparent     =   True
+      Underline       =   False
+      Visible         =   True
+      Width           =   129
+   End
+   Begin Label labEIPLTaxSum
+      AutoDeactivate  =   True
+      Bold            =   False
+      DataField       =   ""
+      DataSource      =   ""
+      Enabled         =   True
+      Height          =   20
+      HelpTag         =   ""
+      Index           =   -2147483648
+      InitialParent   =   ""
+      Italic          =   False
+      Left            =   269
+      LockBottom      =   False
+      LockedInPosition=   False
+      LockLeft        =   True
+      LockRight       =   False
+      LockTop         =   True
+      Multiline       =   False
+      Scope           =   0
+      Selectable      =   False
+      TabIndex        =   16
+      TabPanelIndex   =   0
+      Text            =   "Tax:"
+      TextAlign       =   0
+      TextColor       =   &c00000000
+      TextFont        =   "System"
+      TextSize        =   0.0
+      TextUnit        =   0
+      Top             =   27
+      Transparent     =   True
+      Underline       =   False
+      Visible         =   True
+      Width           =   129
+   End
+   Begin Label labEIPLBalance
+      AutoDeactivate  =   True
+      Bold            =   False
+      DataField       =   ""
+      DataSource      =   ""
+      Enabled         =   True
+      Height          =   20
+      HelpTag         =   ""
+      Index           =   -2147483648
+      InitialParent   =   ""
+      Italic          =   False
+      Left            =   540
+      LockBottom      =   False
+      LockedInPosition=   False
+      LockLeft        =   True
+      LockRight       =   False
+      LockTop         =   True
+      Multiline       =   False
+      Scope           =   0
+      Selectable      =   False
+      TabIndex        =   17
+      TabPanelIndex   =   0
+      Text            =   "Balance"
+      TextAlign       =   0
+      TextColor       =   &c00000000
+      TextFont        =   "System"
+      TextSize        =   0.0
+      TextUnit        =   0
+      Top             =   27
+      Transparent     =   True
+      Underline       =   False
+      Visible         =   True
+      Width           =   129
    End
 End
 #tag EndWindow
@@ -300,7 +436,7 @@ End
 		    dim jsFieldValues as JSONItem = otblRecord.GetMyFieldValues(True)
 		    // Add the total of this row to the field value json item
 		    dim dictReturn as Dictionary = modPriceCalculations.CalculateLineItemPrices( otblRecord, oEIPLRecord )
-		    jsFieldValues.Value("CalcTotal") = str( dictReturn.Value( "AfterDiscount" ), "\$###,###,###,###.00" )
+		    jsFieldValues.Value("CalcTotal") = str( dictReturn.Value( "AfterDiscount" ), "-\$###,###,###,##0.00" )
 		    
 		    // Populate the Column values for this row
 		    For Each sFieldName as String In oRowTag.sFieldNames
@@ -526,7 +662,7 @@ End
 		          dictReturn = CalculateGroupTotal( oGroupRowTag.vGroupingData, oEIPLRecord, oGroupRowTag.sGroupDataStructure )
 		        End If
 		        
-		        dim vTotalString as Variant = "Total: " + str( dictReturn.Value("Total"), "\$###,###,###,###.00")
+		        dim vTotalString as Variant = "Total: " + str( dictReturn.Value("Total"), "-\$###,###,###,##0.00")
 		        
 		        oGroupRowtag.aroChildren() = aroChildRowTags
 		        oGroupRowtag.iCellTypes = dictCellTypes.Value("GroupFolder")
@@ -565,7 +701,7 @@ End
 		          dictReturn = CalculateGroupTotal( oGroupRowTag.vGroupingData, oEIPLRecord, oGroupRowTag.sGroupDataStructure )
 		        End If
 		        
-		        dim vTotalString as Variant = "Total: " + str( dictReturn.Value("Total"), "\$###,###,###,###.00")
+		        dim vTotalString as Variant = "Total: " + str( dictReturn.Value("Total"), "-\$###,###,###,##0.00")
 		        
 		        oGroupRowtag.aroChildren() = aroChildRowTags()
 		        oGroupRowtag.iCellTypes = dictCellTypes.Value("GroupFolder")
@@ -909,7 +1045,11 @@ End
 		    
 		    // Lets calculate the eipl total
 		    dim retDict as Dictionary = modPriceCalculations.CalculateEIPLTotal(records(),oEIPLRecord)
-		    labEIPLTotal.Text = "Total: " + str( retDict.Value("Total"), "\$###,###,###,###.00" )
+		    labEIPLTotal.Text = "Total: " + str( retDict.Value("Total"), "-\$###,###,###,##0.00" )
+		    labEIPLDiscountSum.Text = "Disc Sum: " + str( retDict.Value("DiscountSum"), "-\$###,###,###,##0.00" )
+		    labEIPLSubTotal.Text = "SubTotal: " + str( retDict.Value("SubTotal"), "-\$###,###,###,##0.00" )
+		    labEIPLTaxSum.Text = "Tax: " + str( retDict.Value("TaxSum"), "-\$###,###,###,##0.00" )
+		    labEIPLBalance.Text = "Balance: " + str( retDict.Value("Balance"), "-\$###,###,###,##0.00" )
 		    
 		    If records.Ubound <> -1 THen
 		      // Build the rowtags
@@ -927,7 +1067,11 @@ End
 		    
 		    // Lets calculate the eipl total
 		    dim retDict as Dictionary = modPriceCalculations.CalculateEIPLTotal(dictRecords,oEIPLRecord)
-		    labEIPLTotal.Text = "Total: " + str( retDict.Value("Total"), "\$###,###,###,###.00" )
+		    labEIPLTotal.Text = "Total: " + str( retDict.Value("Total"), "-\$###,###,###,##0.00" )
+		    labEIPLDiscountSum.Text = "Disc Sum: " + str( retDict.Value("DiscountSum"), "-\$###,###,###,##0.00" )
+		    labEIPLSubTotal.Text = "SubTotal: " + str( retDict.Value("SubTotal"), "-\$###,###,###,##0.00" )
+		    labEIPLTaxSum.Text = "Tax: " + str( retDict.Value("TaxSum"), "-\$###,###,###,##0.00" )
+		    labEIPLBalance.Text = "Balance: " + str( retDict.Value("Balance"), "-\$###,###,###,##0.00" )
 		    
 		    If dictRecords.Count <> 0 Then
 		      dim theRowtagsGrouped() as lbRowTag

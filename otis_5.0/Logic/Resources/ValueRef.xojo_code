@@ -12,6 +12,10 @@ Protected Module ValueRef
 		#Tag Instance, Platform = Any, Language = Default, Definition  = \"Ready\x2CIn Maintenance\x2CSold"
 	#tag EndConstant
 
+	#tag Constant, Name = PaymentTypes, Type = String, Dynamic = False, Default = \"", Scope = Public
+		#Tag Instance, Platform = Any, Language = Default, Definition  = \"Check\x2CCash\x2CDeposit"
+	#tag EndConstant
+
 
 	#tag ViewBehavior
 		#tag ViewProperty

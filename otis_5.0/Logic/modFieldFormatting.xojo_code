@@ -39,6 +39,8 @@ Protected Module modFieldFormatting
 		    Select Case sFieldName
 		    Case "eipl_tax_rate"
 		      Return tbl_eipl.eipl_tax_rate
+		    Case "discount"
+		      Return tbl_eipl.discount
 		    End Select
 		    
 		    

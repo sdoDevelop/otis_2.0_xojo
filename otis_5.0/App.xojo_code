@@ -106,7 +106,7 @@ Inherits Application
 		Sub Initialize()
 		  RegisterThirdPartyPlugins 'Register third party plugins (if needed)
 		  CheckVersions 'Checks Xojo and third plug-in versions (In the debugger only)
-		  CheckForUpdates
+		  
 		  
 		  //Set timezone
 		  dim d1 as new date 
@@ -266,6 +266,7 @@ Inherits Application
 		  App.MainWindow =  new winMain_1TabPanel
 		  app.MainWindow.show
 		  
+		  CheckForUpdates
 		End Sub
 	#tag EndMethod
 

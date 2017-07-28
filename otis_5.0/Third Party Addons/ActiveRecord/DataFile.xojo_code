@@ -63,7 +63,7 @@ Protected Module DataFile
 		  BKS_ActiveRecord.Table( db, "tbl_contact_methods", GetTypeInfo( tbl_contact_methods ) )
 		  BKS_ActiveRecord.Table( db, "tbl_internal_linking", GetTypeInfo( tbl_internal_linking ) )
 		  BKS_ActiveRecord.Table( db, "tbl_group_discounts", GetTypeInfo( tbl_group_discounts ) )
-		  
+		  BKS_ActiveRecord.Table( db, "tbl_payments", GetTypeInfo( tbl_payments ) )
 		End Sub
 	#tag EndMethod
 

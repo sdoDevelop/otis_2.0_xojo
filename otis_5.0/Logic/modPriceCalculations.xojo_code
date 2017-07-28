@@ -2,31 +2,43 @@
 Protected Module modPriceCalculations
 	#tag Method, Flags = &h0
 		Function CalculateEIPLTotal(oRecords() as datafile.tbl_lineitems, oEIPLRecord as DataFile.tbl_eipl) As Dictionary
-		  dim iSubTotal, iAfterDiscount, iAfterTax, iDiscountSum, iTaxSum, iDiscount as Currency
+		  dim iSubTotal, iAfterDiscount, iAfterTax, iDiscountSum, iTaxSum, iDiscount, iBalance, iPaymentSum as Currency
+		  
+		  ForEIPLTotal = True
 		  
 		  // get the total of the groups
 		  dim retDict as Dictionary = CalculateGroupTotal( oRecords, oEIPLRecord, "" )
-		  iSubTotal = retDict.Value("Total")
+		  iSubTotal = retDict.Value("PreDiscount")
 		  iDiscountSum = retDict.Value("DiscountSum")
 		  iTaxSum = retDict.Value("TaxSum")
 		  
 		  // Calculate the after discount price
 		  iDiscount = val( Methods.StripNonDigitsDecimals( oEIPLRecord.sdiscount ) )
 		  If iDiscount = 0 Then
-		    iAfterDiscount = iSubTotal
+		    'iAfterDiscount = iSubTotal
 		  ElseIf InStr( oEIPLRecord.sdiscount, "%") > 0 Then
 		    // the discount is a percent
-		    iAfterDiscount = iSubTotal - ( ( iDiscount / 100 ) * iSubTotal )
+		    iDiscount = ( ( iDiscount / 100 ) * iSubTotal )
 		  Else
 		    // the discount is an amount
-		    iAfterDiscount = iSubTotal - iDiscount
 		  End If
 		  
 		  // Calculate discount sum
-		  iDiscountSum = iDiscountSum + ( iSubTotal - iAfterDiscount )
+		  iDiscountSum = iDiscountSum + iDiscount
+		  
+		  // Calculate after discount
+		  iAfterDiscount = iSubTotal - iDiscountSum
 		  
 		  // Calculate the after tax amount
 		  iAfterTax = iAfterDiscount + iTaxSum
+		  
+		  // Calculate amount payed and balance
+		  dim oPayments() as DataFile.tbl_payments = DataFile.tbl_payments.List( "fkeipl = " + oEIPLRecord.ipkid.ToText )
+		  For Each oPayment as DataFile.tbl_payments In oPayments()
+		    dim iAmount as Currency = val( Methods.StripNonDigitsDecimals( oPayment.spayment_amount ) )
+		    iPaymentSum = iPaymentSum + iAmount
+		  Next
+		  iBalance = iAfterTax - iPaymentSum
 		  
 		  // Round things
 		  iSubTotal = round(iSubTotal*100)/100
@@ -34,6 +46,8 @@ Protected Module modPriceCalculations
 		  iAfterTax = round(iAfterTax*100)/100
 		  iDiscountSum = round(iDiscountSum*100)/100
 		  iTaxSum = round(iTaxSum*100)/100
+		  iPaymentSum = round(iPaymentSum*100)/100
+		  iBalance = round(iBalance*100)/100
 		  
 		  dim retDictionary as New Dictionary
 		  retDictionary.Value("SubTotal") = iSubTotal
@@ -41,6 +55,10 @@ Protected Module modPriceCalculations
 		  retDictionary.Value("Total") = iAfterTax
 		  retDictionary.Value("DiscountSum") = iDiscountSum
 		  retDictionary.Value("TaxSum") = iTaxSum
+		  retDictionary.Value("PaymentSum") = iPaymentSum
+		  retDictionary.Value("Balance") = iBalance
+		  
+		  ForEIPLTotal = False
 		  
 		  Return retDictionary
 		  
@@ -50,31 +68,43 @@ Protected Module modPriceCalculations
 
 	#tag Method, Flags = &h0
 		Function CalculateEIPLTotal(dictGroups as Dictionary, oEIPLRecord as DataFile.tbl_eipl) As Dictionary
-		  dim iSubTotal, iAfterDiscount, iAfterTax, iDiscountSum, iTaxSum, iDiscount as Currency
+		  dim iSubTotal, iAfterDiscount, iAfterTax, iDiscountSum, iTaxSum, iDiscount, iPaymentSum, iBalance as Currency
+		  
+		  ForEIPLTotal = True
 		  
 		  // get the total of the groups
 		  dim retDict as Dictionary = CalculateGroupofGroupTotal( dictGroups, oEIPLRecord, "" )
-		  iSubTotal = retDict.Value("Total")
+		  iSubTotal = retDict.Value("PreDiscount")
 		  iDiscountSum = retDict.Value("DiscountSum")
 		  iTaxSum = retDict.Value("TaxSum")
 		  
 		  // Calculate the after discount price
 		  iDiscount = val( Methods.StripNonDigitsDecimals( oEIPLRecord.sdiscount ) )
 		  If iDiscount = 0 Then
-		    iAfterDiscount = iSubTotal
+		    'iAfterDiscount = iSubTotal
 		  ElseIf InStr( oEIPLRecord.sdiscount, "%") > 0 Then
 		    // the discount is a percent
-		    iAfterDiscount = iSubTotal - ( ( iDiscount / 100 ) * iSubTotal )
+		    iDiscount = ( ( iDiscount / 100 ) * iSubTotal )
 		  Else
 		    // the discount is an amount
-		    iAfterDiscount = iSubTotal - iDiscount
 		  End If
 		  
 		  // Calculate discount sum
-		  iDiscountSum = iDiscountSum + ( iSubTotal - iAfterDiscount )
+		  iDiscountSum = iDiscountSum + iDiscount
+		  
+		  // Calculate after discount
+		  iAfterDiscount = iSubTotal - iDiscountSum
 		  
 		  // Calculate the after tax amount
 		  iAfterTax = iAfterDiscount + iTaxSum
+		  
+		  // Calculate amount payed and balance
+		  dim oPayments() as DataFile.tbl_payments = DataFile.tbl_payments.List( "fkeipl = " + oEIPLRecord.ipkid.ToText )
+		  For Each oPayment as DataFile.tbl_payments In oPayments()
+		    dim iAmount as Currency = val( Methods.StripNonDigitsDecimals( oPayment.spayment_amount ) )
+		    iPaymentSum = iPaymentSum + iAmount
+		  Next
+		  iBalance = iAfterTax - iPaymentSum
 		  
 		  // Round things
 		  iSubTotal = round(iSubTotal*100)/100
@@ -82,6 +112,8 @@ Protected Module modPriceCalculations
 		  iAfterTax = round(iAfterTax*100)/100
 		  iDiscountSum = round(iDiscountSum*100)/100
 		  iTaxSum = round(iTaxSum*100)/100
+		  iPaymentSum = round(iPaymentSum*100)/100
+		  iBalance = round(iBalance*100)/100
 		  
 		  dim retDictionary as New Dictionary
 		  retDictionary.Value("SubTotal") = iSubTotal
@@ -89,6 +121,10 @@ Protected Module modPriceCalculations
 		  retDictionary.Value("Total") = iAfterTax
 		  retDictionary.Value("DiscountSum") = iDiscountSum
 		  retDictionary.Value("TaxSum") = iTaxSum
+		  retDictionary.Value("PaymentSum") = iPaymentSum
+		  retDictionary.Value("Balance") = iBalance
+		  
+		  ForEIPLTotal = False
 		  
 		  Return retDictionary
 		  
@@ -119,7 +155,11 @@ Protected Module modPriceCalculations
 		      retDictionary = CalculateGroupofGroupTotal( dictGroups.Value( vKey ), oEIPLRecord, sInnerGroupStructure )
 		      
 		      // Add up totals
-		      iPreDiscount = iPreDiscount + retDictionary.Value("Total")
+		      If ForEIPLTotal Then
+		        iPreDiscount = iPreDiscount + retDictionary.Value("PreDiscount")
+		      Else
+		        iPreDiscount = iPreDiscount + retDictionary.Value("Total")
+		      End If
 		      iDiscountSum = iDiscountSum + retDictionary.Value("DiscountSum")
 		      iTaxSum = iTaxSum + retDictionary.Value("TaxSum")
 		      
@@ -138,7 +178,11 @@ Protected Module modPriceCalculations
 		      retDictionary = CalculateGroupTotal( dictGroups.Value( vKey ), oEIPLRecord, sInnerGroupStructure )
 		      
 		      // Add up totals
-		      iPreDiscount = iPreDiscount + retDictionary.Value("Total")
+		      If ForEIPLTotal Then
+		        iPreDiscount = iPreDiscount + retDictionary.Value("PreDiscount")
+		      Else
+		        iPreDiscount = iPreDiscount + retDictionary.Value("Total")
+		      End If
 		      iDiscountSum = iDiscountSum + retDictionary.Value("DiscountSum")
 		      iTaxSum = iTaxSum + retDictionary.Value("TaxSum")
 		      
@@ -214,7 +258,11 @@ Protected Module modPriceCalculations
 		  For Each oLIRecord as DataFile.tbl_lineitems In aroLIRecords()
 		    dim retDictionary as Dictionary
 		    retDictionary = CalculateLineItemPrices( oLIRecord, oEIPlRecord )
-		    iPreDiscount = iPreDiscount + retDictionary.Value("AfterDiscount")
+		    If ForEIPLTotal Then
+		      iPreDiscount = iPreDiscount + retDictionary.Value("SubTotal")
+		    Else
+		      iPreDiscount = iPreDiscount + retDictionary.Value("AfterDiscount")
+		    End If
 		    iTaxSum = iTaxSum + retDictionary.Value( "TaxSum" )
 		    iDiscountSum = iDiscountSum + retDictionary.Value("DiscountSum")
 		  Next
@@ -367,6 +415,11 @@ Protected Module modPriceCalculations
 		  
 		End Function
 	#tag EndMethod
+
+
+	#tag Property, Flags = &h1
+		Protected ForEIPLTotal As Boolean
+	#tag EndProperty
 
 
 	#tag ViewBehavior

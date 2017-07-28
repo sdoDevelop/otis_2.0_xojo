@@ -207,3 +207,16 @@ Select
     group_discount              
     From tbl_group_discounts
     ;
+
+Select
+    pkid                        ,
+    row_created                 ,
+    row_modified                ,
+    row_username                ,
+    fkeipl                      ,
+    payment_amount              ,
+    payment_date                ,
+    payment_type                ,
+    payment_memo                
+    From tbl_payments
+    ;
