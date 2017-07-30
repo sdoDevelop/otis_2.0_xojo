@@ -45,6 +45,7 @@ Create Table tbl_lineitems
     li_category                 text,
     li_subcategory              text,
     li_description              text, 
+    li_stage                    text,
     li_type                     text,
     li_price                    text,
     li_rate                     text,

@@ -44,8 +44,21 @@ Protected Module modMethods
 
 	#tag Method, Flags = &h1
 		Protected Function GetNewPKID() As Integer
-		  LastPKID = LastPKID + 1
-		  Return LastPKID
+		  dim newDB as PostgreSQLDatabase = app.NewDB
+		  
+		  dim sql as string = "Select * From client_reg.fnc_get_id_block('transfer',1);"
+		  
+		  dim rs as RecordSet = newDB.SQLSelect(sql)
+		  If newDB.Error Then
+		    Break
+		  End If
+		  
+		  dim sID as string = rs.Field("fnc_get_id_block").StringValue
+		  dim sIDArray() as string = sID.Split(",")
+		  dim iID as int64 = val( sIDArray(0) )
+		  
+		  
+		  Return iID
 		End Function
 	#tag EndMethod
 
@@ -105,6 +118,100 @@ Protected Module modMethods
 		    ps.Bind(12, rs.Field("addressstate").StringValue)
 		    ps.Bind(13,rs.Field("addresszip").StringValue)
 		    ps.Bind(14,rs.Field("addresscountry").StringValue)
+		    
+		    ps.SQLExecute()
+		    If db.Error Then
+		      Break
+		    End If
+		    
+		    rs.MoveNext
+		    
+		  Next
+		  
+		  Window1.Listbox1.AddRow("Done!")
+		End Sub
+	#tag EndMethod
+
+	#tag Method, Flags = &h1
+		Protected Sub InsertEvents()
+		  dim db as PostgreSQLDatabase = App.NewDB
+		  
+		  dim rs as RecordSet = OldData.value("events_")
+		  
+		  For i1 as integer = 1 To rs.RecordCount
+		    
+		    dim sql as string
+		    sql = "Insert Into tbl_events ("_
+		    + "pkid, row_created, row_modified, row_username, "_
+		    + "event_name, start_time, end_time, loadin_time, loadout_time, "_
+		    + "start_date, end_date, loadin_date, loadout_date, "_
+		    + "event_details, account_manager) "_
+		    + "Values( $1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15);"
+		    dim ps as PostgreSQLPreparedStatement = db.Prepare(sql)
+		    ps.Bind(0,GetNewPKID.ToText)
+		    ps.Bind(1,rs.Field("row_created").StringValue)
+		    ps.Bind( 2,rs.Field("row_modified").StringValue)
+		    ps.Bind( 3,rs.Field("row_username").StringValue)
+		    ps.Bind(4,rs.Field("name").StringValue)
+		    ps.Bind(5, rs.Field("starttime_").StringValue)
+		    ps.Bind(6,rs.Field("endtime_").StringValue)
+		    ps.Bind( 7,rs.Field("loadintime_").StringValue)
+		    ps.Bind( 8, rs.Field("loadouttime_").StringValue)
+		    ps.Bind( 9,rs.Field("startdate_").StringValue)
+		    ps.Bind(10,rs.Field("enddate_").StringValue)
+		    ps.Bind(11,rs.Field("loadindate_").StringValue)
+		    ps.Bind(12, rs.Field("loadoutdate_").StringValue)
+		    ps.Bind(13,rs.Field("details").StringValue)
+		    ps.Bind(14,rs.Field("acountmanager_").StringValue)
+		    
+		    ps.SQLExecute()
+		    If db.Error Then
+		      Break
+		    End If
+		    
+		    rs.MoveNext
+		    
+		  Next
+		  
+		  Window1.Listbox1.AddRow("Done!")
+		End Sub
+	#tag EndMethod
+
+	#tag Method, Flags = &h1
+		Protected Sub InsertLineItems()
+		  dim db as PostgreSQLDatabase = App.NewDB
+		  
+		  dim rs as RecordSet = OldData.value("lineitems")
+		  
+		  For i1 as integer = 1 To rs.RecordCount
+		    
+		    dim sql as string
+		    sql = "Insert Into tbl_lineitems ("_
+		    + "pkid, row_created, row_modified, row_username, "_
+		    + "fkeipl, fkinventory, li_name, li_manufacturer, li_model, "_
+		    + "li_department, li_category, li_subcategory, li_description, "_
+		    + "li_price, li_rate, li_discount, li_time, li_taxable, li_quantity) "_
+		    + "Values( $1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19);"
+		    dim ps as PostgreSQLPreparedStatement = db.Prepare(sql)
+		    ps.Bind(0,GetNewPKID.ToText)
+		    ps.Bind(1,rs.Field("row_created").StringValue)
+		    ps.Bind( 2,rs.Field("row_modified").StringValue)
+		    ps.Bind( 3,rs.Field("row_username").StringValue)
+		    ps.Bind(4,rs.Field("fkeipl").StringValue)
+		    ps.Bind(5, rs.Field("fkinventory").StringValue)
+		    ps.Bind(6,rs.Field("name_").StringValue)
+		    ps.Bind( 7,rs.Field("manufacturer").StringValue)
+		    ps.Bind( 8, rs.Field("model").StringValue)
+		    ps.Bind( 9,rs.Field("department").StringValue)
+		    ps.Bind(10,rs.Field("category").StringValue)
+		    ps.Bind(11,rs.Field("subcategory").StringValue)
+		    ps.Bind(12, rs.Field("note_").StringValue)
+		    ps.Bind(13, str( rs.Field("price").IntegerValue / 100) )
+		    ps.Bind(14,rs.Field("rate_").StringValue)
+		    ps.Bind(15, str( rs.Field("discountperc_").IntegerValue / 1000 ) + "%" )
+		    ps.Bind(16, str( rs.Field("time_").DoubleValue ) )
+		    ps.Bind(17, rs.Field("taxable_").BooleanValue )
+		    ps.Bind(18, rs.Field("quantity_").StringValue ) 
 		    
 		    ps.SQLExecute()
 		    If db.Error Then

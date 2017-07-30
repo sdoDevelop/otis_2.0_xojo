@@ -51,7 +51,7 @@ Begin Window Window1
       InitialParent   =   ""
       InitialValue    =   ""
       Italic          =   False
-      Left            =   0
+      Left            =   160
       LockBottom      =   False
       LockedInPosition=   False
       LockLeft        =   True
@@ -72,7 +72,7 @@ Begin Window Window1
       Underline       =   False
       UseFocusRing    =   True
       Visible         =   True
-      Width           =   600
+      Width           =   440
       _ScrollOffset   =   0
       _ScrollWidth    =   -1
    End
@@ -200,6 +200,102 @@ Begin Window Window1
       Visible         =   True
       Width           =   80
    End
+   Begin CheckBox chbContactables
+      AutoDeactivate  =   True
+      Bold            =   False
+      Caption         =   "Contactables"
+      DataField       =   ""
+      DataSource      =   ""
+      Enabled         =   True
+      Height          =   20
+      HelpTag         =   ""
+      Index           =   -2147483648
+      InitialParent   =   ""
+      Italic          =   False
+      Left            =   10
+      LockBottom      =   False
+      LockedInPosition=   False
+      LockLeft        =   True
+      LockRight       =   False
+      LockTop         =   True
+      Scope           =   0
+      State           =   0
+      TabIndex        =   5
+      TabPanelIndex   =   0
+      TabStop         =   True
+      TextFont        =   "System"
+      TextSize        =   0.0
+      TextUnit        =   0
+      Top             =   29
+      Underline       =   False
+      Value           =   False
+      Visible         =   True
+      Width           =   100
+   End
+   Begin CheckBox chbEvents
+      AutoDeactivate  =   True
+      Bold            =   False
+      Caption         =   "Events"
+      DataField       =   ""
+      DataSource      =   ""
+      Enabled         =   True
+      Height          =   20
+      HelpTag         =   ""
+      Index           =   -2147483648
+      InitialParent   =   ""
+      Italic          =   False
+      Left            =   10
+      LockBottom      =   False
+      LockedInPosition=   False
+      LockLeft        =   True
+      LockRight       =   False
+      LockTop         =   True
+      Scope           =   0
+      State           =   0
+      TabIndex        =   6
+      TabPanelIndex   =   0
+      TabStop         =   True
+      TextFont        =   "System"
+      TextSize        =   0.0
+      TextUnit        =   0
+      Top             =   51
+      Underline       =   False
+      Value           =   False
+      Visible         =   True
+      Width           =   100
+   End
+   Begin CheckBox chbLineItems
+      AutoDeactivate  =   True
+      Bold            =   False
+      Caption         =   "Line Items"
+      DataField       =   ""
+      DataSource      =   ""
+      Enabled         =   True
+      Height          =   20
+      HelpTag         =   ""
+      Index           =   -2147483648
+      InitialParent   =   ""
+      Italic          =   False
+      Left            =   10
+      LockBottom      =   False
+      LockedInPosition=   False
+      LockLeft        =   True
+      LockRight       =   False
+      LockTop         =   True
+      Scope           =   0
+      State           =   0
+      TabIndex        =   7
+      TabPanelIndex   =   0
+      TabStop         =   True
+      TextFont        =   "System"
+      TextSize        =   0.0
+      TextUnit        =   0
+      Top             =   72
+      Underline       =   False
+      Value           =   False
+      Visible         =   True
+      Width           =   100
+   End
 End
 #tag EndWindow
 
@@ -242,7 +338,16 @@ End
 #tag Events pbTransfer
 	#tag Event
 		Sub Action()
-		  modMethods.InsertContactables
+		  
+		  If chbContactables.Value Then
+		    modMethods.InsertContactables
+		  End If
+		  If chbEvents.Value Then
+		    modMethods.InsertEvents
+		  End If
+		  If chbLineItems.Value Then
+		    modMethods.InsertLineItems
+		  End If
 		End Sub
 	#tag EndEvent
 #tag EndEvents

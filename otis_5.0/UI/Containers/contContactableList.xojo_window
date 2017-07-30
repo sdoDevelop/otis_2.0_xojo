@@ -558,7 +558,7 @@ End
 		  If sSearchValue = "" Then
 		    sSearchCondition = ""
 		  Else
-		    sSearchCondition = "item_name Like '%" + sSearchValue + "%'"
+		    sSearchCondition = "name_first Like '%" + sSearchValue + "%' Or name_last Like '%" + sSearchValue + "%' Or company Like '%" + sSearchValue + "%' "
 		  End If
 		  
 		  // Set up Hidden Condition

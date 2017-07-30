@@ -24,7 +24,7 @@ Begin ContainerControl contLIDetails
    Transparent     =   True
    UseFocusRing    =   False
    Visible         =   True
-   Width           =   672
+   Width           =   754
    Begin Label labName
       AutoDeactivate  =   True
       Bold            =   False
@@ -937,7 +937,7 @@ Begin ContainerControl contLIDetails
       Index           =   -2147483648
       InitialParent   =   ""
       Italic          =   False
-      Left            =   539
+      Left            =   530
       LockBottom      =   False
       LockedInPosition=   False
       LockLeft        =   True
@@ -958,7 +958,7 @@ Begin ContainerControl contLIDetails
       Transparent     =   True
       Underline       =   False
       Visible         =   True
-      Width           =   62
+      Width           =   54
    End
    Begin Label labTaxable
       AutoDeactivate  =   True
@@ -971,7 +971,7 @@ Begin ContainerControl contLIDetails
       Index           =   -2147483648
       InitialParent   =   ""
       Italic          =   False
-      Left            =   539
+      Left            =   530
       LockBottom      =   False
       LockedInPosition=   False
       LockLeft        =   True
@@ -992,7 +992,7 @@ Begin ContainerControl contLIDetails
       Transparent     =   True
       Underline       =   False
       Visible         =   True
-      Width           =   62
+      Width           =   54
    End
    Begin entTextField tfQuantity
       AcceptTabs      =   False
@@ -1011,7 +1011,7 @@ Begin ContainerControl contLIDetails
       HelpTag         =   ""
       Index           =   -2147483648
       Italic          =   False
-      Left            =   539
+      Left            =   587
       LimitText       =   0
       LockBottom      =   False
       LockedInPosition=   False
@@ -1030,7 +1030,7 @@ Begin ContainerControl contLIDetails
       TextFont        =   "System"
       TextSize        =   0.0
       TextUnit        =   0
-      Top             =   33
+      Top             =   7
       Underline       =   False
       UseFocusRing    =   True
       Visible         =   True
@@ -1048,7 +1048,7 @@ Begin ContainerControl contLIDetails
       Index           =   -2147483648
       InitialParent   =   ""
       Italic          =   False
-      Left            =   539
+      Left            =   587
       LockBottom      =   False
       LockedInPosition=   False
       LockLeft        =   True
@@ -1062,9 +1062,85 @@ Begin ContainerControl contLIDetails
       TextFont        =   "System"
       TextSize        =   0.0
       TextUnit        =   0
-      Top             =   85
+      Top             =   59
       Underline       =   False
       Value           =   False
+      Visible         =   True
+      Width           =   113
+   End
+   Begin Label labStage
+      AutoDeactivate  =   True
+      Bold            =   False
+      DataField       =   ""
+      DataSource      =   ""
+      Enabled         =   True
+      Height          =   20
+      HelpTag         =   ""
+      Index           =   -2147483648
+      InitialParent   =   ""
+      Italic          =   False
+      Left            =   530
+      LockBottom      =   False
+      LockedInPosition=   False
+      LockLeft        =   True
+      LockRight       =   False
+      LockTop         =   True
+      Multiline       =   False
+      Scope           =   0
+      Selectable      =   False
+      TabIndex        =   28
+      TabPanelIndex   =   0
+      Text            =   "Stage"
+      TextAlign       =   0
+      TextColor       =   &c00000000
+      TextFont        =   "System"
+      TextSize        =   0.0
+      TextUnit        =   0
+      Top             =   35
+      Transparent     =   True
+      Underline       =   False
+      Visible         =   True
+      Width           =   54
+   End
+   Begin entTextField tfStage
+      AcceptTabs      =   False
+      Alignment       =   0
+      AutoDeactivate  =   True
+      AutomaticallyCheckSpelling=   False
+      BackColor       =   &cFFFFFF00
+      Bold            =   False
+      Border          =   True
+      CueText         =   ""
+      DataField       =   ""
+      DataSource      =   ""
+      Enabled         =   True
+      Format          =   ""
+      Height          =   22
+      HelpTag         =   ""
+      Index           =   -2147483648
+      Italic          =   False
+      Left            =   587
+      LimitText       =   0
+      LockBottom      =   False
+      LockedInPosition=   False
+      LockLeft        =   True
+      LockRight       =   False
+      LockTop         =   True
+      Mask            =   ""
+      Password        =   False
+      ReadOnly        =   False
+      Scope           =   0
+      TabIndex        =   29
+      TabPanelIndex   =   0
+      TabStop         =   True
+      Text            =   ""
+      TextColor       =   &c00000000
+      TextFont        =   "System"
+      TextSize        =   0.0
+      TextUnit        =   0
+      Top             =   34
+      Underline       =   False
+      UseFocusRing    =   True
       Visible         =   True
       Width           =   113
    End
@@ -1097,6 +1173,7 @@ End
 		  tfRate.Text = oCurrentRecord.sli_rate
 		  tfSubCategory.Text = oCurrentRecord.sli_subcategory
 		  tfTime.Text = oCurrentRecord.sli_time
+		  tfStage.Text = oCurrentRecord.sli_stage
 		  chbTaxable.Value = oCurrentRecord.bli_taxable
 		  
 		  dim s2 as string
@@ -1278,6 +1355,15 @@ End
 		Sub Action()
 		  
 		  oCurrentRecord.bli_taxable = me.Value
+		  oCurrentRecord.Save
+		End Sub
+	#tag EndEvent
+#tag EndEvents
+#tag Events tfStage
+	#tag Event
+		Sub LostFocus()
+		  
+		  oCurrentRecord.sli_stage = me.Text
 		  oCurrentRecord.Save
 		End Sub
 	#tag EndEvent

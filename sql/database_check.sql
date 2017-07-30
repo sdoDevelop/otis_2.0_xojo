@@ -44,6 +44,7 @@ Select
     li_category                 ,
     li_subcategory              ,
     li_description              , 
+    li_stage                    ,
     li_type                     ,
     li_price                    ,
     li_rate                     ,

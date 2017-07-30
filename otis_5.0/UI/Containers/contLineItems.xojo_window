@@ -1041,7 +1041,7 @@ End
 		  If Not IsGrouped Then
 		    
 		    // Get the records
-		    dim records() as DataFile.tbl_lineitems = methGetRecordList_UnGrouped("li_department, li_manufacturer","fkeipl = " + oEIPLRecord.ipkid.ToText )    '!@! Table Dependent !@!
+		    dim records() as DataFile.tbl_lineitems = methGetRecordList_UnGrouped("li_stage, li_department","fkeipl = " + oEIPLRecord.ipkid.ToText )    '!@! Table Dependent !@!
 		    
 		    // Lets calculate the eipl total
 		    dim retDict as Dictionary = modPriceCalculations.CalculateEIPLTotal(records(),oEIPLRecord)
@@ -1063,7 +1063,7 @@ End
 		  ElseIf IsGrouped Then
 		    
 		    // Get the Records
-		    dim dictRecords as Dictionary = methGetRecordList_Grouped("li_department, li_manufacturer", "fkeipl = " + oEIPLRecord.ipkid.ToText )    '!@! Table Dependent !@!
+		    dim dictRecords as Dictionary = methGetRecordList_Grouped("li_stage, li_department", "fkeipl = " + oEIPLRecord.ipkid.ToText )    '!@! Table Dependent !@!
 		    
 		    // Lets calculate the eipl total
 		    dim retDict as Dictionary = modPriceCalculations.CalculateEIPLTotal(dictRecords,oEIPLRecord)

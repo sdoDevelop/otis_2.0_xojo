@@ -319,6 +319,10 @@ Inherits DataFile.ActiveRecordBase
 	#tag EndProperty
 
 	#tag Property, Flags = &h0
+		sli_stage As String
+	#tag EndProperty
+
+	#tag Property, Flags = &h0
 		sli_subcategory As String
 	#tag EndProperty
 
@@ -333,19 +337,9 @@ Inherits DataFile.ActiveRecordBase
 
 	#tag ViewBehavior
 		#tag ViewProperty
-			Name="bignore_price_discrepency"
-			Group="Behavior"
-			Type="Boolean"
-		#tag EndViewProperty
-		#tag ViewProperty
 			Name="bli_taxable"
 			Group="Behavior"
 			Type="Boolean"
-		#tag EndViewProperty
-		#tag ViewProperty
-			Name="idiscount_amount_cost"
-			Group="Behavior"
-			Type="Integer"
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="ifkeipl"
@@ -358,21 +352,6 @@ Inherits DataFile.ActiveRecordBase
 			Group="Behavior"
 			Type="Int64"
 			EditorType="MultiLineEditor"
-		#tag EndViewProperty
-		#tag ViewProperty
-			Name="ili_price_cost"
-			Group="Behavior"
-			Type="Integer"
-		#tag EndViewProperty
-		#tag ViewProperty
-			Name="ili_taxtotal_cost"
-			Group="Behavior"
-			Type="Integer"
-		#tag EndViewProperty
-		#tag ViewProperty
-			Name="ili_total_cost"
-			Group="Behavior"
-			Type="Integer"
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="Index"
@@ -447,10 +426,9 @@ Inherits DataFile.ActiveRecordBase
 			EditorType="MultiLineEditor"
 		#tag EndViewProperty
 		#tag ViewProperty
-			Name="sli_note"
+			Name="sli_price"
 			Group="Behavior"
 			Type="String"
-			EditorType="MultiLineEditor"
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="sli_quantity"
@@ -473,7 +451,8 @@ Inherits DataFile.ActiveRecordBase
 		#tag ViewProperty
 			Name="sli_time"
 			Group="Behavior"
-			Type="Integer"
+			Type="String"
+			EditorType="MultiLineEditor"
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="sli_type"

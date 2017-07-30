@@ -4,11 +4,13 @@ Inherits Application
 	#tag Event
 		Sub Close()
 		  Preferences.save
+		  #Pragma BreakOnExceptions = False
 		  try
 		    db.close
 		  catch
 		    'do nothing
 		  end try
+		  #Pragma BreakOnExceptions = True
 		  app.UpdateInitiater = Nil
 		End Sub
 	#tag EndEvent

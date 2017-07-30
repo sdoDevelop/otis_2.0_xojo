@@ -262,7 +262,7 @@ Protected Module Methods
 		      End If
 		    End If
 		    
-		    dim sql as string = "Select min(id_number), pkid From tbl_ids;"
+		    dim sql as string = "Select min(id_number) as new_id, pkid From tbl_ids;"
 		    dim rs as RecordSet = db.SQLSelect(sql)
 		    If db.Error Then
 		      ErrManage( "Methods.GetNewPKID", "Could not get new pkid from database: " + db.ErrorMessage)
@@ -276,7 +276,7 @@ Protected Module Methods
 		      Return -1
 		    End If
 		    
-		    Return rs.Field("id_number").Int64Value
+		    Return rs.Field("new_id").Int64Value
 		    
 		  End If
 		  

@@ -163,6 +163,7 @@ Class=tbl_payments;Third Party Addons/ActiveRecord/DataFile/tbl_payments.xojo_co
 Window=contPaymentList;UI/Containers/contPaymentList.xojo_window;&h2AF5F7FF;&h77254FFF;false
 Module=tbl_payments;Logic/modFieldFormatting/tbl_payments.xojo_code;&h41EFD7FF;&h187CDFFF;false
 Window=contPayment;UI/Containers/contPayment.xojo_window;&h5BD4C7FF;&h77254FFF;false
+Module=modUndo;Logic/modUndo.xojo_code;&h1ADE8FFF;&h2AC587FF;false
 AppMenuBar=MainMenuBar
 MajorVersion=1
 MinorVersion=1

@@ -107,6 +107,12 @@ Inherits BKS_ActiveRecord.Base
 	#tag EndEvent
 
 	#tag Event
+		Sub BeforeSave()
+		  
+		End Sub
+	#tag EndEvent
+
+	#tag Event
 		Sub BeforeUpdate()
 		  Dim StatementType as string
 		  dim n1 as integer
